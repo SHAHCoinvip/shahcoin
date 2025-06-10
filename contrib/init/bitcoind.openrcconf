@@ -1,0 +1,33 @@
+# /etc/conf.d/shahcoind: config file for /etc/init.d/shahcoind
+
+# Config file location
+#SHAHCOIND_CONFIGFILE="/etc/shahcoin/shahcoin.conf"
+
+# What directory to write pidfile to?  (created and owned by $SHAHCOIND_USER)
+#SHAHCOIND_PIDDIR="/var/run/shahcoind"
+
+# What filename to give the pidfile
+#SHAHCOIND_PIDFILE="${SHAHCOIND_PIDDIR}/shahcoind.pid"
+
+# Where to write shahcoind data (be mindful that the blockchain is large)
+#SHAHCOIND_DATADIR="/var/lib/shahcoind"
+
+# User and group to own shahcoind process
+#SHAHCOIND_USER="shahcoin"
+#SHAHCOIND_GROUP="shahcoin"
+
+# Path to shahcoind executable
+#SHAHCOIND_BIN="/usr/bin/shahcoind"
+
+# Nice value to run shahcoind under
+#SHAHCOIND_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+#SHAHCOIND_OPTS=""
+
+# The timeout in seconds OpenRC will wait for shahcoind to terminate
+# after a SIGTERM has been raised.
+# Note that this will be mapped as argument to start-stop-daemon's
+# '--retry' option, which means you can specify a retry schedule
+# here. For more information see man 8 start-stop-daemon.
+SHAHCOIND_SIGTERM_TIMEOUT=600

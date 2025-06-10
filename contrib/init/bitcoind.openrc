@@ -1,0 +1,93 @@
+#!/sbin/openrc-run
+
+# backward compatibility for existing gentoo layout 
+#
+if [ -d "/var/lib/shahcoin/.shahcoin" ]; then
+	SHAHCOIND_DEFAULT_DATADIR="/var/lib/shahcoin/.shahcoin"
+else
+	SHAHCOIND_DEFAULT_DATADIR="/var/lib/shahcoind"
+fi
+
+SHAHCOIND_CONFIGFILE=${SHAHCOIND_CONFIGFILE:-/etc/shahcoin/shahcoin.conf}
+SHAHCOIND_PIDDIR=${SHAHCOIND_PIDDIR:-/var/run/shahcoind}
+SHAHCOIND_PIDFILE=${SHAHCOIND_PIDFILE:-${SHAHCOIND_PIDDIR}/shahcoind.pid}
+SHAHCOIND_DATADIR=${SHAHCOIND_DATADIR:-${SHAHCOIND_DEFAULT_DATADIR}}
+SHAHCOIND_USER=${SHAHCOIND_USER:-${SHAHCOIN_USER:-shahcoin}}
+SHAHCOIND_GROUP=${SHAHCOIND_GROUP:-shahcoin}
+SHAHCOIND_BIN=${SHAHCOIND_BIN:-/usr/bin/shahcoind}
+SHAHCOIND_NICE=${SHAHCOIND_NICE:-${NICELEVEL:-0}}
+SHAHCOIND_OPTS="${SHAHCOIND_OPTS:-${SHAHCOIN_OPTS}}"
+
+name="Shahcoin Core Daemon"
+description="Shahcoin cryptocurrency P2P network daemon"
+
+command="/usr/bin/shahcoind"
+command_args="-pid=\"${SHAHCOIND_PIDFILE}\" \
+		-conf=\"${SHAHCOIND_CONFIGFILE}\" \
+		-datadir=\"${SHAHCOIND_DATADIR}\" \
+		-daemon \
+		${SHAHCOIND_OPTS}"
+
+required_files="${SHAHCOIND_CONFIGFILE}"
+start_stop_daemon_args="-u ${SHAHCOIND_USER} \
+			-N ${SHAHCOIND_NICE} -w 2000"
+pidfile="${SHAHCOIND_PIDFILE}"
+
+# The retry schedule to use when stopping the daemon. Could be either
+# a timeout in seconds or multiple signal/timeout pairs (like
+# "SIGKILL/180 SIGTERM/300")
+retry="${SHAHCOIND_SIGTERM_TIMEOUT}"
+
+depend() {
+	need localmount net
+}
+
+# verify
+# 1) that the datadir exists and is writable (or create it)
+# 2) that a directory for the pid exists and is writable
+# 3) ownership and permissions on the config file
+start_pre() {
+	checkpath \
+	-d \
+	--mode 0750 \
+	--owner "${SHAHCOIND_USER}:${SHAHCOIND_GROUP}" \
+	"${SHAHCOIND_DATADIR}"
+
+	checkpath \
+	-d \
+	--mode 0755 \
+	--owner "${SHAHCOIND_USER}:${SHAHCOIND_GROUP}" \
+	"${SHAHCOIND_PIDDIR}"
+
+	checkpath -f \
+	-o "${SHAHCOIND_USER}:${SHAHCOIND_GROUP}" \
+	-m 0660 \
+	"${SHAHCOIND_CONFIGFILE}"
+
+	checkconfig || return 1
+}
+
+checkconfig()
+{
+	if grep -qs '^rpcuser=' "${SHAHCOIND_CONFIGFILE}" && \
+		! grep -qs '^rpcpassword=' "${SHAHCOIND_CONFIGFILE}" ; then
+		eerror ""
+		eerror "ERROR: You must set a secure rpcpassword to run shahcoind."
+		eerror "The setting must appear in ${SHAHCOIND_CONFIGFILE}"
+		eerror ""
+		eerror "This password is security critical to securing wallets "
+		eerror "and must not be the same as the rpcuser setting."
+		eerror "You can generate a suitable random password using the following "
+		eerror "command from the shell:"
+		eerror ""
+		eerror "bash -c 'tr -dc a-zA-Z0-9 < /dev/urandom | head -c32 && echo'"
+		eerror ""
+		eerror "It is recommended that you also set alertnotify so you are "
+		eerror "notified of problems:"
+		eerror ""
+		eerror "ie: alertnotify=echo %%s | mail -s \"Shahcoin Alert\"" \
+			"admin@foo.com"
+		eerror ""
+		return 1
+	fi
+}

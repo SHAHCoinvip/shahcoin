@@ -1,0 +1,7 @@
+[main]
+host = https://www.transifex.com
+
+[o:shahcoin:p:shahcoin:r:qt-translation-026x]
+file_filter = src/qt/locale/shahcoin_<lang>.xlf
+source_file = src/qt/locale/shahcoin_en.xlf
+source_lang = en

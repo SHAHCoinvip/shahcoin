@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+#
+#  shahcoind The shahcoin core server.
+#
+#
+# chkconfig: 345 80 20
+# description: shahcoind
+# processname: shahcoind
+#
+
+# Source function library.
+. /etc/init.d/functions
+
+# you can override defaults in /etc/sysconfig/shahcoind, see below
+if [ -f /etc/sysconfig/shahcoind ]; then
+        . /etc/sysconfig/shahcoind
+fi
+
+RETVAL=0
+
+prog=shahcoind
+# you can override the lockfile via SHAHCOIND_LOCKFILE in /etc/sysconfig/shahcoind
+lockfile=${SHAHCOIND_LOCKFILE-/var/lock/subsys/shahcoind}
+
+# shahcoind defaults to /usr/bin/shahcoind, override with SHAHCOIND_BIN
+shahcoind=${SHAHCOIND_BIN-/usr/bin/shahcoind}
+
+# shahcoind opts default to -disablewallet, override with SHAHCOIND_OPTS
+shahcoind_opts=${SHAHCOIND_OPTS--disablewallet}
+
+start() {
+    echo -n $"Starting $prog: "
+    daemon $DAEMONOPTS $shahcoind $shahcoind_opts
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && touch $lockfile
+    return $RETVAL
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    killproc $prog -t600
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && rm -f $lockfile
+    return $RETVAL
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status $prog
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: service $prog {start|stop|status|restart}"
+        exit 1
+        ;;
+esac

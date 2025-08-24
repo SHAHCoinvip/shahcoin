@@ -1,4 +1,3 @@
-// Copyright (c) 2009-2010 Shahi Nakamoto
 // Copyright (C) 2025 The SHAHCOIN Core Developers
 // Copyright (c) 2017 The Zcash developers
 // Distributed under the MIT software license, see the accompanying

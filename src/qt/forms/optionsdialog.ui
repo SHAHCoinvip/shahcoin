@@ -296,6 +296,25 @@
         </widget>
        </item>
        <item>
+        <widget class="QGroupBox" name="groupBoxAIWallet">
+         <property name="title">
+          <string>AI Wallet</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_AIWallet">
+          <item>
+           <widget class="QCheckBox" name="sendPaymentEmail">
+            <property name="toolTip">
+             <string>If enabled, you'll receive a confirmation email each time a payment is processed for AI Wallet services.</string>
+            </property>
+            <property name="text">
+             <string>Send email confirmation for every payment</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer_Wallet">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

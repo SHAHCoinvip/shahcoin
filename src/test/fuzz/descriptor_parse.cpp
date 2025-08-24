@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2021 The Shahcoin Core developers
+// Copyright (C) 2025 The SHAHCOIN Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -150,7 +150,7 @@ static void TestDescriptor(const Descriptor& desc, FlatSigningProvider& sig_prov
 void initialize_descriptor_parse()
 {
     ECC_Start();
-    SelectParams(ChainType::MAIN);
+    SelectParams("main");
 }
 
 void initialize_mocked_descriptor_parse()

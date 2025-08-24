@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2014-2022 The Shahcoin Core developers
+# Copyright (c) 2014-2022 The SHAHCOIN Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test mempool limiting together/eviction with the wallet."""
@@ -194,13 +194,13 @@ class MempoolLimitTest(ShahcoinTestFramework):
         # evicted, making this test much less meaningful.
         approx_child_vsize = self.wallet.create_self_transfer_multi(utxos_to_spend=parent_utxos)["tx"].get_vsize()
         cpfp_fee = (mempoolmin_feerate / 1000) * (cpfp_parent["tx"].get_vsize() + approx_child_vsize) - cpfp_parent["fee"]
-        # Specific number of satoshis to fit within a small window. The parent_cpfp + child package needs to be
+        # Specific number of shahi to fit within a small window. The parent_cpfp + child package needs to be
         # - When there is mid-package eviction, high enough feerate to meet the new mempoolminfee
         # - When there is no mid-package eviction, low enough feerate to be evicted immediately after submission.
-        magic_satoshis = 1200
-        cpfp_satoshis = int(cpfp_fee * COIN) + magic_satoshis
+        magic_shahi = 1200
+cpfp_shahi = int(cpfp_fee * COIN) + magic_shahi
 
-        child = self.wallet.create_self_transfer_multi(utxos_to_spend=parent_utxos, fee_per_output=cpfp_satoshis)
+        child = self.wallet.create_self_transfer_multi(utxos_to_spend=parent_utxos, fee_per_output=cpfp_shahi)
         package_hex.append(child["hex"])
 
         # Package should be submitted, temporarily exceeding maxmempool, and then evicted.

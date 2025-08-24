@@ -1,6 +1,6 @@
-Shahcoin Core version 0.9.2 is now available from:
+SHAHCOIN Core version 0.9.2 is now available from:
 
-  https://shahcoin.org/bin/0.9.2/
+  https://shah.vip/bin/0.9.2/
 
 This is a new minor version release, bringing mostly bug fixes and some minor
 improvements. OpenSSL has been updated because of a security issue (CVE-2014-0224).
@@ -8,7 +8,7 @@ Upgrading to this release is recommended.
 
 Please report bugs using the issue tracker at github:
 
-  https://github.com/shahcoin/shahcoin/issues
+  https://github.com/SHAHCoinvip/shahcoin/issues
 
 How to Upgrade
 --------------

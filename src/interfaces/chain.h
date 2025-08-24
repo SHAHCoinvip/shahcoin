@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2022 The Shahcoin Core developers
+// Copyright (c) 2018-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -106,7 +106,7 @@ struct BlockInfo {
 //! * The initMessages() and showProgress() methods which the wallet uses to send
 //!   notifications to the GUI should go away when GUI and wallet can directly
 //!   communicate with each other without going through the node
-//!   (https://github.com/shahcoin/shahcoin/pull/15288#discussion_r253321096).
+//!   (https://github.com/SHAHCoinvip/shahcoin/pull/15288#discussion_r253321096).
 //!
 //! * The handleRpc, registerRpcs, rpcEnableDeprecated methods and other RPC
 //!   methods can go away if wallets listen for HTTP requests on their own
@@ -118,7 +118,7 @@ struct BlockInfo {
 //!
 //! * `guessVerificationProgress` and similar methods can go away if rescan
 //!   logic moves out of the wallet, and the wallet just requests scans from the
-//!   node (https://github.com/shahcoin/shahcoin/issues/11756)
+//!   node (https://github.com/SHAHCoinvip/shahcoin/issues/11756)
 class Chain
 {
 public:

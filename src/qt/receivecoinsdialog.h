@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2021 The Shahcoin Core developers
+// Copyright (c) 2011-2021 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -6,8 +6,15 @@
 #define SHAHCOIN_QT_RECEIVECOINSDIALOG_H
 
 #include <qt/guiutil.h>
+#include <qt/enhancedaddressbook.h>
 
 #include <QDialog>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QDoubleSpinBox>
+#include <QPixmap>
+#include <QPainter>
 #include <QHeaderView>
 #include <QItemSelection>
 #include <QKeyEvent>
@@ -57,6 +64,16 @@ private:
     QAction* copyMessageAction;
     QAction* copyAmountAction;
     const PlatformStyle *platformStyle;
+    
+    // QR Code components
+    QLabel* m_qrCodeLabel;
+    QLineEdit* m_qrAmountEdit;
+    QLineEdit* m_qrLabelEdit;
+    QLineEdit* m_qrMessageEdit;
+    QPushButton* m_copyAddressButton;
+    QPushButton* m_copyURIButton;
+    QPushButton* m_saveQRButton;
+    QPixmap m_qrPixmap;
 
     QModelIndex selectedRow();
     void copyColumnToClipboard(int column);
@@ -74,6 +91,19 @@ private Q_SLOTS:
     void copyLabel();
     void copyMessage();
     void copyAmount();
+    void on_manageAddressBookClicked();
+    
+    // QR Code methods
+    void setupQRCodeSection();
+    void updateQRCode();
+    void generateQRCode();
+    QString generateQRString() const;
+    void onQRAmountChanged();
+    void onQRLabelChanged();
+    void onQRMessageChanged();
+    void onCopyAddressClicked();
+    void onCopyURIClicked();
+    void onSaveQRClicked();
 };
 
 #endif // SHAHCOIN_QT_RECEIVECOINSDIALOG_H

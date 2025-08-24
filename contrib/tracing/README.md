@@ -2,8 +2,8 @@ Example scripts for User-space, Statically Defined Tracing (USDT)
 =================================================================
 
 This directory contains scripts showcasing User-space, Statically Defined
-Tracing (USDT) support for Shahcoin Core on Linux using. For more information on
-USDT support in Shahcoin Core see the [USDT documentation].
+Tracing (USDT) support for SHAHCOIN Core on Linux using. For more information on
+USDT support in SHAHCOIN Core see the [USDT documentation].
 
 [USDT documentation]: ../../doc/tracing.md
 
@@ -34,10 +34,10 @@ The bpftrace examples contain a relative path to the `shahcoind` binary. By
 default, the scripts should be run from the repository-root and assume a
 self-compiled `shahcoind` binary. The paths in the examples can be changed, for
 example, to point to release builds if needed. See the
-[Shahcoin Core USDT documentation] on how to list available tracepoints in your
+[SHAHCOIN Core USDT documentation] on how to list available tracepoints in your
 `shahcoind` binary.
 
-[Shahcoin Core USDT documentation]: ../../doc/tracing.md#listing-available-tracepoints
+[SHAHCOIN Core USDT documentation]: ../../doc/tracing.md#listing-available-tracepoints
 
 **WARNING: eBPF programs require root privileges to be loaded into a Linux
 kernel VM. This means the bpftrace and BCC examples must be executed with root
@@ -184,7 +184,7 @@ longer than 25ms to connect.
 $ bpftrace contrib/tracing/connectblock_benchmark.bt 20000 38000 25
 ```
 
-In a different terminal, starting Shahcoin Core in SigNet mode and with
+In a different terminal, starting SHAHCOIN Core in SigNet mode and with
 re-indexing enabled.
 
 ```

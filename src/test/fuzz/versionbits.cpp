@@ -1,4 +1,4 @@
-// Copyright (c) 2020-2021 The Shahcoin Core developers
+// Copyright (c) 2020-2021 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -105,7 +105,7 @@ std::unique_ptr<const CChainParams> g_params;
 void initialize()
 {
     // this is actually comparatively slow, so only do it once
-    g_params = CreateChainParams(ArgsManager{}, ChainType::MAIN);
+    g_params = CreateChainParams("main");
     assert(g_params != nullptr);
 }
 

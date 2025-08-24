@@ -1,0 +1,700 @@
+/**
+ * Token Creation Fee Explanation & Confirmation Styles
+ * Modern, responsive design for the fee explanation and confirmation flow
+ */
+
+.token-creation-fee-explanation {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Header Section */
+.fee-explanation-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.fee-explanation-header h2 {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a202c;
+}
+
+.fee-explanation-header p {
+  margin: 0;
+  font-size: 16px;
+  color: #718096;
+}
+
+/* Error Messages */
+.error-messages {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+}
+
+.error-message {
+  color: #c53030;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.error-message:last-child {
+  margin-bottom: 0;
+}
+
+/* Token Configuration Section */
+.token-config-section {
+  margin-bottom: 32px;
+}
+
+.token-config-section h3 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.form-input,
+.form-select {
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  background: #ffffff;
+}
+
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-input::placeholder {
+  color: #a0aec0;
+}
+
+/* Fee Explanation Section */
+.fee-explanation-section {
+  margin-bottom: 32px;
+  padding: 24px;
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.fee-explanation-section h3 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.fee-breakdown {
+  margin-bottom: 20px;
+}
+
+.fee-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.fee-item:last-child {
+  border-bottom: none;
+}
+
+.fee-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #4a5568;
+}
+
+.info-button {
+  background: none;
+  border: none;
+  color: #667eea;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.info-button:hover {
+  color: #5a67d8;
+}
+
+.fee-amount {
+  font-size: 14px;
+  color: #2d3748;
+  font-weight: 500;
+}
+
+.fee-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  margin-top: 16px;
+  border-top: 2px solid #e2e8f0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.total-amount {
+  color: #667eea;
+  font-size: 18px;
+}
+
+.calculate-fee-button {
+  width: 100%;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.calculate-fee-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+}
+
+.calculate-fee-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Payment Method Section */
+.payment-method-section {
+  margin-bottom: 32px;
+}
+
+.payment-method-section h3 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.payment-method-option {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #ffffff;
+}
+
+.payment-method-option:hover {
+  border-color: #667eea;
+  background: #f7fafc;
+}
+
+.payment-method-option input[type="radio"] {
+  margin: 0 12px 0 0;
+  width: 18px;
+  height: 18px;
+  accent-color: #667eea;
+}
+
+.payment-method-option span {
+  font-size: 16px;
+  font-weight: 500;
+  color: #2d3748;
+}
+
+/* Add-ons Section */
+.add-ons-section {
+  margin-bottom: 32px;
+}
+
+.add-ons-section h3 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.add-ons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.add-on-item {
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  background: #ffffff;
+}
+
+.add-on-item:hover {
+  border-color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.1);
+}
+
+.add-on-checkbox {
+  display: flex;
+  align-items: flex-start;
+  padding: 20px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.add-on-checkbox input[type="checkbox"] {
+  margin: 0 16px 0 0;
+  width: 20px;
+  height: 20px;
+  accent-color: #667eea;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.add-on-content {
+  flex: 1;
+}
+
+.add-on-content h4 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.add-on-content p {
+  margin: 0;
+  font-size: 14px;
+  color: #718096;
+  line-height: 1.5;
+}
+
+/* Terms Section */
+.terms-section {
+  margin-bottom: 32px;
+  padding: 20px;
+  background: #f7fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.terms-checkbox {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #4a5568;
+}
+
+.terms-checkbox input[type="checkbox"] {
+  margin: 0 12px 0 0;
+  width: 18px;
+  height: 18px;
+  accent-color: #667eea;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+}
+
+.btn-secondary,
+.btn-primary {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  min-width: 120px;
+}
+
+.btn-secondary {
+  background: #e2e8f0;
+  color: #4a5568;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #cbd5e0;
+}
+
+.btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Confirmation Modal */
+.confirmation-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.confirmation-modal {
+  background: #ffffff;
+  border-radius: 16px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.confirmation-header {
+  padding: 24px 32px;
+  border-bottom: 1px solid #e2e8f0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 16px 16px 0 0;
+}
+
+.confirmation-header h3 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.confirmation-content {
+  padding: 32px;
+}
+
+.confirmation-summary,
+.confirmation-fees {
+  margin-bottom: 24px;
+}
+
+.confirmation-summary h4,
+.confirmation-fees h4 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 14px;
+}
+
+.summary-item:last-child {
+  border-bottom: none;
+}
+
+.summary-item span:first-child {
+  color: #718096;
+  font-weight: 500;
+}
+
+.summary-item span:last-child {
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.confirmation-warning {
+  padding: 16px;
+  background: #fff5f5;
+  border: 1px solid #fed7d7;
+  border-radius: 8px;
+  margin-top: 24px;
+}
+
+.confirmation-warning p {
+  margin: 0;
+  color: #c53030;
+  font-weight: 500;
+  text-align: center;
+}
+
+.confirmation-actions {
+  padding: 24px 32px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .token-creation-fee-explanation {
+    padding: 20px;
+    margin: 20px;
+  }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .add-ons-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .btn-secondary,
+  .btn-primary {
+    width: 100%;
+  }
+  
+  .confirmation-modal {
+    margin: 20px;
+  }
+  
+  .confirmation-content {
+    padding: 20px;
+  }
+  
+  .confirmation-actions {
+    padding: 20px;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .token-creation-fee-explanation {
+    padding: 16px;
+    margin: 10px;
+  }
+  
+  .fee-explanation-header h2 {
+    font-size: 24px;
+  }
+  
+  .fee-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .fee-total {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .token-creation-fee-explanation {
+    background: #1a202c;
+    color: #e2e8f0;
+  }
+  
+  .fee-explanation-header h2,
+  .token-config-section h3,
+  .fee-explanation-section h3,
+  .payment-method-section h3,
+  .add-ons-section h3 {
+    color: #e2e8f0;
+  }
+  
+  .fee-explanation-header p {
+    color: #a0aec0;
+  }
+  
+  .form-input,
+  .form-select {
+    background: #2d3748;
+    border-color: #4a5568;
+    color: #e2e8f0;
+  }
+  
+  .form-input:focus,
+  .form-select:focus {
+    border-color: #667eea;
+  }
+  
+  .fee-explanation-section {
+    background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+    border-color: #4a5568;
+  }
+  
+  .payment-method-option,
+  .add-on-item {
+    background: #2d3748;
+    border-color: #4a5568;
+  }
+  
+  .payment-method-option:hover,
+  .add-on-item:hover {
+    background: #4a5568;
+  }
+  
+  .payment-method-option span,
+  .add-on-content h4 {
+    color: #e2e8f0;
+  }
+  
+  .add-on-content p {
+    color: #a0aec0;
+  }
+  
+  .terms-section {
+    background: #2d3748;
+    border-color: #4a5568;
+  }
+  
+  .terms-checkbox {
+    color: #a0aec0;
+  }
+  
+  .fee-label,
+  .form-group label {
+    color: #a0aec0;
+  }
+  
+  .fee-amount,
+  .summary-item span:last-child {
+    color: #e2e8f0;
+  }
+  
+  .summary-item span:first-child {
+    color: #a0aec0;
+  }
+  
+  .confirmation-modal {
+    background: #1a202c;
+  }
+  
+  .confirmation-summary h4,
+  .confirmation-fees h4 {
+    color: #e2e8f0;
+  }
+}
+
+/* Animation Classes */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Focus States for Accessibility */
+.form-input:focus,
+.form-select:focus,
+.info-button:focus,
+.calculate-fee-button:focus,
+.btn-secondary:focus,
+.btn-primary:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.payment-method-option:focus-within,
+.add-on-checkbox:focus-within,
+.terms-checkbox:focus-within {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}

@@ -1,20 +1,20 @@
 24.1 Release Notes
 ==================
 
-Shahcoin Core version 24.1 is now available from:
+SHAHCOIN Core version 24.1 is now available from:
 
-  <https://shahcoincore.org/bin/shahcoin-core-24.1/>
+  <https://shah.vip/bin/shahcoin-core-24.1/>
 
 This release includes various bug fixes and performance
 improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/shahcoin/shahcoin/issues>
+  <https://github.com/SHAHCoinvip/shahcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://shahcoincore.org/en/list/announcements/join/>
+  <https://shah.vip/en/list/announcements/join/>
 
 How to Upgrade
 ==============
@@ -24,17 +24,17 @@ shut down (which might take a few minutes in some cases), then run the
 installer (on Windows) or just copy over `/Applications/Shahcoin-Qt` (on macOS)
 or `shahcoind`/`shahcoin-qt` (on Linux).
 
-Upgrading directly from a version of Shahcoin Core that has reached its EOL is
+Upgrading directly from a version of SHAHCOIN Core that has reached its EOL is
 possible, but it might take some time if the data directory needs to be migrated. Old
-wallet versions of Shahcoin Core are generally supported.
+wallet versions of SHAHCOIN Core are generally supported.
 
 Compatibility
 ==============
 
-Shahcoin Core is supported and extensively tested on operating systems
+SHAHCOIN Core is supported and extensively tested on operating systems
 using the Linux kernel, macOS 10.15+, and Windows 7 and newer.  Shahcoin
 Core should also work on most other Unix-like systems but is not as
-frequently tested on them.  It is not recommended to use Shahcoin Core on
+frequently tested on them.  It is not recommended to use SHAHCOIN Core on
 unsupported systems.
 
 ### P2P

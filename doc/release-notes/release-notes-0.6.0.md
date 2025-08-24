@@ -7,13 +7,13 @@ project at Transifex to help:
 https://www.transifex.net/projects/p/shahcoin/
 
 Please report bugs using the issue tracker at github:
-https://github.com/shahcoin/shahcoin/issues
+https://github.com/SHAHCoinvip/shahcoin/issues
 
 Project source code is hosted at github; we are no longer
 distributing .tar.gz files here, you can get them
 directly from github:
-https://github.com/shahcoin/shahcoin/tarball/v0.6.0  # .tar.gz
-https://github.com/shahcoin/shahcoin/zipball/v0.6.0  # .zip
+https://github.com/SHAHCoinvip/shahcoin/tarball/v0.6.0  # .tar.gz
+https://github.com/SHAHCoinvip/shahcoin/zipball/v0.6.0  # .zip
 
 For Ubuntu users, there is a ppa maintained by Matt Corallo which
 you can add to your system so that it will automatically keep

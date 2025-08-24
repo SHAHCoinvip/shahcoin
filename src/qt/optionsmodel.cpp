@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -59,7 +59,7 @@ static const char* SettingName(OptionsModel::OptionID option)
     }
 }
 
-/** Call node.updateRwSetting() with Shahcoin 22.x workaround. */
+/** Call node.updateRwSetting() with SHAHCOIN Core workaround. */
 static void UpdateRwSetting(interfaces::Node& node, OptionsModel::OptionID option, const std::string& suffix, const common::SettingsValue& value)
 {
     if (value.isNum() &&
@@ -68,12 +68,12 @@ static void UpdateRwSetting(interfaces::Node& node, OptionsModel::OptionID optio
          option == OptionsModel::Prune ||
          option == OptionsModel::PruneSize)) {
         // Write certain old settings as strings, even though they are numbers,
-        // because Shahcoin 22.x releases try to read these specific settings as
+        // because SHAHCOIN Core releases try to read these specific settings as
         // strings in addOverriddenOption() calls at startup, triggering
         // uncaught exceptions in UniValue::get_str(). These errors were fixed
-        // in later releases by https://github.com/shahcoin/shahcoin/pull/24498.
+        // in later releases by https://github.com/SHAHCoinvip/shahcoin/pull/24498.
         // If new numeric settings are added, they can be written as numbers
-        // instead of strings, because shahcoin 22.x will not try to read these.
+        // instead of strings, because SHAHCOIN Core will not try to read these.
         node.updateRwSetting(SettingName(option) + suffix, value.getValStr());
     } else {
         node.updateRwSetting(SettingName(option) + suffix, value);
@@ -684,7 +684,7 @@ void OptionsModel::checkAndMigrate()
     if (settingsVersion < CLIENT_VERSION)
     {
         // -dbcache was bumped from 100 to 300 in 0.13
-        // see https://github.com/shahcoin/shahcoin/pull/8273
+        // see https://github.com/SHAHCoinvip/shahcoin/pull/8273
         // force people to upgrade to the new value if they are using 100MB
         if (settingsVersion < 130000 && settings.contains("nDatabaseCache") && settings.value("nDatabaseCache").toLongLong() == 100)
             settings.setValue("nDatabaseCache", (qint64)nDefaultDbCache);
@@ -746,6 +746,6 @@ void OptionsModel::checkAndMigrate()
     // parameter interaction code to update other settings. This is particularly
     // important for the -listen setting, which should cause -listenonion, -upnp,
     // and other settings to default to false if it was set to false.
-    // (https://github.com/shahcoin-core/gui/issues/567).
+    // (https://github.com/SHAHCoinvip/gui/issues/567).
     node().initParameterInteraction();
 }

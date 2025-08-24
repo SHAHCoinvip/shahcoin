@@ -1,20 +1,20 @@
 25.0 Release Notes
 ==================
 
-Shahcoin Core version 25.0 is now available from:
+SHAHCOIN Core version 25.0 is now available from:
 
-  <https://shahcoincore.org/bin/shahcoin-core-25.0/>
+  <https://shah.vip/bin/shahcoin-core-25.0/>
 
 This release includes new features, various bug fixes and performance
 improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/shahcoin/shahcoin/issues>
+  <https://github.com/SHAHCoinvip/shahcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://shahcoincore.org/en/list/announcements/join/>
+  <https://shah.vip/en/list/announcements/join/>
 
 How to Upgrade
 ==============
@@ -24,17 +24,17 @@ shut down (which might take a few minutes in some cases), then run the
 installer (on Windows) or just copy over `/Applications/Shahcoin-Qt` (on macOS)
 or `shahcoind`/`shahcoin-qt` (on Linux).
 
-Upgrading directly from a version of Shahcoin Core that has reached its EOL is
+Upgrading directly from a version of SHAHCOIN Core that has reached its EOL is
 possible, but it might take some time if the data directory needs to be migrated. Old
-wallet versions of Shahcoin Core are generally supported.
+wallet versions of SHAHCOIN Core are generally supported.
 
 Compatibility
 ==============
 
-Shahcoin Core is supported and extensively tested on operating systems
+SHAHCOIN Core is supported and extensively tested on operating systems
 using the Linux kernel, macOS 10.15+, and Windows 7 and newer.  Shahcoin
 Core should also work on most other Unix-like systems but is not as
-frequently tested on them.  It is not recommended to use Shahcoin Core on
+frequently tested on them.  It is not recommended to use SHAHCOIN Core on
 unsupported systems.
 
 Notable changes
@@ -60,7 +60,7 @@ Updated RPCs
 ------------
 
 - All JSON-RPC methods accept a new [named
-  parameter](https://github.com/shahcoin/shahcoin/blob/master/doc/JSON-RPC-interface.md#parameter-passing) called `args` that can
+  parameter](https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/JSON-RPC-interface.md#parameter-passing) called `args` that can
   contain positional parameter values. This is a convenience to allow some
   parameter values to be passed by name without having to name every value. The
   python test framework and `shahcoin-cli` tool both take advantage of this, so
@@ -114,7 +114,7 @@ Updated settings
 
 - If the `-checkblocks` or `-checklevel` options are explicitly provided by the
 user, but the verification checks cannot be completed due to an insufficient
-dbcache, Shahcoin Core will now return an error at startup. (#25574)
+dbcache, SHAHCOIN Core will now return an error at startup. (#25574)
 
 - Ports specified in `-port` and `-rpcport` options are now validated at startup.
   Values that previously worked and were considered valid can now result in errors. (#22087)
@@ -137,7 +137,7 @@ New settings
 ------------
 
 - The `shutdownnotify` option is used to specify a command to execute synchronously
-before Shahcoin Core has begun its shutdown sequence. (#23395)
+before SHAHCOIN Core has begun its shutdown sequence. (#23395)
 
 
 Wallet
@@ -208,7 +208,7 @@ Binary verification
   In this release and moving forward it will verify that the binaries are
   signed by a _threshold of trusted keys_. For more details and
   examples, see:
-  https://github.com/shahcoin/shahcoin/blob/master/contrib/verify-binaries/README.md
+  https://github.com/SHAHCoinvip/shahcoin/blob/master/contrib/verify-binaries/README.md
   (#27358)
 
 Low-level changes

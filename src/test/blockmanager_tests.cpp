@@ -1,4 +1,4 @@
-// Copyright (c) 2022 The Shahcoin Core developers
+// Copyright (c) 2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -26,7 +26,7 @@ BOOST_FIXTURE_TEST_SUITE(blockmanager_tests, BasicTestingSetup)
 
 BOOST_AUTO_TEST_CASE(blockmanager_find_block_pos)
 {
-    const auto params {CreateChainParams(ArgsManager{}, ChainType::MAIN)};
+    const auto params {CreateChainParams("main")};
     KernelNotifications notifications{m_node.exit_status};
     const BlockManager::Options blockman_opts{
         .chainparams = *params,
@@ -45,10 +45,10 @@ BOOST_AUTO_TEST_CASE(blockmanager_find_block_pos)
     // now simulate what happens after reindex for the first new block processed
     // the actual block contents don't matter, just that it's a block.
     // verify that the write position is at offset 0x12d.
-    // this is a check to make sure that https://github.com/shahcoin/shahcoin/issues/21379 does not recur
+    // this is a check to make sure that https://github.com/SHAHCoinvip/shahcoin/issues/21379 does not recur
     // 8 bytes (for serialization header) + 285 (for serialized genesis block) = 293
     // add another 8 bytes for the second block's serialization header and we get 293 + 8 = 301
-    FlatFilePos actual{blockman.SaveBlockToDisk(params->GenesisBlock(), 1, nullptr)};
+    FlatFilePos actual = blockman.SaveBlockToDisk(params->GenesisBlock(), 1, nullptr);
     BOOST_CHECK_EQUAL(actual.nPos, BLOCK_SERIALIZATION_HEADER_SIZE + ::GetSerializeSize(params->GenesisBlock(), CLIENT_VERSION) + BLOCK_SERIALIZATION_HEADER_SIZE);
 }
 

@@ -3,8 +3,8 @@ nano apply_customizations.sh
 
 echo "🔧 Starting Shahcoin customization..."
 
-# 1️⃣ Change project name from 'Bitcoin' to 'Shahcoin'
-find . -type f \( -name "*.cpp" -o -name "*.h" -o -name "configure.ac" \) -exec sed -i 's/Bitcoin/Shahcoin/g' {} +
+# 1️⃣ Change project name from 'Shahcoin' to 'Shahcoin'
+find . -type f \( -name "*.cpp" -o -name "*.h" -o -name "configure.ac" \) -exec sed -i 's/Shahcoin/Shahcoin/g' {} +
 
 # 2️⃣ Change symbol from 'BTC' to 'SHAH'
 find . -type f \( -name "*.cpp" -o -name "*.h" -o -name "configure.ac" \) -exec sed -i 's/BTC/SHAH/g' {} +

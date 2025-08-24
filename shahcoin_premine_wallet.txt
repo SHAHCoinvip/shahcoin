@@ -1,0 +1,8 @@
+SHAHCOIN Premine Wallet - Generated
+=====================================
+SHAH Address: SVUNaktXHkoRtoZeScGxjMxFVDVMn4xKTG
+Public Key:   029797b158ad1a44415a6c10ca96a4bb2e5932f0e45a22601f01dbb75f6732dd
+Private Key:  VPDArztHSodZuqn8rVsf2aakrePbmG2BZqZf9D5ZKpEEynocS4Pm
+
+This wallet will receive 8,000,000 SHAH premine
+Store private key securely in cold storage!

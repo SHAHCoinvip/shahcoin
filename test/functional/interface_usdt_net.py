@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-# Copyright (c) 2022 The Shahcoin Core developers
+# Copyright (c) 2022 The SHAHCOIN Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 """  Tests the net:* tracepoint API interface.
-     See https://github.com/shahcoin/shahcoin/blob/master/doc/tracing.md#context-net
+     See https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/tracing.md#context-net
 """
 
 import ctypes
@@ -92,7 +92,7 @@ class NetTracepointTest(ShahcoinTestFramework):
 
     def run_test(self):
         # Tests the net:inbound_message and net:outbound_message tracepoints
-        # See https://github.com/shahcoin/shahcoin/blob/master/doc/tracing.md#context-net
+        # See https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/tracing.md#context-net
 
         class P2PMessage(ctypes.Structure):
             _fields_ = [

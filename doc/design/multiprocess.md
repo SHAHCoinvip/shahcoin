@@ -2,11 +2,11 @@
 
 On unix systems, the `--enable-multiprocess` build option can be passed to `./configure` to build new `shahcoin-node`, `shahcoin-wallet`, and `shahcoin-gui` executables alongside existing `shahcoind` and `shahcoin-qt` executables.
 
-`shahcoin-node` is a drop-in replacement for `shahcoind`, and `shahcoin-gui` is a drop-in replacement for `shahcoin-qt`, and there are no differences in use or external behavior between the new and old executables. But internally (after [#10102](https://github.com/shahcoin/shahcoin/pull/10102)), `shahcoin-gui` will spawn a `shahcoin-node` process to run P2P and RPC code, communicating with it across a socket pair, and `shahcoin-node` will spawn `shahcoin-wallet` to run wallet code, also communicating over a socket pair. This will let node, wallet, and GUI code run in separate address spaces for better isolation, and allow future improvements like being able to start and stop components independently on different machines and environments.
+`shahcoin-node` is a drop-in replacement for `shahcoind`, and `shahcoin-gui` is a drop-in replacement for `shahcoin-qt`, and there are no differences in use or external behavior between the new and old executables. But internally (after [#10102](https://github.com/SHAHCoinvip/shahcoin/pull/10102)), `shahcoin-gui` will spawn a `shahcoin-node` process to run P2P and RPC code, communicating with it across a socket pair, and `shahcoin-node` will spawn `shahcoin-wallet` to run wallet code, also communicating over a socket pair. This will let node, wallet, and GUI code run in separate address spaces for better isolation, and allow future improvements like being able to start and stop components independently on different machines and environments.
 
 ## Next steps
 
-Specific next steps after [#10102](https://github.com/shahcoin/shahcoin/pull/10102) will be:
+Specific next steps after [#10102](https://github.com/SHAHCoinvip/shahcoin/pull/10102) will be:
 
 - [ ] Adding `-ipcbind` and `-ipcconnect` options to `shahcoin-node`, `shahcoin-wallet`, and `shahcoin-gui` executables so they can listen and connect to TCP ports and unix socket paths. This will allow separate processes to be started and stopped any time and connect to each other.
 - [ ] Adding `-server` and `-rpcbind` options to the `shahcoin-wallet` executable so wallet processes can handle RPC requests directly without going through the node.

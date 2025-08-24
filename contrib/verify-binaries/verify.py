@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-# Copyright (c) 2020-2021 The Shahcoin Core developers
+# Copyright (c) 2020-2021 The SHAHCOIN Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Script for verifying Shahcoin Core release binaries.
+"""Script for verifying SHAHCOIN Core release binaries.
 
 This script attempts to download the sum file SHA256SUMS and corresponding
-signature file SHA256SUMS.asc from shahcoincore.org and shahcoin.org and
+signature file SHA256SUMS.asc from shah.vip and shah.vip and
 compares them.
 
 The sum-signature file is signed by a number of builder keys. This script
@@ -15,7 +15,7 @@ here, but by default is based upon local GPG trust settings.
 
 The builder keys are available in the guix.sigs repo:
 
-    https://github.com/shahcoin-core/guix.sigs/tree/main/builder-keys
+    https://github.com/SHAHCoinvip/guix.sigs/tree/main/builder-keys
 
 If a minimum good, trusted signature threshold is met on the sum file, we then
 download the files specified in SHA256SUMS, and check if the hashes of these
@@ -46,8 +46,8 @@ from hashlib import sha256
 from pathlib import PurePath, Path
 
 # The primary host; this will fail if we can't retrieve files from here.
-HOST1 = "https://shahcoincore.org"
-HOST2 = "https://shahcoin.org"
+HOST1 = "https://shah.vip"
+HOST2 = "https://shah.vip"
 VERSIONPREFIX = "shahcoin-core-"
 SUMS_FILENAME = 'SHA256SUMS'
 SIGNATUREFILENAME = f"{SUMS_FILENAME}.asc"
@@ -517,7 +517,7 @@ def verify_published_handler(args: argparse.Namespace) -> ReturnCode:
         log.error("no files matched the platform specified")
         return ReturnCode.NO_BINARIES_MATCH
 
-    # remove binaries that are known not to be hosted by shahcoincore.org
+    # remove binaries that are known not to be hosted by shah.vip
     fragments_to_remove = ['-unsigned', '-debug', '-codesignatures']
     for fragment in fragments_to_remove:
         nobinaries = [i for i in hashes_to_verify if fragment in i[1]]
@@ -690,7 +690,7 @@ def main():
         default=bool_from_env('BINVERIFY_REQUIRE_ALL_HOSTS'),
         help=(
             f'If set, require all hosts ({HOST1}, {HOST2}) to provide signatures. '
-            '(Sometimes shahcoin.org lags behind shahcoincore.org.)')
+            '(Sometimes shah.vip lags behind shah.vip.)')
     )
 
     bin_parser = subparsers.add_parser("bin", help="Verify local binaries.")

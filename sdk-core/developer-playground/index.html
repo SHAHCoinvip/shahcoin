@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Shahcoin Developer Playground</title>
+	<style>
+		body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
+		.container { max-width: 960px; margin: 0 auto; }
+		.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+		.card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; }
+		h2 { margin: 0 0 12px; }
+		label { display: block; margin: 8px 0 4px; font-weight: 600; }
+		input, select, button, textarea { width: 100%; padding: 8px; margin-bottom: 8px; }
+		pre { background: #0b1020; color: #cde; padding: 12px; border-radius: 6px; overflow: auto; }
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Shahcoin Developer Playground</h1>
+		<p>Simulate SHI-20 and SHI-30 actions (mint, transfer, burn) and validate metadata.</p>
+		<div class="grid">
+			<div class="card">
+				<h2>SHI-20 Actions</h2>
+				<label>Name</label>
+				<input id="tName" placeholder="My Token" />
+				<label>Symbol</label>
+				<input id="tSymbol" placeholder="MTK" />
+				<label>Total Supply</label>
+				<input id="tSupply" value="1000000000000000000000000" />
+				<button id="btnGen20">Generate Contract</button>
+				<pre id="out20"></pre>
+			</div>
+			<div class="card">
+				<h2>SHI-30 Actions</h2>
+				<label>Name</label>
+				<input id="nName" placeholder="My NFT" />
+				<label>Symbol</label>
+				<input id="nSymbol" placeholder="MNFT" />
+				<label>Base URI</label>
+				<input id="nBase" placeholder="https://example.com/metadata/" />
+				<button id="btnGen30">Generate Contract</button>
+				<pre id="out30"></pre>
+			</div>
+		</div>
+	</div>
+	<script type="module" src="./playground.js"></script>
+</body>
+</html>

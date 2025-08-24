@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -27,6 +27,15 @@
 #include <util/translation.h>
 #include <wallet/coincontrol.h>
 #include <wallet/wallet.h> // for CRecipient
+
+// Add includes for new features
+#include <stake/stake.h>
+#include <tokens/token.h>
+#include <tokens/nft.h>
+#include <dex/dex.h>
+#include <policy/honeypot_filter.h>
+#include <consensus/finality.h>
+#include <stake/cold_staking.h>
 
 #include <stdint.h>
 #include <functional>
@@ -624,4 +633,323 @@ CAmount WalletModel::getAvailableBalance(const CCoinControl* control)
     }
     // Fetch balance from the wallet, taking into account the selected coins
     return wallet().getAvailableBalance(*control);
+}
+
+// Staking operations implementation
+bool WalletModel::startStaking(CAmount amount, QString& error)
+{
+    if (!g_stakeManager) {
+        error = tr("Staking system not initialized");
+        return false;
+    }
+
+    // Check if wallet is unlocked
+    WalletModel::UnlockContext ctx(requestUnlock());
+    if (!ctx.isValid()) {
+        error = tr("Wallet is locked");
+        return false;
+    }
+
+    // Get a new address for staking
+    util::Result<CTxDestination> dest = m_wallet->getNewDestination(OutputType::LEGACY, "staking");
+    if (!dest) {
+        error = tr("Failed to get staking address");
+        return false;
+    }
+
+    // Check if we can stake this amount
+    if (!StakeUtils::CanCreateStake(*dest, amount)) {
+        error = tr("Cannot stake this amount. Minimum: %1, Maximum: %2")
+                .arg(ShahcoinUnits::formatWithUnit(getOptionsModel()->getDisplayUnit(), 
+                     g_stakeManager->GetConfig().minStakeAmount, false, ShahcoinUnits::SeparatorStyle::STANDARD))
+                .arg(ShahcoinUnits::formatWithUnit(getOptionsModel()->getDisplayUnit(), 
+                     getAvailableBalance(nullptr), false, ShahcoinUnits::SeparatorStyle::STANDARD));
+        return false;
+    }
+
+    // Create stake transaction
+    if (!g_stakeManager->CreateStake(*dest, amount)) {
+        error = tr("Failed to create stake transaction");
+        return false;
+    }
+
+    return true;
+}
+
+bool WalletModel::stopStaking(const QString& stakeId, QString& error)
+{
+    if (!g_stakeManager) {
+        error = tr("Staking system not initialized");
+        return false;
+    }
+
+    // Parse stake ID and find the stake
+    uint256 stakeHash = uint256S(stakeId.toStdString());
+    
+    // TODO: Implement stop staking logic
+    // This would involve creating an unstaking transaction
+    error = tr("Stop staking not yet implemented");
+    return false;
+}
+
+bool WalletModel::claimStakeRewards(const QString& stakeId, QString& error)
+{
+    if (!g_stakeManager) {
+        error = tr("Staking system not initialized");
+        return false;
+    }
+
+    // TODO: Implement claim rewards logic
+    error = tr("Claim rewards not yet implemented");
+    return false;
+}
+
+CAmount WalletModel::getStakedBalance() const
+{
+    if (!g_stakeManager) return 0;
+    
+    // Get all addresses in the wallet
+    auto addresses = m_wallet->listCoins();
+    CAmount totalStaked = 0;
+    
+    for (const auto& [dest, coins] : addresses) {
+        totalStaked += g_stakeManager->GetStakeAmount(dest);
+    }
+    
+    return totalStaked;
+}
+
+CAmount WalletModel::getStakeableBalance() const
+{
+    CAmount available = getAvailableBalance(nullptr);
+    CAmount staked = getStakedBalance();
+    return std::max(0LL, available - staked);
+}
+
+QStringList WalletModel::getActiveStakes() const
+{
+    QStringList stakes;
+    if (!g_stakeManager) return stakes;
+    
+    // TODO: Implement getting active stakes from stake manager
+    return stakes;
+}
+
+QStringList WalletModel::getStakingHistory() const
+{
+    QStringList history;
+    if (!g_stakeManager) return history;
+    
+    // TODO: Implement getting staking history from wallet
+    return history;
+}
+
+// Token operations implementation
+bool WalletModel::createToken(const QString& name, const QString& symbol, CAmount totalSupply, 
+                             int decimals, const QString& description, QString& error)
+{
+    if (!g_tokenManager) {
+        error = tr("Token system not initialized");
+        return false;
+    }
+
+    // Check if wallet is unlocked
+    WalletModel::UnlockContext ctx(requestUnlock());
+    if (!ctx.isValid()) {
+        error = tr("Wallet is locked");
+        return false;
+    }
+
+    // Get a new address for token creation
+    util::Result<CTxDestination> dest = m_wallet->getNewDestination(OutputType::LEGACY, "token_creation");
+    if (!dest) {
+        error = tr("Failed to get token creation address");
+        return false;
+    }
+
+    // Create token
+    CTokenInfo tokenInfo;
+    tokenInfo.name = name.toStdString();
+    tokenInfo.symbol = symbol.toStdString();
+    tokenInfo.totalSupply = totalSupply;
+    tokenInfo.decimals = decimals;
+    tokenInfo.description = description.toStdString();
+    tokenInfo.creator = *dest;
+
+    if (!g_tokenManager->CreateToken(tokenInfo)) {
+        error = tr("Failed to create token");
+        return false;
+    }
+
+    return true;
+}
+
+bool WalletModel::transferToken(const QString& tokenId, const QString& recipient, CAmount amount, QString& error)
+{
+    if (!g_tokenManager) {
+        error = tr("Token system not initialized");
+        return false;
+    }
+
+    // TODO: Implement token transfer
+    error = tr("Token transfer not yet implemented");
+    return false;
+}
+
+QStringList WalletModel::getOwnedTokens() const
+{
+    QStringList tokens;
+    if (!g_tokenManager) return tokens;
+    
+    // TODO: Implement getting owned tokens
+    return tokens;
+}
+
+CAmount WalletModel::getTokenBalance(const QString& tokenId) const
+{
+    if (!g_tokenManager) return 0;
+    
+    // TODO: Implement getting token balance
+    return 0;
+}
+
+// NFT operations implementation
+bool WalletModel::mintNFT(const QString& name, const QString& description, const QString& imagePath, 
+                         const QString& collection, QString& error)
+{
+    if (!g_nftManager) {
+        error = tr("NFT system not initialized");
+        return false;
+    }
+
+    // Check if wallet is unlocked
+    WalletModel::UnlockContext ctx(requestUnlock());
+    if (!ctx.isValid()) {
+        error = tr("Wallet is locked");
+        return false;
+    }
+
+    // Get a new address for NFT minting
+    util::Result<CTxDestination> dest = m_wallet->getNewDestination(OutputType::LEGACY, "nft_minting");
+    if (!dest) {
+        error = tr("Failed to get NFT minting address");
+        return false;
+    }
+
+    // Create NFT
+    CNFTInfo nftInfo;
+    nftInfo.name = name.toStdString();
+    nftInfo.description = description.toStdString();
+    nftInfo.imagePath = imagePath.toStdString();
+    nftInfo.collection = collection.toStdString();
+    nftInfo.owner = *dest;
+
+    if (!g_nftManager->MintNFT(nftInfo)) {
+        error = tr("Failed to mint NFT");
+        return false;
+    }
+
+    return true;
+}
+
+bool WalletModel::transferNFT(const QString& nftId, const QString& recipient, QString& error)
+{
+    if (!g_nftManager) {
+        error = tr("NFT system not initialized");
+        return false;
+    }
+
+    // TODO: Implement NFT transfer
+    error = tr("NFT transfer not yet implemented");
+    return false;
+}
+
+QStringList WalletModel::getOwnedNFTs() const
+{
+    QStringList nfts;
+    if (!g_nftManager) return nfts;
+    
+    // TODO: Implement getting owned NFTs
+    return nfts;
+}
+
+QString WalletModel::getNFTMetadata(const QString& nftId) const
+{
+    if (!g_nftManager) return QString();
+    
+    // TODO: Implement getting NFT metadata
+    return QString();
+}
+
+// DEX operations implementation
+bool WalletModel::swapTokens(const QString& fromToken, const QString& toToken, CAmount amount, 
+                            double slippage, QString& error)
+{
+    if (!g_dexManager) {
+        error = tr("DEX system not initialized");
+        return false;
+    }
+
+    // TODO: Implement token swap
+    error = tr("Token swap not yet implemented");
+    return false;
+}
+
+bool WalletModel::addLiquidity(const QString& tokenA, const QString& tokenB, CAmount amountA, 
+                              CAmount amountB, QString& error)
+{
+    if (!g_dexManager) {
+        error = tr("DEX system not initialized");
+        return false;
+    }
+
+    // TODO: Implement add liquidity
+    error = tr("Add liquidity not yet implemented");
+    return false;
+}
+
+QStringList WalletModel::getAvailablePools() const
+{
+    QStringList pools;
+    if (!g_dexManager) return pools;
+    
+    // TODO: Implement getting available pools
+    return pools;
+}
+
+double WalletModel::getSwapRate(const QString& fromToken, const QString& toToken) const
+{
+    if (!g_dexManager) return 0.0;
+    
+    // TODO: Implement getting swap rate
+    return 0.0;
+}
+
+// Explorer operations implementation
+QString WalletModel::getTransactionInfo(const QString& txId) const
+{
+    // TODO: Implement getting transaction info
+    return QString();
+}
+
+QString WalletModel::getAddressInfo(const QString& address) const
+{
+    // TODO: Implement getting address info
+    return QString();
+}
+
+QString WalletModel::getTokenInfo(const QString& tokenId) const
+{
+    if (!g_tokenManager) return QString();
+    
+    // TODO: Implement getting token info
+    return QString();
+}
+
+QString WalletModel::getNFTInfo(const QString& nftId) const
+{
+    if (!g_nftManager) return QString();
+    
+    // TODO: Implement getting NFT info
+    return QString();
 }

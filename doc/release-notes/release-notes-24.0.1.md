@@ -4,20 +4,20 @@
 Due to last-minute issues (#26616), 24.0, although tagged, was never fully
 announced or released.
 
-Shahcoin Core version 24.0.1 is now available from:
+SHAHCOIN Core version 24.0.1 is now available from:
 
-  <https://shahcoincore.org/bin/shahcoin-core-24.0.1/>
+  <https://shah.vip/bin/shahcoin-core-24.0.1/>
 
 This release includes new features, various bug fixes and performance
 improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/shahcoin/shahcoin/issues>
+  <https://github.com/SHAHCoinvip/shahcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://shahcoincore.org/en/list/announcements/join/>
+  <https://shah.vip/en/list/announcements/join/>
 
 How to Upgrade
 ==============
@@ -27,23 +27,23 @@ shut down (which might take a few minutes in some cases), then run the
 installer (on Windows) or just copy over `/Applications/Shahcoin-Qt` (on macOS)
 or `shahcoind`/`shahcoin-qt` (on Linux).
 
-Upgrading directly from a version of Shahcoin Core that has reached its EOL is
+Upgrading directly from a version of SHAHCOIN Core that has reached its EOL is
 possible, but it might take some time if the data directory needs to be migrated. Old
-wallet versions of Shahcoin Core are generally supported.
+wallet versions of SHAHCOIN Core are generally supported.
 
 Compatibility
 ==============
 
-Shahcoin Core is supported and extensively tested on operating systems
+SHAHCOIN Core is supported and extensively tested on operating systems
 using the Linux kernel, macOS 10.15+, and Windows 7 and newer.  Shahcoin
 Core should also work on most other Unix-like systems but is not as
-frequently tested on them.  It is not recommended to use Shahcoin Core on
+frequently tested on them.  It is not recommended to use SHAHCOIN Core on
 unsupported systems.
 
 Notice of new option for transaction replacement policies
 =========================================================
 
-This version of Shahcoin Core adds a new `mempoolfullrbf` configuration
+This version of SHAHCOIN Core adds a new `mempoolfullrbf` configuration
 option which allows users to change the policy their individual node
 will use for relaying and mining unconfirmed transactions.  The option
 defaults to the same policy that was used in previous releases and no
@@ -67,7 +67,7 @@ still make this assumption.
 There are several benefits to users from removing this *first-seen*
 simplification.  One key benefit, the ability for the sender of a
 transaction to replace it with an alternative version paying higher
-fees, was realized in [Shahcoin Core 0.12.0][] (February 2016) with the
+fees, was realized in [SHAHCOIN Core 0.12.0][] (February 2016) with the
 introduction of [BIP125][] opt-in Replace By Fee (RBF).
 
 Since then, there has been discussion about completely removing the
@@ -78,9 +78,9 @@ option that allows enabling full-RBF, although it defaults to off
 (allowing only opt-in RBF).
 
 Several alternative node implementations have already enabled full-RBF by
-default for years, and several contributors to Shahcoin Core are
+default for years, and several contributors to SHAHCOIN Core are
 advocating for enabling full-RBF by default in a future version of
-Shahcoin Core.
+SHAHCOIN Core.
 
 As more nodes that participate in relay and mining begin enabling
 full-RBF, replacement of unconfirmed transactions by ones offering higher
@@ -91,7 +91,7 @@ not accept unconfirmed transactions as final, and if they insist on doing so,
 to take the appropriate steps to ensure they have some recourse or plan for
 when their assumptions do not hold.
 
-[Shahcoin Core 0.12.0]: https://shahcoincore.org/en/releases/0.12.0/#opt-in-replace-by-fee-transactions
+[SHAHCOIN Core 0.12.0]: https://shah.vip/en/releases/0.12.0/#opt-in-replace-by-fee-transactions
 [bip125]: https://github.com/shahcoin/bips/blob/master/bip-0125.mediawiki
 
 Notable changes
@@ -211,13 +211,13 @@ Wallet
 
 - The `wsh()` output descriptor was extended with Miniscript support. You can import Miniscript
   descriptors for P2WSH in a watchonly wallet to track coins, but you can't spend from them using
-  the Shahcoin Core wallet yet.
+  the SHAHCOIN Core wallet yet.
   You can find more about Miniscript on the [reference website](https://shahcoin.sipa.be/miniscript/). (#24148)
 
 - The `tr()` output descriptor now supports multisig scripts through the `multi_a()` and
   `sortedmulti_a()` functions. (#24043)
 
-- To help prevent fingerprinting transactions created by the Shahcoin Core wallet, change output
+- To help prevent fingerprinting transactions created by the SHAHCOIN Core wallet, change output
   amounts are now randomized. (#24494)
 
 - The `listtransactions`, `gettransaction`, and `listsinceblock`
@@ -237,7 +237,7 @@ Migrating Legacy Wallets to Descriptor Wallets
 
 An experimental RPC `migratewallet` has been added to migrate Legacy (non-descriptor) wallets to
 Descriptor wallets. More information about the migration process is available in the
-[documentation](https://github.com/shahcoin/shahcoin/blob/master/doc/managing-wallets.md#migrating-legacy-wallets-to-descriptor-wallets).
+[documentation](https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/managing-wallets.md#migrating-legacy-wallets-to-descriptor-wallets).
 
 GUI changes
 -----------

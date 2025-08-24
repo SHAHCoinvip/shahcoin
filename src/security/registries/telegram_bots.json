@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "updated_at": "2025-01-01T00:00:00Z",
+  "verified": [
+    {
+      "username": "ShahcoinOfficialBot",
+      "id": 100100100,
+      "notes": "Official Shahcoin bot"
+    }
+  ],
+  "flagged": [
+    {
+      "username": "ShahcoinAirdropBot",
+      "id": 999888777,
+      "reason": "Impersonation / Airdrop scam"
+    }
+  ]
+}

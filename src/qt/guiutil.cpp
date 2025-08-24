@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -12,6 +12,7 @@
 
 #include <addresstype.h>
 #include <base58.h>
+#include <base58type.h>
 #include <chainparams.h>
 #include <common/args.h>
 #include <interfaces/node.h>
@@ -111,7 +112,7 @@ static const uint8_t dummydata[] = {0xeb,0x15,0x23,0x1d,0xfc,0xeb,0x60,0x92,0x58
 // Generate a dummy address with invalid CRC, starting with the network prefix.
 static std::string DummyAddress(const CChainParams &params)
 {
-    std::vector<unsigned char> sourcedata = params.Base58Prefix(CChainParams::PUBKEY_ADDRESS);
+    std::vector<unsigned char> sourcedata = params.Base58Prefix(Base58Type::PUBKEY_ADDRESS);
     sourcedata.insert(sourcedata.end(), dummydata, dummydata + sizeof(dummydata));
     for(int i=0; i<256; ++i) { // Try every trailing byte
         std::string s = EncodeBase58(sourcedata);

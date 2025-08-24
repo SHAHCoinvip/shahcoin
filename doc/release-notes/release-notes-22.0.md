@@ -1,20 +1,20 @@
 22.0 Release Notes
 ==================
 
-Shahcoin Core version 22.0 is now available from:
+SHAHCOIN Core version 22.0 is now available from:
 
-  <https://shahcoincore.org/bin/shahcoin-core-22.0/>
+  <https://shah.vip/bin/shahcoin-core-22.0/>
 
 This release includes new features, various bug fixes and performance
 improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/shahcoin/shahcoin/issues>
+  <https://github.com/SHAHCoinvip/shahcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://shahcoincore.org/en/list/announcements/join/>
+  <https://shah.vip/en/list/announcements/join/>
 
 How to Upgrade
 ==============
@@ -24,33 +24,33 @@ shut down (which might take a few minutes in some cases), then run the
 installer (on Windows) or just copy over `/Applications/Shahcoin-Qt` (on Mac)
 or `shahcoind`/`shahcoin-qt` (on Linux).
 
-Upgrading directly from a version of Shahcoin Core that has reached its EOL is
+Upgrading directly from a version of SHAHCOIN Core that has reached its EOL is
 possible, but it might take some time if the data directory needs to be migrated. Old
-wallet versions of Shahcoin Core are generally supported.
+wallet versions of SHAHCOIN Core are generally supported.
 
 Compatibility
 ==============
 
-Shahcoin Core is supported and extensively tested on operating systems
+SHAHCOIN Core is supported and extensively tested on operating systems
 using the Linux kernel, macOS 10.14+, and Windows 7 and newer.  Shahcoin
 Core should also work on most other Unix-like systems but is not as
-frequently tested on them.  It is not recommended to use Shahcoin Core on
+frequently tested on them.  It is not recommended to use SHAHCOIN Core on
 unsupported systems.
 
-From Shahcoin Core 22.0 onwards, macOS versions earlier than 10.14 are no longer supported.
+From SHAHCOIN Core 22.0 onwards, macOS versions earlier than 10.14 are no longer supported.
 
 Notable changes
 ===============
 
 P2P and network changes
 -----------------------
-- Added support for running Shahcoin Core as an
+- Added support for running SHAHCOIN Core as an
   [I2P (Invisible Internet Project)](https://en.wikipedia.org/wiki/I2P) service
-  and connect to such services. See [i2p.md](https://github.com/shahcoin/shahcoin/blob/22.x/doc/i2p.md) for details. (#20685)
+  and connect to such services. See [i2p.md](https://github.com/SHAHCoinvip/shahcoin/blob/22.x/doc/i2p.md) for details. (#20685)
 - This release removes support for Tor version 2 hidden services in favor of Tor
   v3 only, as the Tor network [dropped support for Tor
   v2](https://blog.torproject.org/v2-deprecation-timeline) with the release of
-  Tor version 0.4.6.  Henceforth, Shahcoin Core ignores Tor v2 addresses; it
+  Tor version 0.4.6.  Henceforth, SHAHCOIN Core ignores Tor v2 addresses; it
   neither rumors them over the network to other peers, nor stores them in memory
   or to `peers.dat`.  (#22050)
 
@@ -137,7 +137,7 @@ Files
 - The list of banned hosts and networks (via `setban` RPC) is now saved on disk
   in JSON format in `banlist.json` instead of `banlist.dat`. `banlist.dat` is
   only read on startup if `banlist.json` is not present. Changes are only written to the new
-  `banlist.json`. A future version of Shahcoin Core may completely ignore
+  `banlist.json`. A future version of SHAHCOIN Core may completely ignore
   `banlist.dat`. (#20966)
 
 New settings
@@ -160,7 +160,7 @@ Tools and Utilities
 - A new CLI `-addrinfo` command returns the number of addresses known to the
   node per network type (including Tor v2 versus v3) and total. This can be
   useful to see if the node knows enough addresses in a network to use options
-  like `-onlynet=<network>` or to upgrade to this release of Shahcoin Core 22.0
+  like `-onlynet=<network>` or to upgrade to this release of SHAHCOIN Core 22.0
   that supports Tor v3 only.  (#21595)
 
 - A new `-rpcwaittimeout` argument to `shahcoin-cli` sets the timeout
@@ -170,7 +170,7 @@ Tools and Utilities
 Wallet
 ------
 
-- External signers such as hardware wallets can now be used through the new RPC methods `enumeratesigners` and `displayaddress`. Support is also added to the `send` RPC call. This feature is experimental. See [external-signer.md](https://github.com/shahcoin/shahcoin/blob/22.x/doc/external-signer.md) for details. (#16546)
+- External signers such as hardware wallets can now be used through the new RPC methods `enumeratesigners` and `displayaddress`. Support is also added to the `send` RPC call. This feature is experimental. See [external-signer.md](https://github.com/SHAHCoinvip/shahcoin/blob/22.x/doc/external-signer.md) for details. (#16546)
 
 - A new `listdescriptors` RPC is available to inspect the contents of descriptor-enabled wallets.
   The RPC returns public versions of all imported descriptors, including their timestamp and flags.
@@ -187,12 +187,12 @@ Wallet
 - We now support up to 20 keys in `multi()` and `sortedmulti()` descriptors
   under `wsh()`. (#20867)
 
-- Taproot descriptors can be imported into the wallet only after activation has occurred on the network (e.g. mainnet, testnet, signet) in use. See [descriptors.md](https://github.com/shahcoin/shahcoin/blob/22.x/doc/descriptors.md) for supported descriptors.
+- Taproot descriptors can be imported into the wallet only after activation has occurred on the network (e.g. mainnet, testnet, signet) in use. See [descriptors.md](https://github.com/SHAHCoinvip/shahcoin/blob/22.x/doc/descriptors.md) for supported descriptors.
 
 GUI changes
 -----------
 
-- External signers such as hardware wallets can now be used. These require an external tool such as [HWI](https://github.com/shahcoin-core/HWI) to be installed and configured under Options -> Wallet. When creating a new wallet a new option "External signer" will appear in the dialog. If the device is detected, its name is suggested as the wallet name. The watch-only keys are then automatically imported. Receive addresses can be verified on the device. The send dialog will automatically use the connected device. This feature is experimental and the UI may freeze for a few seconds when performing these actions.
+- External signers such as hardware wallets can now be used. These require an external tool such as [HWI](https://github.com/SHAHCoinvip/HWI) to be installed and configured under Options -> Wallet. When creating a new wallet a new option "External signer" will appear in the dialog. If the device is detected, its name is suggested as the wallet name. The watch-only keys are then automatically imported. Receive addresses can be verified on the device. The send dialog will automatically use the connected device. This feature is experimental and the UI may freeze for a few seconds when performing these actions.
 
 Low-level changes
 =================

@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -47,7 +47,7 @@ static const int TOOLTIP_WRAP_THRESHOLD = 80;
 #define SPINNER_FRAMES 36
 
 #define QAPP_ORG_NAME "Shahcoin"
-#define QAPP_ORG_DOMAIN "shahcoin.org"
+#define QAPP_ORG_DOMAIN "shah.vip"
 #define QAPP_APP_NAME_DEFAULT "Shahcoin-Qt"
 #define QAPP_APP_NAME_TESTNET "Shahcoin-Qt-testnet"
 #define QAPP_APP_NAME_SIGNET "Shahcoin-Qt-signet"

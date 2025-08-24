@@ -42,16 +42,16 @@ Usage: test/lint/git-subtree-check.sh [-r] DIR [COMMIT]
 
 To do a full check with `-r`, make sure that you have fetched the upstream repository branch in which the subtree is
 maintained:
-* for `src/secp256k1`: https://github.com/shahcoin-core/secp256k1.git (branch master)
-* for `src/leveldb`: https://github.com/shahcoin-core/leveldb-subtree.git (branch shahcoin-fork)
-* for `src/crypto/ctaes`: https://github.com/shahcoin-core/ctaes.git (branch master)
-* for `src/crc32c`: https://github.com/shahcoin-core/crc32c-subtree.git (branch shahcoin-fork)
+* for `src/secp256k1`: https://github.com/SHAHCoinvip/secp256k1.git (branch master)
+* for `src/leveldb`: https://github.com/SHAHCoinvip/leveldb-subtree.git (branch shahcoin-fork)
+* for `src/crypto/ctaes`: https://github.com/SHAHCoinvip/ctaes.git (branch master)
+* for `src/crc32c`: https://github.com/SHAHCoinvip/crc32c-subtree.git (branch shahcoin-fork)
 * for `src/minisketch`: https://github.com/sipa/minisketch.git (branch master)
 
 To do so, add the upstream repository as remote:
 
 ```
-git remote add --fetch secp256k1 https://github.com/shahcoin-core/secp256k1.git
+git remote add --fetch secp256k1 https://github.com/SHAHCoinvip/secp256k1.git
 ```
 
 all-lint.py

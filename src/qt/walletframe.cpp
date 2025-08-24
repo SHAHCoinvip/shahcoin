@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -275,6 +275,83 @@ void WalletFrame::usedReceivingAddresses()
     WalletView *walletView = currentWalletView();
     if (walletView)
         walletView->usedReceivingAddresses();
+}
+
+void WalletFrame::gotoStakingPage()
+{
+    WalletView *walletView = currentWalletView();
+    if (walletView)
+        walletView->gotoStakingPage();
+}
+
+void WalletFrame::gotoNFTManagerPage()
+{
+    WalletView *walletView = currentWalletView();
+    if (walletView)
+        walletView->gotoNFTManagerPage();
+}
+
+void WalletFrame::gotoTokenCreatorPage()
+{
+    WalletView *walletView = currentWalletView();
+    if (walletView)
+        walletView->gotoTokenCreatorPage();
+}
+
+void WalletFrame::gotoShahSwapPage()
+{
+    WalletView *walletView = currentWalletView();
+    if (walletView)
+        walletView->gotoShahSwapPage();
+}
+
+void WalletFrame::gotoColdStakingPage()
+{
+    WalletView *walletView = currentWalletView();
+    if (walletView)
+        walletView->gotoColdStakingPage();
+}
+
+void WalletFrame::gotoAssetCreatorPage()
+{
+    WalletView *walletView = currentWalletView();
+    if (walletView)
+        walletView->gotoAssetCreatorPage();
+}
+
+void WalletFrame::gotoWalletManagerPage()
+{
+    WalletView *walletView = currentWalletView();
+    if (walletView)
+        walletView->gotoWalletManagerPage();
+}
+
+void WalletFrame::gotoTokenNFTExplorerPage()
+{
+    WalletView *walletView = currentWalletView();
+    if (walletView)
+        walletView->gotoTokenNFTExplorerPage();
+}
+
+void WalletFrame::gotoQRCodePage()
+{
+    WalletView *walletView = currentWalletView();
+    if (walletView)
+        walletView->gotoQRCodePage();
+}
+
+void WalletFrame::gotoDashboardPage()
+{
+    WalletView *walletView = currentWalletView();
+    if (walletView)
+        walletView->gotoDashboardPage();
+}
+
+void WalletFrame::gotoSettingsPage()
+{
+    WalletView *walletView = currentWalletView();
+    if (walletView)
+        walletView->gotoSettingsPage();
 }
 
 WalletView* WalletFrame::currentWalletView() const

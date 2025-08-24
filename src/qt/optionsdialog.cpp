@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -14,6 +14,8 @@
 #include <qt/guiconstants.h>
 #include <qt/guiutil.h>
 #include <qt/optionsmodel.h>
+#include <QComboBox>
+#include <QLabel>
 
 #include <common/system.h>
 #include <interfaces/node.h>
@@ -163,6 +165,24 @@ OptionsDialog::OptionsDialog(QWidget* parent, bool enableWallet)
     ui->systemFont_radioButton->setChecked(true);
 
     GUIUtil::handleCloseWindowShortcut(this);
+
+    // Append Assistant Language selector to main layout
+    if (ui->verticalLayout_Main) {
+        ui->verticalLayout_Main->addWidget(new QLabel(tr("Assistant Language:"), this));
+        QComboBox* langCombo = new QComboBox(this);
+        langCombo->addItem("English", "en");
+        langCombo->addItem("Persian", "fa");
+        langCombo->addItem("French", "fr");
+        langCombo->addItem("Arabic", "ar");
+        langCombo->addItem("Spanish", "es");
+        // Load current setting if exists
+        QSettings s; QString cur = s.value("aiassistant/language", "en").toString();
+        int idx = langCombo->findData(cur); if (idx>=0) langCombo->setCurrentIndex(idx);
+        ui->verticalLayout_Main->addWidget(langCombo);
+        connect(langCombo, &QComboBox::currentIndexChanged, this, [langCombo]{
+            QSettings s; s.setValue("aiassistant/language", langCombo->currentData().toString());
+        });
+    }
 }
 
 OptionsDialog::~OptionsDialog()
@@ -420,6 +440,17 @@ void OptionsDialog::updateDefaultProxyNets()
 
     has_proxy = model->node().getProxy(NET_ONION, proxy);
     ui->proxyReachTor->setChecked(has_proxy && proxy.proxy == ui_proxy);
+}
+
+// AI Wallet email confirmation methods
+bool OptionsDialog::isSendPaymentEmailEnabled() const
+{
+    return ui->sendPaymentEmail->isChecked();
+}
+
+void OptionsDialog::setSendPaymentEmailEnabled(bool enabled)
+{
+    ui->sendPaymentEmail->setChecked(enabled);
 }
 
 ProxyAddressValidator::ProxyAddressValidator(QObject *parent) :

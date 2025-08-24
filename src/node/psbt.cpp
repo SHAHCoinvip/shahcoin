@@ -1,10 +1,11 @@
-// Copyright (c) 2009-2022 The Shahcoin Core developers
+// Copyright (C) 2025 The SHAHCOIN Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <coins.h>
 #include <consensus/amount.h>
 #include <consensus/tx_verify.h>
+#include <consensus/validation.h>
 #include <node/psbt.h>
 #include <policy/policy.h>
 #include <policy/settings.h>

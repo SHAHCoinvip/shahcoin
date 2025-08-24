@@ -46,8 +46,8 @@ The utility script
 ## General background
 
 - [assumeutxo proposal](https://github.com/jamesob/assumeutxo-docs/tree/2019-04-proposal/proposal)
-- [Github issue](https://github.com/shahcoin/shahcoin/issues/15605)
-- [draft PR](https://github.com/shahcoin/shahcoin/pull/15606)
+- [Github issue](https://github.com/SHAHCoinvip/shahcoin/issues/15605)
+- [draft PR](https://github.com/SHAHCoinvip/shahcoin/pull/15606)
 
 ## Design notes
 

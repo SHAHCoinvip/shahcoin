@@ -1,0 +1,55 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0.0",
+	"FriendlyName": "Shahcoin Plugin",
+	"Description": "Unreal Engine plugin for integrating Shahcoin blockchain functionality into your games. Provides wallet connectivity, NFT ownership verification, and ShahSwap integration.",
+	"Category": "Blockchain",
+	"CreatedBy": "Shahcoin Core Contributors",
+	"CreatedByURL": "https://shah.vip",
+	"DocsURL": "https://shah.vip/dev",
+	"MarketplaceURL": "https://www.unrealengine.com/marketplace/en-US/product/shahcoin-plugin",
+	"SupportURL": "https://github.com/SHAHCoinvip/shahcoin/issues",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "ShahcoinPlugin",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [
+				"Win64",
+				"Mac",
+				"Linux",
+				"Android",
+				"IOS"
+			]
+		},
+		{
+			"Name": "ShahcoinPluginEditor",
+			"Type": "Editor",
+			"LoadingPhase": "PostEngineInit",
+			"PlatformAllowList": [
+				"Win64",
+				"Mac",
+				"Linux"
+			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "HTTP",
+			"Enabled": true
+		},
+		{
+			"Name": "Json",
+			"Enabled": true
+		},
+		{
+			"Name": "WebSockets",
+			"Enabled": true
+		}
+	]
+}

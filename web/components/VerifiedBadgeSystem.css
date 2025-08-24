@@ -1,0 +1,156 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2025 Hamid Rad / SHAHCOIN Core */
+
+/* Verified Badge System Styles */
+
+.verified-badge {
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.verified-badge:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+.verified-badge.verified-token {
+    /* Gold theme for verified tokens */
+}
+
+.verified-badge.verified-nft {
+    /* Purple theme for verified NFTs */
+}
+
+.verified-badge.trusted-creator {
+    /* Teal theme for trusted creators */
+}
+
+.verified-badge.legal-warning {
+    /* Orange theme for legal warnings */
+}
+
+/* Filter Widget Styles */
+.verified-filter-widget {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 8px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.verified-filter-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 500;
+    color: #495057;
+    user-select: none;
+}
+
+.verified-filter-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.verified-filter-checkbox .checkmark {
+    margin-right: 8px;
+    font-size: 16px;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+}
+
+.verified-filter-checkbox input[type="checkbox"]:checked + .checkmark {
+    opacity: 1;
+    color: #28a745;
+}
+
+.verified-filter-checkbox:hover {
+    color: #007bff;
+}
+
+/* Legal Warning Widget */
+.legal-warning-widget {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 8px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.legal-warning-widget .warning-icon {
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.legal-warning-widget .warning-text {
+    color: #E65100;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Badge Overlay for Grid View */
+.verified-badge-overlay {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    padding: 2px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .verified-badge {
+        transform: scale(0.9);
+    }
+    
+    .verified-filter-widget {
+        padding: 8px 12px;
+    }
+    
+    .legal-warning-widget {
+        padding: 8px;
+        font-size: 12px;
+    }
+}
+
+/* Animation for badge appearance */
+@keyframes badgeAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.5) rotate(-180deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.verified-badge {
+    animation: badgeAppear 0.5s ease-out;
+}
+
+/* Hover effects for different badge types */
+.verified-badge.verified-token:hover {
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+}
+
+.verified-badge.verified-nft:hover {
+    filter: drop-shadow(0 0 8px rgba(156, 39, 176, 0.6));
+}
+
+.verified-badge.trusted-creator:hover {
+    filter: drop-shadow(0 0 8px rgba(0, 188, 212, 0.6));
+}
+
+.verified-badge.legal-warning:hover {
+    filter: drop-shadow(0 0 8px rgba(255, 152, 0, 0.6));
+}

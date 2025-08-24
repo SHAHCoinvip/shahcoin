@@ -1,4 +1,4 @@
-// Copyright (c) 2020 The Shahcoin Core developers
+// Copyright (c) 2020 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -20,7 +20,7 @@
 void initialize_message()
 {
     ECC_Start();
-    SelectParams(ChainType::REGTEST);
+    SelectParams("regtest");
 }
 
 FUZZ_TARGET(message, .init = initialize_message)

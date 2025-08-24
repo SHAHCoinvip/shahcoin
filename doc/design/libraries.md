@@ -100,5 +100,5 @@ class shahcoin-qt,shahcoind,shahcoin-cli,shahcoin-wallet bold
 
 ## Work in progress
 
-- Validation code is moving from *libshahcoin_node* to *libshahcoin_kernel* as part of [The libshahcoinkernel Project #24303](https://github.com/shahcoin/shahcoin/issues/24303)
-- Source code organization is discussed in general in [Library source code organization #15732](https://github.com/shahcoin/shahcoin/issues/15732)
+- Validation code is moving from *libshahcoin_node* to *libshahcoin_kernel* as part of [The libshahcoinkernel Project #24303](https://github.com/SHAHCoinvip/shahcoin/issues/24303)
+- Source code organization is discussed in general in [Library source code organization #15732](https://github.com/SHAHCoinvip/shahcoin/issues/15732)

@@ -1,0 +1,47 @@
+{
+  "name": "@shahcoin/sdk",
+  "version": "1.0.0",
+  "description": "SHAHCOIN Advanced Modular SDK - Complete blockchain interaction toolkit",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean",
+    "docs": "turbo run docs",
+    "publish": "turbo run publish"
+  },
+  "devDependencies": {
+    "turbo": "^1.10.0",
+    "typescript": "^5.0.0",
+    "eslint": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "prettier": "^3.0.0",
+    "typedoc": "^0.25.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SHAHCoinvip/shahcoin-sdk.git"
+  },
+  "keywords": [
+    "shahcoin",
+    "blockchain",
+    "cryptocurrency",
+    "wallet",
+    "nft",
+    "tokens",
+    "staking",
+    "pos",
+    "pow"
+  ],
+  "author": "SHAHCOIN Team",
+  "license": "Apache-2.0"
+}

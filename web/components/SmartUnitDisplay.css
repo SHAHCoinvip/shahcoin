@@ -1,0 +1,418 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2025 Hamid Rad / SHAHCOIN Core */
+
+/* Smart Unit Display Component */
+.smart-unit-display {
+    font-weight: bold;
+    color: #333;
+    cursor: help;
+    transition: all 0.3s ease;
+    display: inline-block;
+    padding: 2px 4px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 1px solid #dee2e6;
+}
+
+.smart-unit-display:hover {
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Settings Widget */
+.smart-unit-settings {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid #dee2e6;
+}
+
+.setting-group {
+    margin-bottom: 20px;
+}
+
+.setting-group h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.toggle-switch input {
+    display: none;
+}
+
+.toggle-switch .slider {
+    position: relative;
+    width: 50px;
+    height: 24px;
+    background: #ccc;
+    border-radius: 12px;
+    transition: background 0.3s ease;
+    margin-right: 10px;
+}
+
+.toggle-switch .slider:before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: white;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.toggle-switch input:checked + .slider {
+    background: #007bff;
+}
+
+.toggle-switch input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.toggle-switch .label {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Display Mode Select */
+.display-mode-select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background: white;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.display-mode-select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+/* Unit Explorer Button */
+.unit-explorer-btn {
+    width: 100%;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,123,255,0.3);
+}
+
+.unit-explorer-btn:hover {
+    background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,123,255,0.4);
+}
+
+.unit-explorer-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,123,255,0.3);
+}
+
+/* Unit Explorer Dialog */
+.unit-explorer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.unit-explorer-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.unit-explorer-dialog {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    max-width: 90vw;
+    max-height: 80vh;
+    width: 800px;
+    overflow: hidden;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.unit-explorer-overlay.show .unit-explorer-dialog {
+    transform: scale(1);
+}
+
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid #dee2e6;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.dialog-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background: #e9ecef;
+    color: #333;
+}
+
+.dialog-content {
+    padding: 24px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+/* Unit Sections */
+.unit-section {
+    margin-bottom: 30px;
+}
+
+.unit-section h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #007bff;
+}
+
+.unit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 12px;
+}
+
+.unit-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    transition: all 0.3s ease;
+}
+
+.unit-item:hover {
+    background: #e9ecef;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.unit-icon {
+    font-size: 20px;
+    margin-right: 12px;
+    width: 24px;
+    text-align: center;
+}
+
+.unit-name {
+    font-weight: 600;
+    font-size: 14px;
+    margin-right: 12px;
+    min-width: 100px;
+}
+
+.unit-value {
+    font-size: 12px;
+    color: #666;
+    margin-right: 12px;
+    font-family: 'Courier New', monospace;
+}
+
+.unit-description {
+    font-size: 11px;
+    color: #888;
+    flex: 1;
+}
+
+/* Examples Section */
+.examples-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.example-item {
+    padding: 10px 12px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #333;
+    font-family: 'Courier New', monospace;
+    transition: all 0.3s ease;
+}
+
+.example-item:hover {
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    transform: translateX(2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .unit-explorer-dialog {
+        width: 95vw;
+        margin: 10px;
+    }
+    
+    .dialog-content {
+        padding: 16px;
+    }
+    
+    .unit-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .unit-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .unit-icon {
+        margin-right: 0;
+    }
+    
+    .unit-name {
+        margin-right: 0;
+        min-width: auto;
+    }
+    
+    .unit-value {
+        margin-right: 0;
+    }
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* Unit-specific animations */
+.unit-item {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.unit-item:nth-child(1) { animation-delay: 0.1s; }
+.unit-item:nth-child(2) { animation-delay: 0.2s; }
+.unit-item:nth-child(3) { animation-delay: 0.3s; }
+.unit-item:nth-child(4) { animation-delay: 0.4s; }
+.unit-item:nth-child(5) { animation-delay: 0.5s; }
+.unit-item:nth-child(6) { animation-delay: 0.6s; }
+.unit-item:nth-child(7) { animation-delay: 0.7s; }
+.unit-item:nth-child(8) { animation-delay: 0.8s; }
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .smart-unit-display {
+        background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+        border-color: #4a5568;
+        color: #e2e8f0;
+    }
+    
+    .smart-unit-display:hover {
+        background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+    }
+    
+    .smart-unit-settings {
+        background: #2d3748;
+        border-color: #4a5568;
+        color: #e2e8f0;
+    }
+    
+    .unit-explorer-dialog {
+        background: #2d3748;
+        color: #e2e8f0;
+    }
+    
+    .dialog-header {
+        background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+        border-color: #4a5568;
+    }
+    
+    .unit-item {
+        background: #1a202c;
+        border-color: #4a5568;
+    }
+    
+    .unit-item:hover {
+        background: #2d3748;
+    }
+    
+    .example-item {
+        background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+        border-color: #4a5568;
+    }
+    
+    .example-item:hover {
+        background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+    }
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2018-2022 The Shahcoin Core developers
+# Copyright (c) 2018-2022 The SHAHCOIN Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test shahcoin-wallet."""
@@ -305,7 +305,7 @@ class ToolWalletTest(ShahcoinTestFramework):
         self.log.debug('Wallet file shasum unchanged\n')
 
     def test_salvage(self):
-        # TODO: Check salvage actually salvages and doesn't break things. https://github.com/shahcoin/shahcoin/issues/7463
+        # TODO: Check salvage actually salvages and doesn't break things. https://github.com/SHAHCoinvip/shahcoin/issues/7463
         self.log.info('Check salvage')
         self.start_node(0)
         self.nodes[0].createwallet("salvage")

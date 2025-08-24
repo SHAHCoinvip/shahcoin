@@ -1,0 +1,46 @@
+{
+  "name": "@shahcoin/unity-plugin",
+  "version": "1.0.0",
+  "displayName": "SHAHCOIN Unity Plugin",
+  "description": "SHAHCOIN blockchain integration for Unity games - wallet integration, NFT display, token rewards",
+  "unity": "2022.3",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.2.1"
+  },
+  "keywords": [
+    "shahcoin",
+    "blockchain",
+    "cryptocurrency",
+    "nft",
+    "tokens",
+    "wallet",
+    "unity"
+  ],
+  "author": {
+    "name": "SHAHCOIN Team",
+    "email": "dev@shahcoin.network",
+    "url": "https://shahcoin.network"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SHAHCoinvip/shahcoin.git"
+  },
+  "samples": [
+    {
+      "displayName": "Basic Wallet Integration",
+      "description": "Basic wallet connection and balance display",
+      "path": "Samples~/BasicWallet"
+    },
+    {
+      "displayName": "NFT Gallery",
+      "description": "Display and interact with NFTs",
+      "path": "Samples~/NFTGallery"
+    },
+    {
+      "displayName": "Token Rewards",
+      "description": "Token reward system for game achievements",
+      "path": "Samples~/TokenRewards"
+    }
+  ]
+}

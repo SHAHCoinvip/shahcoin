@@ -1,17 +1,17 @@
-Shahcoin Core version 0.18.1 is now available from:
+SHAHCOIN Core version 0.18.1 is now available from:
 
-  <https://shahcoincore.org/bin/shahcoin-core-0.18.1/>
+  <https://shah.vip/bin/shahcoin-core-0.18.1/>
 
 This is a new minor version release, including new features, various bug
 fixes and performance improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/shahcoin/shahcoin/issues>
+  <https://github.com/SHAHCoinvip/shahcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://shahcoincore.org/en/list/announcements/join/>
+  <https://shah.vip/en/list/announcements/join/>
 
 How to Upgrade
 ==============
@@ -35,16 +35,16 @@ wallet versions are still supported.
 Compatibility
 ==============
 
-Shahcoin Core is supported and extensively tested on operating systems
+SHAHCOIN Core is supported and extensively tested on operating systems
 using the Linux kernel, macOS 10.10+, and Windows 7 and newer. It is not
-recommended to use Shahcoin Core on unsupported systems.
+recommended to use SHAHCOIN Core on unsupported systems.
 
-Shahcoin Core should also work on most other Unix-like systems but is not
+SHAHCOIN Core should also work on most other Unix-like systems but is not
 as frequently tested on them.
 
 From 0.17.0 onwards, macOS <10.10 is no longer supported. 0.17.0 is
 built using Qt 5.9.x, which doesn't support versions of macOS older than
-10.10. Additionally, Shahcoin Core does not yet change appearance when
+10.10. Additionally, SHAHCOIN Core does not yet change appearance when
 macOS "dark mode" is activated.
 
 Known issues

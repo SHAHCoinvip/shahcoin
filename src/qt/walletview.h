@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2021 The Shahcoin Core developers
+// Copyright (c) 2011-2021 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -19,6 +19,17 @@ class SendCoinsRecipient;
 class TransactionView;
 class WalletModel;
 class AddressBookPage;
+class StakingPage;
+class NFTManagerPage;
+class TokenCreatorPage;
+class ShahSwapPanel;
+class ColdStakingPanel;
+class AssetCreatorPanel;
+class WalletManagerPanel;
+class SettingsPage;
+class TokenNFTExplorer;
+class QRCodeWidget;
+class DashboardWidget;
 
 QT_BEGIN_NAMESPACE
 class QModelIndex;
@@ -64,6 +75,17 @@ private:
     SendCoinsDialog *sendCoinsPage;
     AddressBookPage *usedSendingAddressesPage;
     AddressBookPage *usedReceivingAddressesPage;
+    StakingPage *stakingPage;
+    NFTManagerPage *nftManagerPage;
+    TokenCreatorPage *tokenCreatorPage;
+    ShahSwapPanel *shahSwapPage;
+    ColdStakingPanel *coldStakingPage;
+    AssetCreatorPanel *assetCreatorPage;
+    WalletManagerPanel *walletManagerPage;
+    SettingsPage *settingsPage;
+    TokenNFTExplorer *tokenNFTExplorerPage;
+    QRCodeWidget *qrCodePage;
+    DashboardWidget *dashboardPage;
 
     TransactionView *transactionView;
 
@@ -79,6 +101,29 @@ public Q_SLOTS:
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */
     void gotoSendCoinsPage(QString addr = "");
+
+    /** Switch to staking page */
+    void gotoStakingPage();
+    /** Switch to NFT manager page */
+    void gotoNFTManagerPage();
+    /** Switch to token creator page */
+    void gotoTokenCreatorPage();
+    /** Switch to ShahSwap page */
+    void gotoShahSwapPage();
+    /** Switch to Cold Staking page */
+    void gotoColdStakingPage();
+    /** Switch to Asset Creator page */
+    void gotoAssetCreatorPage();
+    /** Switch to Wallet Manager page */
+    void gotoWalletManagerPage();
+    /** Switch to Token & NFT Explorer page */
+    void gotoTokenNFTExplorerPage();
+    /** Switch to QR Code page */
+    void gotoQRCodePage();
+    /** Switch to Dashboard page */
+    void gotoDashboardPage();
+    /** Switch to settings page */
+    void gotoSettingsPage();
 
     /** Show Sign/Verify Message dialog and switch to sign message tab */
     void gotoSignMessageTab(QString addr = "");

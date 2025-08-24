@@ -1,4 +1,4 @@
-// Copyright (c) 2020-2021 The Shahcoin Core developers
+// Copyright (c) 2020-2021 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -15,7 +15,7 @@
 void initialize_key_io()
 {
     ECC_Start();
-    SelectParams(ChainType::MAIN);
+    SelectParams("main");
 }
 
 FUZZ_TARGET(key_io, .init = initialize_key_io)

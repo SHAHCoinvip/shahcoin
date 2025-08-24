@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -75,8 +75,7 @@ using node::LoadChainstate;
 using node::RegenerateCommitments;
 using node::VerifyLoadedChainstate;
 
-const std::function<std::string(const char*)> G_TRANSLATION_FUN = nullptr;
-UrlDecodeFn* const URL_DECODE = nullptr;
+
 
 /** Random context to get unique temp data dirs. Separate from g_insecure_rand_ctx, which can be seeded from a const env var */
 static FastRandomContext g_insecure_rand_ctx_temp_path;
@@ -121,7 +120,22 @@ BasicTestingSetup::BasicTestingSetup(const ChainType chainType, const std::vecto
             throw std::runtime_error{error};
         }
     }
-    SelectParams(chainType);
+    switch (chainType) {
+    case ChainType::MAIN:
+        SelectParams("main");
+        break;
+    case ChainType::TESTNET:
+        SelectParams("test");
+        break;
+    case ChainType::REGTEST:
+        SelectParams("regtest");
+        break;
+    case ChainType::SIGNET:
+        SelectParams("signet");
+        break;
+    default:
+        throw std::runtime_error(strprintf("Unknown chain type: %d", static_cast<int>(chainType)));
+    }
     SeedInsecureRand();
     if (G_TEST_LOG_FUN) LogInstance().PushBackCallback(G_TEST_LOG_FUN);
     InitLogging(*m_node.args);

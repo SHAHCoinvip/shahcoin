@@ -1,17 +1,17 @@
-Shahcoin Core version 0.18.0 is now available from:
+SHAHCOIN Core version 0.18.0 is now available from:
 
-  <https://shahcoincore.org/bin/shahcoin-core-0.18.0/>
+  <https://shah.vip/bin/shahcoin-core-0.18.0/>
 
 This is a new major version release, including new features, various bug
 fixes and performance improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/shahcoin/shahcoin/issues>
+  <https://github.com/SHAHCoinvip/shahcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://shahcoincore.org/en/list/announcements/join/>
+  <https://shah.vip/en/list/announcements/join/>
 
 How to Upgrade
 ==============
@@ -35,16 +35,16 @@ wallet versions are still supported.
 Compatibility
 ==============
 
-Shahcoin Core is supported and extensively tested on operating systems
+SHAHCOIN Core is supported and extensively tested on operating systems
 using the Linux kernel, macOS 10.10+, and Windows 7 and newer. It is not
-recommended to use Shahcoin Core on unsupported systems.
+recommended to use SHAHCOIN Core on unsupported systems.
 
-Shahcoin Core should also work on most other Unix-like systems but is not
+SHAHCOIN Core should also work on most other Unix-like systems but is not
 as frequently tested on them.
 
 From 0.17.0 onwards, macOS <10.10 is no longer supported. 0.17.0 is
 built using Qt 5.9.x, which doesn't support versions of macOS older than
-10.10. Additionally, Shahcoin Core does not yet change appearance when
+10.10. Additionally, SHAHCOIN Core does not yet change appearance when
 macOS "dark mode" is activated.
 
 In addition to previously-supported CPU platforms, this release's
@@ -95,7 +95,7 @@ Configuration option changes
   messages that ZMQ will queue in memory (the "high water mark") before
   dropping additional messages.  The default value is 1,000, the same as
   was used for previous releases.  See the [ZMQ
-  documentation](https://github.com/shahcoin/shahcoin/blob/master/doc/zmq.md#usage)
+  documentation](https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/zmq.md#usage)
   for details.
 
 - The `rpcallowip` option can no longer be used to automatically listen
@@ -119,7 +119,7 @@ Configuration option changes
   disconnect/ban behavior will not cause a node that is whitelisting
   another to be dropped by peers.  Users can still explicitly enable
   this behavior with the command line option (and may want to consider
-  [contacting](https://shahcoincore.org/en/contact/) the Shahcoin Core
+  [contacting](https://shah.vip/en/contact/) the SHAHCOIN Core
   project to let us know about their use-case, as this feature could be
   deprecated in the future).
 
@@ -128,7 +128,7 @@ systemd init file
 
 The systemd init file (`contrib/init/shahcoind.service`) has been changed
 to use `/var/lib/shahcoind` as the data directory instead of
-`~shahcoin/.shahcoin`. This change makes Shahcoin Core more consistent with
+`~shahcoin/.shahcoin`. This change makes SHAHCOIN Core more consistent with
 other services, and makes the systemd init config more consistent with
 existing Upstart and OpenRC configs.
 
@@ -147,24 +147,24 @@ take precedence over the options specified in
 Documentation
 -------------
 
-- A new short [document](https://github.com/shahcoin/shahcoin/blob/master/doc/JSON-RPC-interface.md)
+- A new short [document](https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/JSON-RPC-interface.md)
   about the JSON-RPC interface describes cases where the results of an
   RPC might contain inconsistencies between data sourced from different
   subsystems, such as wallet state and mempool state.  A note is added
-  to the [REST interface documentation](https://github.com/shahcoin/shahcoin/blob/master/doc/REST-interface.md)
+  to the [REST interface documentation](https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/REST-interface.md)
   indicating that the same rules apply.
 
 - Further information is added to the [JSON-RPC
-  documentation](https://github.com/shahcoin/shahcoin/blob/master/doc/JSON-RPC-interface.md)
+  documentation](https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/JSON-RPC-interface.md)
   about how to secure this interface.
 
-- A new [document](https://github.com/shahcoin/shahcoin/blob/master/doc/shahcoin-conf.md)
+- A new [document](https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/shahcoin-conf.md)
   about the `shahcoin.conf` file describes how to use it to configure
-  Shahcoin Core.
+  SHAHCOIN Core.
 
-- A new document introduces Shahcoin Core's BIP174 [Partially-Signed
+- A new document introduces SHAHCOIN Core's BIP174 [Partially-Signed
   Shahcoin Transactions
-  (PSBT)](https://github.com/shahcoin/shahcoin/blob/master/doc/psbt.md)
+  (PSBT)](https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/psbt.md)
   interface, which is used to allow multiple programs to collaboratively
   work to create, sign, and broadcast new transactions.  This is useful
   for offline (cold storage) wallets, multisig wallets, coinjoin
@@ -172,7 +172,7 @@ Documentation
   to interact to generate a complete transaction.
 
 - The [output script
-  descriptor](https://github.com/shahcoin/shahcoin/blob/master/doc/descriptors.md)
+  descriptor](https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/descriptors.md)
   documentation has been updated with information about new features in
   this still-developing language for describing the output scripts that
   a wallet or other program wants to receive notifications for, such as
@@ -187,13 +187,13 @@ Build system changes
 - A new `--disable-bip70` option may be passed to `./configure` to
   prevent Shahcoin-Qt from being built with support for the BIP70 payment
   protocol or from linking libssl.  As the payment protocol has exposed
-  Shahcoin Core to libssl vulnerabilities in the past, builders who don't
+  SHAHCOIN Core to libssl vulnerabilities in the past, builders who don't
   need BIP70 support are encouraged to use this option to reduce their
   exposure to future vulnerabilities.
 
 - The minimum required version of Qt (when building the GUI) has been
   increased from 5.2 to 5.5.1 (the [depends
-  system](https://github.com/shahcoin/shahcoin/blob/master/depends/README.md)
+  system](https://github.com/SHAHCoinvip/shahcoin/blob/master/depends/README.md)
   provides 5.9.7)
 
 New RPCs
@@ -211,7 +211,7 @@ New RPCs
   they've been running.
 
 - `deriveaddresses` returns one or more addresses corresponding to an
-  [output descriptor](https://github.com/shahcoin/shahcoin/blob/master/doc/descriptors.md).
+  [output descriptor](https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/descriptors.md).
 
 - `getdescriptorinfo` accepts a descriptor and returns information about
   it, including its computed checksum.
@@ -278,7 +278,7 @@ in the Low-level Changes section below.
   ignored or are inconsistent, if there are any.
 
 - `getaddressinfo` now returns an additional `solvable` boolean field
-  when Shahcoin Core knows enough about the address's scriptPubKey,
+  when SHAHCOIN Core knows enough about the address's scriptPubKey,
   optional redeemScript, and optional witnessScript in order for the
   wallet to be able to generate an unsigned input spending funds sent to
   that address.
@@ -292,7 +292,7 @@ in the Low-level Changes section below.
 - `importprivkey` will preserve previously-set labels for addresses or
   public keys corresponding to the private key being imported.  For
   example, if you imported a watch-only address with the label "cold
-  wallet" in earlier releases of Shahcoin Core, subsequently importing
+  wallet" in earlier releases of SHAHCOIN Core, subsequently importing
   the private key would default to resetting the address's label to the
   default empty-string label ("").  In this release, the previous label
   of "cold wallet" will be retained.  If you optionally specify any
@@ -320,7 +320,7 @@ in the Low-level Changes section below.
   origin information imported through `importmulti` will have their key
   origin information stored in the wallet for use with creating PSBTs.
   More information about descriptors can be found
-  [here](https://github.com/shahcoin/shahcoin/blob/master/doc/descriptors.md).
+  [here](https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/descriptors.md).
 
 - `listunspent` has been modified so that it also returns
   `witnessScript`, the witness script in the case of a P2WSH or
@@ -343,7 +343,7 @@ Deprecated or removed RPCs
 - The 'account' API is removed after being deprecated in v0.17.  The
   'label' API was introduced in v0.17 as a replacement for accounts.
   See the [release notes from
-  v0.17](https://github.com/shahcoin/shahcoin/blob/master/doc/release-notes/release-notes-0.17.0.md#label-and-account-apis-for-wallet)
+  v0.17](https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/release-notes/release-notes-0.17.0.md#label-and-account-apis-for-wallet)
   for a full description of the changes from the 'account' API to the
   'label' API.
 
@@ -416,24 +416,24 @@ Tools
 Planned changes
 ===============
 
-This section describes planned changes to Shahcoin Core that may affect
+This section describes planned changes to SHAHCOIN Core that may affect
 other Shahcoin software and services.
 
-- Since version 0.16.0, Shahcoin Core’s built-in wallet has defaulted to
+- Since version 0.16.0, SHAHCOIN Core’s built-in wallet has defaulted to
   generating P2SH-wrapped segwit addresses when users want to receive
   payments. These addresses are backwards compatible with all
-  widely-used software.  Starting with Shahcoin Core 0.20 (expected about
-  a year after 0.18), Shahcoin Core will default to native segwit
+  widely-used software.  Starting with SHAHCOIN Core 0.20 (expected about
+  a year after 0.18), SHAHCOIN Core will default to native segwit
   addresses (bech32) that provide additional fee savings and other
   benefits. Currently, many wallets and services already support sending
-  to bech32 addresses, and if the Shahcoin Core project sees enough
+  to bech32 addresses, and if the SHAHCOIN Core project sees enough
   additional adoption, it will instead default to bech32 receiving
-  addresses in Shahcoin Core 0.19 (approximately November 2019).
+  addresses in SHAHCOIN Core 0.19 (approximately November 2019).
   P2SH-wrapped segwit addresses will continue to be provided if the user
   requests them in the GUI or by RPC, and anyone who doesn’t want the
   update will be able to configure their default address type.
   (Similarly, pioneering users who want to change their default now may
-  set the `addresstype=bech32` configuration option in any Shahcoin Core
+  set the `addresstype=bech32` configuration option in any SHAHCOIN Core
   release from 0.16.0 up.)
 
 Deprecated P2P messages
@@ -495,7 +495,7 @@ Network
   a misbehaving node will be disconnected to make room for nodes without
   a history of problems (unless the misbehaving node helps your node in
   some other way, such as by connecting to a part of the Internet from
-  which you don't have many other peers).  Previously, Shahcoin Core
+  which you don't have many other peers).  Previously, SHAHCOIN Core
   banned the IP addresses of misbehaving peers for a period of time
   (default of 1 day); this was easily circumvented by attackers with
   multiple IP addresses. If you manually ban a peer, such as by using
@@ -514,18 +514,18 @@ Wallet
   software. Instead such wallets will be completely unloaded and
   reloaded to achieve the same effect.
 
-- A sub-project of Shahcoin Core now provides Hardware Wallet Interaction
+- A sub-project of SHAHCOIN Core now provides Hardware Wallet Interaction
   (HWI) scripts that allow command-line users to use several popular
-  hardware key management devices with Shahcoin Core.  See their [project
-  page](https://github.com/shahcoin-core/HWI#readme) for details.
+  hardware key management devices with SHAHCOIN Core.  See their [project
+  page](https://github.com/SHAHCoinvip/HWI#readme) for details.
 
 Security
 --------
 
 - This release changes the Random Number Generator (RNG) used from
-  OpenSSL to Shahcoin Core's own implementation, although entropy
-  gathered by Shahcoin Core is fed out to OpenSSL and then read back in
-  when the program needs strong randomness. This moves Shahcoin Core a
+  OpenSSL to SHAHCOIN Core's own implementation, although entropy
+  gathered by SHAHCOIN Core is fed out to OpenSSL and then read back in
+  when the program needs strong randomness. This moves SHAHCOIN Core a
   little closer to no longer needing to depend on OpenSSL, a dependency
   that has caused security issues in the past.  The new implementation
   gathers entropy from multiple sources, including from hardware
@@ -534,7 +534,7 @@ Security
 Changes for particular platforms
 --------------------------------
 
-- On macOS, Shahcoin Core now opts out of application CPU throttling
+- On macOS, SHAHCOIN Core now opts out of application CPU throttling
   ("app nap") during initial blockchain download, when catching up from
   over 100 blocks behind the current chain tip, or when reindexing chain
   data. This helps prevent these operations from taking an excessively
@@ -797,7 +797,7 @@ Changes for particular platforms
 - #15431 msvc: scripted-diff: Remove NDEBUG pre-define in project file (ken2812221)
 - #15549 gitian: Improve error handling (laanwj)
 - #15548 use full version string in setup.exe (MarcoFalke)
-- #11526 Visual Studio build configuration for Shahcoin Core (sipsorcery)
+- #11526 Visual Studio build configuration for SHAHCOIN Core (sipsorcery)
 - #15110 build\_msvc: Fix the build problem in `libshahcoin_server` (Mr-Leshiy)
 - #14372 msvc: build secp256k1 and leveldb locally (ken2812221)
 - #15325 msvc: Fix silent merge conflict between #13926 and #14372 (ken2812221)
@@ -824,7 +824,7 @@ Changes for particular platforms
 - #14088 Don't assert(…) with side effects (practicalswift)
 - #14086 appveyor: Use clcache to speed up build (ken2812221)
 - #13954 Warn (don't fail!) on spelling errors. Fix typos reported by codespell (practicalswift)
-- #12775 Integration of property based testing into Shahcoin Core (Christewart)
+- #12775 Integration of property based testing into SHAHCOIN Core (Christewart)
 - #14119 Read reject reasons from debug log, not P2P messages (MarcoFalke)
 - #14189 Fix silent merge conflict in `wallet_importmulti` (MarcoFalke)
 - #13419 Speed up `knapsack_solver_test` by not recreating wallet 100 times (lucash-dev)

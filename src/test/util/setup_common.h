@@ -1,4 +1,4 @@
-// Copyright (c) 2015-2022 The Shahcoin Core developers
+// Copyright (c) 2015-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -40,8 +40,6 @@ std::ostream& operator<<(typename std::enable_if<std::is_enum<T>::value, std::os
     return stream << static_cast<typename std::underlying_type<T>::type>(e);
 }
 } // namespace std
-
-static constexpr CAmount CENT{1000000};
 
 /** Basic testing setup.
  * This just configures logging, data dir and chain parameters.

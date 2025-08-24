@@ -2,7 +2,7 @@ Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Shahcoin
 Upstream-Contact: Satoshi Nakamoto <satoshin@gmx.com>
  irc://#shahcoin-core-dev@libera.chat
-Source: https://github.com/shahcoin/shahcoin
+Source: https://github.com/SHAHCoinvip/shahcoin
 
 Files: *
 Copyright: 2009-2023, Shahcoin Core Developers

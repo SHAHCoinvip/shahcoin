@@ -150,3 +150,12 @@ dist/
 /guix-build-*
 
 /ci/scratch/
+
+# Security exclusions
+.env
+*.key
+*.pem
+*.wallet
+*.dat
+qt_wallet.db
+*.sqlite

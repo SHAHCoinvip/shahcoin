@@ -1,8 +1,8 @@
 blank_issues_enabled: true
 contact_links:
   - name: Shahcoin Core Security Policy
-    url: https://github.com/shahcoin/shahcoin/blob/master/SECURITY.md
+    url: https://github.com/SHAHCoinvip/shahcoin/blob/master/SECURITY.md
     about: View security policy
   - name: Shahcoin Core Developers
-    url: https://shahcoincore.org
+    url: https://shah.vip
     about: Shahcoin Core homepage

@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -11,6 +11,7 @@
 
 #include <qt/addressbookpage.h>
 #include <qt/addresstablemodel.h>
+#include <qt/enhancedaddressbook.h>
 #include <qt/guiutil.h>
 #include <qt/optionsmodel.h>
 #include <qt/platformstyle.h>
@@ -57,11 +58,17 @@ void SendCoinsEntry::on_addressBookButton_clicked()
 {
     if(!model)
         return;
-    AddressBookPage dlg(platformStyle, AddressBookPage::ForSelection, AddressBookPage::SendingTab, this);
-    dlg.setModel(model->getAddressTableModel());
+    
+    // Use enhanced address book for better functionality
+    EnhancedAddressBook dlg(platformStyle, EnhancedAddressBook::ForSelection, this);
+    dlg.setModel(model);
     if(dlg.exec())
     {
         ui->payTo->setText(dlg.getReturnValue());
+        // Auto-fill label if available
+        if (!dlg.getReturnLabel().isEmpty()) {
+            ui->addAsLabel->setText(dlg.getReturnLabel());
+        }
         ui->payAmount->setFocus();
     }
 }
@@ -69,6 +76,7 @@ void SendCoinsEntry::on_addressBookButton_clicked()
 void SendCoinsEntry::on_payTo_textChanged(const QString &address)
 {
     updateLabel(address);
+    Q_EMIT addressChanged(address);
 }
 
 void SendCoinsEntry::setModel(WalletModel *_model)

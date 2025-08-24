@@ -1,7 +1,7 @@
 Benchmarking
 ============
 
-Shahcoin Core has an internal benchmarking framework, with benchmarks
+SHAHCOIN Core has an internal benchmarking framework, with benchmarks
 for cryptographic algorithms (e.g. SHA1, SHA256, SHA512, RIPEMD160, Poly1305, ChaCha20), rolling bloom filter, coins selection,
 thread queue, wallet balance.
 
@@ -56,6 +56,6 @@ More benchmarks are needed for, in no particular order:
 Going Further
 --------------------
 
-To monitor Shahcoin Core performance more in depth (like reindex or IBD): https://github.com/chaincodelabs/shahcoinperf
+To monitor SHAHCOIN Core performance more in depth (like reindex or IBD): https://github.com/chaincodelabs/shahcoinperf
 
-To generate Flame Graphs for Shahcoin Core: https://github.com/eklitzke/shahcoin/blob/flamegraphs/doc/flamegraphs.md
+To generate Flame Graphs for SHAHCOIN Core: https://github.com/eklitzke/shahcoin/blob/flamegraphs/doc/flamegraphs.md

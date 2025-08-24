@@ -1,14 +1,14 @@
-# Support for signing transactions outside of Shahcoin Core
+# Support for signing transactions outside of SHAHCOIN Core
 
-Shahcoin Core can be launched with `-signer=<cmd>` where `<cmd>` is an external tool which can sign transactions and perform other functions. For example, it can be used to communicate with a hardware wallet.
+SHAHCOIN Core can be launched with `-signer=<cmd>` where `<cmd>` is an external tool which can sign transactions and perform other functions. For example, it can be used to communicate with a hardware wallet.
 
 ## Example usage
 
-The following example is based on the [HWI](https://github.com/shahcoin-core/HWI) tool. Version 2.0 or newer is required. Although this tool is hosted under the Shahcoin Core GitHub organization and maintained by Shahcoin Core developers, it should be used with caution. It is considered experimental and has far less review than Shahcoin Core itself. Be particularly careful when running tools such as these on a computer with private keys on it.
+The following example is based on the [HWI](https://github.com/SHAHCoinvip/HWI) tool. Version 2.0 or newer is required. Although this tool is hosted under the SHAHCOIN Core GitHub organization and maintained by SHAHCOIN Core developers, it should be used with caution. It is considered experimental and has far less review than SHAHCOIN Core itself. Be particularly careful when running tools such as these on a computer with private keys on it.
 
-When using a hardware wallet, consult the manufacturer website for (alternative) software they recommend. As long as their software conforms to the standard below, it should be able to work with Shahcoin Core.
+When using a hardware wallet, consult the manufacturer website for (alternative) software they recommend. As long as their software conforms to the standard below, it should be able to work with SHAHCOIN Core.
 
-Start Shahcoin Core:
+Start SHAHCOIN Core:
 
 ```sh
 $ shahcoind -signer=../HWI/hwi.py
@@ -16,7 +16,7 @@ $ shahcoind -signer=../HWI/hwi.py
 
 ### Device setup
 
-Follow the hardware manufacturers instructions for the initial device setup, as well as their instructions for creating a backup. Alternatively, for some devices, you can use the `setup`, `restore` and `backup` commands provided by [HWI](https://github.com/shahcoin-core/HWI).
+Follow the hardware manufacturers instructions for the initial device setup, as well as their instructions for creating a backup. Alternatively, for some devices, you can use the `setup`, `restore` and `backup` commands provided by [HWI](https://github.com/SHAHCoinvip/HWI).
 
 ### Create wallet and import keys
 
@@ -68,7 +68,7 @@ it automatically broadcasts the transaction.
 
 ## Signer API
 
-In order to be compatible with Shahcoin Core any signer command should conform to the specification below. This specification is subject to change. Ideally a BIP should propose a standard so that other wallets can also make use of it.
+In order to be compatible with SHAHCOIN Core any signer command should conform to the specification below. This specification is subject to change. Ideally a BIP should propose a standard so that other wallets can also make use of it.
 
 Prerequisite knowledge:
 * [Output Descriptors](descriptors.md)
@@ -156,7 +156,7 @@ If <descriptor> contains an xpub, the command MUST fail if it does not match the
 
 The command MAY complain if `--testnet` is set, but the BIP32 coin type is not `1h` (and vice versa).
 
-## How Shahcoin Core uses the Signer API
+## How SHAHCOIN Core uses the Signer API
 
 The `enumeratesigners` RPC simply calls `<cmd> enumerate`.
 

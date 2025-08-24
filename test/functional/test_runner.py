@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2014-2022 The Shahcoin Core developers
+# Copyright (c) 2014-2022 The SHAHCOIN Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Run regression test suite.
@@ -552,7 +552,7 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
 
     tests_dir = src_dir + '/test/functional/'
     # This allows `test_runner.py` to work from an out-of-source build directory using a symlink,
-    # a hard link or a copy on any platform. See https://github.com/shahcoin/shahcoin/pull/27561.
+    # a hard link or a copy on any platform. See https://github.com/SHAHCoinvip/shahcoin/pull/27561.
     sys.path.append(tests_dir)
 
     test_framework_tests = unittest.TestSuite()

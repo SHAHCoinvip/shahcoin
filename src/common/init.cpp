@@ -1,20 +1,41 @@
-// Copyright (c) 2023 The Shahcoin Core developers
+// Copyright (c) 2023 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+#include <common/init.h>
+
 #include <chainparams.h>
 #include <common/args.h>
-#include <common/init.h>
+#include <common/system.h>
 #include <logging.h>
-#include <tinyformat.h>
-#include <util/fs.h>
+#include <util/check.h>
 #include <util/translation.h>
 
-#include <algorithm>
-#include <exception>
-#include <optional>
+#include <cstdint>
+#include <string>
 
 namespace common {
+
+void SelectParams(const ChainType chain)
+{
+    switch (chain) {
+    case ChainType::MAIN:
+        ::SelectParams("main");
+        break;
+    case ChainType::TESTNET:
+        ::SelectParams("test");
+        break;
+    case ChainType::REGTEST:
+        ::SelectParams("regtest");
+        break;
+    case ChainType::SIGNET:
+        ::SelectParams("signet");
+        break;
+    default:
+        throw std::runtime_error(strprintf("%s: Unknown chain type.", __func__));
+    }
+}
+
 std::optional<ConfigError> InitConfig(ArgsManager& args, SettingsAbortFn settings_abort_fn)
 {
     try {
@@ -52,7 +73,7 @@ std::optional<ConfigError> InitConfig(ArgsManager& args, SettingsAbortFn setting
             // wallets could be mixed up with other files. For backwards
             // compatibility, wallet code will use the "wallets" subdirectory only
             // if it already exists, but never create it itself. There is discussion
-            // in https://github.com/shahcoin/shahcoin/issues/16220 about ways to
+            // in https://github.com/SHAHCoinvip/shahcoin/issues/16220 about ways to
             // change wallet code so it would no longer be necessary to create
             // "wallets" subdirectories here.
             fs::create_directories(base_path / "wallets");

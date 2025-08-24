@@ -1,5 +1,5 @@
-// Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2022 The Shahcoin Core developers
+// Copyright (c) 2009-2010 Shahi Nakamoto
+// Copyright (C) 2025 The SHAHCOIN Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -14,6 +14,9 @@
 #include <consensus/merkle.h>
 #include <consensus/tx_verify.h>
 #include <consensus/validation.h>
+#include <consensus/hybrid.h>
+#include <consensus/pos_stub.h>
+#include <pow_dispatch.h>
 #include <deploymentstatus.h>
 #include <logging.h>
 #include <policy/feerate.h>
@@ -165,9 +168,54 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     // Fill in header
     pblock->hashPrevBlock  = pindexPrev->GetBlockHash();
     UpdateTime(pblock, chainparams.GetConsensus(), pindexPrev);
-    pblock->nBits          = GetNextWorkRequired(pindexPrev, pblock, chainparams.GetConsensus());
+    
+    // Hybrid consensus: Set algorithm and block type
+    AlgoType expectedAlgo;
+    
+    // Check if user specified a specific algorithm via -algo parameter
+    std::string algoParam = gArgs.GetArg("-algo", "");
+    if (!algoParam.empty()) {
+        // Parse user-specified algorithm
+        if (algoParam == "sha256d" || algoParam == "sha256") {
+            expectedAlgo = AlgoType::SHA256D;
+        } else if (algoParam == "scrypt") {
+            expectedAlgo = AlgoType::SCRYPT;
+        } else if (algoParam == "groestl") {
+            expectedAlgo = AlgoType::GROESTL;
+        } else {
+            // Invalid algorithm specified, fall back to automatic selection
+            LogPrintf("Warning: Invalid algorithm '%s' specified. Using automatic algorithm selection.\n", algoParam);
+            expectedAlgo = SelectNextAlgo(nHeight);
+        }
+    } else {
+        // No algorithm specified, use automatic selection
+        expectedAlgo = SelectNextAlgo(nHeight);
+    }
+    
+    pblock->SetAlgoType(expectedAlgo);
+    pblock->SetBlockType(BLOCK_TYPE_POW); // Default to PoW for mining
+    
+    // Set difficulty based on algorithm
+    switch (expectedAlgo) {
+        case AlgoType::SHA256D:
+            pblock->nBits = GetNextWorkRequiredSHA256(pindexPrev, chainparams.GetConsensus());
+            break;
+        case AlgoType::SCRYPT:
+            pblock->nBits = GetNextWorkRequiredScrypt(pindexPrev, chainparams.GetConsensus());
+            break;
+        case AlgoType::GROESTL:
+            pblock->nBits = GetNextWorkRequiredGroestl(pindexPrev, chainparams.GetConsensus());
+            break;
+        default:
+            pblock->nBits = GetNextWorkRequired(pindexPrev, pblock, chainparams.GetConsensus());
+            break;
+    }
+    
     pblock->nNonce         = 0;
     pblocktemplate->vTxSigOpsCost[0] = WITNESS_SCALE_FACTOR * GetLegacySigOpCount(*pblock->vtx[0]);
+    
+    LogPrint(BCLog::MINING, "CreateNewBlock(): Using algorithm %s for height %d\n", 
+             AlgoName(expectedAlgo), nHeight);
 
     BlockValidationState state;
     if (m_options.test_block_validity && !TestBlockValidity(state, chainparams, m_chainstate, *pblock, pindexPrev,

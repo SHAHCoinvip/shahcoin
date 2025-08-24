@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (c) 2018-present The Shahcoin Core developers
+# Copyright (c) 2018-present The SHAHCOIN Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #
@@ -128,7 +128,7 @@ def download_binary(tag, args) -> int:
         platform = "osx64"
     tarball = 'shahcoin-{tag}-{platform}.tar.gz'.format(
         tag=tag[1:], platform=platform)
-    tarballUrl = 'https://shahcoincore.org/{bin_path}/{tarball}'.format(
+    tarballUrl = 'https://shah.vip/{bin_path}/{tarball}'.format(
         bin_path=bin_path, tarball=tarball)
 
     print('Fetching: {tarballUrl}'.format(tarballUrl=tarballUrl))
@@ -203,7 +203,7 @@ def download_binary(tag, args) -> int:
 
 
 def build_release(tag, args) -> int:
-    githubUrl = "https://github.com/shahcoin/shahcoin"
+    githubUrl = "https://github.com/SHAHCoinvip/shahcoin"
     if args.remove_dir:
         if Path(tag).is_dir():
             shutil.rmtree(tag)

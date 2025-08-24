@@ -1,17 +1,17 @@
-Shahcoin Core version *0.15.2* is now available from:
+SHAHCOIN Core version *0.15.2* is now available from:
 
-  <https://shahcoincore.org/bin/shahcoin-core-0.15.2/>
+  <https://shah.vip/bin/shahcoin-core-0.15.2/>
 
 This is a new minor version release, including various bugfixes and
 performance improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/shahcoin/shahcoin/issues>
+  <https://github.com/SHAHCoinvip/shahcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://shahcoincore.org/en/list/announcements/join/>
+  <https://shah.vip/en/list/announcements/join/>
 
 How to Upgrade
 ==============
@@ -48,10 +48,10 @@ processing the entire blockchain.
 Compatibility
 ==============
 
-Shahcoin Core is extensively tested on multiple operating systems using
+SHAHCOIN Core is extensively tested on multiple operating systems using
 the Linux kernel, macOS 10.8+, and Windows Vista and later. Windows XP is not supported.
 
-Shahcoin Core should also work on most other Unix-like systems but is not
+SHAHCOIN Core should also work on most other Unix-like systems but is not
 frequently tested on them.
 
 
@@ -62,7 +62,7 @@ Denial-of-Service vulnerability CVE-2018-17144
 -------------------------------
 
 A denial-of-service vulnerability exploitable by miners has been discovered in
-Shahcoin Core versions 0.14.0 up to 0.16.2. It is recommended to upgrade any of
+SHAHCOIN Core versions 0.14.0 up to 0.16.2. It is recommended to upgrade any of
 the vulnerable versions to 0.15.2 or 0.16.3 as soon as possible.
 
 0.15.2 Change log

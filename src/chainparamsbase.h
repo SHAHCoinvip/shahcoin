@@ -1,55 +1,75 @@
-// Copyright (c) 2014-2020 The Shahcoin Core developers
-// Distributed under the MIT software license, see the accompanying
-// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+// Copyright (c) 2023 SHAHCOIN Core
+// Distributed under the MIT software license
 
 #ifndef SHAHCOIN_CHAINPARAMSBASE_H
 #define SHAHCOIN_CHAINPARAMSBASE_H
 
-#include <util/chaintype.h>
-
-#include <memory>
 #include <string>
+#include <vector>
+#include <memory>
+#include "util/chaintype.h"
 
 class ArgsManager;
 
 /**
- * CBaseChainParams defines the base parameters (shared between shahcoin-cli and shahcoind)
- * of a given instance of the Shahcoin system.
+ * CBaseChainParams defines the base parameters (shared between shahcoind and shahcoin-qt)
+ * of a given instance of the Shahcoin network.
  */
-class CBaseChainParams
-{
+class CBaseChainParams {
 public:
+    enum Network {
+        MAIN,
+        TESTNET,
+        REGTEST,
+        MAX_NETWORK_TYPES
+    };
+
     const std::string& DataDir() const { return strDataDir; }
-    uint16_t RPCPort() const { return m_rpc_port; }
-    uint16_t OnionServiceTargetPort() const { return m_onion_service_target_port; }
+    int RPCPort() const { return nRPCPort; }
+    int OnionServiceTargetPort() const { return nRPCPort; }
+    
+    // Setters for configuration
+    void SetRPCPort(int port) { nRPCPort = port; }
+    void SetDataDir(const std::string& dir) { strDataDir = dir; }
 
-    CBaseChainParams() = delete;
-    CBaseChainParams(const std::string& data_dir, uint16_t rpc_port, uint16_t onion_service_target_port)
-        : m_rpc_port(rpc_port), m_onion_service_target_port(onion_service_target_port), strDataDir(data_dir) {}
+public:
+    CBaseChainParams() {}
 
-private:
-    const uint16_t m_rpc_port;
-    const uint16_t m_onion_service_target_port;
+protected:
+    int nRPCPort;
     std::string strDataDir;
 };
 
 /**
- * Creates and returns a std::unique_ptr<CBaseChainParams> of the chosen chain.
+ * Creates and returns base chain params for the given chain type.
  */
-std::unique_ptr<CBaseChainParams> CreateBaseChainParams(const ChainType chain);
+std::unique_ptr<CBaseChainParams> CreateBaseChainParams(ChainType chain);
 
 /**
- *Set the arguments for chainparams
+ * Returns base parameters for the given network name (main, testnet, regtest).
+ * Raises a runtime_error if the network is unknown.
  */
-void SetupChainParamsBaseOptions(ArgsManager& argsman);
+const CBaseChainParams& BaseParams(const std::string& chain);
 
 /**
- * Return the currently selected parameters. This won't change after app
- * startup, except for unit tests.
+ * Returns currently selected parameters.
+ * This will not change after the app starts unless SelectBaseParams() is called.
  */
 const CBaseChainParams& BaseParams();
 
-/** Sets the params returned by Params() to those for the given chain. */
-void SelectBaseParams(const ChainType chain);
+/**
+ * Sets base parameters according to the given network.
+ */
+void SelectBaseParams(const std::string& chain);
+
+/**
+ * Checks if base parameters are configured.
+ */
+bool AreBaseParamsConfigured();
+
+/**
+ * Setup chain params base options for ArgManager.
+ */
+void SetupChainParamsBaseOptions(ArgsManager& argsman);
 
 #endif // SHAHCOIN_CHAINPARAMSBASE_H

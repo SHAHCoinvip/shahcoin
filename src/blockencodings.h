@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2022 The Shahcoin Core developers
+// Copyright (c) 2016-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -18,6 +18,13 @@ struct Params;
 // Transaction compression schemes for compact block relay can be introduced by writing
 // an actual formatter here.
 using TransactionCompression = DefaultFormatter;
+
+class CTxCompressor
+{
+public:
+    static bool CompressScript(const CScript& script, std::vector<unsigned char>& out);
+    static bool DecompressScript(CScript& script, const std::vector<unsigned char>& in);
+};
 
 class DifferenceFormatter
 {

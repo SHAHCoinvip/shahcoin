@@ -167,7 +167,8 @@ SHAHCOIN_TESTS =\
   test/validation_tests.cpp \
   test/validationinterface_tests.cpp \
   test/versionbits_tests.cpp \
-  test/xoroshiro128plusplus_tests.cpp
+  test/xoroshiro128plusplus_tests.cpp \
+  test/hybrid_consensus_tests.cpp
 
 if ENABLE_WALLET
 SHAHCOIN_TESTS += \

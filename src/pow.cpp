@@ -1,5 +1,5 @@
-// Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2022 The Shahcoin Core developers
+// Copyright (c) 2009-2010 Shahi Nakamoto
+// Copyright (C) 2025 The SHAHCOIN Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -9,6 +9,10 @@
 #include <chain.h>
 #include <primitives/block.h>
 #include <uint256.h>
+#include <crypto/multihash.h>
+#include <consensus/consensus.h>
+#include <consensus/hybrid.h>
+#include <pow_dispatch.h>
 
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
 {
@@ -64,6 +68,74 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
     bnNew.SetCompact(pindexLast->nBits);
     bnNew *= nActualTimespan;
     bnNew /= params.nPowTargetTimespan;
+
+    if (bnNew > bnPowLimit)
+        bnNew = bnPowLimit;
+
+    return bnNew.GetCompact();
+}
+
+// SHAHCOIN Core multi-algorithm difficulty adjustment
+unsigned int GetNextWorkRequiredMultiAlgo(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
+{
+    assert(pindexLast != nullptr);
+    
+    MiningAlgorithm currentAlgo = pblock->GetAlgorithm();
+    unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();
+
+    // Only change once per difficulty adjustment interval
+    if ((pindexLast->nHeight+1) % params.DifficultyAdjustmentInterval() != 0)
+    {
+        if (params.fPowAllowMinDifficultyBlocks)
+        {
+            // Special difficulty rule for testnet
+            if (pblock->GetBlockTime() > pindexLast->GetBlockTime() + params.nPowTargetSpacing*2)
+                return nProofOfWorkLimit;
+            else
+            {
+                // Return the last non-special-min-difficulty-rules-block
+                const CBlockIndex* pindex = pindexLast;
+                while (pindex->pprev && pindex->nHeight % params.DifficultyAdjustmentInterval() != 0 && pindex->nBits == nProofOfWorkLimit)
+                    pindex = pindex->pprev;
+                return pindex->nBits;
+            }
+        }
+        return pindexLast->nBits;
+    }
+
+    // Calculate difficulty for the specific algorithm
+    // Go back by what we want to be 14 days worth of blocks for this algorithm
+    int nHeightFirst = pindexLast->nHeight - (params.DifficultyAdjustmentInterval()-1);
+    assert(nHeightFirst >= 0);
+    const CBlockIndex* pindexFirst = pindexLast->GetAncestor(nHeightFirst);
+    assert(pindexFirst);
+
+    return CalculateNextWorkRequiredMultiAlgo(pindexLast, pindexFirst->GetBlockTime(), params, currentAlgo);
+}
+
+unsigned int CalculateNextWorkRequiredMultiAlgo(const CBlockIndex* pindexLast, int64_t nFirstBlockTime, const Consensus::Params& params, MiningAlgorithm algo)
+{
+    if (params.fPowNoRetargeting)
+        return pindexLast->nBits;
+
+    // Limit adjustment step
+    int64_t nActualTimespan = pindexLast->GetBlockTime() - nFirstBlockTime;
+    if (nActualTimespan < params.nPowTargetTimespan/4)
+        nActualTimespan = params.nPowTargetTimespan/4;
+    if (nActualTimespan > params.nPowTargetTimespan*4)
+        nActualTimespan = params.nPowTargetTimespan*4;
+
+    // Retarget with algorithm-specific adjustments
+    const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
+    arith_uint256 bnNew;
+    bnNew.SetCompact(pindexLast->nBits);
+    bnNew *= nActualTimespan;
+    bnNew /= params.nPowTargetTimespan;
+
+    // Apply algorithm-specific weight adjustments
+    int algoWeight = ALGO_WEIGHTS[algo];
+    bnNew *= 100; // Scale up for precision
+    bnNew /= algoWeight;
 
     if (bnNew > bnPowLimit)
         bnNew = bnPowLimit;
@@ -139,4 +211,66 @@ bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params&
         return false;
 
     return true;
+}
+
+// SHAHCOIN Core multi-algorithm proof of work check
+bool CheckProofOfWorkMultiAlgo(uint256 hash, unsigned int nBits, const Consensus::Params& params, MiningAlgorithm algo)
+{
+    bool fNegative;
+    bool fOverflow;
+    arith_uint256 bnTarget;
+
+    bnTarget.SetCompact(nBits, &fNegative, &fOverflow);
+
+    // Check range
+    if (fNegative || bnTarget == 0 || fOverflow || bnTarget > UintToArith256(params.powLimit))
+        return false;
+
+    // Apply algorithm-specific adjustments
+    int algoWeight = ALGO_WEIGHTS[algo];
+    bnTarget *= algoWeight;
+    bnTarget /= 100; // Scale back down
+
+    // Check proof of work matches claimed amount
+    if (UintToArith256(hash) > bnTarget)
+        return false;
+
+    return true;
+}
+
+// Hybrid consensus: Per-algo work required functions (stubs for now)
+unsigned int GetNextWorkRequiredSHA256(const CBlockIndex* pindexLast, const Consensus::Params& params)
+{
+    // TODO: Implement per-algo DAA (LWMA/ASERT)
+    return GetNextWorkRequired(pindexLast, nullptr, params);
+}
+
+unsigned int GetNextWorkRequiredScrypt(const CBlockIndex* pindexLast, const Consensus::Params& params)
+{
+    // TODO: Implement per-algo DAA (LWMA/ASERT)
+    return GetNextWorkRequired(pindexLast, nullptr, params);
+}
+
+unsigned int GetNextWorkRequiredGroestl(const CBlockIndex* pindexLast, const Consensus::Params& params)
+{
+    // TODO: Implement per-algo DAA (LWMA/ASERT)
+    return GetNextWorkRequired(pindexLast, nullptr, params);
+}
+
+unsigned int GetNextStakeTarget(const CBlockIndex* pindexLast, const Consensus::Params& params)
+{
+    // TODO: Implement PoS difficulty adjustment
+    return UintToArith256(params.powLimit).GetCompact();
+}
+
+// Hybrid consensus: Overload for AlgoType
+uint256 GetPoWHash(const CBlockHeader& hdr)
+{
+    std::vector<unsigned char> header;
+    // Serialize header (simplified - in practice, use proper serialization)
+    header.resize(80);
+    // TODO: Proper header serialization
+    unsigned char hash[32];
+    GetPoWHash(header, hdr.GetAlgoType(), hash);
+    return uint256(hash);
 }

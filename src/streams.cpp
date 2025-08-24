@@ -1,4 +1,4 @@
-// Copyright (c) 2009-present The Shahcoin Core developers
+// Copyright (c) 2009-present The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or https://opensource.org/license/mit/.
 

@@ -1,17 +1,17 @@
-Shahcoin Core version 0.13.0 is now available from:
+SHAHCOIN Core version 0.13.0 is now available from:
 
-  <https://shahcoin.org/bin/shahcoin-core-0.13.0/>
+  <https://shah.vip/bin/shahcoin-core-0.13.0/>
 
 This is a new major version release, including new features, various bugfixes
 and performance improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at github:
 
-  <https://github.com/shahcoin/shahcoin/issues>
+  <https://github.com/SHAHCoinvip/shahcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://shahcoincore.org/en/list/announcements/join/>
+  <https://shah.vip/en/list/announcements/join/>
 
 Compatibility
 ==============
@@ -21,8 +21,8 @@ an OS initially released in 2001. This means that not even critical security
 updates will be released anymore. Without security updates, using a shahcoin
 wallet on a XP machine is irresponsible at least.
 
-In addition to that, with 0.12.x there have been varied reports of Shahcoin Core
-randomly crashing on Windows XP. It is [not clear](https://github.com/shahcoin/shahcoin/issues/7681#issuecomment-217439891)
+In addition to that, with 0.12.x there have been varied reports of SHAHCOIN Core
+randomly crashing on Windows XP. It is [not clear](https://github.com/SHAHCoinvip/shahcoin/issues/7681#issuecomment-217439891)
 what the source of these crashes is, but it is likely that upstream
 libraries such as Qt are no longer being tested on XP.
 
@@ -76,7 +76,7 @@ table by any user on the system.
 C++11 and Python 3
 ------------------
 
-Various code modernizations have been done. The Shahcoin Core code base has
+Various code modernizations have been done. The SHAHCOIN Core code base has
 started using C++11. This means that a C++11-capable compiler is now needed for
 building. Effectively this means GCC 4.7 or higher, or Clang 3.3 or higher.
 
@@ -156,9 +156,9 @@ You can't disable HD key generation once you have created a HD wallet.
 
 There is no distinction between internal (change) and external keys.
 
-HD wallets are incompatible with older versions of Shahcoin Core.
+HD wallets are incompatible with older versions of SHAHCOIN Core.
 
-[Pull request](https://github.com/shahcoin/shahcoin/pull/8035/files), [BIP 32](https://github.com/shahcoin/bips/blob/master/bip-0032.mediawiki)
+[Pull request](https://github.com/SHAHCoinvip/shahcoin/pull/8035/files), [BIP 32](https://github.com/shahcoin/bips/blob/master/bip-0032.mediawiki)
 
 
 Segregated Witness
@@ -172,7 +172,7 @@ The code preparations for Segregated Witness ("segwit"), as described in [BIP
 finished and included in this release.  However, BIP 141 does not yet specify
 activation parameters on mainnet, and so this release does not support segwit
 use on mainnet.  Testnet use is supported, and after BIP 141 is updated with
-proposed parameters, a future release of Shahcoin Core is expected that
+proposed parameters, a future release of SHAHCOIN Core is expected that
 implements those parameters for mainnet.
 
 Furthermore, because segwit activation is not yet specified for mainnet,
@@ -358,7 +358,7 @@ Low-level ZMQ changes
   listeners to detect lost notifications.
   The sequence number is always the last element in a multi-part ZMQ notification and
   therefore backward compatible. Each message type has its own counter.
-  PR [#7762](https://github.com/shahcoin/shahcoin/pull/7762).
+  PR [#7762](https://github.com/SHAHCoinvip/shahcoin/pull/7762).
 
 
 0.13.0 Change log
@@ -563,7 +563,7 @@ git merge commit are mentioned.
 - #8257 `ff03c50` Do not ask a UI question from shahcoind (sipa)
 - #8288 `91abb77` Network-specific example address (laanwj)
 - #7707 `a914968` UI support for abandoned transactions (jonasschnelli)
-- #8207 `f7a403b` Add a link to the Shahcoin-Core repository and website to the About Dialog (MarcoFalke)
+- #8207 `f7a403b` Add a link to the shahcoin-core repository and website to the About Dialog (MarcoFalke)
 - #8281 `6a87eb0` Remove client name from debug window (laanwj)
 - #8407 `45eba4b` Add dbcache migration path (jonasschnelli)
 

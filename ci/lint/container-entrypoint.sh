@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) The Shahcoin Core developers
+# Copyright (c) The SHAHCOIN Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or https://opensource.org/license/mit/.
 

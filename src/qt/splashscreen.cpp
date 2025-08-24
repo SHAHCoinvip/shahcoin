@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -6,208 +6,163 @@
 #include <config/shahcoin-config.h>
 #endif
 
-#include <qt/splashscreen.h>
+#include "splashscreen.h"
+
+#include <qt/networkstyle.h>
+#include <qt/guiutil.h>
+#include <qt/guiconstants.h>
 
 #include <clientversion.h>
-#include <common/system.h>
 #include <interfaces/handler.h>
 #include <interfaces/node.h>
 #include <interfaces/wallet.h>
-#include <qt/guiutil.h>
-#include <qt/networkstyle.h>
-#include <qt/walletmodel.h>
+#include <util/system.h>
 #include <util/translation.h>
-
-#include <functional>
 
 #include <QApplication>
 #include <QCloseEvent>
 #include <QPainter>
 #include <QRadialGradient>
 #include <QScreen>
+#include <QTimer>
+#include <QPropertyAnimation>
+#include <QGraphicsOpacityEffect>
+#include <QFontDatabase>
+#include <QFontMetrics>
 
+#include <memory>
 
-SplashScreen::SplashScreen(const NetworkStyle* networkStyle)
-    : QWidget()
+SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) :
+    QWidget(nullptr, f), curAlignment(0), curColor(0), m_node(nullptr), m_shutdown(false),
+    m_network_style(networkStyle)
 {
-    // set reference point, paddings
-    int paddingRight            = 50;
-    int paddingTop              = 50;
-    int titleVersionVSpace      = 17;
-    int titleCopyrightVSpace    = 40;
-
-    float fontFactor            = 1.0;
-    float devicePixelRatio      = 1.0;
-    devicePixelRatio = static_cast<QGuiApplication*>(QCoreApplication::instance())->devicePixelRatio();
-
-    // define text to place
-    QString titleText       = PACKAGE_NAME;
-    QString versionText     = QString("Version %1").arg(QString::fromStdString(FormatFullVersion()));
-    QString copyrightText   = QString::fromUtf8(CopyrightHolders(strprintf("\xc2\xA9 %u-%u ", 2009, COPYRIGHT_YEAR)).c_str());
-    const QString& titleAddText    = networkStyle->getTitleAddText();
-
-    QString font            = QApplication::font().toString();
-
-    // create a bitmap according to device pixelratio
-    QSize splashSize(480*devicePixelRatio,320*devicePixelRatio);
-    pixmap = QPixmap(splashSize);
-
-    // change to HiDPI if it makes sense
-    pixmap.setDevicePixelRatio(devicePixelRatio);
-
-    QPainter pixPaint(&pixmap);
-    pixPaint.setPen(QColor(100,100,100));
-
-    // draw a slightly radial gradient
-    QRadialGradient gradient(QPoint(0,0), splashSize.width()/devicePixelRatio);
-    gradient.setColorAt(0, Qt::white);
-    gradient.setColorAt(1, QColor(247,247,247));
-    QRect rGradient(QPoint(0,0), splashSize);
-    pixPaint.fillRect(rGradient, gradient);
-
-    // draw the shahcoin icon, expected size of PNG: 1024x1024
-    QRect rectIcon(QPoint(-150,-122), QSize(430,430));
-
-    const QSize requiredSize(1024,1024);
-    QPixmap icon(networkStyle->getAppIcon().pixmap(requiredSize));
-
-    pixPaint.drawPixmap(rectIcon, icon);
-
-    // check font size and drawing with
-    pixPaint.setFont(QFont(font, 33*fontFactor));
-    QFontMetrics fm = pixPaint.fontMetrics();
-    int titleTextWidth = GUIUtil::TextWidth(fm, titleText);
-    if (titleTextWidth > 176) {
-        fontFactor = fontFactor * 176 / titleTextWidth;
+    // Set window properties
+    setWindowTitle(tr("SHAHCOIN Core"));
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    setAttribute(Qt::WA_TranslucentBackground);
+    
+    // Create layout
+    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(40, 40, 40, 40);
+    mainLayout->setSpacing(20);
+    
+    // Create UI elements
+    m_icon_label = new QLabel(this);
+    m_icon_label->setAlignment(Qt::AlignCenter);
+    m_icon_label->setPixmap(m_network_style->getSplashIcon().pixmap(128, 128));
+    
+    m_title_label = new QLabel(tr("SHAHCOIN Core"), this);
+    m_title_label->setAlignment(Qt::AlignCenter);
+    m_title_label->setStyleSheet("QLabel { color: #1E3A8A; font-size: 32px; font-weight: bold; }");
+    
+    m_tagline_label = new QLabel(tr("Sovereign Crypto for a New Era"), this);
+    m_tagline_label->setAlignment(Qt::AlignCenter);
+    m_tagline_label->setStyleSheet("QLabel { color: #6B7280; font-size: 16px; font-style: italic; }");
+    
+    m_version_label = new QLabel(QString("v%1").arg(QString::fromStdString(FormatFullVersion())), this);
+    m_version_label->setAlignment(Qt::AlignCenter);
+    m_version_label->setStyleSheet("QLabel { color: #9CA3AF; font-size: 12px; }");
+    
+    m_network_label = new QLabel(m_network_style->getTitleAddText(), this);
+    m_network_label->setAlignment(Qt::AlignCenter);
+    m_network_label->setStyleSheet("QLabel { color: #F59E0B; font-size: 14px; font-weight: bold; }");
+    
+    m_progress_bar = new QProgressBar(this);
+    m_progress_bar->setRange(0, 100);
+    m_progress_bar->setValue(0);
+    m_progress_bar->setTextVisible(false);
+    m_progress_bar->setStyleSheet(
+        "QProgressBar {"
+        "   border: 2px solid #E5E7EB;"
+        "   border-radius: 10px;"
+        "   background-color: #F8FAFC;"
+        "   height: 8px;"
+        "}"
+        "QProgressBar::chunk {"
+        "   background: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
+        "       stop:0 #1E3A8A, stop:1 #3B82F6);"
+        "   border-radius: 8px;"
+        "}"
+    );
+    
+    m_status_label = new QLabel(tr("Initializing..."), this);
+    m_status_label->setAlignment(Qt::AlignCenter);
+    m_status_label->setStyleSheet("QLabel { color: #6B7280; font-size: 14px; }");
+    
+    m_loading_label = new QLabel("", this);
+    m_loading_label->setAlignment(Qt::AlignCenter);
+    m_loading_label->setStyleSheet("QLabel { color: #9CA3AF; font-size: 12px; }");
+    
+    // Add widgets to layout
+    mainLayout->addStretch();
+    mainLayout->addWidget(m_icon_label);
+    mainLayout->addWidget(m_title_label);
+    mainLayout->addWidget(m_tagline_label);
+    mainLayout->addWidget(m_version_label);
+    mainLayout->addWidget(m_network_label);
+    mainLayout->addSpacing(20);
+    mainLayout->addWidget(m_progress_bar);
+    mainLayout->addWidget(m_status_label);
+    mainLayout->addWidget(m_loading_label);
+    mainLayout->addStretch();
+    
+    // Setup animations
+    m_fade_animation = new QPropertyAnimation(this, "windowOpacity");
+    m_fade_animation->setDuration(500);
+    m_fade_animation->setStartValue(0.0);
+    m_fade_animation->setEndValue(1.0);
+    
+    m_progress_animation = new QPropertyAnimation(m_progress_bar, "value");
+    m_progress_animation->setDuration(300);
+    
+    // Setup loading timer
+    m_loading_timer = new QTimer(this);
+    connect(m_loading_timer, &QTimer::timeout, [this]() {
+        m_loading_dots = (m_loading_dots + 1) % 4;
+        QString dots = QString(".").repeated(m_loading_dots);
+        m_loading_label->setText(dots);
+    });
+    m_loading_timer->start(500);
+    
+    // Center on screen
+    QScreen* screen = QApplication::primaryScreen();
+    if (screen) {
+        QRect screenGeometry = screen->geometry();
+        int x = (screenGeometry.width() - width()) / 2;
+        int y = (screenGeometry.height() - height()) / 2;
+        move(x, y);
     }
-
-    pixPaint.setFont(QFont(font, 33*fontFactor));
-    fm = pixPaint.fontMetrics();
-    titleTextWidth  = GUIUtil::TextWidth(fm, titleText);
-    pixPaint.drawText(pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight,paddingTop,titleText);
-
-    pixPaint.setFont(QFont(font, 15*fontFactor));
-
-    // if the version string is too long, reduce size
-    fm = pixPaint.fontMetrics();
-    int versionTextWidth  = GUIUtil::TextWidth(fm, versionText);
-    if(versionTextWidth > titleTextWidth+paddingRight-10) {
-        pixPaint.setFont(QFont(font, 10*fontFactor));
-        titleVersionVSpace -= 5;
-    }
-    pixPaint.drawText(pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight+2,paddingTop+titleVersionVSpace,versionText);
-
-    // draw copyright stuff
-    {
-        pixPaint.setFont(QFont(font, 10*fontFactor));
-        const int x = pixmap.width()/devicePixelRatio-titleTextWidth-paddingRight;
-        const int y = paddingTop+titleCopyrightVSpace;
-        QRect copyrightRect(x, y, pixmap.width() - x - paddingRight, pixmap.height() - y);
-        pixPaint.drawText(copyrightRect, Qt::AlignLeft | Qt::AlignTop | Qt::TextWordWrap, copyrightText);
-    }
-
-    // draw additional text if special network
-    if(!titleAddText.isEmpty()) {
-        QFont boldFont = QFont(font, 10*fontFactor);
-        boldFont.setWeight(QFont::Bold);
-        pixPaint.setFont(boldFont);
-        fm = pixPaint.fontMetrics();
-        int titleAddTextWidth  = GUIUtil::TextWidth(fm, titleAddText);
-        pixPaint.drawText(pixmap.width()/devicePixelRatio-titleAddTextWidth-10,15,titleAddText);
-    }
-
-    pixPaint.end();
-
-    // Set window title
-    setWindowTitle(titleText + " " + titleAddText);
-
-    // Resize window and move to center of desktop, disallow resizing
-    QRect r(QPoint(), QSize(pixmap.size().width()/devicePixelRatio,pixmap.size().height()/devicePixelRatio));
-    resize(r.size());
-    setFixedSize(r.size());
-    move(QGuiApplication::primaryScreen()->geometry().center() - r.center());
-
-    installEventFilter(this);
-
-    GUIUtil::handleCloseWindowShortcut(this);
+    
+    // Start fade in animation
+    m_fade_animation->start();
+    
+    // Subscribe to core signals
+    subscribeToCoreSignals();
 }
 
 SplashScreen::~SplashScreen()
 {
-    if (m_node) unsubscribeFromCoreSignals();
+    unsubscribeFromCoreSignals();
 }
 
-void SplashScreen::setNode(interfaces::Node& node)
+void SplashScreen::finish()
 {
-    assert(!m_node);
-    m_node = &node;
-    subscribeToCoreSignals();
-    if (m_shutdown) m_node->startShutdown();
-}
-
-void SplashScreen::shutdown()
-{
-    m_shutdown = true;
-    if (m_node) m_node->startShutdown();
-}
-
-bool SplashScreen::eventFilter(QObject * obj, QEvent * ev) {
-    if (ev->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(ev);
-        if (keyEvent->key() == Qt::Key_Q) {
-            shutdown();
-        }
-    }
-    return QObject::eventFilter(obj, ev);
-}
-
-static void InitMessage(SplashScreen *splash, const std::string &message)
-{
-    bool invoked = QMetaObject::invokeMethod(splash, "showMessage",
-        Qt::QueuedConnection,
-        Q_ARG(QString, QString::fromStdString(message)),
-        Q_ARG(int, Qt::AlignBottom|Qt::AlignHCenter),
-        Q_ARG(QColor, QColor(55,55,55)));
-    assert(invoked);
-}
-
-static void ShowProgress(SplashScreen *splash, const std::string &title, int nProgress, bool resume_possible)
-{
-    InitMessage(splash, title + std::string("\n") +
-            (resume_possible ? SplashScreen::tr("(press q to shutdown and continue later)").toStdString()
-                                : SplashScreen::tr("press q to shutdown").toStdString()) +
-            strprintf("\n%d", nProgress) + "%");
-}
-
-void SplashScreen::subscribeToCoreSignals()
-{
-    // Connect signals to client
-    m_handler_init_message = m_node->handleInitMessage(std::bind(InitMessage, this, std::placeholders::_1));
-    m_handler_show_progress = m_node->handleShowProgress(std::bind(ShowProgress, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
-    m_handler_init_wallet = m_node->handleInitWallet([this]() { handleLoadWallet(); });
-}
-
-void SplashScreen::handleLoadWallet()
-{
-#ifdef ENABLE_WALLET
-    if (!WalletModel::isWalletEnabled()) return;
-    m_handler_load_wallet = m_node->walletLoader().handleLoadWallet([this](std::unique_ptr<interfaces::Wallet> wallet) {
-        m_connected_wallet_handlers.emplace_back(wallet->handleShowProgress(std::bind(ShowProgress, this, std::placeholders::_1, std::placeholders::_2, false)));
-        m_connected_wallets.emplace_back(std::move(wallet));
+    if (m_closed) return;
+    
+    m_closed = true;
+    
+    // Fade out animation
+    QPropertyAnimation* fadeOut = new QPropertyAnimation(this, "windowOpacity");
+    fadeOut->setDuration(300);
+    fadeOut->setStartValue(1.0);
+    fadeOut->setEndValue(0.0);
+    
+    connect(fadeOut, &QPropertyAnimation::finished, [this]() {
+        close();
+        deleteLater();
     });
-#endif
-}
-
-void SplashScreen::unsubscribeFromCoreSignals()
-{
-    // Disconnect signals from client
-    m_handler_init_message->disconnect();
-    m_handler_show_progress->disconnect();
-    for (const auto& handler : m_connected_wallet_handlers) {
-        handler->disconnect();
-    }
-    m_connected_wallet_handlers.clear();
-    m_connected_wallets.clear();
+    
+    fadeOut->start();
 }
 
 void SplashScreen::showMessage(const QString &message, int alignment, const QColor &color)
@@ -215,20 +170,85 @@ void SplashScreen::showMessage(const QString &message, int alignment, const QCol
     curMessage = message;
     curAlignment = alignment;
     curColor = color;
+    m_status_label->setText(message);
     update();
+}
+
+void SplashScreen::setBreakAction(const std::function<void(void)> &action)
+{
+    breakAction = action;
+}
+
+void SplashScreen::setProgress(int progress)
+{
+    m_progress = progress;
+    m_progress_animation->setStartValue(m_progress_bar->value());
+    m_progress_animation->setEndValue(progress);
+    m_progress_animation->start();
 }
 
 void SplashScreen::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    painter.drawPixmap(0, 0, pixmap);
-    QRect r = rect().adjusted(5, 5, -5, -5);
-    painter.setPen(curColor);
-    painter.drawText(r, curAlignment, curMessage);
+    
+    // Create gradient background
+    QRadialGradient gradient(rect().center(), width() / 2);
+    gradient.setColorAt(0, QColor(248, 250, 252));  // Light gray
+    gradient.setColorAt(1, QColor(255, 255, 255));  // White
+    
+    painter.fillRect(rect(), gradient);
+    
+    // Draw border
+    painter.setPen(QPen(QColor(229, 231, 235), 2));
+    painter.drawRoundedRect(rect().adjusted(1, 1, -1, -1), 15, 15);
 }
 
 void SplashScreen::closeEvent(QCloseEvent *event)
 {
-    shutdown(); // allows an "emergency" shutdown during startup
-    event->ignore();
+    if (breakAction) {
+        breakAction();
+    }
+    event->accept();
+}
+
+void SplashScreen::subscribeToCoreSignals()
+{
+    // Connect to core signals for progress updates
+    // This will be implemented when connecting to the actual core
+}
+
+void SplashScreen::unsubscribeFromCoreSignals()
+{
+    // Disconnect from core signals
+    // This will be implemented when connecting to the actual core
+}
+
+void SplashScreen::connectWallet(WalletModel* walletModel)
+{
+    // Connect wallet model signals
+    // This will be implemented when connecting to the actual wallet model
+}
+
+void SplashScreen::connectBlockchain()
+{
+    // Connect blockchain signals
+    // This will be implemented when connecting to the actual blockchain
+}
+
+void SplashScreen::showProgress(const QString &title, int nProgress)
+{
+    setProgress(nProgress);
+    showMessage(title, Qt::AlignCenter | Qt::AlignHCenter, QColor(102, 102, 102));
+}
+
+void SplashScreen::setVisible(bool visible)
+{
+    m_show = visible;
+    QWidget::setVisible(visible);
+}
+
+void SplashScreen::alignWidget(QWidget *widget, const QWidget *host, int alignment, int dx, int dy)
+{
+    // Align widget relative to host widget
+    // This will be implemented if needed
 }

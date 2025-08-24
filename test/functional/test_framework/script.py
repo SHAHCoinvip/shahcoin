@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2015-2022 The Shahcoin Core developers
+# Copyright (c) 2015-2022 The SHAHCOIN Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Functionality to build scripts, as well as signature hash functions.
@@ -612,7 +612,7 @@ SIGHASH_SINGLE = 3
 SIGHASH_ANYONECANPAY = 0x80
 
 def FindAndDelete(script, sig):
-    """Consensus critical, see FindAndDelete() in Satoshi codebase"""
+    """Consensus critical, see FindAndDelete() in shahi codebase"""
     r = b''
     last_sop_idx = sop_idx = 0
     skip = True

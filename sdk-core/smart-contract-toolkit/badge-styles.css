@@ -1,0 +1,446 @@
+/**
+ * Shahcoin Token Badge Styles
+ * 
+ * CSS styles for SHI-20 and SHI-30 token badges across the Shahcoin ecosystem
+ */
+
+/* Base Badge Styles */
+.shahcoin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition: all 0.2s ease-in-out;
+  cursor: help;
+  user-select: none;
+}
+
+/* Badge Sizes */
+.shahcoin-badge.badge-sm {
+  padding: 2px 6px;
+  font-size: 10px;
+  gap: 2px;
+}
+
+.shahcoin-badge.badge-md {
+  padding: 4px 8px;
+  font-size: 12px;
+  gap: 4px;
+}
+
+.shahcoin-badge.badge-lg {
+  padding: 6px 12px;
+  font-size: 14px;
+  gap: 6px;
+}
+
+/* Badge Icon */
+.shahcoin-badge .badge-icon {
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+/* Badge Label */
+.shahcoin-badge .badge-label {
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+/* SHI-20 Token Badge */
+.shahcoin-badge.badge-shi20 {
+  background-color: #F3F4F6;
+  color: #6B7280;
+  border-color: #D1D5DB;
+}
+
+.shahcoin-badge.badge-shi20:hover {
+  background-color: #E5E7EB;
+  border-color: #9CA3AF;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* SHI-30 NFT Badge */
+.shahcoin-badge.badge-shi30 {
+  background-color: #FEF3C7;
+  color: #F59E0B;
+  border-color: #FCD34D;
+}
+
+.shahcoin-badge.badge-shi30:hover {
+  background-color: #FDE68A;
+  border-color: #F59E0B;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(245, 158, 11, 0.2);
+}
+
+/* Verified Badge */
+.shahcoin-badge.badge-verified {
+  background-color: #D1FAE5;
+  color: #10B981;
+  border-color: #A7F3D0;
+}
+
+.shahcoin-badge.badge-verified:hover {
+  background-color: #A7F3D0;
+  border-color: #10B981;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+/* Unknown Token Badge */
+.shahcoin-badge.badge-unknown {
+  background-color: #F9FAFB;
+  color: #9CA3AF;
+  border-color: #D1D5DB;
+}
+
+.shahcoin-badge.badge-unknown:hover {
+  background-color: #F3F4F6;
+  border-color: #9CA3AF;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Badge with Verification Status */
+.shahcoin-badge.badge-shi20.badge-verified {
+  background: linear-gradient(135deg, #F3F4F6 0%, #D1FAE5 100%);
+  color: #10B981;
+  border-color: #A7F3D0;
+}
+
+.shahcoin-badge.badge-shi30.badge-verified {
+  background: linear-gradient(135deg, #FEF3C7 0%, #D1FAE5 100%);
+  color: #F59E0B;
+  border-color: #FCD34D;
+}
+
+/* Badge in Token Lists */
+.token-list-item .shahcoin-badge {
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+/* Badge in Token Cards */
+.token-card .shahcoin-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+}
+
+/* Badge in Token Details */
+.token-details .shahcoin-badge {
+  margin-bottom: 12px;
+}
+
+/* Badge in Transaction History */
+.transaction-item .shahcoin-badge {
+  margin-left: 4px;
+}
+
+/* Badge in Explorer */
+.explorer-token .shahcoin-badge {
+  margin-right: 8px;
+}
+
+/* Badge in Swap Interface */
+.swap-token-selector .shahcoin-badge {
+  margin-left: 6px;
+}
+
+/* Badge in Portfolio */
+.portfolio-token .shahcoin-badge {
+  position: relative;
+  top: -1px;
+}
+
+/* Badge Tooltips */
+.shahcoin-badge[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #1F2937;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 400;
+  white-space: nowrap;
+  z-index: 1000;
+  margin-bottom: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.shahcoin-badge[title]:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: #1F2937;
+  margin-bottom: 0;
+  z-index: 1000;
+}
+
+/* Badge Animations */
+@keyframes badgePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.shahcoin-badge.badge-verified {
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+/* Badge Loading State */
+.shahcoin-badge.badge-loading {
+  background-color: #F3F4F6;
+  color: #9CA3AF;
+  border-color: #D1D5DB;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Badge in Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .shahcoin-badge.badge-shi20 {
+    background-color: #374151;
+    color: #D1D5DB;
+    border-color: #4B5563;
+  }
+  
+  .shahcoin-badge.badge-shi20:hover {
+    background-color: #4B5563;
+    border-color: #6B7280;
+  }
+  
+  .shahcoin-badge.badge-shi30 {
+    background-color: #451A03;
+    color: #FCD34D;
+    border-color: #92400E;
+  }
+  
+  .shahcoin-badge.badge-shi30:hover {
+    background-color: #92400E;
+    border-color: #F59E0B;
+  }
+  
+  .shahcoin-badge.badge-verified {
+    background-color: #064E3B;
+    color: #A7F3D0;
+    border-color: #065F46;
+  }
+  
+  .shahcoin-badge.badge-verified:hover {
+    background-color: #065F46;
+    border-color: #10B981;
+  }
+  
+  .shahcoin-badge.badge-unknown {
+    background-color: #1F2937;
+    color: #6B7280;
+    border-color: #374151;
+  }
+  
+  .shahcoin-badge.badge-unknown:hover {
+    background-color: #374151;
+    border-color: #6B7280;
+  }
+}
+
+/* Badge in High Contrast Mode */
+@media (prefers-contrast: high) {
+  .shahcoin-badge {
+    border-width: 2px;
+    font-weight: 700;
+  }
+  
+  .shahcoin-badge.badge-shi20 {
+    background-color: #FFFFFF;
+    color: #000000;
+    border-color: #000000;
+  }
+  
+  .shahcoin-badge.badge-shi30 {
+    background-color: #FFFF00;
+    color: #000000;
+    border-color: #000000;
+  }
+  
+  .shahcoin-badge.badge-verified {
+    background-color: #00FF00;
+    color: #000000;
+    border-color: #000000;
+  }
+}
+
+/* Badge in Reduced Motion Mode */
+@media (prefers-reduced-motion: reduce) {
+  .shahcoin-badge {
+    transition: none;
+  }
+  
+  .shahcoin-badge:hover {
+    transform: none;
+  }
+  
+  .shahcoin-badge.badge-verified {
+    animation: none;
+  }
+}
+
+/* Badge Responsive Design */
+@media (max-width: 768px) {
+  .shahcoin-badge {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+  
+  .shahcoin-badge.badge-sm {
+    font-size: 9px;
+    padding: 2px 4px;
+  }
+  
+  .shahcoin-badge.badge-lg {
+    font-size: 13px;
+    padding: 5px 10px;
+  }
+  
+  .shahcoin-badge .badge-label {
+    display: none;
+  }
+  
+  .shahcoin-badge .badge-icon {
+    font-size: 1.2em;
+  }
+}
+
+@media (max-width: 480px) {
+  .shahcoin-badge {
+    font-size: 10px;
+    padding: 2px 4px;
+  }
+  
+  .shahcoin-badge .badge-label {
+    display: none;
+  }
+}
+
+/* Badge in Print */
+@media print {
+  .shahcoin-badge {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border: 1px solid #000000 !important;
+    box-shadow: none !important;
+  }
+  
+  .shahcoin-badge.badge-verified {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border: 2px solid #000000 !important;
+  }
+}
+
+/* Badge Focus States for Accessibility */
+.shahcoin-badge:focus {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+}
+
+.shahcoin-badge:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Badge Screen Reader Support */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Badge with Additional Info */
+.shahcoin-badge.badge-with-info {
+  position: relative;
+}
+
+.shahcoin-badge.badge-with-info::after {
+  content: "ℹ";
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background-color: #3B82F6;
+  color: white;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  font-size: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* Badge Groups */
+.badge-group {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.badge-group .shahcoin-badge {
+  margin: 0;
+}
+
+/* Badge in Tables */
+.token-table .shahcoin-badge {
+  margin: 0 4px;
+}
+
+/* Badge in Forms */
+.token-form .shahcoin-badge {
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+/* Badge in Modals */
+.modal-content .shahcoin-badge {
+  margin-bottom: 8px;
+}
+
+/* Badge in Sidebar */
+.sidebar .shahcoin-badge {
+  margin-left: 6px;
+}
+
+/* Badge in Header */
+.header .shahcoin-badge {
+  margin-left: 4px;
+}
+
+/* Badge in Footer */
+.footer .shahcoin-badge {
+  margin-right: 8px;
+}

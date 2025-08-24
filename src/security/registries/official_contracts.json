@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "updated_at": "2025-01-01T00:00:00Z",
+  "official": [
+    {
+      "address": "0x0000000000000000000000000000000000000001",
+      "name": "SHAHCOIN",
+      "symbol": "SHAH",
+      "type": "SHI-20",
+      "verified": true,
+      "creator": "0x1111111111111111111111111111111111111111",
+      "notes": "Official SHAHCOIN token"
+    }
+  ],
+  "trusted": [
+    {
+      "address": "0x00000000000000000000000000000000000000a0",
+      "name": "Shah Staking Token",
+      "symbol": "sSHAH",
+      "type": "SHI-20",
+      "verified": true,
+      "creator": "0x2222222222222222222222222222222222222222",
+      "notes": "Official staking derivative"
+    }
+  ]
+}

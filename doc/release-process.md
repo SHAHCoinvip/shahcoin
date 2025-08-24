@@ -5,10 +5,10 @@ Release Process
 
 ### Before every release candidate
 
-* Update translations see [translation_process.md](https://github.com/shahcoin/shahcoin/blob/master/doc/translation_process.md#synchronising-translations).
+* Update translations see [translation_process.md](https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/translation_process.md#synchronising-translations).
 * Update release candidate version in `configure.ac` (`CLIENT_VERSION_RC`).
-* Update manpages (after rebuilding the binaries), see [gen-manpages.py](https://github.com/shahcoin/shahcoin/blob/master/contrib/devtools/README.md#gen-manpagespy).
-* Update shahcoin.conf and commit, see [gen-shahcoin-conf.sh](https://github.com/shahcoin/shahcoin/blob/master/contrib/devtools/README.md#gen-shahcoin-confsh).
+* Update manpages (after rebuilding the binaries), see [gen-manpages.py](https://github.com/SHAHCoinvip/shahcoin/blob/master/contrib/devtools/README.md#gen-manpagespy).
+* Update shahcoin.conf and commit, see [gen-shahcoin-conf.sh](https://github.com/SHAHCoinvip/shahcoin/blob/master/contrib/devtools/README.md#gen-shahcoin-confsh).
 
 ### Before every major and minor release
 
@@ -21,14 +21,14 @@ Release Process
 
 * On both the master branch and the new release branch:
   - update `CLIENT_VERSION_MAJOR` in [`configure.ac`](../configure.ac)
-* On the new release branch in [`configure.ac`](../configure.ac)(see [this commit](https://github.com/shahcoin/shahcoin/commit/742f7dd)):
+* On the new release branch in [`configure.ac`](../configure.ac)(see [this commit](https://github.com/SHAHCoinvip/shahcoin/commit/742f7dd)):
   - set `CLIENT_VERSION_MINOR` to `0`
   - set `CLIENT_VERSION_BUILD` to `0`
   - set `CLIENT_VERSION_IS_RELEASE` to `true`
 
 #### Before branch-off
 
-* Update hardcoded [seeds](/contrib/seeds/README.md), see [this pull request](https://github.com/shahcoin/shahcoin/pull/27488) for an example.
+* Update hardcoded [seeds](/contrib/seeds/README.md), see [this pull request](https://github.com/SHAHCoinvip/shahcoin/pull/27488) for an example.
 * Update the following variables in [`src/kernel/chainparams.cpp`](/src/kernel/chainparams.cpp) for mainnet, testnet, and signet:
   - `m_assumed_blockchain_size` and `m_assumed_chain_state_size` with the current size plus some overhead (see
     [this](#how-to-calculate-assumed-blockchain-and-chain-state-size) for information on how to calculate them).
@@ -36,7 +36,7 @@ Release Process
     that causes rejection of blocks in the past history.
   - `chainTxData` with statistics about the transaction count and rate. Use the output of the `getchaintxstats` RPC with an
     `nBlocks` of 4096 (28 days) and a `bestblockhash` of RPC `getbestblockhash`; see
-    [this pull request](https://github.com/shahcoin/shahcoin/pull/28591) for an example. Reviewers can verify the results by running
+    [this pull request](https://github.com/SHAHCoinvip/shahcoin/pull/28591) for an example. Reviewers can verify the results by running
     `getchaintxstats <window_block_count> <window_final_block_hash>` with the `window_block_count` and `window_final_block_hash` from your output.
   - `defaultAssumeValid` with the output of RPC `getblockhash` using the `height` of `window_final_block_height` above
     (and update the block height comment with that height), taking into account the following:
@@ -63,22 +63,22 @@ Release Process
 #### After branch-off (on the major release branch)
 
 - Update the versions.
-- Create the draft, named "*version* Release Notes Draft", as a [collaborative wiki](https://github.com/shahcoin-core/shahcoin-devwiki/wiki/_new).
+- Create the draft, named "*version* Release Notes Draft", as a [collaborative wiki](https://github.com/SHAHCoinvip/shahcoin-devwiki/wiki/_new).
 - Clear the release notes: `cp doc/release-notes-empty-template.md doc/release-notes.md`
-- Create a pinned meta-issue for testing the release candidate (see [this issue](https://github.com/shahcoin/shahcoin/issues/27621) for an example) and provide a link to it in the release announcements where useful.
+- Create a pinned meta-issue for testing the release candidate (see [this issue](https://github.com/SHAHCoinvip/shahcoin/issues/27621) for an example) and provide a link to it in the release announcements where useful.
 - Translations on Transifex
     - Change the auto-update URL for the new major version's resource away from `master` and to the branch, e.g. `https://raw.githubusercontent.com/shahcoin/shahcoin/<branch>/src/qt/locale/shahcoin_en.xlf`. Do not forget this or it will keep tracking the translations on master instead, drifting away from the specific major release.
 - Prune inputs from the qa-assets repo (See [pruning
-  inputs](https://github.com/shahcoin-core/qa-assets#pruning-inputs)).
+  inputs](https://github.com/SHAHCoinvip/qa-assets#pruning-inputs)).
 
 #### Before final release
 
-- Merge the release notes from [the wiki](https://github.com/shahcoin-core/shahcoin-devwiki/wiki/) into the branch.
+- Merge the release notes from [the wiki](https://github.com/SHAHCoinvip/shahcoin-devwiki/wiki/) into the branch.
 - Ensure the "Needs release note" label is removed from all relevant pull requests and issues.
 
 #### Tagging a release (candidate)
 
-To tag the version (or release candidate) in git, use the `make-tag.py` script from [shahcoin-maintainer-tools](https://github.com/shahcoin-core/shahcoin-maintainer-tools). From the root of the repository run:
+To tag the version (or release candidate) in git, use the `make-tag.py` script from [shahcoin-maintainer-tools](https://github.com/SHAHCoinvip/shahcoin-maintainer-tools). From the root of the repository run:
 
     ../shahcoin-maintainer-tools/make-tag.py v(new version, e.g. 25.0)
 
@@ -94,13 +94,13 @@ Install Guix using one of the installation methods detailed in
 Check out the source code in the following directory hierarchy.
 
     cd /path/to/your/toplevel/build
-    git clone https://github.com/shahcoin-core/guix.sigs.git
-    git clone https://github.com/shahcoin-core/shahcoin-detached-sigs.git
-    git clone https://github.com/shahcoin/shahcoin.git
+    git clone https://github.com/SHAHCoinvip/guix.sigs.git
+    git clone https://github.com/SHAHCoinvip/shahcoin-detached-sigs.git
+    git clone https://github.com/SHAHCoinvip/shahcoin.git
 
 ### Write the release notes
 
-Open a draft of the release notes for collaborative editing at https://github.com/shahcoin-core/shahcoin-devwiki/wiki.
+Open a draft of the release notes for collaborative editing at https://github.com/SHAHCoinvip/shahcoin-devwiki/wiki.
 
 For the period during which the notes are being edited on the wiki, the version on the branch should be wiped and replaced with a link to the wiki which should be used for all announcements until `-final`.
 
@@ -110,7 +110,7 @@ Generate list of authors:
 
 ### Setup and perform Guix builds
 
-Checkout the Shahcoin Core version you'd like to build:
+Checkout the SHAHCOIN Core version you'd like to build:
 
 ```sh
 pushd ./shahcoin
@@ -153,7 +153,7 @@ git commit -m "Add attestations by ${SIGNER} for ${VERSION} non-codesigned"
 popd
 ```
 
-Then open a Pull Request to the [guix.sigs repository](https://github.com/shahcoin-core/guix.sigs).
+Then open a Pull Request to the [guix.sigs repository](https://github.com/SHAHCoinvip/guix.sigs).
 
 ## Codesigning
 
@@ -193,7 +193,7 @@ popd
 ### Non-codesigners: wait for Windows and macOS detached signatures
 
 - Once the Windows and macOS builds each have 3 matching signatures, they will be signed with their respective release keys.
-- Detached signatures will then be committed to the [shahcoin-detached-sigs](https://github.com/shahcoin-core/shahcoin-detached-sigs) repository, which can be combined with the unsigned apps to create signed binaries.
+- Detached signatures will then be committed to the [shahcoin-detached-sigs](https://github.com/SHAHCoinvip/shahcoin-detached-sigs) repository, which can be combined with the unsigned apps to create signed binaries.
 
 ### Create the codesigned build outputs
 
@@ -212,7 +212,7 @@ git commit -m "Add attestations by ${SIGNER} for ${VERSION} codesigned"
 popd
 ```
 
-Then open a Pull Request to the [guix.sigs repository](https://github.com/shahcoin-core/guix.sigs).
+Then open a Pull Request to the [guix.sigs repository](https://github.com/SHAHCoinvip/guix.sigs).
 
 ## After 3 or more people have guix-built and their results match
 
@@ -223,7 +223,7 @@ cat "$VERSION"/*/all.SHA256SUMS.asc > SHA256SUMS.asc
 ```
 
 
-- Upload to the shahcoincore.org server (`/var/www/bin/shahcoin-core-${VERSION}/`):
+- Upload to the shah.vip server (`/var/www/bin/shahcoin-core-${VERSION}/`):
     1. The contents of each `./shahcoin/guix-build-${VERSION}/output/${HOST}/` directory, except for
        `*-debug*` files.
 
@@ -236,11 +236,11 @@ cat "$VERSION"/*/all.SHA256SUMS.asc > SHA256SUMS.asc
        for troubleshooting by developers. It is assumed that anyone that is
        interested in debugging can run guix to generate the files for
        themselves. To avoid end-user confusion about which file to pick, as well
-       as save storage space *do not upload these to the shahcoincore.org server,
+       as save storage space *do not upload these to the shah.vip server,
        nor put them in the torrent*.
 
        ```sh
-       find guix-build-${VERSION}/output/ -maxdepth 2 -type f -not -name "SHA256SUMS.part" -and -not -name "*debug*" -exec scp {} user@shahcoincore.org:/var/www/bin/shahcoin-core-${VERSION} \;
+       find guix-build-${VERSION}/output/ -maxdepth 2 -type f -not -name "SHA256SUMS.part" -and -not -name "*debug*" -exec scp {} user@shah.vip:/var/www/bin/shahcoin-core-${VERSION} \;
        ```
 
     2. The `SHA256SUMS` file
@@ -259,44 +259,44 @@ cat "$VERSION"/*/all.SHA256SUMS.asc > SHA256SUMS.asc
   ```
 
   Insert the magnet URI into the announcement sent to mailing lists. This permits
-  people without access to `shahcoincore.org` to download the binary distribution.
+  people without access to `shah.vip` to download the binary distribution.
   Also put it into the `optional_magnetlink:` slot in the YAML file for
-  shahcoincore.org.
+  shah.vip.
 
 - Update other repositories and websites for new version
 
-  - shahcoincore.org blog post
+  - shah.vip blog post
 
-  - shahcoincore.org maintained versions update:
-    [table](https://github.com/shahcoin-core/shahcoincore.org/commits/master/_includes/posts/maintenance-table.md)
+  - shah.vip maintained versions update:
+    [table](https://github.com/SHAHCoinvip/shah.vip/commits/master/_includes/posts/maintenance-table.md)
 
-  - Delete post-EOL [release branches](https://github.com/shahcoin/shahcoin/branches/all) and create a tag `v${branch_name}-final`.
+  - Delete post-EOL [release branches](https://github.com/SHAHCoinvip/shahcoin/branches/all) and create a tag `v${branch_name}-final`.
 
-  - Delete ["Needs backport" labels](https://github.com/shahcoin/shahcoin/labels?q=backport) for non-existing branches.
+  - Delete ["Needs backport" labels](https://github.com/SHAHCoinvip/shahcoin/labels?q=backport) for non-existing branches.
 
-  - shahcoincore.org RPC documentation update
+  - shah.vip RPC documentation update
 
-      - See https://github.com/shahcoin-core/shahcoincore.org/blob/master/contrib/doc-gen/
+      - See https://github.com/SHAHCoinvip/shah.vip/blob/master/contrib/doc-gen/
 
   - Update packaging repo
 
       - Push the flatpak to flathub, e.g. https://github.com/flathub/org.shahcoincore.shahcoin-qt/pull/2
 
-      - Push the snap, see https://github.com/shahcoin-core/packaging/blob/main/snap/local/build.md
+      - Push the snap, see https://github.com/SHAHCoinvip/packaging/blob/main/snap/local/build.md
 
   - This repo
 
       - Archive the release notes for the new version to `doc/release-notes/` (branch `master` and branch of the release)
 
-      - Create a [new GitHub release](https://github.com/shahcoin/shahcoin/releases/new) with a link to the archived release notes
+      - Create a [new GitHub release](https://github.com/SHAHCoinvip/shahcoin/releases/new) with a link to the archived release notes
 
 - Announce the release:
 
   - shahcoin-dev and shahcoin-core-dev mailing list
 
-  - Shahcoin Core announcements list https://shahcoincore.org/en/list/announcements/join/
+  - SHAHCOIN Core announcements list https://shah.vip/en/list/announcements/join/
 
-  - Shahcoin Core Twitter https://twitter.com/shahcoincoreorg
+  - SHAHCOIN Core Twitter https://twitter.com/shahcoincoreorg
 
   - Celebrate
 

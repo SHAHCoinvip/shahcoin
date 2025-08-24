@@ -41,7 +41,7 @@ of the following conditions are met:
 limits in two-party contract protocols such as LN.  Also see the [mailing list
 post](https://lists.linuxfoundation.org/pipermail/shahcoin-dev/2018-November/016518.html).
 
-This rule was introduced in [PR #15681](https://github.com/shahcoin/shahcoin/pull/15681).
+This rule was introduced in [PR #15681](https://github.com/SHAHCoinvip/shahcoin/pull/15681).
 
 ### Single-Conflict RBF Carve Out
 

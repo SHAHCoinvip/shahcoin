@@ -1,0 +1,860 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TokenCreatorPage</class>
+ <widget class="QWidget" name="TokenCreatorPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Token Creator - Shahcoin Core</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>12</number>
+   </property>
+   <property name="leftMargin">
+    <number>12</number>
+   </property>
+   <property name="topMargin">
+    <number>12</number>
+   </property>
+   <property name="rightMargin">
+    <number>12</number>
+   </property>
+   <property name="bottomMargin">
+    <number>12</number>
+   </property>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <property name="styleSheet">
+      <string>QTabWidget::pane {
+    border: 1px solid #c0c0c0;
+    background-color: white;
+}
+QTabBar::tab {
+    background-color: #f0f0f0;
+    padding: 8px 16px;
+    margin-right: 2px;
+    border: 1px solid #c0c0c0;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    font-weight: bold;
+}
+QTabBar::tab:selected {
+    background-color: white;
+    border-bottom: 1px solid white;
+}
+QTabBar::tab:hover {
+    background-color: #e0e0e0;
+}</string>
+     </property>
+     <widget class="QWidget" name="tab_CreateToken">
+      <attribute name="title">
+               <string>🧬 Create SHI-20 Token</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>12</number>
+       </property>
+       <item>
+        <widget class="QGroupBox" name="groupBox_TokenForm">
+         <property name="title">
+          <string>🪙 Create New Token</string>
+         </property>
+         <property name="styleSheet">
+          <string>QGroupBox {
+    font-weight: bold;
+    font-size: 14px;
+    color: #4CAF50;
+}</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout">
+          <property name="spacing">
+           <number>8</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_TokenName">
+            <property name="text">
+             <string>Token Name:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit_TokenName">
+            <property name="placeholderText">
+             <string>Enter token name (e.g., My Awesome Token)</string>
+            </property>
+            <property name="styleSheet">
+             <string>QLineEdit {
+    padding: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QLineEdit:focus {
+    border-color: #4CAF50;
+    outline: none;
+}</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_TokenSymbol">
+            <property name="text">
+             <string>Token Symbol:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEdit_TokenSymbol">
+            <property name="placeholderText">
+             <string>Enter token symbol (e.g., MAT)</string>
+            </property>
+            <property name="maxLength">
+             <number>10</number>
+            </property>
+            <property name="styleSheet">
+             <string>QLineEdit {
+    padding: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QLineEdit:focus {
+    border-color: #4CAF50;
+    outline: none;
+}</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_TotalSupply">
+            <property name="text">
+             <string>Total Supply:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="ShahcoinAmountField" name="amountField_TotalSupply">
+            <property name="placeholderText">
+             <string>Enter total supply (e.g., 1000000)</string>
+            </property>
+            <property name="styleSheet">
+             <string>QLineEdit {
+    padding: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QLineEdit:focus {
+    border-color: #4CAF50;
+    outline: none;
+}</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_Decimals">
+            <property name="text">
+             <string>Decimals:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QSpinBox" name="spinBox_Decimals">
+            <property name="minimum">
+             <number>0</number>
+            </property>
+            <property name="maximum">
+             <number>18</number>
+            </property>
+            <property name="value">
+             <number>8</number>
+            </property>
+            <property name="toolTip">
+             <string>Number of decimal places (0-18)</string>
+            </property>
+            <property name="styleSheet">
+             <string>QSpinBox {
+    padding: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QSpinBox:focus {
+    border-color: #4CAF50;
+    outline: none;
+}</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_Description">
+            <property name="text">
+             <string>Description:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QTextEdit" name="textEdit_Description">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>100</height>
+             </size>
+            </property>
+            <property name="placeholderText">
+             <string>Enter token description (optional)</string>
+            </property>
+            <property name="styleSheet">
+             <string>QTextEdit {
+    padding: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QTextEdit:focus {
+    border-color: #4CAF50;
+    outline: none;
+}</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_CreationFee">
+            <property name="text">
+             <string>Creation Fee:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLabel" name="label_CreationFeeValue">
+            <property name="text">
+             <string>500.00000000 SHAH</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; color: #FF6347; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_TokenPreview">
+         <property name="title">
+          <string>👁️ Token Preview</string>
+         </property>
+         <property name="styleSheet">
+          <string>QGroupBox {
+    font-weight: bold;
+    font-size: 14px;
+    color: #2196F3;
+}</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <property name="spacing">
+           <number>8</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_PreviewName">
+            <property name="text">
+             <string>Name: [Enter name above]</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 14px; color: #2E8B57;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_PreviewSymbol">
+            <property name="text">
+             <string>Symbol: [Enter symbol above]</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; color: #4169E1; font-size: 14px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_PreviewSupply">
+            <property name="text">
+             <string>Total Supply: [Enter supply above]</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-size: 13px; color: #666666;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_PreviewDecimals">
+            <property name="text">
+             <string>Decimals: [Select above]</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-size: 13px; color: #666666;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QLabel" name="label_PreviewDescription">
+            <property name="text">
+             <string>Description: [Enter description above]</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string>font-size: 13px; color: #666666;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="pushButton_CreateToken">
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>44</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>🪙 Create SHI-20 Token</string>
+           </property>
+           <property name="toolTip">
+            <string>Create the token (Fee: 500 SHAH)</string>
+           </property>
+           <property name="styleSheet">
+            <string>QPushButton {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #45a049;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+QPushButton:pressed {
+    background-color: #3d8b40;
+    transform: translateY(0px);
+}
+QPushButton:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    transform: none;
+    box-shadow: none;
+}</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_ClearForm">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>44</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>🗑️ Clear Form</string>
+           </property>
+           <property name="toolTip">
+            <string>Clear all form fields</string>
+           </property>
+           <property name="styleSheet">
+            <string>QPushButton {
+    background-color: #f44336;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    font-size: 14px;
+    margin: 4px 2px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #da190b;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+QPushButton:pressed {
+    background-color: #b71c1c;
+    transform: translateY(0px);
+}</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_MyTokens">
+      <attribute name="title">
+       <string>📚 My Tokens</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>12</number>
+       </property>
+       <item>
+        <widget class="QGroupBox" name="groupBox_MyTokens">
+         <property name="title">
+          <string>🪙 My Created Tokens</string>
+         </property>
+         <property name="styleSheet">
+          <string>QGroupBox {
+    font-weight: bold;
+    font-size: 14px;
+    color: #4CAF50;
+}</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <property name="spacing">
+           <number>8</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_Search">
+              <property name="text">
+               <string>🔍 Search:</string>
+              </property>
+              <property name="styleSheet">
+               <string>font-weight: bold; font-size: 13px;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_Search">
+              <property name="placeholderText">
+               <string>Search tokens by name or symbol...</string>
+              </property>
+              <property name="styleSheet">
+               <string>QLineEdit {
+    padding: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QLineEdit:focus {
+    border-color: #4CAF50;
+    outline: none;
+}</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_RefreshTokens">
+              <property name="minimumSize">
+               <size>
+                <width>80</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>♻️ Refresh</string>
+              </property>
+              <property name="toolTip">
+               <string>Refresh token list</string>
+              </property>
+              <property name="styleSheet">
+               <string>QPushButton {
+    background-color: #2196F3;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    text-align: center;
+    font-size: 12px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #0b7dda;
+}
+QPushButton:pressed {
+    background-color: #0d47a1;
+}</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QTableWidget" name="tableWidget_MyTokens">
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+            <property name="sortingEnabled">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string>QTableWidget {
+    gridline-color: #d0d0d0;
+    background-color: white;
+    alternate-background-color: #f8f8f8;
+}
+QTableWidget::item {
+    padding: 4px;
+    border-bottom: 1px solid #e0e0e0;
+}
+QTableWidget::item:selected {
+    background-color: #e3f2fd;
+    color: black;
+}
+QHeaderView::section {
+    background-color: #f5f5f5;
+    padding: 6px;
+    border: 1px solid #d0d0d0;
+    font-weight: bold;
+}</string>
+            </property>
+            <column>
+             <property name="text">
+              <string>Token Name</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Symbol</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Total Supply</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Decimals</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Token Address</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Creation Date</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Actions</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_TokenTransfer">
+      <attribute name="title">
+       <string>📤 Transfer Tokens</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <property name="spacing">
+        <number>12</number>
+       </property>
+       <item>
+        <widget class="QGroupBox" name="groupBox_TransferForm">
+         <property name="title">
+          <string>📤 Transfer Tokens</string>
+         </property>
+         <property name="styleSheet">
+          <string>QGroupBox {
+    font-weight: bold;
+    font-size: 14px;
+    color: #2196F3;
+}</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_2">
+          <property name="spacing">
+           <number>8</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_SelectToken">
+            <property name="text">
+             <string>Select Token:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="comboBox_SelectToken">
+            <property name="placeholderText">
+             <string>Choose token to transfer</string>
+            </property>
+            <property name="styleSheet">
+             <string>QComboBox {
+    padding: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QComboBox:focus {
+    border-color: #2196F3;
+    outline: none;
+}</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_AvailableBalance">
+            <property name="text">
+             <string>Available Balance:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_AvailableBalanceValue">
+            <property name="text">
+             <string>0.00000000</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; color: #2E8B57; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_TransferAmount">
+            <property name="text">
+             <string>Transfer Amount:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="ShahcoinAmountField" name="amountField_TransferAmount">
+            <property name="placeholderText">
+             <string>Enter amount to transfer</string>
+            </property>
+            <property name="styleSheet">
+             <string>QLineEdit {
+    padding: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QLineEdit:focus {
+    border-color: #2196F3;
+    outline: none;
+}</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_RecipientAddress">
+            <property name="text">
+             <string>Recipient Address:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="lineEdit_RecipientAddress">
+            <property name="placeholderText">
+             <string>Enter recipient Shahcoin address</string>
+            </property>
+            <property name="styleSheet">
+             <string>QLineEdit {
+    padding: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QLineEdit:focus {
+    border-color: #2196F3;
+    outline: none;
+}</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_TransferFee">
+            <property name="text">
+             <string>Transfer Fee:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="label_TransferFeeValue">
+            <property name="text">
+             <string>0.00100000 SHAH</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; color: #FF6347; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="pushButton_TransferTokens">
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>44</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>📤 Transfer Tokens</string>
+           </property>
+           <property name="toolTip">
+            <string>Transfer the selected tokens to the recipient address</string>
+           </property>
+           <property name="styleSheet">
+            <string>QPushButton {
+    background-color: #2196F3;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #0b7dda;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+QPushButton:pressed {
+    background-color: #0d47a1;
+    transform: translateY(0px);
+}
+QPushButton:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    transform: none;
+    box-shadow: none;
+}</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ShahcoinAmountField</class>
+   <extends>QWidget</extends>
+   <header>qt/shahcoinamountfield.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

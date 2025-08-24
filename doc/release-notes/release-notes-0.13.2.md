@@ -1,17 +1,17 @@
-Shahcoin Core version 0.13.2 is now available from:
+SHAHCOIN Core version 0.13.2 is now available from:
 
-  <https://shahcoin.org/bin/shahcoin-core-0.13.2/>
+  <https://shah.vip/bin/shahcoin-core-0.13.2/>
 
 This is a new minor version release, including various bugfixes and
 performance improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at github:
 
-  <https://github.com/shahcoin/shahcoin/issues>
+  <https://github.com/SHAHCoinvip/shahcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://shahcoincore.org/en/list/announcements/join/>
+  <https://shah.vip/en/list/announcements/join/>
 
 Compatibility
 ==============
@@ -21,8 +21,8 @@ an OS initially released in 2001. This means that not even critical security
 updates will be released anymore. Without security updates, using a shahcoin
 wallet on a XP machine is irresponsible at least.
 
-In addition to that, with 0.12.x there have been varied reports of Shahcoin Core
-randomly crashing on Windows XP. It is [not clear](https://github.com/shahcoin/shahcoin/issues/7681#issuecomment-217439891)
+In addition to that, with 0.12.x there have been varied reports of SHAHCOIN Core
+randomly crashing on Windows XP. It is [not clear](https://github.com/SHAHCoinvip/shahcoin/issues/7681#issuecomment-217439891)
 what the source of these crashes is, but it is likely that upstream
 libraries such as Qt are no longer being tested on XP.
 

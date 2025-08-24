@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -11,7 +11,8 @@
 #include <flatfile.h>
 #include <hash.h>
 #include <kernel/chain.h>
-#include <kernel/chainparams.h>
+#include <chainparams.h>
+#include <checkpoints.h>
 #include <kernel/messagestartchars.h>
 #include <logging.h>
 #include <pow.h>
@@ -302,7 +303,7 @@ void BlockManager::FindFilesToPrune(
     if (chain.m_chain.Height() < 0 || target == 0) {
         return;
     }
-    if (static_cast<uint64_t>(chain.m_chain.Height()) <= chainman.GetParams().PruneAfterHeight()) {
+    if (static_cast<uint64_t>(chain.m_chain.Height()) <= 1000) { // Hardcoded prune height for mainnet-only
         return;
     }
 
@@ -386,29 +387,8 @@ bool BlockManager::LoadBlockIndex(const std::optional<uint256>& snapshot_blockha
         return false;
     }
 
-    if (snapshot_blockhash) {
-        const std::optional<AssumeutxoData> maybe_au_data = GetParams().AssumeutxoForBlockhash(*snapshot_blockhash);
-        if (!maybe_au_data) {
-            m_opts.notifications.fatalError(strprintf("Assumeutxo data not found for the given blockhash '%s'.", snapshot_blockhash->ToString()));
-            return false;
-        }
-        const AssumeutxoData& au_data = *Assert(maybe_au_data);
-        m_snapshot_height = au_data.height;
-        CBlockIndex* base{LookupBlockIndex(*snapshot_blockhash)};
-
-        // Since nChainTx (responsible for estimated progress) isn't persisted
-        // to disk, we must bootstrap the value for assumedvalid chainstates
-        // from the hardcoded assumeutxo chainparams.
-        base->nChainTx = au_data.nChainTx;
-        LogPrintf("[snapshot] set nChainTx=%d for %s\n", au_data.nChainTx, snapshot_blockhash->ToString());
-    } else {
-        // If this isn't called with a snapshot blockhash, make sure the cached snapshot height
-        // is null. This is relevant during snapshot completion, when the blockman may be loaded
-        // with a height that then needs to be cleared after the snapshot is fully validated.
-        m_snapshot_height.reset();
-    }
-
-    Assert(m_snapshot_height.has_value() == snapshot_blockhash.has_value());
+    // Assumeutxo functionality disabled for mainnet-only
+    m_snapshot_height.reset();
 
     // Calculate nChainWork
     std::vector<CBlockIndex*> vSortedByHeight{GetAllBlockIndices()};

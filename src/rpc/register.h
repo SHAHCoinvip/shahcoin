@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2022 The Shahcoin Core developers
+// Copyright (C) 2025 The SHAHCOIN Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -19,6 +19,8 @@ void RegisterOutputScriptRPCCommands(CRPCTable&);
 void RegisterRawTransactionRPCCommands(CRPCTable &tableRPC);
 void RegisterSignMessageRPCCommands(CRPCTable&);
 void RegisterSignerRPCCommands(CRPCTable &tableRPC);
+void RegisterSecurityRPCCommands(CRPCTable&);
+void RegisterHybridRPCCommands(CRPCTable&);
 void RegisterTxoutProofRPCCommands(CRPCTable&);
 
 static inline void RegisterAllCoreRPCCommands(CRPCTable &t)
@@ -35,6 +37,8 @@ static inline void RegisterAllCoreRPCCommands(CRPCTable &t)
 #ifdef ENABLE_EXTERNAL_SIGNER
     RegisterSignerRPCCommands(t);
 #endif // ENABLE_EXTERNAL_SIGNER
+    RegisterSecurityRPCCommands(t);
+    RegisterHybridRPCCommands(t);
     RegisterTxoutProofRPCCommands(t);
 }
 

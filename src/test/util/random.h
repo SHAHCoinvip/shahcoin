@@ -1,4 +1,4 @@
-// Copyright (c) 2023 The Shahcoin Core developers
+// Copyright (c) 2023 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -6,6 +6,7 @@
 #define SHAHCOIN_TEST_UTIL_RANDOM_H
 
 #include <consensus/amount.h>
+#include <consensus/validation.h>
 #include <random.h>
 #include <uint256.h>
 

@@ -1,0 +1,804 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SettingsPage</class>
+ <widget class="QWidget" name="SettingsPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Settings</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>10</number>
+   </property>
+   <property name="leftMargin">
+    <number>15</number>
+   </property>
+   <property name="topMargin">
+    <number>15</number>
+   </property>
+   <property name="rightMargin">
+    <number>15</number>
+   </property>
+   <property name="bottomMargin">
+    <number>15</number>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="groupBox_Mining">
+     <property name="title">
+      <string>⚒️ Mining Preferences</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QGroupBox {
+    font-weight: bold;
+    font-size: 14px;
+    color: #2E8B57;
+    border: 2px solid #2E8B57;
+    border-radius: 8px;
+    margin-top: 1ex;
+    padding-top: 10px;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 5px 0 5px;
+}</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_Mining">
+      <property name="spacing">
+       <number>8</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_Algorithm">
+        <item>
+         <widget class="QLabel" name="label_Algorithm">
+          <property name="text">
+           <string>Default Mining Algorithm:</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font-weight: bold; font-size: 13px;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboBox_MiningAlgorithm">
+          <property name="styleSheet">
+           <string notr="true">QComboBox {
+    padding: 8px;
+    border: 2px solid #CCCCCC;
+    border-radius: 6px;
+    font-size: 12px;
+    background-color: white;
+}
+QComboBox:focus {
+    border-color: #2E8B57;
+}
+QComboBox::drop-down {
+    border: none;
+    width: 20px;
+}
+QComboBox::down-arrow {
+    image: url(:/icons/down_arrow);
+    width: 12px;
+    height: 12px;
+}</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>SHA256d</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Scrypt</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Groestl</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_Algorithm">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_AlgorithmHelp">
+        <property name="text">
+         <string>Preferred algorithm when launching miner</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: #666666; font-size: 11px; font-style: italic;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_AutoSwitch">
+        <property name="text">
+         <string>Enable auto-switching between algorithms</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QCheckBox {
+    font-size: 12px;
+    spacing: 8px;
+}
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+}
+QCheckBox::indicator:unchecked {
+    border: 2px solid #CCCCCC;
+    background-color: white;
+    border-radius: 3px;
+}
+QCheckBox::indicator:checked {
+    border: 2px solid #2E8B57;
+    background-color: #2E8B57;
+    border-radius: 3px;
+}</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_Fees">
+     <property name="title">
+      <string>💰 Transaction Fees</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QGroupBox {
+    font-weight: bold;
+    font-size: 14px;
+    color: #4169E1;
+    border: 2px solid #4169E1;
+    border-radius: 8px;
+    margin-top: 1ex;
+    padding-top: 10px;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 5px 0 5px;
+}</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_Fees">
+      <property name="spacing">
+       <number>8</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_CustomFee">
+        <item>
+         <widget class="QLabel" name="label_CustomFee">
+          <property name="text">
+           <string>Custom Transaction Fee (SHAH/kB):</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font-weight: bold; font-size: 13px;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_CustomFee">
+          <property name="decimals">
+           <number>4</number>
+          </property>
+          <property name="minimum">
+           <double>0.000100000000000</double>
+          </property>
+          <property name="maximum">
+           <double>0.010000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.000100000000000</double>
+          </property>
+          <property name="value">
+           <double>0.001000000000000</double>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QDoubleSpinBox {
+    padding: 8px;
+    border: 2px solid #CCCCCC;
+    border-radius: 6px;
+    font-size: 12px;
+    background-color: white;
+}
+QDoubleSpinBox:focus {
+    border-color: #4169E1;
+}</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_CustomFee">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_DynamicFees">
+        <property name="text">
+         <string>Enable Dynamic Fees</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QCheckBox {
+    font-size: 12px;
+    spacing: 8px;
+}
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+}
+QCheckBox::indicator:unchecked {
+    border: 2px solid #CCCCCC;
+    background-color: white;
+    border-radius: 3px;
+}
+QCheckBox::indicator:checked {
+    border: 2px solid #4169E1;
+    background-color: #4169E1;
+    border-radius: 3px;
+}</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_FeesHelp">
+        <property name="text">
+         <string>Applies to transactions from this wallet</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: #666666; font-size: 11px; font-style: italic;</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_Display">
+     <property name="title">
+      <string>🎨 Display Preferences</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QGroupBox {
+    font-weight: bold;
+    font-size: 14px;
+    color: #4CAF50;
+    border: 2px solid #4CAF50;
+    border-radius: 8px;
+    margin-top: 1ex;
+    padding-top: 10px;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 5px 0 5px;
+}</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_Display">
+      <property name="spacing">
+       <number>8</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_Language">
+        <item>
+         <widget class="QLabel" name="label_Language">
+          <property name="text">
+           <string>Interface Language:</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font-weight: bold; font-size: 13px;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboBox_Language">
+          <property name="styleSheet">
+           <string notr="true">QComboBox {
+    padding: 8px;
+    border: 2px solid #CCCCCC;
+    border-radius: 6px;
+    font-size: 12px;
+    background-color: white;
+}
+QComboBox:focus {
+    border-color: #4CAF50;
+}
+QComboBox::drop-down {
+    border: none;
+    width: 20px;
+}
+QComboBox::down-arrow {
+    image: url(:/icons/down_arrow);
+    width: 12px;
+    height: 12px;
+}</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>English</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>French</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Spanish</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Persian</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Arabic</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Chinese</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_Language">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_Theme">
+        <item>
+         <widget class="QLabel" name="label_Theme">
+          <property name="text">
+           <string>UI Theme:</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font-weight: bold; font-size: 13px;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboBox_Theme">
+          <property name="styleSheet">
+           <string notr="true">QComboBox {
+    padding: 8px;
+    border: 2px solid #CCCCCC;
+    border-radius: 6px;
+    font-size: 12px;
+    background-color: white;
+}
+QComboBox:focus {
+    border-color: #4CAF50;
+}
+QComboBox::drop-down {
+    border: none;
+    width: 20px;
+}
+QComboBox::down-arrow {
+    image: url(:/icons/down_arrow);
+    width: 12px;
+    height: 12px;
+}</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>Light</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Dark</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>System Default</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_Theme">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_Performance">
+     <property name="title">
+      <string>🔒 Performance &amp; Security</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QGroupBox {
+    font-weight: bold;
+    font-size: 14px;
+    color: #FF6347;
+    border: 2px solid #FF6347;
+    border-radius: 8px;
+    margin-top: 1ex;
+    padding-top: 10px;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 5px 0 5px;
+}</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_Performance">
+      <property name="spacing">
+       <number>8</number>
+      </property>
+      <item>
+       <widget class="QCheckBox" name="checkBox_StartMinimized">
+        <property name="text">
+         <string>Start minimized to tray</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QCheckBox {
+    font-size: 12px;
+    spacing: 8px;
+}
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+}
+QCheckBox::indicator:unchecked {
+    border: 2px solid #CCCCCC;
+    background-color: white;
+    border-radius: 3px;
+}
+QCheckBox::indicator:checked {
+    border: 2px solid #FF6347;
+    background-color: #FF6347;
+    border-radius: 3px;
+}</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_RPCLocalhost">
+        <property name="text">
+         <string>Enable RPC access from localhost only</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QCheckBox {
+    font-size: 12px;
+    spacing: 8px;
+}
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+}
+QCheckBox::indicator:unchecked {
+    border: 2px solid #CCCCCC;
+    background-color: white;
+    border-radius: 3px;
+}
+QCheckBox::indicator:checked {
+    border: 2px solid #FF6347;
+    background-color: #FF6347;
+    border-radius: 3px;
+}</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_WarnLargeAmount">
+        <property name="text">
+         <string>Warn before sending over 1000 SHAH</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QCheckBox {
+    font-size: 12px;
+    spacing: 8px;
+}
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+}
+QCheckBox::indicator:unchecked {
+    border: 2px solid #CCCCCC;
+    background-color: white;
+    border-radius: 3px;
+}
+QCheckBox::indicator:checked {
+    border: 2px solid #FF6347;
+    background-color: #FF6347;
+    border-radius: 3px;
+}</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_About">
+     <property name="title">
+      <string>ℹ️ About Shahcoin</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QGroupBox {
+    font-weight: bold;
+    font-size: 14px;
+    color: #2196F3;
+    border: 2px solid #2196F3;
+    border-radius: 8px;
+    margin-top: 1ex;
+    padding-top: 10px;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 5px 0 5px;
+}</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_About">
+      <property name="spacing">
+       <number>8</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_Version">
+        <item>
+         <widget class="QLabel" name="label_Version">
+          <property name="text">
+           <string>Version:</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font-weight: bold; font-size: 13px;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_VersionValue">
+          <property name="text">
+           <string>Shahcoin Core v21.0.0</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font-size: 12px; color: #666666;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_Version">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_Website">
+        <item>
+         <widget class="QLabel" name="label_Website">
+          <property name="text">
+           <string>Website:</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font-weight: bold; font-size: 13px;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_Website">
+          <property name="text">
+           <string>https://shah.vip</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    background-color: transparent;
+    border: none;
+    color: #2196F3;
+    font-size: 12px;
+    text-decoration: underline;
+    padding: 4px;
+}
+QPushButton:hover {
+    color: #1976D2;
+    background-color: #E3F2FD;
+    border-radius: 4px;
+}
+QPushButton:pressed {
+    color: #0D47A1;
+}</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_Website">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_Founder">
+        <property name="text">
+         <string>Hamid Rad — Founder of Shahcoin</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-size: 12px; color: #666666; font-style: italic;</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_Buttons">
+     <item>
+      <widget class="QPushButton" name="pushButton_Save">
+       <property name="text">
+        <string>💾 Save Settings</string>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 13px;
+    margin: 4px 2px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #45a049;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+QPushButton:pressed {
+    background-color: #3d8b40;
+    transform: translateY(0px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+QPushButton:disabled {
+    background-color: #cccccc;
+    color: #666666;
+}</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_Reset">
+       <property name="text">
+        <string>🔄 Reset to Defaults</string>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #FF9800;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 13px;
+    margin: 4px 2px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #F57C00;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+QPushButton:pressed {
+    background-color: #EF6C00;
+    transform: translateY(0px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+QPushButton:disabled {
+    background-color: #cccccc;
+    color: #666666;
+}</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_Buttons">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

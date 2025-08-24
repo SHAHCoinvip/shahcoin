@@ -1,0 +1,782 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2025 Hamid Rad / SHAHCOIN Core */
+
+/* Premium Subscription Styles */
+
+/* Premium Status Widget */
+.premium-status-widget {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.premium-status-widget:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.premium-status-widget.premium {
+  background-color: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.premium-status-widget.free {
+  background-color: rgba(255, 107, 53, 0.1);
+  border: 1px solid rgba(255, 107, 53, 0.3);
+}
+
+.premium-status-icon {
+  font-size: 16px;
+}
+
+.premium-status-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.premium-plan {
+  font-weight: bold;
+  color: #4CAF50;
+}
+
+.free-plan {
+  font-weight: bold;
+  color: #666;
+}
+
+.premium-expiry,
+.upgrade-text {
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+.premium-status-loading {
+  padding: 8px;
+  color: #666;
+  font-size: 12px;
+}
+
+/* Feature Gate */
+.feature-gate {
+  position: relative;
+  min-height: 200px;
+}
+
+.feature-gate-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: 8px;
+}
+
+.feature-gate-content {
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+.feature-gate-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.9;
+}
+
+.feature-gate-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.feature-gate-description {
+  font-size: 14px;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+.feature-gate-upgrade-btn {
+  background: linear-gradient(135deg, #FF6B35, #F7931E);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s ease;
+}
+
+.feature-gate-upgrade-btn:hover {
+  transform: translateY(-2px);
+}
+
+.feature-gate-disabled-content {
+  filter: blur(2px);
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Premium Upgrade Modal */
+.premium-upgrade-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.premium-upgrade-modal {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.premium-upgrade-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  border-bottom: 1px solid #eee;
+  background: linear-gradient(135deg, #FF6B35, #F7931E);
+  color: white;
+  border-radius: 12px 12px 0 0;
+}
+
+.premium-upgrade-header h2 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 24px;
+}
+
+.premium-upgrade-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.premium-upgrade-close:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.premium-upgrade-content {
+  padding: 30px;
+}
+
+/* Plans Step */
+.premium-plans-step h3 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 20px;
+}
+
+.premium-plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.premium-plan-card {
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  padding: 25px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  background: white;
+}
+
+.premium-plan-card:hover {
+  border-color: #007bff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 123, 255, 0.15);
+}
+
+.premium-plan-card.selected {
+  border-color: #007bff;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+}
+
+.premium-plan-card.recommended {
+  border-color: #FF6B35;
+}
+
+.premium-plan-card.recommended.selected {
+  background: linear-gradient(135deg, #FF6B35, #F7931E);
+}
+
+.premium-plan-badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #FF6B35;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.premium-plan-card h4 {
+  margin: 0 0 15px 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.premium-plan-price {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.premium-plan-interval {
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.premium-plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.premium-plan-features li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.premium-plan-features svg {
+  color: #4CAF50;
+  flex-shrink: 0;
+}
+
+.premium-plan-card.selected .premium-plan-features svg {
+  color: white;
+}
+
+/* Payment Step */
+.premium-payment-step h3 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 20px;
+}
+
+.premium-payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.premium-payment-method {
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.premium-payment-method:hover {
+  border-color: #007bff;
+}
+
+.premium-payment-method.selected {
+  border-color: #007bff;
+  background: #f8f9ff;
+}
+
+.premium-payment-method-name {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.premium-payment-method-desc {
+  font-size: 14px;
+  color: #666;
+}
+
+.premium-email-input {
+  margin-top: 20px;
+}
+
+.premium-email-input label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+.premium-email-input input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.premium-email-input input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* Summary Step */
+.premium-summary-step h3 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 20px;
+}
+
+.premium-summary-details {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.premium-summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.premium-summary-item:last-child {
+  margin-bottom: 0;
+  border-top: 2px solid #dee2e6;
+  padding-top: 15px;
+  font-weight: bold;
+}
+
+.premium-summary-price {
+  color: #28a745;
+  font-size: 18px;
+}
+
+/* Button Styles */
+.premium-upgrade-continue,
+.premium-upgrade-purchase {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  transition: background-color 0.2s ease;
+}
+
+.premium-upgrade-continue:hover,
+.premium-upgrade-purchase:hover {
+  background: #218838;
+}
+
+.premium-upgrade-purchase:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.premium-payment-buttons,
+.premium-summary-buttons {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.premium-payment-buttons button:first-child,
+.premium-summary-buttons button:first-child {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Premium Features Dashboard */
+.premium-features-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.premium-features-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #eee;
+}
+
+.premium-features-header h2 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
+}
+
+.premium-features-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #eee;
+  overflow-x: auto;
+}
+
+.premium-features-tab {
+  background: none;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  color: #666;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.premium-features-tab:hover {
+  color: #333;
+  background: #f8f9fa;
+}
+
+.premium-features-tab.active {
+  color: #007bff;
+  border-bottom-color: #007bff;
+}
+
+.premium-features-content {
+  display: grid;
+  gap: 20px;
+}
+
+.premium-feature-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  transition: box-shadow 0.2s ease;
+}
+
+.premium-feature-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.premium-feature-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.premium-feature-icon {
+  font-size: 24px;
+  color: #007bff;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.premium-feature-info {
+  flex: 1;
+}
+
+.premium-feature-info h3 {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.premium-feature-info p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.premium-feature-status {
+  flex-shrink: 0;
+}
+
+.feature-unlocked {
+  color: #4CAF50;
+  font-size: 20px;
+}
+
+.feature-locked {
+  color: #ccc;
+  font-size: 20px;
+}
+
+.premium-feature-upgrade {
+  margin-top: 15px;
+  padding: 10px;
+  background: linear-gradient(135deg, #FF6B35, #F7931E);
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Subscription Management */
+.subscription-management {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.subscription-details {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 25px;
+  margin-bottom: 20px;
+}
+
+.subscription-details h3 {
+  margin: 0 0 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
+}
+
+.subscription-info {
+  display: grid;
+  gap: 15px;
+}
+
+.subscription-info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.subscription-info-item:last-child {
+  border-bottom: none;
+}
+
+.status.active {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.status.inactive {
+  color: #F44336;
+  font-weight: bold;
+}
+
+.subscription-actions {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.subscription-action-btn {
+  flex: 1;
+  min-width: 150px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.subscription-action-btn.primary {
+  background: #007bff;
+  color: white;
+}
+
+.subscription-action-btn.primary:hover {
+  background: #0056b3;
+}
+
+.subscription-action-btn.secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.subscription-action-btn.secondary:hover {
+  background: #545b62;
+}
+
+.subscription-action-btn.danger {
+  background: #dc3545;
+  color: white;
+}
+
+.subscription-action-btn.danger:hover {
+  background: #c82333;
+}
+
+.subscription-cancel-confirm {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.subscription-cancel-confirm h4 {
+  margin: 0 0 10px 0;
+  color: #856404;
+}
+
+.subscription-cancel-confirm p {
+  margin: 0 0 20px 0;
+  color: #856404;
+}
+
+.subscription-cancel-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.subscription-cancel-actions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.subscription-cancel-actions button:first-child {
+  background: #28a745;
+  color: white;
+}
+
+.subscription-cancel-actions button.danger {
+  background: #dc3545;
+  color: white;
+}
+
+.subscription-loading,
+.subscription-inactive {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.trademark-notice {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #6c757d;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.trademark-notice p {
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .premium-upgrade-modal {
+    width: 95%;
+    margin: 20px;
+  }
+  
+  .premium-upgrade-content {
+    padding: 20px;
+  }
+  
+  .premium-plans-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .premium-features-tabs {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .premium-features-tab {
+    text-align: center;
+  }
+  
+  .subscription-actions {
+    flex-direction: column;
+  }
+  
+  .subscription-action-btn {
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .premium-features-dashboard {
+    padding: 10px;
+  }
+  
+  .premium-features-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .premium-feature-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+}

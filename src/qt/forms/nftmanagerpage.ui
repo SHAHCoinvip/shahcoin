@@ -1,0 +1,857 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>NFTManagerPage</class>
+ <widget class="QWidget" name="NFTManagerPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>900</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>NFT Manager - Shahcoin Core</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>12</number>
+   </property>
+   <property name="leftMargin">
+    <number>12</number>
+   </property>
+   <property name="topMargin">
+    <number>12</number>
+   </property>
+   <property name="rightMargin">
+    <number>12</number>
+   </property>
+   <property name="bottomMargin">
+    <number>12</number>
+   </property>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <property name="styleSheet">
+      <string>QTabWidget::pane {
+    border: 1px solid #c0c0c0;
+    background-color: white;
+}
+QTabBar::tab {
+    background-color: #f0f0f0;
+    padding: 8px 16px;
+    margin-right: 2px;
+    border: 1px solid #c0c0c0;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    font-weight: bold;
+}
+QTabBar::tab:selected {
+    background-color: white;
+    border-bottom: 1px solid white;
+}
+QTabBar::tab:hover {
+    background-color: #e0e0e0;
+}</string>
+     </property>
+     <widget class="QWidget" name="tab_MintNFT">
+      <attribute name="title">
+       <string>🖼️ Mint NFT</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>12</number>
+       </property>
+       <item>
+        <widget class="QGroupBox" name="groupBox_MintForm">
+         <property name="title">
+          <string>🎨 Create New NFT</string>
+         </property>
+         <property name="styleSheet">
+          <string>QGroupBox {
+    font-weight: bold;
+    font-size: 14px;
+    color: #4CAF50;
+}</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout">
+          <property name="spacing">
+           <number>8</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_Name">
+            <property name="text">
+             <string>NFT Name:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit_Name">
+            <property name="placeholderText">
+             <string>Enter NFT name (e.g., My Awesome NFT)</string>
+            </property>
+            <property name="styleSheet">
+             <string>QLineEdit {
+    padding: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QLineEdit:focus {
+    border-color: #4CAF50;
+    outline: none;
+}</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_Description">
+            <property name="text">
+             <string>Description:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QTextEdit" name="textEdit_Description">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>100</height>
+             </size>
+            </property>
+            <property name="placeholderText">
+             <string>Enter NFT description...</string>
+            </property>
+            <property name="styleSheet">
+             <string>QTextEdit {
+    padding: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QTextEdit:focus {
+    border-color: #4CAF50;
+    outline: none;
+}</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_ImagePath">
+            <property name="text">
+             <string>Image Path:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_ImagePath">
+              <property name="placeholderText">
+               <string>Enter image URL or file path</string>
+              </property>
+              <property name="styleSheet">
+               <string>QLineEdit {
+    padding: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QLineEdit:focus {
+    border-color: #4CAF50;
+    outline: none;
+}</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_BrowseImage">
+              <property name="minimumSize">
+               <size>
+                <width>80</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>📁 Browse</string>
+              </property>
+              <property name="toolTip">
+               <string>Browse for image file</string>
+              </property>
+              <property name="styleSheet">
+               <string>QPushButton {
+    background-color: #2196F3;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    text-align: center;
+    font-size: 12px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #0b7dda;
+}
+QPushButton:pressed {
+    background-color: #0d47a1;
+}</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_Collection">
+            <property name="text">
+             <string>Collection:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QComboBox" name="comboBox_Collection">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <property name="placeholderText">
+             <string>Select or create collection</string>
+            </property>
+            <property name="styleSheet">
+             <string>QComboBox {
+    padding: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QComboBox:focus {
+    border-color: #4CAF50;
+    outline: none;
+}</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_MintFee">
+            <property name="text">
+             <string>Minting Fee:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="label_MintFeeValue">
+            <property name="text">
+             <string>100.00000000 SHAH</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; color: #FF6347; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_Preview">
+         <property name="title">
+          <string>👁️ NFT Preview</string>
+         </property>
+         <property name="styleSheet">
+          <string>QGroupBox {
+    font-weight: bold;
+    font-size: 14px;
+    color: #2196F3;
+}</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="spacing">
+           <number>16</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_PreviewImage">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string>border: 2px dashed #cccccc; background-color: #f9f9f9; border-radius: 8px;</string>
+            </property>
+            <property name="text">
+             <string>No Image Selected</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_PreviewName">
+              <property name="text">
+               <string>NFT Name: [Enter name above]</string>
+              </property>
+              <property name="styleSheet">
+               <string>font-weight: bold; font-size: 14px; color: #2E8B57;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_PreviewDescription">
+              <property name="text">
+               <string>Description: [Enter description above]</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+              <property name="styleSheet">
+               <string>font-size: 13px; color: #666666;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_PreviewCollection">
+              <property name="text">
+               <string>Collection: [Select collection above]</string>
+              </property>
+              <property name="styleSheet">
+               <string>font-size: 13px; color: #666666;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="pushButton_MintNFT">
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>44</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>🖼️ Mint NFT</string>
+           </property>
+           <property name="toolTip">
+            <string>Create and mint the NFT (Fee: 100 SHAH)</string>
+           </property>
+           <property name="styleSheet">
+            <string>QPushButton {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #45a049;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+QPushButton:pressed {
+    background-color: #3d8b40;
+    transform: translateY(0px);
+}
+QPushButton:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    transform: none;
+    box-shadow: none;
+}</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_ClearForm">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>44</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>🗑️ Clear Form</string>
+           </property>
+           <property name="toolTip">
+            <string>Clear all form fields</string>
+           </property>
+           <property name="styleSheet">
+            <string>QPushButton {
+    background-color: #f44336;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    font-size: 14px;
+    margin: 4px 2px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #da190b;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+QPushButton:pressed {
+    background-color: #b71c1c;
+    transform: translateY(0px);
+}</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_MyNFTs">
+      <attribute name="title">
+       <string>📚 My NFTs</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <property name="spacing">
+        <number>12</number>
+       </property>
+       <item>
+        <widget class="QGroupBox" name="groupBox_MyNFTs">
+         <property name="title">
+          <string>🎨 My NFT Collection</string>
+         </property>
+         <property name="styleSheet">
+          <string>QGroupBox {
+    font-weight: bold;
+    font-size: 14px;
+    color: #4CAF50;
+}</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <property name="spacing">
+           <number>8</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="spacing">
+             <number>8</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="label_Filter">
+              <property name="text">
+               <string>🔍 Filter:</string>
+              </property>
+              <property name="styleSheet">
+               <string>font-weight: bold; font-size: 13px;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboBox_Filter">
+              <property name="styleSheet">
+               <string>QComboBox {
+    padding: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QComboBox:focus {
+    border-color: #4CAF50;
+    outline: none;
+}</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>All NFTs</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>By Collection</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Recently Minted</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_Search">
+              <property name="placeholderText">
+               <string>🔍 Search NFTs...</string>
+              </property>
+              <property name="styleSheet">
+               <string>QLineEdit {
+    padding: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QLineEdit:focus {
+    border-color: #4CAF50;
+    outline: none;
+}</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_RefreshNFTs">
+              <property name="minimumSize">
+               <size>
+                <width>80</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>♻️ Refresh</string>
+              </property>
+              <property name="toolTip">
+               <string>Refresh NFT list</string>
+              </property>
+              <property name="styleSheet">
+               <string>QPushButton {
+    background-color: #2196F3;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    text-align: center;
+    font-size: 12px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #0b7dda;
+}
+QPushButton:pressed {
+    background-color: #0d47a1;
+}</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QTableWidget" name="tableWidget_MyNFTs">
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+            <property name="sortingEnabled">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string>QTableWidget {
+    gridline-color: #d0d0d0;
+    background-color: white;
+    alternate-background-color: #f8f8f8;
+}
+QTableWidget::item {
+    padding: 4px;
+    border-bottom: 1px solid #e0e0e0;
+}
+QTableWidget::item:selected {
+    background-color: #e3f2fd;
+    color: black;
+}
+QHeaderView::section {
+    background-color: #f5f5f5;
+    padding: 6px;
+    border: 1px solid #d0d0d0;
+    font-weight: bold;
+}</string>
+            </property>
+            <column>
+             <property name="text">
+              <string>Thumbnail</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Name</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Collection</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Token ID</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Mint Date</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Actions</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_TransferNFT">
+      <attribute name="title">
+       <string>📤 Transfer NFT</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <property name="spacing">
+        <number>12</number>
+       </property>
+       <item>
+        <widget class="QGroupBox" name="groupBox_TransferForm">
+         <property name="title">
+          <string>📤 Transfer NFT</string>
+         </property>
+         <property name="styleSheet">
+          <string>QGroupBox {
+    font-weight: bold;
+    font-size: 14px;
+    color: #2196F3;
+}</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_2">
+          <property name="spacing">
+           <number>8</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_SelectNFT">
+            <property name="text">
+             <string>Select NFT:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="comboBox_SelectNFT">
+            <property name="placeholderText">
+             <string>Choose NFT to transfer</string>
+            </property>
+            <property name="styleSheet">
+             <string>QComboBox {
+    padding: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QComboBox:focus {
+    border-color: #2196F3;
+    outline: none;
+}</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_RecipientAddress">
+            <property name="text">
+             <string>Recipient Address:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEdit_RecipientAddress">
+            <property name="placeholderText">
+             <string>Enter recipient Shahcoin address</string>
+            </property>
+            <property name="styleSheet">
+             <string>QLineEdit {
+    padding: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QLineEdit:focus {
+    border-color: #2196F3;
+    outline: none;
+}</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_TransferFee">
+            <property name="text">
+             <string>Transfer Fee:</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="label_TransferFeeValue">
+            <property name="text">
+             <string>0.00100000 SHAH</string>
+            </property>
+            <property name="styleSheet">
+             <string>font-weight: bold; color: #FF6347; font-size: 13px;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="pushButton_TransferNFT">
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>44</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>📤 Transfer NFT</string>
+           </property>
+           <property name="toolTip">
+            <string>Transfer the selected NFT to the recipient address</string>
+           </property>
+           <property name="styleSheet">
+            <string>QPushButton {
+    background-color: #2196F3;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #0b7dda;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+QPushButton:pressed {
+    background-color: #0d47a1;
+    transform: translateY(0px);
+}
+QPushButton:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    transform: none;
+    box-shadow: none;
+}</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

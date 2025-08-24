@@ -1,0 +1,784 @@
+/* Shahcoin Qt Wallet - Modern Skin */
+/* Flat design with light neumorphism and glassmorphism effects */
+
+/* ===== COLOR PALETTE ===== */
+:root {
+    --shah-gold: #FFD700;
+    --shah-gold-dark: #DAA520;
+    --shah-gold-light: #FFF8DC;
+    --shah-black: #1A1A1A;
+    --shah-black-light: #2D2D2D;
+    --shah-white: #FFFFFF;
+    --shah-gray: #F5F5F5;
+    --shah-gray-dark: #E0E0E0;
+    --shah-blue: #4682B4;
+    --shah-green: #00FF7F;
+    --shah-red: #FF6B6B;
+    --shah-purple: #9370DB;
+    
+    /* Neumorphism colors */
+    --neu-light: #FFFFFF;
+    --neu-dark: #E0E0E0;
+    --neu-shadow-light: rgba(255, 255, 255, 0.8);
+    --neu-shadow-dark: rgba(0, 0, 0, 0.1);
+    
+    /* Glassmorphism colors */
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* ===== GLOBAL STYLES ===== */
+QWidget {
+    font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+    font-size: 14px;
+    color: var(--shah-black);
+    background-color: var(--shah-white);
+}
+
+QMainWindow {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 var(--shah-white), stop:1 var(--shah-gray));
+}
+
+/* ===== SIDEBAR STYLING ===== */
+QWidget#sidebar {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 var(--shah-black), stop:1 var(--shah-black-light));
+    border-right: 1px solid var(--shah-gray-dark);
+    min-width: 250px;
+    max-width: 250px;
+}
+
+QWidget#sidebar QPushButton {
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin: 4px 8px;
+    color: var(--shah-white);
+    font-weight: 500;
+    text-align: left;
+    min-height: 48px;
+}
+
+QWidget#sidebar QPushButton:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+QWidget#sidebar QPushButton:pressed {
+    background: rgba(255, 215, 0, 0.2);
+    border: 1px solid var(--shah-gold);
+}
+
+QWidget#sidebar QPushButton:checked {
+    background: var(--shah-gold);
+    color: var(--shah-black);
+    font-weight: 600;
+}
+
+/* Sidebar icons */
+QWidget#sidebar QPushButton::icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+}
+
+/* ===== TOP BAR STYLING ===== */
+QWidget#topBar {
+    background: var(--shah-white);
+    border-bottom: 1px solid var(--shah-gray-dark);
+    min-height: 60px;
+    padding: 0 20px;
+}
+
+QWidget#topBar QLabel {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--shah-black);
+}
+
+QWidget#topBar QPushButton {
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: var(--shah-black);
+    font-weight: 500;
+}
+
+QWidget#topBar QPushButton:hover {
+    background: var(--shah-gray);
+}
+
+/* ===== BALANCE CARDS ===== */
+QWidget#balanceCard {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 var(--shah-gold-light), stop:1 var(--shah-white));
+    border: 1px solid var(--shah-gray-dark);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 8px;
+    
+    /* Neumorphism effect */
+    box-shadow: 
+        8px 8px 16px var(--neu-shadow-dark),
+        -8px -8px 16px var(--neu-shadow-light);
+}
+
+QWidget#balanceCard QLabel#balanceAmount {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--shah-black);
+}
+
+QWidget#balanceCard QLabel#balanceFiat {
+    font-size: 14px;
+    color: var(--shah-black-light);
+    margin-top: 4px;
+}
+
+QWidget#balanceCard QLabel#coinIcon {
+    width: 48px;
+    height: 48px;
+    margin-right: 16px;
+}
+
+/* ===== TABS STYLING ===== */
+QTabWidget::pane {
+    border: 1px solid var(--shah-gray-dark);
+    border-radius: 12px;
+    background: var(--shah-white);
+    margin-top: -1px;
+}
+
+QTabBar::tab {
+    background: var(--shah-gray);
+    border: none;
+    border-radius: 8px 8px 0 0;
+    padding: 12px 20px;
+    margin-right: 4px;
+    color: var(--shah-black);
+    font-weight: 500;
+    min-width: 120px;
+}
+
+QTabBar::tab:hover {
+    background: var(--shah-gray-dark);
+}
+
+QTabBar::tab:selected {
+    background: var(--shah-white);
+    color: var(--shah-gold);
+    font-weight: 600;
+    border-bottom: 3px solid var(--shah-gold);
+}
+
+/* ===== INPUT FIELDS ===== */
+QLineEdit, QTextEdit, QPlainTextEdit {
+    background: var(--shah-white);
+    border: 2px solid var(--shah-gray-dark);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: var(--shah-black);
+}
+
+QLineEdit:focus, QTextEdit:focus, QPlainTextEdit:focus {
+    border: 2px solid var(--shah-gold);
+    background: var(--shah-gold-light);
+}
+
+QLineEdit:hover, QTextEdit:hover, QPlainTextEdit:hover {
+    border: 2px solid var(--shah-blue);
+}
+
+/* ===== BUTTONS ===== */
+QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 var(--shah-gold), stop:1 var(--shah-gold-dark));
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    color: var(--shah-black);
+    font-weight: 600;
+    font-size: 14px;
+    min-height: 44px;
+    
+    /* Neumorphism effect */
+    box-shadow: 
+        4px 4px 8px var(--neu-shadow-dark),
+        -4px -4px 8px var(--neu-shadow-light);
+}
+
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 var(--shah-gold-light), stop:1 var(--shah-gold));
+    transform: translateY(-1px);
+}
+
+QPushButton:pressed {
+    background: var(--shah-gold-dark);
+    transform: translateY(1px);
+    box-shadow: 
+        2px 2px 4px var(--neu-shadow-dark),
+        -2px -2px 4px var(--neu-shadow-light);
+}
+
+QPushButton:disabled {
+    background: var(--shah-gray);
+    color: var(--shah-gray-dark);
+    box-shadow: none;
+}
+
+/* Secondary buttons */
+QPushButton[class="secondary"] {
+    background: transparent;
+    border: 2px solid var(--shah-gold);
+    color: var(--shah-gold);
+}
+
+QPushButton[class="secondary"]:hover {
+    background: var(--shah-gold);
+    color: var(--shah-black);
+}
+
+/* Danger buttons */
+QPushButton[class="danger"] {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 var(--shah-red), stop:1 #E74C3C);
+    color: var(--shah-white);
+}
+
+/* ===== STAKING TIERS ===== */
+QWidget#stakingTier {
+    background: var(--shah-white);
+    border: 2px solid var(--shah-gray-dark);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 8px;
+    
+    /* Neumorphism effect */
+    box-shadow: 
+        6px 6px 12px var(--neu-shadow-dark),
+        -6px -6px 12px var(--neu-shadow-light);
+}
+
+QWidget#stakingTier:hover {
+    border: 2px solid var(--shah-gold);
+    transform: translateY(-2px);
+}
+
+QWidget#stakingTier[selected="true"] {
+    border: 2px solid var(--shah-gold);
+    background: var(--shah-gold-light);
+}
+
+QWidget#stakingTier QLabel#tierName {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--shah-black);
+}
+
+QWidget#stakingTier QLabel#tierAPY {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--shah-gold);
+}
+
+QWidget#stakingTier QLabel#tierBadge {
+    background: var(--shah-gold);
+    color: var(--shah-black);
+    border-radius: 12px;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ===== NFT GALLERY ===== */
+QWidget#nftCard {
+    background: var(--shah-white);
+    border: 1px solid var(--shah-gray-dark);
+    border-radius: 12px;
+    padding: 12px;
+    margin: 8px;
+    
+    /* Neumorphism effect */
+    box-shadow: 
+        4px 4px 8px var(--neu-shadow-dark),
+        -4px -4px 8px var(--neu-shadow-light);
+}
+
+QWidget#nftCard:hover {
+    border: 1px solid var(--shah-gold);
+    transform: translateY(-2px);
+    box-shadow: 
+        8px 8px 16px var(--neu-shadow-dark),
+        -8px -8px 16px var(--neu-shadow-light);
+}
+
+QWidget#nftCard QLabel#nftImage {
+    border-radius: 8px;
+    background: var(--shah-gray);
+}
+
+QWidget#nftCard QLabel#nftName {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--shah-black);
+    margin-top: 8px;
+}
+
+QWidget#nftCard QLabel#nftPrice {
+    font-size: 14px;
+    color: var(--shah-gold);
+    font-weight: 600;
+}
+
+/* ===== TOKEN/NFT CREATION PANELS ===== */
+QWidget#creationPanel {
+    background: var(--shah-white);
+    border: 1px solid var(--shah-gray-dark);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 16px;
+    
+    /* Glassmorphism effect */
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px var(--glass-shadow);
+}
+
+QWidget#creationPanel QLabel#sectionTitle {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--shah-black);
+    margin-bottom: 16px;
+}
+
+QWidget#creationPanel QGroupBox {
+    border: 2px solid var(--shah-gray-dark);
+    border-radius: 8px;
+    margin-top: 16px;
+    padding-top: 16px;
+}
+
+QWidget#creationPanel QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 12px;
+    padding: 0 8px 0 8px;
+    background: var(--shah-white);
+    color: var(--shah-black);
+    font-weight: 600;
+}
+
+/* ===== TABLES ===== */
+QTableView, QTableWidget {
+    background: var(--shah-white);
+    border: 1px solid var(--shah-gray-dark);
+    border-radius: 8px;
+    gridline-color: var(--shah-gray-dark);
+    selection-background-color: var(--shah-gold-light);
+    selection-color: var(--shah-black);
+}
+
+QTableView::item, QTableWidget::item {
+    padding: 8px;
+    border: none;
+}
+
+QTableView::item:selected, QTableWidget::item:selected {
+    background: var(--shah-gold-light);
+    color: var(--shah-black);
+}
+
+QHeaderView::section {
+    background: var(--shah-gray);
+    border: none;
+    border-bottom: 1px solid var(--shah-gray-dark);
+    padding: 12px 8px;
+    font-weight: 600;
+    color: var(--shah-black);
+}
+
+/* ===== PROGRESS BARS ===== */
+QProgressBar {
+    border: 2px solid var(--shah-gray-dark);
+    border-radius: 8px;
+    background: var(--shah-white);
+    text-align: center;
+    font-weight: 600;
+    color: var(--shah-black);
+}
+
+QProgressBar::chunk {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+        stop:0 var(--shah-gold), stop:1 var(--shah-gold-dark));
+    border-radius: 6px;
+}
+
+/* ===== COMBO BOXES ===== */
+QComboBox {
+    background: var(--shah-white);
+    border: 2px solid var(--shah-gray-dark);
+    border-radius: 8px;
+    padding: 8px 12px;
+    min-height: 36px;
+}
+
+QComboBox:hover {
+    border: 2px solid var(--shah-blue);
+}
+
+QComboBox:focus {
+    border: 2px solid var(--shah-gold);
+}
+
+QComboBox::drop-down {
+    border: none;
+    width: 20px;
+}
+
+QComboBox::down-arrow {
+    image: url(:/icons/dropdown-arrow.svg);
+    width: 12px;
+    height: 12px;
+}
+
+QComboBox QAbstractItemView {
+    background: var(--shah-white);
+    border: 2px solid var(--shah-gold);
+    border-radius: 8px;
+    selection-background-color: var(--shah-gold-light);
+    selection-color: var(--shah-black);
+}
+
+/* ===== CHECKBOXES ===== */
+QCheckBox {
+    spacing: 8px;
+    color: var(--shah-black);
+}
+
+QCheckBox::indicator {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--shah-gray-dark);
+    border-radius: 4px;
+    background: var(--shah-white);
+}
+
+QCheckBox::indicator:hover {
+    border: 2px solid var(--shah-blue);
+}
+
+QCheckBox::indicator:checked {
+    background: var(--shah-gold);
+    border: 2px solid var(--shah-gold);
+    image: url(:/icons/checkmark.svg);
+}
+
+/* ===== RADIO BUTTONS ===== */
+QRadioButton {
+    spacing: 8px;
+    color: var(--shah-black);
+}
+
+QRadioButton::indicator {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--shah-gray-dark);
+    border-radius: 10px;
+    background: var(--shah-white);
+}
+
+QRadioButton::indicator:hover {
+    border: 2px solid var(--shah-blue);
+}
+
+QRadioButton::indicator:checked {
+    background: var(--shah-gold);
+    border: 2px solid var(--shah-gold);
+}
+
+QRadioButton::indicator:checked::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--shah-white);
+    margin: 4px;
+}
+
+/* ===== SLIDERS ===== */
+QSlider::groove:horizontal {
+    border: 1px solid var(--shah-gray-dark);
+    height: 8px;
+    background: var(--shah-gray);
+    border-radius: 4px;
+}
+
+QSlider::handle:horizontal {
+    background: var(--shah-gold);
+    border: 2px solid var(--shah-gold-dark);
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    margin: -6px 0;
+}
+
+QSlider::handle:horizontal:hover {
+    background: var(--shah-gold-light);
+}
+
+/* ===== SCROLLBARS ===== */
+QScrollBar:vertical {
+    background: var(--shah-gray);
+    width: 12px;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:vertical {
+    background: var(--shah-gray-dark);
+    border-radius: 6px;
+    min-height: 20px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: var(--shah-gold);
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+/* ===== TOOLTIPS ===== */
+QToolTip {
+    background: var(--shah-black);
+    color: var(--shah-white);
+    border: 1px solid var(--shah-gray-dark);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 12px;
+}
+
+/* ===== MENUS ===== */
+QMenu {
+    background: var(--shah-white);
+    border: 1px solid var(--shah-gray-dark);
+    border-radius: 8px;
+    padding: 4px;
+}
+
+QMenu::item {
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+QMenu::item:selected {
+    background: var(--shah-gold-light);
+    color: var(--shah-black);
+}
+
+QMenu::separator {
+    height: 1px;
+    background: var(--shah-gray-dark);
+    margin: 4px 0;
+}
+
+/* ===== DIALOGS ===== */
+QDialog {
+    background: var(--shah-white);
+    border: 1px solid var(--shah-gray-dark);
+    border-radius: 12px;
+}
+
+QDialog QLabel#title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--shah-black);
+    margin-bottom: 16px;
+}
+
+/* ===== STATUS BAR ===== */
+QStatusBar {
+    background: var(--shah-gray);
+    border-top: 1px solid var(--shah-gray-dark);
+    color: var(--shah-black);
+}
+
+QStatusBar QLabel {
+    padding: 4px 8px;
+}
+
+/* ===== ANIMATION SUPPORT ===== */
+QWidget[animated="true"] {
+    transition: all 0.3s ease;
+}
+
+QWidget[glow="true"] {
+    box-shadow: 0 0 20px var(--shah-gold);
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+QWidget[darkMode="true"] {
+    background: var(--shah-black);
+    color: var(--shah-white);
+}
+
+QWidget[darkMode="true"] QLineEdit,
+QWidget[darkMode="true"] QTextEdit,
+QWidget[darkMode="true"] QPlainTextEdit {
+    background: var(--shah-black-light);
+    border: 2px solid var(--shah-gray-dark);
+    color: var(--shah-white);
+}
+
+QWidget[darkMode="true"] QPushButton {
+    background: var(--shah-gold);
+    color: var(--shah-black);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+    QWidget {
+        font-size: 12px;
+    }
+    
+    QWidget#sidebar {
+        min-width: 200px;
+        max-width: 200px;
+    }
+    
+    QWidget#balanceCard QLabel#balanceAmount {
+        font-size: 24px;
+    }
+    
+    QPushButton {
+        padding: 8px 16px;
+        min-height: 36px;
+    }
+}
+
+/* ===== ACCESSIBILITY ===== */
+QWidget[highContrast="true"] {
+    border-width: 2px;
+}
+
+QWidget[highContrast="true"] QPushButton {
+    border: 2px solid var(--shah-black);
+}
+
+QWidget[highContrast="true"] QLineEdit {
+    border: 2px solid var(--shah-black);
+}
+
+/* ===== CUSTOM WIDGETS ===== */
+
+/* AI Assistant Widget */
+QWidget#aiAssistant {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 var(--shah-purple), stop:1 var(--shah-blue));
+    border-radius: 16px;
+    padding: 20px;
+    color: var(--shah-white);
+}
+
+QWidget#aiAssistant QLabel {
+    color: var(--shah-white);
+}
+
+/* Marketplace Widget */
+QWidget#marketplace {
+    background: var(--shah-white);
+    border: 1px solid var(--shah-gray-dark);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+/* Portfolio Widget */
+QWidget#portfolio {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 var(--shah-green), stop:1 var(--shah-blue));
+    border-radius: 16px;
+    padding: 20px;
+    color: var(--shah-white);
+}
+
+/* ===== ICON STYLING ===== */
+QLabel[class="icon"] {
+    background: transparent;
+    border: none;
+}
+
+QLabel[class="icon-large"] {
+    width: 48px;
+    height: 48px;
+}
+
+QLabel[class="icon-medium"] {
+    width: 32px;
+    height: 32px;
+}
+
+QLabel[class="icon-small"] {
+    width: 24px;
+    height: 24px;
+}
+
+/* ===== BADGE STYLING ===== */
+QLabel[class="badge"] {
+    background: var(--shah-gold);
+    color: var(--shah-black);
+    border-radius: 12px;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+QLabel[class="badge-success"] {
+    background: var(--shah-green);
+    color: var(--shah-white);
+}
+
+QLabel[class="badge-warning"] {
+    background: var(--shah-gold);
+    color: var(--shah-black);
+}
+
+QLabel[class="badge-error"] {
+    background: var(--shah-red);
+    color: var(--shah-white);
+}
+
+/* ===== LOADING ANIMATIONS ===== */
+QWidget[loading="true"] {
+    background: qconicalgradient(cx:0.5, cy:0.5, angle:0,
+        stop:0 var(--shah-gold), stop:1 transparent);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ===== FOCUS INDICATORS ===== */
+QWidget:focus {
+    outline: 2px solid var(--shah-gold);
+    outline-offset: 2px;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    QWidget {
+        background: white !important;
+        color: black !important;
+        border: 1px solid black !important;
+    }
+    
+    QPushButton, QTabBar::tab {
+        display: none;
+    }
+}

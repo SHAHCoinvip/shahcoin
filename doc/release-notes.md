@@ -1,20 +1,20 @@
 26.0 Release Notes
 ==================
 
-Shahcoin Core version 26.0 is now available from:
+SHAHCOIN Core version 26.0 is now available from:
 
-  <https://shahcoincore.org/bin/shahcoin-core-26.0/>
+  <https://shah.vip/bin/shahcoin-core-26.0/>
 
 This release includes new features, various bug fixes and performance
 improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/shahcoin/shahcoin/issues>
+  <https://github.com/SHAHCoinvip/shahcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://shahcoincore.org/en/list/announcements/join/>
+  <https://shah.vip/en/list/announcements/join/>
 
 How to Upgrade
 ==============
@@ -24,17 +24,17 @@ shut down (which might take a few minutes in some cases), then run the
 installer (on Windows) or just copy over `/Applications/Shahcoin-Qt` (on macOS)
 or `shahcoind`/`shahcoin-qt` (on Linux).
 
-Upgrading directly from a version of Shahcoin Core that has reached its EOL is
+Upgrading directly from a version of SHAHCOIN Core that has reached its EOL is
 possible, but it might take some time if the data directory needs to be migrated. Old
-wallet versions of Shahcoin Core are generally supported.
+wallet versions of SHAHCOIN Core are generally supported.
 
 Compatibility
 ==============
 
-Shahcoin Core is supported and extensively tested on operating systems
+SHAHCOIN Core is supported and extensively tested on operating systems
 using the Linux kernel, macOS 11.0+, and Windows 7 and newer.  Shahcoin
 Core should also work on most other Unix-like systems but is not as
-frequently tested on them.  It is not recommended to use Shahcoin Core on
+frequently tested on them.  It is not recommended to use SHAHCOIN Core on
 unsupported systems.
 
 Notable changes
@@ -103,7 +103,7 @@ New RPCs
   are always checked by hash.
 
   You can find more information on this process in the `assumeutxo` design
-  document (<https://github.com/shahcoin/shahcoin/blob/master/doc/design/assumeutxo.md>).
+  document (<https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/design/assumeutxo.md>).
 
   `getchainstates` has been added to aid in monitoring the assumeutxo sync process.
 
@@ -169,7 +169,7 @@ Wallet
 - Wallet loading has changed in this release. Wallets with some corrupted records that could be
   previously loaded (with warnings) may no longer load. For example, wallets with corrupted
   address book entries may no longer load. If this happens, it is recommended
-  load the wallet in a previous version of Shahcoin Core and import the data into a new wallet.
+  load the wallet in a previous version of SHAHCOIN Core and import the data into a new wallet.
   Please also report an issue to help improve the software and make wallet loading more robust
   in these cases. (#24914)
 
@@ -312,7 +312,7 @@ Thanks to everyone who directly contributed to this release:
 - mruddy
 - Murch
 - ns-xvrn
-- pablomartin4btc
+- pablomartin4SHAH
 - Pieter Wuille
 - Reese Russell
 - Rhythm Garg

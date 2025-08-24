@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2018-2022 The Shahcoin Core developers
+# Copyright (c) 2018-2022 The SHAHCOIN Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Verify commits against a trusted keys list."""
@@ -16,7 +16,7 @@ GIT = os.getenv('GIT', 'git')
 def tree_sha512sum(commit='HEAD'):
     """Calculate the Tree-sha512 for the commit.
 
-    This is copied from github-merge.py. See https://github.com/shahcoin-core/shahcoin-maintainer-tools."""
+    This is copied from github-merge.py. See https://github.com/SHAHCoinvip/shahcoin-maintainer-tools."""
 
     # request metadata for entire tree, recursively
     files = []

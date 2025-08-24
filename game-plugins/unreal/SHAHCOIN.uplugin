@@ -1,0 +1,49 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0.0",
+	"FriendlyName": "SHAHCOIN Blockchain Integration",
+	"Description": "SHAHCOIN blockchain integration for Unreal Engine - wallet integration, NFT display, token rewards",
+	"Category": "Blockchain",
+	"CreatedBy": "SHAHCOIN Team",
+	"CreatedByURL": "https://shahcoin.network",
+	"DocsURL": "https://docs.shahcoin.network",
+	"MarketplaceURL": "",
+	"SupportURL": "https://discord.gg/shahcoin",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "SHAHCOIN",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [
+				"Win64",
+				"Mac",
+				"Linux"
+			]
+		},
+		{
+			"Name": "SHAHCOINEditor",
+			"Type": "Editor",
+			"LoadingPhase": "PostEngineInit",
+			"PlatformAllowList": [
+				"Win64",
+				"Mac",
+				"Linux"
+			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "OnlineSubsystem",
+			"Enabled": true
+		},
+		{
+			"Name": "HTTPRequestHandler",
+			"Enabled": true
+		}
+	]
+}

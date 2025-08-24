@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2022 The Shahcoin Core developers
+// Copyright (c) 2021-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -23,7 +23,7 @@ const std::vector<std::shared_ptr<CBlock>>* g_chain;
 
 void initialize_chain()
 {
-    const auto params{CreateChainParams(ArgsManager{}, ChainType::REGTEST)};
+    const auto params{CreateChainParams("regtest")};
     static const auto chain{CreateBlockChain(2 * COINBASE_MATURITY, *params)};
     g_chain = &chain;
 }

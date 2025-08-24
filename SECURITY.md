@@ -2,12 +2,12 @@
 
 ## Supported Versions
 
-See our website for versions of Shahcoin Core that are currently supported with
-security updates: https://shahcoincore.org/en/lifecycle/#schedule
+See our website for versions of SHAHCOIN Core that are currently supported with
+security updates: https://shah.vip/en/lifecycle/#schedule
 
 ## Reporting a Vulnerability
 
-To report security issues send an email to security@shahcoincore.org (not for support).
+To report security issues send an email to security@shah.vip (not for support).
 
 The following keys may be used to communicate sensitive information to developers:
 

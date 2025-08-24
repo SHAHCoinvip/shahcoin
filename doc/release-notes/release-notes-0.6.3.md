@@ -4,7 +4,7 @@ Shahcoin version 0.6.3 is now available for download at:
 This is a bug-fix release, with no new features.
 
 Please report bugs using the issue tracker at github:
-  https://github.com/shahcoin/shahcoin/issues
+  https://github.com/SHAHCoinvip/shahcoin/issues
 
 CHANGE SUMMARY
 

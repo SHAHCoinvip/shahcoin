@@ -1,22 +1,22 @@
-Shahcoin Core version 0.14.0 is now available from:
+SHAHCOIN Core version 0.14.0 is now available from:
 
-  <https://shahcoin.org/bin/shahcoin-core-0.14.0/>
+  <https://shah.vip/bin/shahcoin-core-0.14.0/>
 
 This is a new major version release, including new features, various bugfixes
 and performance improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at github:
 
-  <https://github.com/shahcoin/shahcoin/issues>
+  <https://github.com/SHAHCoinvip/shahcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://shahcoincore.org/en/list/announcements/join/>
+  <https://shah.vip/en/list/announcements/join/>
 
 Compatibility
 ==============
 
-Shahcoin Core is extensively tested on multiple operating systems using
+SHAHCOIN Core is extensively tested on multiple operating systems using
 the Linux kernel, macOS 10.8+, and Windows Vista and later.
 
 Microsoft ended support for Windows XP on [April 8th, 2014](https://www.microsoft.com/en-us/WindowsForBusiness/end-of-xp-support),
@@ -24,7 +24,7 @@ No attempt is made to prevent installing or running the software on Windows XP, 
 can still do so at your own risk but be aware that there are known instabilities and issues.
 Please do not report issues about Windows XP to the issue tracker.
 
-Shahcoin Core should also work on most other Unix-like systems but is not
+SHAHCOIN Core should also work on most other Unix-like systems but is not
 frequently tested on them.
 
 Notable changes
@@ -55,7 +55,7 @@ improved, leading to much shorter sync and initial block download times.
 Manual Pruning
 --------------
 
-Shahcoin Core has supported automatically pruning the blockchain since 0.11. Pruning
+SHAHCOIN Core has supported automatically pruning the blockchain since 0.11. Pruning
 the blockchain allows for significant storage space savings as the vast majority of
 the downloaded data can be discarded after processing so very little of it remains
 on the disk.
@@ -96,7 +96,7 @@ ZMQ On Windows
 
 Previously the ZeroMQ notification system was unavailable on Windows
 due to various issues with ZMQ. These have been fixed upstream and
-now ZMQ can be used on Windows. Please see [this document](https://github.com/shahcoin/shahcoin/blob/master/doc/zmq.md) for
+now ZMQ can be used on Windows. Please see [this document](https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/zmq.md) for
 help with using ZMQ in general.
 
 Nested RPC Commands in Debug Console
@@ -129,7 +129,7 @@ the same thing as the GUI icon. The command takes one boolean parameter,
 Out-of-sync Modal Info Layer
 ----------------------------
 
-When Shahcoin Core is out-of-sync on startup, a semi-transparent information
+When SHAHCOIN Core is out-of-sync on startup, a semi-transparent information
 layer will be shown over top of the normal display. This layer contains
 details about the current sync progress and estimates the amount of time
 remaining to finish syncing. This layer can also be hidden and subsequently
@@ -189,7 +189,7 @@ commands such as `prioritisetransaction` so that those changes will not be lost.
 Final Alert
 -----------
 
-The Alert System was [disabled and deprecated](https://shahcoin.org/en/alert/2016-11-01-alert-retirement) in Shahcoin Core 0.12.1 and removed in 0.13.0. 
+The Alert System was [disabled and deprecated](https://shah.vip/en/alert/2016-11-01-alert-retirement) in SHAHCOIN Core 0.12.1 and removed in 0.13.0. 
 The Alert System was retired with a maximum sequence final alert which causes any nodes
 supporting the Alert System to display a static hard-coded "Alert Key Compromised" message which also
 prevents any other alerts from overriding it. This final alert is hard-coded into this release
@@ -241,8 +241,8 @@ Low-level RPC changes
    the mempool or if `txindex` is enabled.
 
  - A new RPC command `getmemoryinfo` has been added which will return information
-   about the memory usage of Shahcoin Core. This was added in conjunction with
-   optimizations to memory management. See [Pull #8753](https://github.com/shahcoin/shahcoin/pull/8753)
+   about the memory usage of SHAHCOIN Core. This was added in conjunction with
+   optimizations to memory management. See [Pull #8753](https://github.com/SHAHCoinvip/shahcoin/pull/8753)
    for more information.
 
  - A new RPC command `bumpfee` has been added which allows replacing an
@@ -262,9 +262,9 @@ Minimum Fee Rate Policies
 -------------------------
 
 Since the changes in 0.12 to automatically limit the size of the mempool and improve the performance of block creation in mining code it has not been important for relay nodes or miners to set `-minrelaytxfee`. With this release the following concepts that were tied to this option have been separated out:
-- incremental relay fee used for calculating BIP 125 replacement and mempool limiting. (1000 satoshis/kB)
-- calculation of threshold for a dust output. (effectively 3 * 1000 satoshis/kB)
-- minimum fee rate of a package of transactions to be included in a block created by the mining code. If miners wish to set this minimum they can use the new `-blockmintxfee` option.  (defaults to 1000 satoshis/kB)
+- incremental relay fee used for calculating BIP 125 replacement and mempool limiting. (1000 shahi/kB)
+- calculation of threshold for a dust output. (effectively 3 * 1000 shahi/kB)
+- minimum fee rate of a package of transactions to be included in a block created by the mining code. If miners wish to set this minimum they can use the new `-blockmintxfee` option.  (defaults to 1000 shahi/kB)
 
 The `-minrelaytxfee` option continues to exist but is recommended to be left unset.
 

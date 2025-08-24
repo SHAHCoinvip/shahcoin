@@ -4,7 +4,7 @@ Shahcoin version 0.7.2 is now available from:
 This is a bug-fix minor release.
 
 Please report bugs using the issue tracker at github:
-  https://github.com/shahcoin/shahcoin/issues
+  https://github.com/SHAHCoinvip/shahcoin/issues
 
 How to Upgrade
 --------------

@@ -1,7 +1,7 @@
 Translation Strings Policy
 ===========================
 
-This document provides guidelines for internationalization of the Shahcoin Core software.
+This document provides guidelines for internationalization of the SHAHCOIN Core software.
 
 How to translate?
 ------------------

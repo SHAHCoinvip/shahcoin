@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2018-2022 The Shahcoin Core developers
+# Copyright (c) 2018-2022 The SHAHCOIN Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Backwards compatibility functional test
@@ -110,7 +110,7 @@ class BackwardsCompatibilityTest(ShahcoinTestFramework):
         assert wallet.getaddressinfo(address_18075)["solvable"]
         node_v19.unloadwallet("w1_v19")
 
-        # Copy the 0.19 wallet to the last Shahcoin Core version and open it:
+        # Copy the 0.19 wallet to the last SHAHCOIN Core version and open it:
         shutil.copytree(
             os.path.join(node_v19.wallets_path, "w1_v19"),
             os.path.join(node_master.wallets_path, "w1_v19")
@@ -287,7 +287,7 @@ class BackwardsCompatibilityTest(ShahcoinTestFramework):
             node_v17.assert_start_raises_init_error(["-wallet=w3"], "Error: wallet.dat corrupt, salvage failed")
         else:
             self.log.info("Test blank wallet incompatibility with v17")
-            node_v17.assert_start_raises_init_error(["-wallet=w3"], "Error: Error loading w3: Wallet requires newer version of Shahcoin Core")
+            node_v17.assert_start_raises_init_error(["-wallet=w3"], "Error: Error loading w3: Wallet requires newer version of SHAHCOIN Core")
         self.start_node(node_v17.index)
 
         # No wallet created in master can be opened in 0.16
@@ -297,7 +297,7 @@ class BackwardsCompatibilityTest(ShahcoinTestFramework):
             if self.options.descriptors:
                 node_v16.assert_start_raises_init_error([f"-wallet={wallet_name}"], f"Error: {wallet_name} corrupt, salvage failed")
             else:
-                node_v16.assert_start_raises_init_error([f"-wallet={wallet_name}"], f"Error: Error loading {wallet_name}: Wallet requires newer version of Shahcoin Core")
+                node_v16.assert_start_raises_init_error([f"-wallet={wallet_name}"], f"Error: Error loading {wallet_name}: Wallet requires newer version of SHAHCOIN Core")
 
         # When descriptors are enabled, w1 cannot be opened by 0.21 since it contains a taproot descriptor
         if self.options.descriptors:
@@ -339,7 +339,7 @@ class BackwardsCompatibilityTest(ShahcoinTestFramework):
             # Restore the wallet to master
             load_res = node_master.restorewallet(wallet_name, backup_path)
 
-            # Make sure this wallet opens with only the migration warning. See https://github.com/shahcoin/shahcoin/pull/19054
+            # Make sure this wallet opens with only the migration warning. See https://github.com/SHAHCoinvip/shahcoin/pull/19054
             if not self.options.descriptors:
                 # Legacy wallets will have only a deprecation warning
                 assert_equal(load_res["warnings"], ["Wallet loaded successfully. The legacy wallet type is being deprecated and support for creating and opening legacy wallets will be removed in the future. Legacy wallets can be migrated to a descriptor wallet with migratewallet."])

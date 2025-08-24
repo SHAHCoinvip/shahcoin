@@ -1,5 +1,5 @@
-// Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2022 The Shahcoin Core developers
+// Copyright (c) 2009-2010 Shahi Nakamoto
+// Copyright (C) 2025 The SHAHCOIN Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -154,7 +154,7 @@ uint16_t GetListenPort()
     }
 
     // Otherwise, if -port= is provided, use that. Otherwise use the default port.
-    return static_cast<uint16_t>(gArgs.GetIntArg("-port", Params().GetDefaultPort()));
+    return static_cast<uint16_t>(gArgs.GetIntArg("-port", Params().DefaultPort()));
 }
 
 // Determine the "best" local address for a particular peer.
@@ -415,7 +415,7 @@ CNode* CConnman::ConnectNode(CAddress addrConnect, const char *pszDest, bool fCo
 
     // Resolve
     const uint16_t default_port{pszDest != nullptr ? GetDefaultPort(pszDest) :
-                                                     m_params.GetDefaultPort()};
+                                                                                                           m_params.DefaultPort()};
     if (pszDest) {
         const std::vector<CService> resolved{Lookup(pszDest, default_port, fNameLookup && !HaveNameProxy(), 256)};
         if (!resolved.empty()) {
@@ -2192,7 +2192,10 @@ void CConnman::WakeMessageHandler()
 void CConnman::ThreadDNSAddressSeed()
 {
     FastRandomContext rng;
-    std::vector<std::string> seeds = m_params.DNSSeeds();
+    std::vector<std::string> seeds;
+    for (const auto& seed : m_params.DNSSeeds()) {
+        seeds.push_back(seed.host);
+    }
     Shuffle(seeds.begin(), seeds.end(), rng);
     int seeds_right_now = 0; // Number of seeds left before testing if we have enough connections
     int found = 0;
@@ -2283,7 +2286,7 @@ void CConnman::ThreadDNSAddressSeed()
             const auto addresses{LookupHost(host, nMaxIPs, true)};
             if (!addresses.empty()) {
                 for (const CNetAddr& ip : addresses) {
-                    CAddress addr = CAddress(CService(ip, m_params.GetDefaultPort()), requiredServiceBits);
+                    CAddress addr = CAddress(CService(ip, m_params.DefaultPort()), requiredServiceBits);
                     addr.nTime = rng.rand_uniform_delay(Now<NodeSeconds>() - 3 * 24h, -4 * 24h); // use a random age between 3 and 7 days old
                     vAdd.push_back(addr);
                     found++;
@@ -2491,7 +2494,7 @@ void CConnman::ThreadOpenConnections(const std::vector<std::string> connect)
             }
 
             if (add_fixed_seeds_now) {
-                std::vector<CAddress> seed_addrs{ConvertSeeds(m_params.FixedSeeds())};
+                std::vector<CAddress> seed_addrs; // FixedSeeds not implemented for mainnet-only
                 // We will not make outgoing connections to peers that are unreachable
                 // (e.g. because of -onlynet configuration).
                 // Therefore, we do not add them to addrman in the first place.
@@ -3128,13 +3131,13 @@ NodeId CConnman::GetNewNodeId()
 
 uint16_t CConnman::GetDefaultPort(Network net) const
 {
-    return net == NET_I2P ? I2P_SAM31_PORT : m_params.GetDefaultPort();
+    return net == NET_I2P ? I2P_SAM31_PORT : m_params.DefaultPort();
 }
 
 uint16_t CConnman::GetDefaultPort(const std::string& addr) const
 {
     CNetAddr a;
-    return a.SetSpecial(addr) ? GetDefaultPort(a.GetNetwork()) : m_params.GetDefaultPort();
+    return a.SetSpecial(addr) ? GetDefaultPort(a.GetNetwork()) : m_params.DefaultPort();
 }
 
 bool CConnman::Bind(const CService& addr_, unsigned int flags, NetPermissionFlags permissions)

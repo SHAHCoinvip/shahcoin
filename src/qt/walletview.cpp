@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -17,6 +17,17 @@
 #include <qt/transactiontablemodel.h>
 #include <qt/transactionview.h>
 #include <qt/walletmodel.h>
+#include <qt/stakingpage.h>
+#include <qt/nftmanagerpage.h>
+#include <qt/tokencreatorpage.h>
+#include <qt/shahswappanel.h>
+#include <qt/coldstakingpanel.h>
+#include <qt/assetcreatorpanel.h>
+#include <qt/walletmanagerpanel.h>
+#include <qt/settingspage.h>
+#include <qt/tokennftexplorer.h>
+#include <qt/qrcodewidget.h>
+#include <qt/dashboardwidget.h>
 
 #include <interfaces/node.h>
 #include <node/interface_ui.h>
@@ -69,10 +80,41 @@ WalletView::WalletView(WalletModel* wallet_model, const PlatformStyle* _platform
     usedReceivingAddressesPage = new AddressBookPage(platformStyle, AddressBookPage::ForEditing, AddressBookPage::ReceivingTab, this);
     usedReceivingAddressesPage->setModel(walletModel->getAddressTableModel());
 
+    // Create new feature pages
+    stakingPage = new StakingPage(platformStyle, this);
+    nftManagerPage = new NFTManagerPage(platformStyle, this);
+    tokenCreatorPage = new TokenCreatorPage(platformStyle, this);
+    shahSwapPage = new ShahSwapPanel(platformStyle, this);
+    coldStakingPage = new ColdStakingPanel(platformStyle, this);
+    coldStakingPage->setWalletModel(walletModel);
+    assetCreatorPage = new AssetCreatorPanel(platformStyle, this);
+    assetCreatorPage->setWalletModel(walletModel);
+    walletManagerPage = new WalletManagerPanel(platformStyle, this);
+    walletManagerPage->setWalletModel(walletModel);
+    tokenNFTExplorerPage = new TokenNFTExplorer(platformStyle, this);
+    tokenNFTExplorerPage->setWalletModel(walletModel);
+    qrCodePage = new QRCodeWidget(this);
+    qrCodePage->setWalletModel(walletModel);
+    dashboardPage = new DashboardWidget(this);
+    dashboardPage->setWalletModel(walletModel);
+    settingsPage = new SettingsPage(this);
+    settingsPage->setWalletModel(walletModel);
+
     addWidget(overviewPage);
     addWidget(transactionsPage);
     addWidget(receiveCoinsPage);
     addWidget(sendCoinsPage);
+    addWidget(stakingPage);
+    addWidget(nftManagerPage);
+    addWidget(tokenCreatorPage);
+    addWidget(shahSwapPage);
+    addWidget(coldStakingPage);
+    addWidget(assetCreatorPage);
+    addWidget(walletManagerPage);
+    addWidget(tokenNFTExplorerPage);
+    addWidget(qrCodePage);
+    addWidget(dashboardPage);
+    addWidget(settingsPage);
 
     connect(overviewPage, &OverviewPage::transactionClicked, this, &WalletView::transactionClicked);
     // Clicking on a transaction on the overview pre-selects the transaction on the transaction history page
@@ -98,6 +140,16 @@ WalletView::WalletView(WalletModel* wallet_model, const PlatformStyle* _platform
     // Receive and pass through messages from wallet model
     connect(walletModel, &WalletModel::message, this, &WalletView::message);
 
+    // Connect new feature pages
+    connect(stakingPage, &StakingPage::message, this, &WalletView::message);
+    connect(nftManagerPage, &NFTManagerPage::message, this, &WalletView::message);
+    connect(tokenCreatorPage, &TokenCreatorPage::message, this, &WalletView::message);
+    // ShahSwapPanel doesn't have a message signal, so we'll connect it differently if needed
+    // ColdStakingPanel doesn't have a message signal, so we'll connect it differently if needed
+    // AssetCreatorPanel doesn't have a message signal, so we'll connect it differently if needed
+    // WalletManagerPanel doesn't have a message signal, so we'll connect it differently if needed
+    connect(settingsPage, &SettingsPage::message, this, &WalletView::message);
+
     // Handle changes in encryption status
     connect(walletModel, &WalletModel::encryptionStatusChanged, this, &WalletView::encryptionStatusChanged);
 
@@ -119,6 +171,14 @@ void WalletView::setClientModel(ClientModel *_clientModel)
 
     overviewPage->setClientModel(_clientModel);
     sendCoinsPage->setClientModel(_clientModel);
+    stakingPage->setClientModel(_clientModel);
+    nftManagerPage->setClientModel(_clientModel);
+    tokenCreatorPage->setClientModel(_clientModel);
+    // ShahSwapPanel doesn't need ClientModel, it uses WalletModel directly
+    // ColdStakingPanel doesn't need ClientModel, it uses WalletModel directly
+    // AssetCreatorPanel doesn't need ClientModel, it uses WalletModel directly
+    // WalletManagerPanel doesn't need ClientModel, it uses WalletModel directly
+    settingsPage->setClientModel(_clientModel);
     walletModel->setClientModel(_clientModel);
 }
 
@@ -164,6 +224,61 @@ void WalletView::gotoSendCoinsPage(QString addr)
 
     if (!addr.isEmpty())
         sendCoinsPage->setAddress(addr);
+}
+
+void WalletView::gotoStakingPage()
+{
+    setCurrentWidget(stakingPage);
+}
+
+void WalletView::gotoNFTManagerPage()
+{
+    setCurrentWidget(nftManagerPage);
+}
+
+void WalletView::gotoTokenCreatorPage()
+{
+    setCurrentWidget(tokenCreatorPage);
+}
+
+void WalletView::gotoShahSwapPage()
+{
+    setCurrentWidget(shahSwapPage);
+}
+
+void WalletView::gotoColdStakingPage()
+{
+    setCurrentWidget(coldStakingPage);
+}
+
+void WalletView::gotoAssetCreatorPage()
+{
+    setCurrentWidget(assetCreatorPage);
+}
+
+void WalletView::gotoWalletManagerPage()
+{
+    setCurrentWidget(walletManagerPage);
+}
+
+void WalletView::gotoTokenNFTExplorerPage()
+{
+    setCurrentWidget(tokenNFTExplorerPage);
+}
+
+void WalletView::gotoQRCodePage()
+{
+    setCurrentWidget(qrCodePage);
+}
+
+void WalletView::gotoDashboardPage()
+{
+    setCurrentWidget(dashboardPage);
+}
+
+void WalletView::gotoSettingsPage()
+{
+    setCurrentWidget(settingsPage);
 }
 
 void WalletView::gotoSignMessageTab(QString addr)

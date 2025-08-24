@@ -1,17 +1,17 @@
-Shahcoin Core version 0.17.0 is now available from:
+SHAHCOIN Core version 0.17.0 is now available from:
 
-  <https://shahcoincore.org/bin/shahcoin-core-0.17.0/>
+  <https://shah.vip/bin/shahcoin-core-0.17.0/>
 
 This is a new major version release, including new features, various bugfixes
 and performance improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/shahcoin/shahcoin/issues>
+  <https://github.com/SHAHCoinvip/shahcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://shahcoincore.org/en/list/announcements/join/>
+  <https://shah.vip/en/list/announcements/join/>
 
 How to Upgrade
 ==============
@@ -46,10 +46,10 @@ processing the entire blockchain.
 Compatibility
 ==============
 
-Shahcoin Core is extensively tested on multiple operating systems using
+SHAHCOIN Core is extensively tested on multiple operating systems using
 the Linux kernel, macOS 10.10+, and Windows 7 and newer (Windows XP is not supported).
 
-Shahcoin Core should also work on most other Unix-like systems but is not
+SHAHCOIN Core should also work on most other Unix-like systems but is not
 frequently tested on them.
 
 From 0.17.0 onwards macOS <10.10 is no longer supported. 0.17.0 is built using Qt 5.9.x, which doesn't
@@ -256,7 +256,7 @@ hardware implementations will typically implement multiple roles simultaneously.
 Upgrading non-HD wallets to HD wallets
 --------------------------------------
 
-Since Shahcoin Core 0.13.0, creating new BIP 32 Hierarchical Deterministic wallets has been supported by Shahcoin Core but old non-HD wallets could not be upgraded to HD. Now non-HD wallets can be upgraded to HD using the `-upgradewallet` command line option. This upgrade will result in the all keys in the keypool being marked as used and a new keypool generated. **A new backup must be made when this upgrade is performed.**
+Since SHAHCOIN Core 0.13.0, creating new BIP 32 Hierarchical Deterministic wallets has been supported by SHAHCOIN Core but old non-HD wallets could not be upgraded to HD. Now non-HD wallets can be upgraded to HD using the `-upgradewallet` command line option. This upgrade will result in the all keys in the keypool being marked as used and a new keypool generated. **A new backup must be made when this upgrade is performed.**
 
 Additionally, `-upgradewallet` can be used to upgraded from a non-split HD chain (all keys generated with `m/0'/0'/i'`) to a split HD chain (receiving keys generated with `'m/0'/0'/i'` and change keys generated with `m'/0'/1'/i'`). When this upgrade occurs, all keys already in the keypool will remain in the keypool to be used until all keys from before the upgrade are exhausted. This is to avoid issues with backups and downgrades when some keys may come from the change key keypool. Users can begin using the new split HD chain keypools by using the `newkeypool` RPC to mark all keys in the keypool as used and begin using a new keypool generated from the split HD chain.
 
@@ -578,7 +578,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12928 `ef006d9` Initialize non-static class members that were previously neither initialized where defined nor in constructor (practicalswift)
 - #13158 `81c533c` Improve sendcoinsdialog readability (marcoagner)
 - #11491 `40c34a0` Add proxy icon in statusbar (mess110)
-- #13264 `2a7c53b` Satoshi unit (GreatSock)
+- #13264 `2a7c53b` Shahi unit (GreatSock)
 - #13097 `e545503` Support wallets loaded dynamically (promag)
 - #13284 `f8be434` fix visual "overflow" of amount input (brandonrninefive)
 - #13275 `a315b79` use `[default wallet]` as name for wallet with no name (jonasschnelli)
@@ -935,7 +935,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13625 `7146672` Add release notes for -printtoconsole and -debuglogfile changes (satwo)
 - #13718 `f7f574d` Specify preferred Python string formatting technique (masonicboom)
 - #12764 `10b9a81` Remove field in getblocktemplate help that has never been used (conscott)
-- #13742 `d2186b3` Adjust shahcoincore.org links (MarcoFalke)
+- #13742 `d2186b3` Adjust shah.vip links (MarcoFalke)
 - #13706 `94dd89e` Minor improvements to release-process.md (MitchellCash)
 - #13775 `ef4fac0` Remove newlines from error message (practicalswift)
 - #13803 `feb7dd9` add note to contributor docs about warranted PR's (kallewoof)

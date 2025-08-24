@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2021 The Shahcoin Core developers
+// Copyright (c) 2011-2021 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -97,6 +97,29 @@ public Q_SLOTS:
     void usedSendingAddresses();
     /** Show used receiving addresses */
     void usedReceivingAddresses();
+
+    /** Switch to staking page */
+    void gotoStakingPage();
+    /** Switch to NFT manager page */
+    void gotoNFTManagerPage();
+    /** Switch to token creator page */
+    void gotoTokenCreatorPage();
+    /** Switch to ShahSwap page */
+    void gotoShahSwapPage();
+    /** Switch to Cold Staking page */
+    void gotoColdStakingPage();
+    /** Switch to Asset Creator page */
+    void gotoAssetCreatorPage();
+    /** Switch to Wallet Manager page */
+    void gotoWalletManagerPage();
+    /** Switch to Token & NFT Explorer page */
+    void gotoTokenNFTExplorerPage();
+    /** Switch to QR Code page */
+    void gotoQRCodePage();
+    /** Switch to Dashboard page */
+    void gotoDashboardPage();
+    /** Switch to settings page */
+    void gotoSettingsPage();
 };
 
 #endif // SHAHCOIN_QT_WALLETFRAME_H

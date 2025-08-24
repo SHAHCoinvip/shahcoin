@@ -1,16 +1,16 @@
-Shahcoin Core version 0.17.0.1 is now available from:
+SHAHCOIN Core version 0.17.0.1 is now available from:
 
-  <https://shahcoincore.org/bin/shahcoin-core-0.17.0.1/>
+  <https://shah.vip/bin/shahcoin-core-0.17.0.1/>
 
 This release provides a minor bug fix for 0.17.0.
 
 Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/shahcoin/shahcoin/issues>
+  <https://github.com/SHAHCoinvip/shahcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://shahcoincore.org/en/list/announcements/join/>
+  <https://shah.vip/en/list/announcements/join/>
 
 Notable changes
 ===============

@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -220,7 +220,23 @@ bool Intro::showIfNeeded(bool& did_show_intro, int64_t& prune_MiB)
     {
         /* Use selectParams here to guarantee Params() can be used by node interface */
         try {
-            SelectParams(gArgs.GetChainType());
+            ChainType chain = gArgs.GetChainType();
+            switch (chain) {
+            case ChainType::MAIN:
+                SelectParams("main");
+                break;
+            case ChainType::TESTNET:
+                SelectParams("test");
+                break;
+            case ChainType::REGTEST:
+                SelectParams("regtest");
+                break;
+            case ChainType::SIGNET:
+                SelectParams("signet");
+                break;
+            default:
+                throw std::runtime_error(strprintf("Unknown chain type: %d", static_cast<int>(chain)));
+            }
         } catch (const std::exception&) {
             return false;
         }

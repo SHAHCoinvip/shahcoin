@@ -1,16 +1,16 @@
-# I2P support in Shahcoin Core
+# I2P support in SHAHCOIN Core
 
-It is possible to run Shahcoin Core as an
+It is possible to run SHAHCOIN Core as an
 [I2P (Invisible Internet Project)](https://en.wikipedia.org/wiki/I2P)
 service and connect to such services.
 
 This [glossary](https://geti2p.net/en/about/glossary) may be useful to get
 started with I2P terminology.
 
-## Run Shahcoin Core with an I2P router (proxy)
+## Run SHAHCOIN Core with an I2P router (proxy)
 
 A running I2P router (proxy) is required with the [SAM](https://geti2p.net/en/docs/api/samv3)
-application bridge enabled. The following routers are recommended for use with Shahcoin Core:
+application bridge enabled. The following routers are recommended for use with SHAHCOIN Core:
 
 - [i2prouter (I2P Router)](https://geti2p.net), the official implementation in
   Java. The SAM bridge is not enabled by default; it must be started manually,
@@ -62,7 +62,7 @@ Make automatic outbound connections only to I2P addresses. Inbound and manual
 connections are not affected by this option. It can be specified multiple times
 to allow multiple networks, e.g. onlynet=onion, onlynet=i2p.
 
-I2P support was added to Shahcoin Core in version 22.0 and there may be fewer I2P
+I2P support was added to SHAHCOIN Core in version 22.0 and there may be fewer I2P
 peers than Tor or IP ones. Therefore, using I2P alone without other networks may
 make a node more susceptible to [Sybil
 attacks](https://en.shahcoin.it/wiki/Weaknesses#Sybil_attack). You can use
@@ -78,10 +78,10 @@ one of the networks has issues.
 
 ## Persistent vs transient I2P addresses
 
-The first time Shahcoin Core connects to the I2P router, it automatically
+The first time SHAHCOIN Core connects to the I2P router, it automatically
 generates a persistent I2P address and its corresponding private key by default
 or if `-i2pacceptincoming=1` is set.  The private key is saved in a file named
-`i2p_private_key` in the Shahcoin Core data directory.  The persistent I2P
+`i2p_private_key` in the SHAHCOIN Core data directory.  The persistent I2P
 address is used for making outbound connections and accepting inbound
 connections.
 
@@ -98,9 +98,9 @@ I2P addresses are designed to be long-lived.  Waiting for tunnels to be built
 for every peer connection adds delay to connection setup time.  Therefore, I2P
 listening should only be turned off if really needed.
 
-## Fetching I2P-related information from Shahcoin Core
+## Fetching I2P-related information from SHAHCOIN Core
 
-There are several ways to see your I2P address in Shahcoin Core if accepting
+There are several ways to see your I2P address in SHAHCOIN Core if accepting
 incoming I2P connections (`-i2pacceptincoming`):
 - in the "Local addresses" output of CLI `-netinfo`
 - in the "localaddresses" output of RPC `getnetworkinfo`
@@ -113,10 +113,10 @@ You can use the `getnodeaddresses` RPC to fetch a number of I2P peers known to y
 
 ## Compatibility
 
-Shahcoin Core uses the [SAM v3.1](https://geti2p.net/en/docs/api/samv3) protocol
+SHAHCOIN Core uses the [SAM v3.1](https://geti2p.net/en/docs/api/samv3) protocol
 to connect to the I2P network. Any I2P router that supports it can be used.
 
-## Ports in I2P and Shahcoin Core
+## Ports in I2P and SHAHCOIN Core
 
 One particularity of SAM v3.1 is that it does not support ports,
 unlike newer versions of SAM (v3.2 and up) that do support them and default the
@@ -124,11 +124,11 @@ port numbers to 0. From the point of view of peers that use newer versions of
 SAM or other protocols that support ports, a SAM v3.1 peer is connecting to them
 on port 0, from source port 0.
 
-To allow future upgrades to newer versions of SAM, Shahcoin Core sets its
+To allow future upgrades to newer versions of SAM, SHAHCOIN Core sets its
 listening port to 0 when listening for incoming I2P connections and advertises
 its own I2P address with port 0. Furthermore, it will not attempt to connect to
 I2P addresses with a non-zero port number because with SAM v3.1 the destination
-port (`TO_PORT`) is always set to 0 and is not in the control of Shahcoin Core.
+port (`TO_PORT`) is always set to 0 and is not in the control of SHAHCOIN Core.
 
 ## Bandwidth
 

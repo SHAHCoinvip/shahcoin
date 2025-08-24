@@ -1,6 +1,6 @@
-Shahcoin Core version 0.13.1 is now available from:
+SHAHCOIN Core version 0.13.1 is now available from:
 
-  <https://shahcoin.org/bin/shahcoin-core-0.13.1/>
+  <https://shah.vip/bin/shahcoin-core-0.13.1/>
 
 This is a new minor version release, including activation parameters for the
 segwit softfork, various bugfixes and performance improvements, as well as
@@ -8,11 +8,11 @@ updated translations.
 
 Please report bugs using the issue tracker at github:
 
-  <https://github.com/shahcoin/shahcoin/issues>
+  <https://github.com/SHAHCoinvip/shahcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://shahcoincore.org/en/list/announcements/join/>
+  <https://shah.vip/en/list/announcements/join/>
 
 Compatibility
 ==============
@@ -22,8 +22,8 @@ an OS initially released in 2001. This means that not even critical security
 updates will be released anymore. Without security updates, using a shahcoin
 wallet on a XP machine is irresponsible at least.
 
-In addition to that, with 0.12.x there have been varied reports of Shahcoin Core
-randomly crashing on Windows XP. It is [not clear](https://github.com/shahcoin/shahcoin/issues/7681#issuecomment-217439891)
+In addition to that, with 0.12.x there have been varied reports of SHAHCOIN Core
+randomly crashing on Windows XP. It is [not clear](https://github.com/SHAHCoinvip/shahcoin/issues/7681#issuecomment-217439891)
 what the source of these crashes is, but it is likely that upstream
 libraries such as Qt are no longer being tested on XP.
 
@@ -118,7 +118,7 @@ covered by the txid. This provides several immediate benefits:
   believed to be provided by Shahcoin's choice of parameters for its Elliptic
   Curve Digital Security Algorithm [ECDSA].)
 
-- **More efficient almost-full-node security** Satoshi Nakamoto's original
+- **More efficient almost-full-node security** Shahi Nakamoto's original
   Shahcoin paper describes a method for allowing newly-started full nodes to
   skip downloading and validating some data from historic blocks that are
   protected by large amounts of proof of work.  Unfortunately, Nakamoto's
@@ -131,13 +131,13 @@ covered by the txid. This provides several immediate benefits:
   (specifically, the segregated witnesses) while still ensuring that the node
   can build an accurate copy of the UTXO set for the block chain with the most
   proof of work.  Segwit enables this capability at the consensus layer, but
-  note that Shahcoin Core does not provide an option to use this capability as
+  note that SHAHCOIN Core does not provide an option to use this capability as
   of this 0.13.1 release.
 
 - **Script versioning:** Segwit makes it easy for future soft forks to allow
   Shahcoin users to individually opt-in to almost any change in the Shahcoin
   Script language when those users receive new transactions.  Features
-  currently being researched by Shahcoin Core contributors that may use this
+  currently being researched by SHAHCOIN Core contributors that may use this
   capability include support for Schnorr signatures, which can improve the
   privacy and efficiency of multisig transactions (or transactions with
   multiple inputs), and Merklized Abstract Syntax Trees (MAST), which can
@@ -159,13 +159,13 @@ For more information about segwit, please see the [segwit FAQ][], the
 operator, please see the [versionbits FAQ][] for information about
 signaling support for a soft fork.
 
-[Segwit FAQ]: https://shahcoincore.org/en/2016/01/26/segwit-benefits/
-[segwit wallet developers guide]: https://shahcoincore.org/en/segwit_wallet_dev/
+[Segwit FAQ]: https://shah.vip/en/2016/01/26/segwit-benefits/
+[segwit wallet developers guide]: https://shah.vip/en/segwit_wallet_dev/
 [BIP141]: https://github.com/shahcoin/bips/blob/master/bip-0141.mediawiki
 [BIP143]: https://github.com/shahcoin/bips/blob/master/bip-0143.mediawiki
 [BIP144]: https://github.com/shahcoin/bips/blob/master/bip-0144.mediawiki
 [BIP145]: https://github.com/shahcoin/bips/blob/master/bip-0145.mediawiki
-[versionbits FAQ]: https://shahcoincore.org/en/2016/06/08/version-bits-miners-faq/
+[versionbits FAQ]: https://shah.vip/en/2016/06/08/version-bits-miners-faq/
 
 
 Null dummy soft fork
@@ -183,7 +183,7 @@ a third-party to insert data into other people's transactions, changing
 the transaction's txid (called transaction malleability) and possibly
 causing other problems.
 
-Since Shahcoin Core 0.10.0, nodes have defaulted to only relaying and
+Since SHAHCOIN Core 0.10.0, nodes have defaulted to only relaying and
 mining transactions whose dummy element was a null value (0x00, also
 called OP_0).  The null dummy soft fork turns this relay rule into a
 consensus rule both for non-segwit transactions and segwit transactions,

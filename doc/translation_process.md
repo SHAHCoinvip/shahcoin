@@ -1,7 +1,7 @@
 Translations
 ============
 
-The Shahcoin-Core project has been designed to support multiple localisations. This makes adding new phrases, and completely new languages easily achievable. For managing all application translations, Shahcoin-Core makes use of the Transifex online translation management tool.
+The shahcoin-core project has been designed to support multiple localisations. This makes adding new phrases, and completely new languages easily achievable. For managing all application translations, shahcoin-core makes use of the Transifex online translation management tool.
 
 ### Helping to translate (using Transifex)
 Transifex is setup to monitor the GitHub repo for updates, and when code containing new translations is found, Transifex will process any changes. It may take several hours after a pull-request has been merged, to appear in the Transifex web interface.
@@ -64,7 +64,7 @@ The Transifex Shahcoin project config file is included as part of the repo. It c
 
 ### Synchronising translations
 
-To assist in updating translations, a helper script is available in the [maintainer-tools repo](https://github.com/shahcoin-core/shahcoin-maintainer-tools). To use it and commit the result, simply do:
+To assist in updating translations, a helper script is available in the [maintainer-tools repo](https://github.com/SHAHCoinvip/shahcoin-maintainer-tools). To use it and commit the result, simply do:
 
 ```
 python3 ../shahcoin-maintainer-tools/update-translations.py

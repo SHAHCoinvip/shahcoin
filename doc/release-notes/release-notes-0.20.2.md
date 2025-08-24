@@ -1,20 +1,20 @@
 0.20.2 Release Notes
 ====================
 
-Shahcoin Core version 0.20.2 is now available from:
+SHAHCOIN Core version 0.20.2 is now available from:
 
-  <https://shahcoincore.org/bin/shahcoin-core-0.20.2/>
+  <https://shah.vip/bin/shahcoin-core-0.20.2/>
 
 This minor release includes various bug fixes and performance
 improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/shahcoin/shahcoin/issues>
+  <https://github.com/SHAHCoinvip/shahcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://shahcoincore.org/en/list/announcements/join/>
+  <https://shah.vip/en/list/announcements/join/>
 
 How to Upgrade
 ==============
@@ -24,21 +24,21 @@ shut down (which might take a few minutes in some cases), then run the
 installer (on Windows) or just copy over `/Applications/Shahcoin-Qt` (on Mac)
 or `shahcoind`/`shahcoin-qt` (on Linux).
 
-Upgrading directly from a version of Shahcoin Core that has reached its EOL is
+Upgrading directly from a version of SHAHCOIN Core that has reached its EOL is
 possible, but it might take some time if the data directory needs to be migrated. Old
-wallet versions of Shahcoin Core are generally supported.
+wallet versions of SHAHCOIN Core are generally supported.
 
 Compatibility
 ==============
 
-Shahcoin Core is supported and extensively tested on operating systems
+SHAHCOIN Core is supported and extensively tested on operating systems
 using the Linux kernel, macOS 10.12+, and Windows 7 and newer.  Shahcoin
 Core should also work on most other Unix-like systems but is not as
-frequently tested on them.  It is not recommended to use Shahcoin Core on
+frequently tested on them.  It is not recommended to use SHAHCOIN Core on
 unsupported systems.
 
-From Shahcoin Core 0.20.0 onwards, macOS versions earlier than 10.12 are no
-longer supported. Additionally, Shahcoin Core does not yet change appearance
+From SHAHCOIN Core 0.20.0 onwards, macOS versions earlier than 10.12 are no
+longer supported. Additionally, SHAHCOIN Core does not yet change appearance
 when macOS "dark mode" is activated.
 
 Known Bugs
@@ -90,7 +90,7 @@ Notification changes
 removed from the mempool because they conflict with a new block. These
 notifications were sent previously before the v0.19 release, but had been
 broken since that release (bug
-[#18325](https://github.com/shahcoin/shahcoin/issues/18325)).
+[#18325](https://github.com/SHAHCoinvip/shahcoin/issues/18325)).
 
 PSBT changes
 ------------

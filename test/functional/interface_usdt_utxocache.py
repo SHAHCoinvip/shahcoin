@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-# Copyright (c) 2022 The Shahcoin Core developers
+# Copyright (c) 2022 The SHAHCOIN Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 """ Tests the utxocache:* tracepoint API interface.
-    See https://github.com/shahcoin/shahcoin/blob/master/doc/tracing.md#context-utxocache
+    See https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/tracing.md#context-utxocache
 """
 
 import ctypes
@@ -151,7 +151,7 @@ class UTXOCacheTracepointTest(ShahcoinTestFramework):
 
     def test_uncache(self):
         """ Tests the utxocache:uncache tracepoint API.
-        https://github.com/shahcoin/shahcoin/blob/master/doc/tracing.md#tracepoint-utxocacheuncache
+        https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/tracing.md#tracepoint-utxocacheuncache
         """
         # To trigger an UTXO uncache from the cache, we create an invalid transaction
         # spending a not-cached, but existing UTXO. During transaction validation, this
@@ -216,8 +216,8 @@ class UTXOCacheTracepointTest(ShahcoinTestFramework):
 
     def test_add_spent(self):
         """ Tests the utxocache:add utxocache:spent tracepoint API
-            See https://github.com/shahcoin/shahcoin/blob/master/doc/tracing.md#tracepoint-utxocacheadd
-            and https://github.com/shahcoin/shahcoin/blob/master/doc/tracing.md#tracepoint-utxocachespent
+            See https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/tracing.md#tracepoint-utxocacheadd
+            and https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/tracing.md#tracepoint-utxocachespent
         """
 
         self.log.info(
@@ -326,7 +326,7 @@ class UTXOCacheTracepointTest(ShahcoinTestFramework):
 
     def test_flush(self):
         """ Tests the utxocache:flush tracepoint API.
-            See https://github.com/shahcoin/shahcoin/blob/master/doc/tracing.md#tracepoint-utxocacheflush"""
+            See https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/tracing.md#tracepoint-utxocacheflush"""
 
         self.log.info("test the utxocache:flush tracepoint API")
         self.log.info("hook into the utxocache:flush tracepoint")

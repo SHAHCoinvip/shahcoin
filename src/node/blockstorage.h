@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -10,7 +10,7 @@
 #include <dbwrapper.h>
 #include <kernel/blockmanager_opts.h>
 #include <kernel/chain.h>
-#include <kernel/chainparams.h>
+#include <chainparams.h>
 #include <kernel/cs_main.h>
 #include <kernel/messagestartchars.h>
 #include <sync.h>

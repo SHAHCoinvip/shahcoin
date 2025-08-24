@@ -1,6 +1,6 @@
-# PSBT Howto for Shahcoin Core
+# PSBT Howto for SHAHCOIN Core
 
-Since Shahcoin Core 0.17, an RPC interface exists for Partially Signed Shahcoin
+Since SHAHCOIN Core 0.17, an RPC interface exists for Partially Signed Shahcoin
 Transactions (PSBTs, as specified in
 [BIP 174](https://github.com/shahcoin/bips/blob/master/bip-0174.mediawiki)).
 
@@ -46,7 +46,7 @@ The names above in bold are the names of the roles defined in BIP174. They're
 useful in understanding the underlying steps, but in practice, software and
 hardware implementations will typically implement multiple roles simultaneously.
 
-## PSBT in Shahcoin Core
+## PSBT in SHAHCOIN Core
 
 ### RPCs
 
@@ -90,13 +90,13 @@ hardware implementations will typically implement multiple roles simultaneously.
 
 ### Workflows
 
-#### Multisig with multiple Shahcoin Core instances
+#### Multisig with multiple SHAHCOIN Core instances
 
 For a quick start see [Basic M-of-N multisig example using descriptor wallets and PSBTs](./descriptors.md#basic-multisig-example).
 If you are using legacy wallets feel free to continue with the example provided here.
 
 Alice, Bob, and Carol want to create a 2-of-3 multisig address. They're all using
-Shahcoin Core. We assume their wallets only contain the multisig funds. In case
+SHAHCOIN Core. We assume their wallets only contain the multisig funds. In case
 they also have a personal wallet, this can be accomplished through the
 multiwallet feature - possibly resulting in a need to add `-rpcwallet=name` to
 the command line in case `shahcoin-cli` is used.
@@ -121,7 +121,7 @@ Setup:
   initiate transactions later, however.
 - They can now give out *Amulti* as address others can pay to.
 
-Later, when *V* BTC has been received on *Amulti*, and Bob and Carol want to
+Later, when *V* SHAH has been received on *Amulti*, and Bob and Carol want to
 move the coins in their entirety to address *Asend*, with no change. Alice
 does not need to be involved.
 - One of them - let's assume Carol here - initiates the creation. She runs

@@ -1,0 +1,166 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2024-01-01T00:00:00Z",
+  "faqs": [
+    {
+      "question": "How do I check my SHAH balance?",
+      "answer": "Your SHAH balance is displayed at the top of the wallet interface. You can also go to the 'Overview' tab to see detailed balance information including confirmed and unconfirmed amounts.",
+      "keywords": ["balance", "check", "amount", "shah"],
+      "category": "Wallet",
+      "priority": 8,
+      "relatedQuestions": ["How do I view transaction history?", "What does unconfirmed mean?"]
+    },
+    {
+      "question": "What does 'unconfirmed' mean?",
+      "answer": "Unconfirmed transactions are transactions that have been sent to the network but haven't been included in a block yet. They typically become confirmed within a few minutes. You need at least 6 confirmations for a transaction to be considered fully confirmed.",
+      "keywords": ["unconfirmed", "confirmations", "pending", "block"],
+      "category": "Transactions",
+      "priority": 7,
+      "relatedQuestions": ["How long do transactions take?", "How many confirmations do I need?"]
+    },
+    {
+      "question": "How do I encrypt my wallet?",
+      "answer": "Go to 'Settings → Encrypt Wallet' to set a password. This will encrypt your private keys and require the password for sending transactions. Make sure to remember your password as it cannot be recovered if lost.",
+      "keywords": ["encrypt", "password", "security", "private", "keys"],
+      "category": "Security",
+      "priority": 9,
+      "relatedQuestions": ["How do I backup my wallet?", "What if I forget my password?"]
+    },
+    {
+      "question": "How do I restore a wallet from backup?",
+      "answer": "Go to 'File → Restore Wallet' and select your backup file. The wallet will be restored with all your addresses and transaction history. Make sure to use a backup from the same wallet version.",
+      "keywords": ["restore", "backup", "recovery", "import"],
+      "category": "Security",
+      "priority": 8,
+      "relatedQuestions": ["How do I backup my wallet?", "What backup files do I need?"]
+    },
+    {
+      "question": "How much can I earn from staking?",
+      "answer": "Staking rewards depend on the total amount of SHAH being staked on the network. Generally, you can expect 5-15% annual returns. The more SHAH you stake and the longer you stake, the more rewards you'll earn.",
+      "keywords": ["staking", "rewards", "earn", "apy", "returns"],
+      "category": "Staking",
+      "priority": 8,
+      "relatedQuestions": ["How do I stake SHAH?", "What is the minimum stake amount?"]
+    },
+    {
+      "question": "What is the minimum stake amount?",
+      "answer": "The minimum amount required for staking is 333 SHAH. This ensures that only serious participants can stake and helps maintain network security.",
+      "keywords": ["minimum", "stake", "amount", "333", "shah"],
+      "category": "Staking",
+      "priority": 7,
+      "relatedQuestions": ["How do I stake SHAH?", "How much can I earn from staking?"]
+    },
+    {
+      "question": "How do I add liquidity to ShahSwap?",
+      "answer": "Go to the 'ShahSwap' tab and look for the 'Add Liquidity' option. Select two tokens and the amount you want to provide. You'll earn fees from trades using your liquidity pool.",
+      "keywords": ["liquidity", "add", "pool", "fees", "shahswap"],
+      "category": "DEX",
+      "priority": 6,
+      "relatedQuestions": ["How do I use ShahSwap?", "What are swap fees?"]
+    },
+    {
+      "question": "What are swap fees?",
+      "answer": "ShahSwap charges a 0.3% fee on all swaps. This fee is distributed to liquidity providers. There may also be network transaction fees for the actual swap transaction.",
+      "keywords": ["swap", "fees", "0.3", "percent", "liquidity"],
+      "category": "DEX",
+      "priority": 6,
+      "relatedQuestions": ["How do I use ShahSwap?", "How do I add liquidity?"]
+    },
+    {
+      "question": "How do I trade NFTs?",
+      "answer": "You can trade NFTs through the 'Explorer' tab. Find the NFT you want to trade, click on it, and use the transfer function to send it to another address. Some NFTs may also be available on ShahSwap.",
+      "keywords": ["trade", "nft", "transfer", "explorer", "marketplace"],
+      "category": "NFTs",
+      "priority": 7,
+      "relatedQuestions": ["How do I create an NFT?", "How do I view my NFTs?"]
+    },
+    {
+      "question": "How do I view my NFTs?",
+      "answer": "Go to the 'Explorer' tab and filter by 'NFTs'. You can also use the search function to find specific NFTs by name or ID. Your owned NFTs will be highlighted.",
+      "keywords": ["view", "nft", "explorer", "owned", "filter"],
+      "category": "NFTs",
+      "priority": 7,
+      "relatedQuestions": ["How do I create an NFT?", "How do I trade NFTs?"]
+    },
+    {
+      "question": "What are token fees?",
+      "answer": "Creating a token requires a fee in SHAH based on current market conditions. The fee helps prevent spam and supports network security. Token transfer fees are typically very low.",
+      "keywords": ["token", "fees", "create", "cost", "market"],
+      "category": "Tokens",
+      "priority": 6,
+      "relatedQuestions": ["How do I create a token?", "How much does it cost to create a token?"]
+    },
+    {
+      "question": "How do I check transaction status?",
+      "answer": "Go to the 'Transactions' tab to see all your transaction history. Each transaction shows its status (pending, confirmed, failed) and number of confirmations. You can also click on a transaction for more details.",
+      "keywords": ["transaction", "status", "history", "confirmations", "details"],
+      "category": "Transactions",
+      "priority": 8,
+      "relatedQuestions": ["How long do transactions take?", "What does unconfirmed mean?"]
+    },
+    {
+      "question": "How do I change transaction fees?",
+      "answer": "When sending SHAH, you can adjust the transaction fee in the 'Send' tab. Higher fees result in faster confirmation times. The wallet will suggest an appropriate fee based on network conditions.",
+      "keywords": ["transaction", "fees", "adjust", "send", "confirmation"],
+      "category": "Fees",
+      "priority": 7,
+      "relatedQuestions": ["What's the minimum transaction fee?", "How are fees calculated?"]
+    },
+    {
+      "question": "How are fees calculated?",
+      "answer": "Transaction fees are calculated based on the size of the transaction in kilobytes and current network conditions. The formula is: Fee = Transaction Size (KB) × Fee Rate (SHAH/KB). The wallet automatically suggests appropriate fees.",
+      "keywords": ["fees", "calculated", "size", "kilobytes", "formula"],
+      "category": "Fees",
+      "priority": 6,
+      "relatedQuestions": ["What's the minimum transaction fee?", "How do I change transaction fees?"]
+    },
+    {
+      "question": "What is a cold wallet?",
+      "answer": "A cold wallet is a wallet that stores private keys offline for enhanced security. It's not connected to the internet, making it immune to online attacks. You can mark any wallet as a 'Cold Wallet' in the wallet manager.",
+      "keywords": ["cold", "wallet", "offline", "security", "private", "keys"],
+      "category": "Security",
+      "priority": 7,
+      "relatedQuestions": ["How do I create a cold wallet?", "What are the benefits of cold storage?"]
+    },
+    {
+      "question": "How do I import an address book?",
+      "answer": "Go to 'Settings → Address Book' and use the 'Import' function. You can import addresses from a CSV file or copy-paste them. Make sure the format matches the expected structure.",
+      "keywords": ["import", "address", "book", "csv", "contacts"],
+      "category": "Wallet",
+      "priority": 6,
+      "relatedQuestions": ["How do I add addresses to my address book?", "How do I export my address book?"]
+    },
+    {
+      "question": "What is the difference between SHAH and tokens?",
+      "answer": "SHAH is the native cryptocurrency of the Shahcoin blockchain, used for transactions, staking, and fees. SHI-20 tokens are custom assets created on top of the SHAH blockchain, similar to ERC-20 tokens on Ethereum. Each token can have its own supply, name, and symbol.",
+      "keywords": ["shah", "tokens", "native", "cryptocurrency", "shi-20", "difference"],
+      "category": "General",
+      "priority": 8,
+      "relatedQuestions": ["How do I create a token?", "How do I send tokens?"]
+    },
+    {
+      "question": "How do I send tokens?",
+      "answer": "Go to the 'Send' tab and select the token you want to send from the dropdown menu. Enter the recipient address and amount, then click 'Send'. Make sure you have enough SHAH for the transaction fee.",
+      "keywords": ["send", "tokens", "recipient", "address", "amount"],
+      "category": "Tokens",
+      "priority": 8,
+      "relatedQuestions": ["How do I create a token?", "What are token fees?"]
+    },
+    {
+      "question": "How do I check token balances?",
+      "answer": "Token balances are displayed in the 'Overview' tab along with your SHAH balance. You can also go to the 'Explorer' tab and filter by 'Tokens' to see all your token holdings.",
+      "keywords": ["token", "balances", "overview", "explorer", "holdings"],
+      "category": "Tokens",
+      "priority": 7,
+      "relatedQuestions": ["How do I send tokens?", "How do I create a token?"]
+    },
+    {
+      "question": "What is the maximum supply of SHAH?",
+      "answer": "The maximum supply of SHAH is 63,000,000 coins. This is a hard cap that cannot be exceeded. New SHAH is created through mining rewards and staking, but the total supply will never exceed this limit.",
+      "keywords": ["maximum", "supply", "63", "million", "cap", "limit"],
+      "category": "General",
+      "priority": 6,
+      "relatedQuestions": ["How does mining work?", "How do I stake SHAH?"]
+    }
+  ]
+}

@@ -1,17 +1,17 @@
-Shahcoin Core version 0.16.2 is now available from:
+SHAHCOIN Core version 0.16.2 is now available from:
 
-  <https://shahcoincore.org/bin/shahcoin-core-0.16.2/>
+  <https://shah.vip/bin/shahcoin-core-0.16.2/>
 
 This is a new minor version release, with various bugfixes
 as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/shahcoin/shahcoin/issues>
+  <https://github.com/SHAHCoinvip/shahcoin/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://shahcoincore.org/en/list/announcements/join/>
+  <https://shah.vip/en/list/announcements/join/>
 
 How to Upgrade
 ==============
@@ -40,10 +40,10 @@ wallets that were created with older versions are not affected by this.
 Compatibility
 ==============
 
-Shahcoin Core is extensively tested on multiple operating systems using
+SHAHCOIN Core is extensively tested on multiple operating systems using
 the Linux kernel, macOS 10.8+, and Windows Vista and later. Windows XP is not supported.
 
-Shahcoin Core should also work on most other Unix-like systems but is not
+SHAHCOIN Core should also work on most other Unix-like systems but is not
 frequently tested on them.
 
 0.16.2 change log

@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -158,6 +158,43 @@ public:
     // If coin control has selected outputs, searches the total amount inside the wallet.
     // Otherwise, uses the wallet's cached available balance.
     CAmount getAvailableBalance(const wallet::CCoinControl* control);
+
+    // Staking operations
+    bool startStaking(CAmount amount, QString& error);
+    bool stopStaking(const QString& stakeId, QString& error);
+    bool claimStakeRewards(const QString& stakeId, QString& error);
+    CAmount getStakedBalance() const;
+    CAmount getStakeableBalance() const;
+    QStringList getActiveStakes() const;
+    QStringList getStakingHistory() const;
+
+    // Token operations
+    bool createToken(const QString& name, const QString& symbol, CAmount totalSupply, 
+                    int decimals, const QString& description, QString& error);
+    bool transferToken(const QString& tokenId, const QString& recipient, CAmount amount, QString& error);
+    QStringList getOwnedTokens() const;
+    CAmount getTokenBalance(const QString& tokenId) const;
+
+    // NFT operations
+    bool mintNFT(const QString& name, const QString& description, const QString& imagePath, 
+                const QString& collection, QString& error);
+    bool transferNFT(const QString& nftId, const QString& recipient, QString& error);
+    QStringList getOwnedNFTs() const;
+    QString getNFTMetadata(const QString& nftId) const;
+
+    // DEX operations
+    bool swapTokens(const QString& fromToken, const QString& toToken, CAmount amount, 
+                   double slippage, QString& error);
+    bool addLiquidity(const QString& tokenA, const QString& tokenB, CAmount amountA, 
+                     CAmount amountB, QString& error);
+    QStringList getAvailablePools() const;
+    double getSwapRate(const QString& fromToken, const QString& toToken) const;
+
+    // Explorer operations
+    QString getTransactionInfo(const QString& txId) const;
+    QString getAddressInfo(const QString& address) const;
+    QString getTokenInfo(const QString& tokenId) const;
+    QString getNFTInfo(const QString& nftId) const;
 
 private:
     std::unique_ptr<interfaces::Wallet> m_wallet;

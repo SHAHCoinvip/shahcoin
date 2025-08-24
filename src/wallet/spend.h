@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2022 The Shahcoin Core developers
+// Copyright (c) 2021-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -6,6 +6,7 @@
 #define SHAHCOIN_WALLET_SPEND_H
 
 #include <consensus/amount.h>
+#include <consensus/validation.h>
 #include <policy/fees.h> // for FeeCalculation
 #include <util/result.h>
 #include <wallet/coinselection.h>

@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2022 The Shahcoin Core developers
+// Copyright (c) 2017-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -6,6 +6,7 @@
 #include <core_io.h>
 #include <common/args.h>
 #include <consensus/amount.h>
+#include <consensus/validation.h>
 #include <script/interpreter.h>
 #include <key_io.h>
 #include <outputtype.h>

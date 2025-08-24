@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2022 The Shahcoin Core developers
+// Copyright (C) 2025 The SHAHCOIN Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -13,7 +13,7 @@
 
 void initialize_parse_univalue()
 {
-    SelectParams(ChainType::REGTEST);
+    SelectParams("regtest");
 }
 
 FUZZ_TARGET(parse_univalue, .init = initialize_parse_univalue)

@@ -1,4 +1,4 @@
-# Copyright (c) 2013-2016 The Shahcoin Core developers
+# Copyright (c) 2013-2016 The SHAHCOIN Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -18,22 +18,16 @@ EXTRA_LIBRARIES =
 lib_LTLIBRARIES =
 noinst_LTLIBRARIES =
 
-bin_PROGRAMS =
-noinst_PROGRAMS =
-check_PROGRAMS =
-TESTS =
-BENCHMARKS =
+bin_PROGRAMS += genesis_miner
 
-SHAHCOIN_INCLUDES=-I$(builddir) -I$(srcdir)/$(MINISKETCH_INCLUDE_DIR_INT) -I$(srcdir)/secp256k1/include -I$(srcdir)/$(UNIVALUE_INCLUDE_DIR_INT)
-
-LIBSHAHCOIN_NODE=libshahcoin_node.a
-LIBSHAHCOIN_COMMON=libshahcoin_common.a
-LIBSHAHCOIN_CONSENSUS=libshahcoin_consensus.a
-LIBSHAHCOIN_CLI=libshahcoin_cli.a
-LIBSHAHCOIN_UTIL=libshahcoin_util.a
-LIBSHAHCOIN_CRYPTO_BASE=crypto/libshahcoin_crypto_base.la
-LIBSHAHCOINQT=qt/libshahcoinqt.a
-LIBSECP256K1=secp256k1/libsecp256k1.la
+genesis_miner_SOURCES = genesis_miner.cpp
+genesis_miner_LDADD = \
+    $(LIBSHAHCOIN_NODE) \
+    $(LIBSHAHCOIN_COMMON) \
+    $(LIBSHAHCOIN_CONSENSUS) \
+    $(LIBSHAHCOIN_UTIL) \
+    $(LIBSHAHCOIN_CRYPTO_BASE) \
+    -lboost_system -lcrypto -lssl
 
 if ENABLE_ZMQ
 LIBSHAHCOIN_ZMQ=libshahcoin_zmq.a
@@ -447,6 +441,7 @@ libshahcoin_node_a_SOURCES = \
   rpc/fees.cpp \
   rpc/mempool.cpp \
   rpc/mining.cpp \
+  rpc/hybrid.cpp \
   rpc/net.cpp \
   rpc/node.cpp \
   rpc/output_script.cpp \
@@ -558,18 +553,24 @@ crypto_libshahcoin_crypto_base_la_SOURCES = \
   crypto/chacha20poly1305.h \
   crypto/chacha20poly1305.cpp \
   crypto/common.h \
+  crypto/groestl.cpp \
+  crypto/groestl.h \
   crypto/hkdf_sha256_32.cpp \
   crypto/hkdf_sha256_32.h \
   crypto/hmac_sha256.cpp \
   crypto/hmac_sha256.h \
   crypto/hmac_sha512.cpp \
   crypto/hmac_sha512.h \
+  crypto/multihash.cpp \
+  crypto/multihash.h \
   crypto/poly1305.h \
   crypto/poly1305.cpp \
   crypto/muhash.h \
   crypto/muhash.cpp \
   crypto/ripemd160.cpp \
   crypto/ripemd160.h \
+  crypto/scrypt.cpp \
+  crypto/scrypt.h \
   crypto/sha1.cpp \
   crypto/sha1.h \
   crypto/sha256.cpp \
@@ -649,6 +650,8 @@ libshahcoin_consensus_a_SOURCES = \
   script/script.cpp \
   script/script.h \
   script/script_error.cpp \
+  security/security.cpp \
+  security/security.h \
   script/script_error.h \
   serialize.h \
   span.h \
@@ -757,6 +760,7 @@ libshahcoin_util_a_SOURCES = \
   util/string.cpp \
   util/time.cpp \
   util/tokenpipe.cpp \
+  translation.cpp \
   $(SHAHCOIN_CORE_H)
 #
 
@@ -773,7 +777,7 @@ nodist_libshahcoin_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
 # shahcoind & shahcoin-node binaries #
-shahcoin_daemon_sources = shahcoind.cpp
+shahcoin_daemon_sources = shahcoind.cpp shahcoin.cpp
 shahcoin_bin_cppflags = $(AM_CPPFLAGS) $(SHAHCOIN_INCLUDES)
 shahcoin_bin_cxxflags = $(AM_CXXFLAGS) $(PIE_FLAGS)
 shahcoin_bin_ldflags = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
@@ -1150,3 +1154,8 @@ include Makefile.qttest.include
 endif
 
 include Makefile.univalue.include
+
+bin_PROGRAMS += genesis_miner
+genesis_miner_SOURCES = genesis_miner.cpp
+genesis_miner_LDADD = libshahcoin_util.a libshahcoin_common.a libshahcoin_consensus.a -lboost_system -lboost_filesystem -lssl -lcrypto
+

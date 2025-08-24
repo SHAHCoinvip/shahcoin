@@ -1,0 +1,61 @@
+{
+  "configurations": [
+    {
+      "name": "WSL",
+      "intelliSenseMode": "linux-gcc-x64",
+      "compilerPath": "/usr/bin/g++",
+      "cStandard": "c11",
+      "cppStandard": "c++17",
+      "includePath": [
+        "/usr/include",
+        "/usr/include/x86_64-linux-gnu",
+        "/usr/lib/gcc/x86_64-linux-gnu/13/include",
+        "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed",
+        "/usr/local/include",
+        "/usr/include/c++/13",
+        "/usr/include/c++/13/backward",
+        "/usr/include/c++/13/x86_64-linux-gnu",
+        "/usr/include/boost",
+        "/usr/local/include/boost",
+        "/usr/include/event2",
+        "/usr/include/libevent2",
+        "/usr/include/arpa",
+        "/usr/include/netinet",
+        "/usr/include/sys",
+        "/usr/include/net",
+        "/usr/include/netdb.h",
+        "/usr/include/linux",
+        "/usr/include/asm",
+        "/usr/include/asm-generic",
+        "${workspaceFolder}/**",
+        "${workspaceFolder}/src/**"
+      ],
+      "defines": [
+        "SHAHCOIN_CORE",
+        "HAVE_CONFIG_H",
+        "__linux__",
+        "__GNUC__"
+      ],
+      "compilerArgs": [
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-DHAVE_CONFIG_H",
+        "-DSHAHCOIN_CORE"
+      ],
+      "browse": {
+        "path": [
+          "${workspaceFolder}/**",
+          "/usr/include",
+          "/usr/local/include",
+          "/usr/include/boost",
+          "/usr/include/c++/13"
+        ],
+        "limitSymbolsToIncludedHeaders": true,
+        "databaseFilename": "${workspaceFolder}/.vscode/browse.vc.db"
+      },
+      "configurationProvider": "ms-vscode.cpptools"
+    }
+  ],
+  "version": 4
+}

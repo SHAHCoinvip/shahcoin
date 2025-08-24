@@ -1,5 +1,5 @@
-// Copyright (c) 2010 Satoshi Nakamoto
-// Copyright (c) 2009-2022 The Shahcoin Core developers
+// Copyright (c) 2010 Shahi Nakamoto
+// Copyright (C) 2025 The SHAHCOIN Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -7,19 +7,33 @@
 
 #include <coins.h>
 #include <consensus/amount.h>
+#include <consensus/validation.h>
 #include <core_io.h>
 #include <key_io.h>
 #include <policy/policy.h>
 #include <primitives/transaction.h>
-#include <rpc/request.h>
+#include <rpc/blockchain.h>
+#include <rpc/protocol.h>
 #include <rpc/util.h>
+#include <script/descriptor.h>
 #include <script/sign.h>
 #include <script/signingprovider.h>
+#include <script/standard.h>
+#include <streams.h>
 #include <tinyformat.h>
 #include <univalue.h>
+#include <util/check.h>
+#include <util/error.h>
+#include <util/fees.h>
+#include <util/moneystr.h>
 #include <util/rbf.h>
 #include <util/strencodings.h>
+#include <util/string.h>
+#include <util/system.h>
 #include <util/translation.h>
+#include <validation.h>
+#include <wallet/rpc/util.h>
+#include <wallet/wallet.h>
 
 void AddInputs(CMutableTransaction& rawTx, const UniValue& inputs_in, std::optional<bool> rbf)
 {

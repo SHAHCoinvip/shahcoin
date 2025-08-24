@@ -1,4 +1,4 @@
-This directory contains the source code for the Shahcoin Core graphical user interface (GUI). It uses the [Qt](https://www1.qt.io/developers/) cross-platform framework.
+This directory contains the source code for the SHAHCOIN Core graphical user interface (GUI). It uses the [Qt](https://www1.qt.io/developers/) cross-platform framework.
 
 The current precise version for Qt 5 is specified in [qt.mk](/depends/packages/qt.mk).
 
@@ -121,4 +121,4 @@ sudo apt-get install qtcreator
 
 8. While in the `Projects` tab, ensure that you have the `shahcoin-qt` executable specified under `Run`
  - If the executable is not specified: click `"Choose..."`, navigate to `src/qt`, and select `shahcoin-qt`
-9. You're all set! Start developing, building, and debugging the Shahcoin Core GUI
+9. You're all set! Start developing, building, and debugging the SHAHCOIN Core GUI

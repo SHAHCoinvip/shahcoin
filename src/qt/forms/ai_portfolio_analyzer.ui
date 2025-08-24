@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AIPortfolioAnalyzer</class>
+ <widget class="QWidget" name="AIPortfolioAnalyzer">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>AI Portfolio Analyzer</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="overviewTab">
+      <attribute name="title">
+       <string>Portfolio Overview</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="aiAnalysisTab">
+      <attribute name="title">
+       <string>AI Analysis</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="riskAssessmentTab">
+      <attribute name="title">
+       <string>Risk Assessment</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="performanceChartsTab">
+      <attribute name="title">
+       <string>Performance Charts</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="aiRecommendationsTab">
+      <attribute name="title">
+       <string>AI Recommendations</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QHBoxLayout" name="buttonLayout">
+     <item>
+      <widget class="QPushButton" name="exportButton">
+       <property name="text">
+        <string>Export Analysis</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="helpButton">
+       <property name="text">
+        <string>Help</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
+
+

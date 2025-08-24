@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2022 The Shahcoin Core developers
+// Copyright (c) 2019-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -26,7 +26,7 @@ std::vector<std::string> g_all_messages;
 void initialize_p2p_transport_serialization()
 {
     ECC_Start();
-    SelectParams(ChainType::REGTEST);
+    SelectParams("regtest");
     g_all_messages = getAllNetMessageTypes();
     std::sort(g_all_messages.begin(), g_all_messages.end());
 }

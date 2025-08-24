@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "updated_at": "2025-01-01T00:00:00Z",
+  "domains_blocklist": [
+    "shahco1n.com",
+    "shahc0in.com",
+    "shahcoin-airdrop.com",
+    "free-shah.vip",
+    "claim-shah.vip"
+  ],
+  "url_patterns_blocklist": [
+    "airdrop",
+    "free.*mint",
+    "claim.*shah",
+    "connect.*wallet.*now",
+    "verify.*seed"
+  ],
+  "domains_allowlist": [
+    "shah.vip",
+    "app.shah.vip"
+  ]
+}

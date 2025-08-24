@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2019-present The Shahcoin Core developers
+# Copyright (c) 2019-present The SHAHCOIN Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -15,4 +15,4 @@ export NO_DEPENDS=1
 export OSX_SDK=""
 export CCACHE_MAXSIZE=400M
 export RUN_FUZZ_TESTS=true
-export FUZZ_TESTS_CONFIG="--exclude banman"  # https://github.com/shahcoin/shahcoin/issues/27924
+export FUZZ_TESTS_CONFIG="--exclude banman"  # https://github.com/SHAHCoinvip/shahcoin/issues/27924

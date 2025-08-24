@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2021 The Shahcoin Core developers
+// Copyright (c) 2019-2021 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -20,7 +20,7 @@
 
 void initialize_block()
 {
-    SelectParams(ChainType::REGTEST);
+    SelectParams("regtest");
 }
 
 FUZZ_TARGET(block, .init = initialize_block)

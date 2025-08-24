@@ -1,6 +1,6 @@
-Shahcoin Core version 0.9.5 is now available from:
+SHAHCOIN Core version 0.9.5 is now available from:
 
-  https://shahcoin.org/bin/0.9.5/
+  https://shah.vip/bin/0.9.5/
 
 This is a new minor version release, with the goal of backporting BIP66. There
 are also a few bug fixes and updated translations. Upgrading to this release is
@@ -8,7 +8,7 @@ recommended.
 
 Please report bugs using the issue tracker at github:
 
-  https://github.com/shahcoin/shahcoin/issues
+  https://github.com/SHAHCoinvip/shahcoin/issues
 
 How to Upgrade
 ===============
@@ -24,7 +24,7 @@ Notable changes
 Mining and relay policy enhancements
 ------------------------------------
 
-Shahcoin Core's block templates are now for version 3 blocks only, and any mining
+SHAHCOIN Core's block templates are now for version 3 blocks only, and any mining
 software relying on its `getblocktemplate` must be updated in parallel to use
 libblkmaker either version 0.4.2 or any version from 0.5.1 onward.
 If you are solo mining, this will affect you the moment you upgrade Shahcoin

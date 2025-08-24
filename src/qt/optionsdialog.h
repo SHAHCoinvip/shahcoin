@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -11,6 +11,7 @@
 class ClientModel;
 class OptionsModel;
 class QValidatedLineEdit;
+class QComboBox;
 
 QT_BEGIN_NAMESPACE
 class QDataWidgetMapper;
@@ -50,6 +51,12 @@ public:
     void setModel(OptionsModel *model);
     void setMapper();
     void setCurrentTab(OptionsDialog::Tab tab);
+    // Assistant language
+    QString selectedAssistantLanguage() const;
+    void setSelectedAssistantLanguage(const QString& lang);
+    // AI Wallet email confirmation
+    bool isSendPaymentEmailEnabled() const;
+    void setSendPaymentEmailEnabled(bool enabled);
 
 private Q_SLOTS:
     /* set OK button state (enabled / disabled) */
@@ -77,6 +84,8 @@ private:
     ClientModel* m_client_model{nullptr};
     OptionsModel* model{nullptr};
     QDataWidgetMapper* mapper{nullptr};
+    QComboBox* m_languageCombo{nullptr};
+    QCheckBox* m_sendPaymentEmailCheckbox{nullptr};
 };
 
 #endif // SHAHCOIN_QT_OPTIONSDIALOG_H

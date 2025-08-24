@@ -1,15 +1,15 @@
-Shahcoin Core
+SHAHCOIN Core
 =============
 
 Setup
 ---------------------
-Shahcoin Core is the original Shahcoin client and it builds the backbone of the network. It downloads and, by default, stores the entire history of Shahcoin transactions, which requires a few hundred gigabytes of disk space. Depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more.
+SHAHCOIN Core is the original Shahcoin client and it builds the backbone of the network. It downloads and, by default, stores the entire history of Shahcoin transactions, which requires a few hundred gigabytes of disk space. Depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more.
 
-To download Shahcoin Core, visit [shahcoincore.org](https://shahcoincore.org/en/download/).
+To download SHAHCOIN Core, visit [shah.vip](https://shah.vip/en/download/).
 
 Running
 ---------------------
-The following are some helpful notes on how to run Shahcoin Core on your native platform.
+The following are some helpful notes on how to run SHAHCOIN Core on your native platform.
 
 ### Unix
 
@@ -24,7 +24,7 @@ Unpack the files into a directory, and then run shahcoin-qt.exe.
 
 ### macOS
 
-Drag Shahcoin Core to your applications folder, and then run Shahcoin Core.
+Drag SHAHCOIN Core to your applications folder, and then run SHAHCOIN Core.
 
 ### Need Help?
 
@@ -36,7 +36,7 @@ for help and more information.
 
 Building
 ---------------------
-The following are developer notes on how to build Shahcoin Core on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
+The following are developer notes on how to build SHAHCOIN Core on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
 
 - [Dependencies](dependencies.md)
 - [macOS Build Notes](build-osx.md)
@@ -54,7 +54,7 @@ The Shahcoin repo's [root README](/README.md) contains relevant information on t
 - [Developer Notes](developer-notes.md)
 - [Productivity Notes](productivity.md)
 - [Release Process](release-process.md)
-- [Source Code Documentation (External Link)](https://doxygen.shahcoincore.org/)
+- [Source Code Documentation (External Link)](https://doxygen.shah.vip/)
 - [Translation Process](translation_process.md)
 - [Translation Strings Policy](translation_strings_policy.md)
 - [JSON-RPC Interface](JSON-RPC-interface.md)

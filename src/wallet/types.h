@@ -1,5 +1,5 @@
-// Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2021 The Shahcoin Core developers
+// Copyright (c) 2009-2010 Shahi Nakamoto
+// Copyright (C) 2025 The SHAHCOIN Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -19,7 +19,7 @@ namespace wallet {
 /**
  * IsMine() return codes, which depend on ScriptPubKeyMan implementation.
  * Not every ScriptPubKeyMan covers all types, please refer to
- * https://github.com/shahcoin/shahcoin/blob/master/doc/release-notes/release-notes-0.21.0.md#ismine-semantics
+ * https://github.com/SHAHCoinvip/shahcoin/blob/master/doc/release-notes/release-notes-0.21.0.md#ismine-semantics
  * for better understanding.
  *
  * For LegacyScriptPubKeyMan,
@@ -52,7 +52,7 @@ using isminefilter = std::underlying_type<isminetype>::type;
 /**
  * Address purpose field that has been been stored with wallet sending and
  * receiving addresses since BIP70 payment protocol support was added in
- * https://github.com/shahcoin/shahcoin/pull/2539. This field is not currently
+ * https://github.com/SHAHCoinvip/shahcoin/pull/2539. This field is not currently
  * used for any logic inside the wallet, but it is still shown in RPC and GUI
  * interfaces and saved for new addresses. It is basically redundant with an
  * address's IsMine() result.

@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -83,7 +83,7 @@ SendCoinsDialog::SendCoinsDialog(const PlatformStyle *_platformStyle, QWidget *p
 
     addEntry();
 
-    connect(ui->addButton, &QPushButton::clicked, this, &SendCoinsDialog::addEntry);
+    connect(ui->addButton, &QPushButton::clicked, this, &SendCoinsDialog::onAddRecipientClicked);
     connect(ui->clearButton, &QPushButton::clicked, this, &SendCoinsDialog::clear);
 
     // Coin Control
@@ -131,6 +131,25 @@ SendCoinsDialog::SendCoinsDialog(const PlatformStyle *_platformStyle, QWidget *p
     minimizeFeeSection(settings.value("fFeeSectionMinimized").toBool());
 
     GUIUtil::ExceptionSafeConnect(ui->sendButton, &QPushButton::clicked, this, &SendCoinsDialog::sendButtonClicked);
+    
+    // Add Custom Fee Selection button
+    QPushButton* customFeeButton = new QPushButton(tr("💸 Custom Fee"), this);
+    customFeeButton->setToolTip(tr("Open advanced fee selection dialog with Basic and Advanced modes"));
+    if (_platformStyle->getImagesOnButtons()) {
+        customFeeButton->setIcon(_platformStyle->SingleColorIcon(":/icons/options"));
+    }
+    connect(customFeeButton, &QPushButton::clicked, this, &SendCoinsDialog::onCustomFeeSelectionClicked);
+    
+    // Insert the custom fee button into the fee section layout
+    // Find the horizontal layout that contains the fee buttons
+    QHBoxLayout* feeButtonLayout = qobject_cast<QHBoxLayout*>(ui->buttonChooseFee->parentWidget()->layout());
+    if (feeButtonLayout) {
+        feeButtonLayout->insertWidget(feeButtonLayout->indexOf(ui->buttonChooseFee) + 1, customFeeButton);
+    }
+    
+    // Initialize multi-recipient functionality
+    updateAddRecipientButton();
+    validateRecipients();
 }
 
 void SendCoinsDialog::setClientModel(ClientModel *_clientModel)
@@ -564,6 +583,9 @@ void SendCoinsDialog::clear()
     ui->lineEditCoinControlChange->clear();
     coinControlUpdateLabels();
 
+    // Clear used addresses tracking
+    m_usedAddresses.clear();
+
     // Remove entries until only one left
     while(ui->entries->count())
     {
@@ -572,6 +594,8 @@ void SendCoinsDialog::clear()
     addEntry();
 
     updateTabsAndLabels();
+    updateAddRecipientButton();
+    validateRecipients();
 }
 
 void SendCoinsDialog::reject()
@@ -586,6 +610,13 @@ void SendCoinsDialog::accept()
 
 SendCoinsEntry *SendCoinsDialog::addEntry()
 {
+    // Check if we've reached the maximum number of recipients
+    if (ui->entries->count() >= MAX_RECIPIENTS) {
+        QMessageBox::warning(this, tr("Maximum Recipients"),
+            tr("You can only add up to %1 recipients per transaction.").arg(MAX_RECIPIENTS));
+        return nullptr;
+    }
+
     SendCoinsEntry *entry = new SendCoinsEntry(platformStyle, this);
     entry->setModel(model);
     ui->entries->addWidget(entry);
@@ -593,6 +624,12 @@ SendCoinsEntry *SendCoinsDialog::addEntry()
     connect(entry, &SendCoinsEntry::useAvailableBalance, this, &SendCoinsDialog::useAvailableBalance);
     connect(entry, &SendCoinsEntry::payAmountChanged, this, &SendCoinsDialog::coinControlUpdateLabels);
     connect(entry, &SendCoinsEntry::subtractFeeFromAmountChanged, this, &SendCoinsDialog::coinControlUpdateLabels);
+    
+    // Enhanced multi-recipient connections
+    connect(entry, &SendCoinsEntry::addressChanged, this, [this, entry](const QString& address) {
+        onRecipientAddressChanged(address, entry);
+    });
+    connect(entry, &SendCoinsEntry::payAmountChanged, this, &SendCoinsDialog::onRecipientAmountChanged);
 
     // Focus the field, so that entry can start immediately
     entry->clear();
@@ -609,6 +646,7 @@ SendCoinsEntry *SendCoinsDialog::addEntry()
     }, Qt::QueuedConnection);
 
     updateTabsAndLabels();
+    updateAddRecipientButton();
     return entry;
 }
 
@@ -620,6 +658,12 @@ void SendCoinsDialog::updateTabsAndLabels()
 
 void SendCoinsDialog::removeEntry(SendCoinsEntry* entry)
 {
+    // Remove the address from used addresses tracking
+    SendCoinsRecipient rcp = entry->getValue();
+    if (!rcp.address.isEmpty()) {
+        m_usedAddresses.remove(rcp.address);
+    }
+    
     entry->hide();
 
     // If the last entry is about to be removed add an empty one
@@ -629,6 +673,8 @@ void SendCoinsDialog::removeEntry(SendCoinsEntry* entry)
     entry->deleteLater();
 
     updateTabsAndLabels();
+    updateAddRecipientButton();
+    validateRecipients();
 }
 
 QWidget *SendCoinsDialog::setupTabChain(QWidget *prev)
@@ -1110,5 +1156,188 @@ void SendConfirmationDialog::updateButtons()
             m_psbt_button->setEnabled(true);
             m_psbt_button->setText(m_psbt_button_text);
         }
+    }
+}
+
+// Enhanced multi-recipient methods
+void SendCoinsDialog::updateTotalAmount()
+{
+    CAmount total = 0;
+    for(int i = 0; i < ui->entries->count(); ++i)
+    {
+        SendCoinsEntry *entry = qobject_cast<SendCoinsEntry*>(ui->entries->itemAt(i)->widget());
+        if(entry && !entry->isHidden())
+        {
+            SendCoinsRecipient rcp = entry->getValue();
+            if (rcp.amount > 0) {
+                total += rcp.amount;
+            }
+        }
+    }
+    
+    // Update the total display if we have a label for it
+    // This would require adding a total label to the UI
+    // For now, we'll just update the coin control labels
+    coinControlUpdateLabels();
+}
+
+bool SendCoinsDialog::checkDuplicateAddresses()
+{
+    QSet<QString> addresses;
+    bool hasDuplicates = false;
+    
+    for(int i = 0; i < ui->entries->count(); ++i)
+    {
+        SendCoinsEntry *entry = qobject_cast<SendCoinsEntry*>(ui->entries->itemAt(i)->widget());
+        if(entry && !entry->isHidden())
+        {
+            SendCoinsRecipient rcp = entry->getValue();
+            if (!rcp.address.isEmpty()) {
+                if (addresses.contains(rcp.address)) {
+                    hasDuplicates = true;
+                    // Highlight the duplicate entry
+                    entry->setStyleSheet("QLineEdit { background-color: #ffebee; border: 1px solid #f44336; }");
+                } else {
+                    addresses.insert(rcp.address);
+                    // Reset styling
+                    entry->setStyleSheet("");
+                }
+            }
+        }
+    }
+    
+    return !hasDuplicates;
+}
+
+void SendCoinsDialog::validateRecipients()
+{
+    bool isValid = true;
+    QString errorMessage;
+    
+    // Check for duplicate addresses
+    if (!checkDuplicateAddresses()) {
+        isValid = false;
+        errorMessage = tr("Duplicate addresses detected. Each address should only be used once.");
+    }
+    
+    // Check total amount
+    CAmount total = 0;
+    for(int i = 0; i < ui->entries->count(); ++i)
+    {
+        SendCoinsEntry *entry = qobject_cast<SendCoinsEntry*>(ui->entries->itemAt(i)->widget());
+        if(entry && !entry->isHidden())
+        {
+            SendCoinsRecipient rcp = entry->getValue();
+            if (rcp.amount > 0) {
+                total += rcp.amount;
+            }
+        }
+    }
+    
+    // Check if total exceeds balance
+    if (model && total > model->getBalance()) {
+        isValid = false;
+        if (!errorMessage.isEmpty()) errorMessage += "\n";
+        errorMessage += tr("Total amount exceeds your balance.");
+    }
+    
+    // Update send button state
+    if (ui->sendButton) {
+        ui->sendButton->setEnabled(isValid);
+        if (!isValid) {
+            ui->sendButton->setToolTip(errorMessage);
+        } else {
+            ui->sendButton->setToolTip(tr("Send the transaction"));
+        }
+    }
+}
+
+void SendCoinsDialog::updateAddRecipientButton()
+{
+    if (ui->addButton) {
+        bool canAdd = ui->entries->count() < MAX_RECIPIENTS;
+        ui->addButton->setEnabled(canAdd);
+        if (!canAdd) {
+            ui->addButton->setToolTip(tr("Maximum number of recipients reached (%1)").arg(MAX_RECIPIENTS));
+        } else {
+            ui->addButton->setToolTip(tr("Add another recipient"));
+        }
+    }
+}
+
+void SendCoinsDialog::onRecipientAddressChanged(const QString& address, SendCoinsEntry* entry)
+{
+    // Update used addresses tracking
+    if (!address.isEmpty()) {
+        m_usedAddresses.insert(address);
+    }
+    
+    // Validate recipients after address change
+    validateRecipients();
+}
+
+void SendCoinsDialog::onAddRecipientClicked()
+{
+    addEntry();
+}
+
+void SendCoinsDialog::onRecipientAmountChanged()
+{
+    updateTotalAmount();
+    validateRecipients();
+}
+
+void SendCoinsDialog::onCustomFeeSelectionClicked()
+{
+    if (!model) {
+        QMessageBox::warning(this, tr("No Wallet"), tr("Please load a wallet first."));
+        return;
+    }
+
+    // Open custom fee selection dialog
+    CustomFeeSelectionDialog dlg(platformStyle, this);
+    dlg.setModel(model);
+    
+    // Set current values
+    if (ui->radioSmartFee->isChecked()) {
+        dlg.setCurrentMode(CustomFeeSelectionDialog::Standard);
+    } else {
+        dlg.setCurrentMode(CustomFeeSelectionDialog::Custom);
+        dlg.setCurrentCustomFee(ui->customFee->value());
+    }
+    dlg.setCurrentConfirmationTarget(getConfTargetForIndex(ui->confTargetSelector->currentIndex()));
+    
+    if (dlg.exec() == QDialog::Accepted) {
+        // Apply selected fee settings
+        CustomFeeSelectionDialog::FeeMode selectedMode = dlg.getSelectedMode();
+        
+        if (selectedMode == CustomFeeSelectionDialog::Custom) {
+            // Set custom fee
+            ui->radioCustomFee->setChecked(true);
+            ui->customFee->setValue(dlg.getCustomFeePerKB());
+            ui->confTargetSelector->setCurrentIndex(getIndexForConfTarget(dlg.getConfirmationTarget()));
+        } else {
+            // Set smart fee with appropriate confirmation target
+            ui->radioSmartFee->setChecked(true);
+            int target = 25; // Default
+            switch (selectedMode) {
+                case CustomFeeSelectionDialog::HighPriority:
+                    target = 6;
+                    break;
+                case CustomFeeSelectionDialog::EcoMode:
+                    target = 100;
+                    break;
+                case CustomFeeSelectionDialog::Standard:
+                default:
+                    target = 25;
+                    break;
+            }
+            ui->confTargetSelector->setCurrentIndex(getIndexForConfTarget(target));
+        }
+        
+        // Update fee display
+        updateCoinControlState();
+        updateFeeMinimizedLabel();
+        updateSmartFeeLabel();
     }
 }

@@ -1,5 +1,5 @@
-// Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2022 The Shahcoin Core developers
+// Copyright (c) 2009-2010 Shahi Nakamoto
+// Copyright (C) 2025 The SHAHCOIN Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -736,31 +736,18 @@ std::string ArgsManager::GetChainTypeString() const
 
 std::variant<ChainType, std::string> ArgsManager::GetChainArg() const
 {
-    auto get_net = [&](const std::string& arg) {
-        LOCK(cs_args);
-        common::SettingsValue value = common::GetSetting(m_settings, /* section= */ "", SettingName(arg),
-            /* ignore_default_section_config= */ false,
-            /*ignore_nonpersistent=*/false,
-            /* get_chain_type= */ true);
-        return value.isNull() ? false : value.isBool() ? value.get_bool() : InterpretBool(value.get_str());
-    };
-
-    const bool fRegTest = get_net("-regtest");
-    const bool fSigNet  = get_net("-signet");
-    const bool fTestNet = get_net("-testnet");
     const auto chain_arg = GetArg("-chain");
 
-    if ((int)chain_arg.has_value() + (int)fRegTest + (int)fSigNet + (int)fTestNet > 1) {
-        throw std::runtime_error("Invalid combination of -regtest, -signet, -testnet and -chain. Can use at most one.");
-    }
     if (chain_arg) {
-        if (auto parsed = ChainTypeFromString(*chain_arg)) return *parsed;
+        if (auto parsed = ChainTypeFromString(*chain_arg)) {
+            if (*parsed == ChainType::MAIN) {
+                return *parsed;
+            }
+            throw std::runtime_error("Only mainnet is supported. Testnet and regtest are disabled.");
+        }
         // Not a known string, so return original string
         return *chain_arg;
     }
-    if (fRegTest) return ChainType::REGTEST;
-    if (fSigNet) return ChainType::SIGNET;
-    if (fTestNet) return ChainType::TESTNET;
     return ChainType::MAIN;
 }
 

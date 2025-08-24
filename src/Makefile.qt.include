@@ -32,11 +32,18 @@ QT_FORMS_UI = \
   qt/forms/sendcoinsdialog.ui \
   qt/forms/sendcoinsentry.ui \
   qt/forms/signverifymessagedialog.ui \
-  qt/forms/transactiondescdialog.ui
+  qt/forms/transactiondescdialog.ui \
+  qt/forms/ai_portfolio_analyzer.ui \
+  qt/forms/game_launchpad.ui \
+  qt/forms/marketplacelistingdialog.ui \
+  qt/forms/premiumsubscription.ui \
+  qt/forms/premiumfeatures.ui
 
 QT_MOC_CPP = \
   qt/moc_addressbookpage.cpp \
   qt/moc_addresstablemodel.cpp \
+              qt/moc_enhancedaddressbook.cpp \
+              qt/moc_customfeeselectiondialog.cpp \
   qt/moc_askpassphrasedialog.cpp \
   qt/moc_createwalletdialog.cpp \
   qt/moc_bantablemodel.cpp \
@@ -49,6 +56,7 @@ QT_MOC_CPP = \
   qt/moc_coincontroldialog.cpp \
   qt/moc_coincontroltreewidget.cpp \
   qt/moc_csvmodelwriter.cpp \
+  qt/moc_diagnosticspanel.cpp \
   qt/moc_editaddressdialog.cpp \
   qt/moc_guiutil.cpp \
   qt/moc_initexecutor.cpp \
@@ -76,6 +84,7 @@ QT_MOC_CPP = \
   qt/moc_sendcoinsentry.cpp \
   qt/moc_signverifymessagedialog.cpp \
   qt/moc_splashscreen.cpp \
+  qt/moc_statusfooter.cpp \
   qt/moc_trafficgraphwidget.cpp \
   qt/moc_transactiondesc.cpp \
   qt/moc_transactiondescdialog.cpp \
@@ -87,7 +96,38 @@ QT_MOC_CPP = \
   qt/moc_walletcontroller.cpp \
   qt/moc_walletframe.cpp \
   qt/moc_walletmodel.cpp \
-  qt/moc_walletview.cpp
+  qt/moc_walletview.cpp \
+  qt/moc_tokencreatorpanel.cpp \
+  qt/moc_nftcreatorpanel.cpp \
+  qt/moc_tokennftexplorer.cpp \
+    qt/moc_bulkoperationsdialog.cpp \
+  qt/moc_advancedfilterdialog.cpp \
+  qt/moc_marketplacelistingdialog.cpp \
+  qt/moc_premiumsubscription.cpp \
+  qt/moc_premiumfeatures.cpp \
+  qt/moc_premiumpanel.cpp \
+qt/moc_moderationdialogs.cpp \
+  qt/moc_shahswappanel.cpp \
+  qt/moc_coldstakingpanel.cpp \
+  qt/moc_assetcreatorpanel.cpp \
+  qt/moc_aboutdialog.cpp \
+  qt/moc_releasenotesdialog.cpp \
+  qt/moc_walletsetupwizard.cpp \
+  qt/moc_tooltipenhancement.cpp \
+  qt/moc_easteregg.cpp \
+  qt/moc_walletmanagerpanel.cpp \
+  qt/moc_qrcodewidget.cpp \
+  qt/moc_dashboardwidget.cpp \
+  qt/moc_monetizationmanager.cpp \
+  qt/moc_upgradeaipanel.cpp \
+  qt/moc_aiaccessgate.cpp \
+  qt/moc_seedvault.cpp \
+  qt/moc_watchonlywallet.cpp \
+  qt/moc_multisigwallet.cpp \
+  qt/moc_thememanager.cpp \
+  qt/moc_ai-portfolio-analyzer.cpp \
+  qt/moc_game-launchpad.cpp
+  qt/moc_securitytab.cpp
 
 SHAHCOIN_MM = \
   qt/macdockiconhandler.mm \
@@ -108,6 +148,8 @@ QT_QRC_LOCALE = qt/shahcoin_locale.qrc
 SHAHCOIN_QT_H = \
   qt/addressbookpage.h \
   qt/addresstablemodel.h \
+              qt/enhancedaddressbook.h \
+              qt/customfeeselectiondialog.h \
   qt/askpassphrasedialog.h \
   qt/bantablemodel.h \
   qt/shahcoin.h \
@@ -120,6 +162,7 @@ SHAHCOIN_QT_H = \
   qt/coincontroltreewidget.h \
   qt/createwalletdialog.h \
   qt/csvmodelwriter.h \
+  qt/diagnosticspanel.h \
   qt/editaddressdialog.h \
   qt/guiconstants.h \
   qt/guiutil.h \
@@ -152,6 +195,7 @@ SHAHCOIN_QT_H = \
   qt/sendcoinsrecipient.h \
   qt/signverifymessagedialog.h \
   qt/splashscreen.h \
+  qt/statusfooter.h \
   qt/trafficgraphwidget.h \
   qt/transactiondesc.h \
   qt/transactiondescdialog.h \
@@ -166,7 +210,50 @@ SHAHCOIN_QT_H = \
   qt/walletmodel.h \
   qt/walletmodeltransaction.h \
   qt/walletview.h \
-  qt/winshutdownmonitor.h
+  qt/winshutdownmonitor.h \
+  qt/tokencreatorpanel.h \
+  qt/nftcreatorpanel.h \
+  qt/tokennftexplorer.h \
+    qt/bulkoperationsdialog.h \
+  qt/advancedfilterdialog.h \
+  qt/marketplacelistingdialog.h \
+  qt/premiumsubscription.h \
+  qt/premiumfeatures.h \
+  qt/premiumpanel.h \
+qt/moderationdialogs.h \
+  qt/shahswappanel.h \
+  qt/coldstakingpanel.h \
+  qt/assetcreatorpanel.h \
+  qt/walletmanagerpanel.h \
+  qt/qrcodewidget.h \
+  qt/dashboardwidget.h \
+  qt/monetizationmanager.h \
+  qt/upgradeaipanel.h \
+  qt/aiaccessgate.h \
+  qt/priceoracle.h \
+  qt/aibalancechecker.h \
+  qt/subscriptiondialog.h \
+  qt/aiusagedashboard.h \
+  qt/aipayments.h \
+  qt/emailservice.h \
+  qt/seedvault.h \
+  qt/watchonlywallet.h \
+  qt/multisigwallet.h \
+  qt/thememanager.h \
+  qt/mobilecompaniondialog.h \
+  qt/hardwarewalletdialog.h \
+  	qt/vaultmanager.h \
+	qt/wizardai.h \
+	qt/vaultrecoveryalerts.h \
+	qt/aifeeestimator.h \
+	qt/autostakingoptimizer.h \
+	qt/aboutdialog.h \
+	qt/releasenotesdialog.h \
+	qt/walletsetupwizard.h \
+	qt/tooltipenhancement.h \
+	qt/easteregg.h \
+  qt/ai-portfolio-analyzer.h \
+  qt/game-launchpad.h
 
 QT_RES_FONTS = \
   qt/res/fonts/RobotoMono-Bold.ttf
@@ -228,6 +315,7 @@ SHAHCOIN_QT_BASE_CPP = \
   qt/shahcoinunits.cpp \
   qt/clientmodel.cpp \
   qt/csvmodelwriter.cpp \
+  qt/diagnosticspanel.cpp \
   qt/guiutil.cpp \
   qt/initexecutor.cpp \
   qt/intro.cpp \
@@ -243,14 +331,81 @@ SHAHCOIN_QT_BASE_CPP = \
   qt/qvaluecombobox.cpp \
   qt/rpcconsole.cpp \
   qt/splashscreen.cpp \
+  qt/statusfooter.cpp \
   qt/trafficgraphwidget.cpp \
-  qt/utilitydialog.cpp
+  qt/utilitydialog.cpp \
+  qt/tokencreatorpanel.cpp \
+  qt/nftcreatorpanel.cpp \
+  qt/tokennftexplorer.cpp \
+    qt/bulkoperationsdialog.cpp \
+  qt/advancedfilterdialog.cpp \
+  qt/tokennftexplorer_advanced.cpp \
+  qt/premiumsubscription.cpp \
+  qt/premiumfeatures.cpp \
+  qt/premiumpanel.cpp \
+qt/tokennftexplorer_moderation.cpp \
+qt/moderationdialogs.cpp \
+  qt/marketplacelistingdialog.cpp \
+  qt/shahswappanel.cpp \
+  qt/coldstakingpanel.cpp \
+  qt/assetcreatorpanel.cpp \
+  qt/walletmanagerpanel.cpp \
+  qt/qrcodewidget.cpp \
+  qt/dashboardwidget.cpp \
+  qt/monetizationmanager.cpp \
+  qt/upgradeaipanel.cpp \
+  qt/aiaccessgate.cpp \
+  qt/priceoracle.cpp \
+  qt/aibalancechecker.cpp \
+  qt/subscriptiondialog.cpp \
+  qt/aiusagedashboard.cpp \
+  qt/aipayments.cpp \
+  qt/emailservice.cpp \
+  qt/seedvault.cpp \
+  qt/watchonlywallet.cpp \
+  qt/multisigwallet.cpp \
+  qt/thememanager.cpp \
+  qt/mobilecompaniondialog.cpp \
+  qt/hardwarewalletdialog.cpp \
+  	qt/vaultmanager.cpp \
+	qt/wizardai.cpp \
+	qt/vaultrecoveryalerts.cpp \
+	qt/aifeeestimator.cpp \
+	qt/autostakingoptimizer.cpp \
+	qt/aboutdialog.cpp \
+	qt/releasenotesdialog.cpp \
+	qt/walletsetupwizard.cpp \
+	qt/tooltipenhancement.cpp \
+	qt/easteregg.cpp \
+  qt/ai-portfolio-analyzer.cpp \
+  qt/game-launchpad.cpp \
+  security/shahsecurity.cpp \
+
+  consensus/hybrid.cpp \
+  consensus/pos_stub.cpp \
+  pow_dispatch.cpp \
+  crypto/groestl_simd.cpp \
+  crypto/scrypt_optimized.cpp \
+  stake/stake_manager.cpp
+
+# Security module UI (Security Tab)
+SHAHCOIN_QT_BASE_CPP += \
+  qt/securitytab.cpp \
+  qt/powposdashboard.cpp \
+  qt/posstakingpanel.cpp
+
+SHAHCOIN_QT_H += \
+  qt/securitytab.h \
+  qt/powposdashboard.h \
+  qt/posstakingpanel.h
 
 SHAHCOIN_QT_WINDOWS_CPP = qt/winshutdownmonitor.cpp
 
 SHAHCOIN_QT_WALLET_CPP = \
   qt/addressbookpage.cpp \
   qt/addresstablemodel.cpp \
+              qt/enhancedaddressbook.cpp \
+              qt/customfeeselectiondialog.cpp \
   qt/askpassphrasedialog.cpp \
   qt/coincontroldialog.cpp \
   qt/coincontroltreewidget.cpp \
@@ -394,7 +549,7 @@ shahcoin_qt : qt/shahcoin-qt$(EXEEXT)
 
 APK_LIB_DIR = qt/android/libs/$(ANDROID_ARCH)
 QT_BASE_VERSION = $(lastword $(shell $(MOC) --version))
-QT_BASE_PATH = $(shell find ../depends/sources/ -maxdepth 1 -type f -regex ".*qtbase.*$(QT_BASE_VERSION)\.tar.xz")
+QT_BASE_PATH = $(shell find ../depends/sources/ -maxdepth 1 -type f -regex ".*qtbase.*$(QT_BASE_VERSION)\.tar\.xz")
 QT_BASE_TLD = $(shell tar tf $(QT_BASE_PATH) --exclude='*/*')
 
 shahcoin_qt_apk: FORCE

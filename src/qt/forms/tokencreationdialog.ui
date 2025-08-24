@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TokenCreationDialog</class>
+ <widget class="QDialog" name="TokenCreationDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Create SHI-20 Token</string>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label_title">
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Create Your SHI-20 Token</string>
+     </property>
+     <property name="toolTip">
+      <string>SHI-20 is the official user token standard on Shahcoin (like ERC-20 on Ethereum).</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   
+   <!-- Tier Selection Section -->
+   <item>
+    <widget class="QGroupBox" name="groupBox_tier">
+     <property name="title">
+      <string>Tier (Per Token)</string>
+     </property>
+     <property name="toolTip">
+      <string>Select a pricing tier. All prices are per token.</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout_tier">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_tier">
+        <property name="text">
+         <string>Choose Tier (per token):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="comboBox_tier">
+        <item>
+         <property name="text">
+          <string>Basic — $49 per token</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Pro — $79 per token</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Premium — $129 per token</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QLabel" name="label_tierBenefits">
+        <property name="text">
+         <string>Basic: name, symbol, supply; no-code SHI-20; standard listing. Pro: adds logo upload, verified badge, ShahSwap auto-listing, wallet visibility. Premium: adds advanced analytics, DAO-ready toggle, NFT airdrop integration, custom landing page.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   
+   <item>
+    <widget class="QLabel" name="label_description">
+     <property name="text">
+      <string>Configure your SHI-20 token and review fees before creation</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   
+   <item>
+    <spacer name="verticalSpacer_title">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   
+   <!-- Token Configuration Section -->
+   <item>
+    <widget class="QGroupBox" name="groupBox_tokenConfig">
+     <property name="title">
+      <string>SHI-20 Token Configuration</string>
+     </property>
+     <property name="toolTip">
+      <string>SHI-20 is the official user token standard on Shahcoin (like ERC-20 on Ethereum).</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout_token">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_tokenName">
+        <property name="text">
+         <string>Token Name:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="lineEdit_tokenName">
+        <property name="placeholderText">
+         <string>My Awesome Token</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_tokenSymbol">
+        <property name="text">
+         <string>Token Symbol:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="lineEdit_tokenSymbol">
+        <property name="placeholderText">
+         <string>MAT</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_decimals">
+        <property name="text">
+         <string>Decimals:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSpinBox" name="spinBox_decimals">
+        <property name="minimum">
+         <number>0</number>
+        </property>
+        <property name="maximum">
+         <number>18</number>
+        </property>
+        <property name="value">
+         <number>18</number>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_maxSupply">
+        <property name="text">
+         <string>Max Supply:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="lineEdit_maxSupply">
+        <property name="placeholderText">
+         <string>1000000</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_initialSupply">
+        <property name="text">
+         <string>Initial Supply:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="lineEdit_initialSupply">
+        <property name="placeholderText">
+         <string>100000</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   
+   <!-- Fee Explanation Section -->
+   <item>
+    <widget class="QGroupBox" name="groupBox_feeExplanation">
+     <property name="title">
+      <string>Fee Explanation</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_fees">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_tokenFee">
+        <item>
+         <widget class="QLabel" name="label_tokenFee">
+          <property name="text">
+           <string>Token Creation Fee:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_tokenFeeAmount">
+          <property name="text">
+           <string>$49 worth of SHAH (per token, calculated live via ShahSwap)</string>
+          </property>
+          <property name="styleSheet">
+           <string>color: #2d3748; font-weight: bold;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_tokenFeeInfo">
+          <property name="maximumSize">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>ⓘ</string>
+          </property>
+          <property name="toolTip">
+           <string>Token fee is for ShahFactory setup and verification</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_txFee">
+        <item>
+         <widget class="QLabel" name="label_txFee">
+          <property name="text">
+           <string>Blockchain Transaction Fee:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_txFeeAmount">
+          <property name="text">
+           <string>~0.001 SHAH paid to miners</string>
+          </property>
+          <property name="styleSheet">
+           <string>color: #718096;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_txFeeInfo">
+          <property name="maximumSize">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>ⓘ</string>
+          </property>
+          <property name="toolTip">
+           <string>TX fee is standard miner cost to record on blockchain</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_totalFee">
+        <property name="text">
+         <string>Total Fee: <span style="font-weight: bold; color: #2d3748;">$49.001 SHAH</span></string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_paymentStatus">
+        <property name="text">
+         <string>Payment Status: Not Verified</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="styleSheet">
+         <string>color: #b45309;</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   
+   <!-- Payment Method Section -->
+   <item>
+    <widget class="QGroupBox" name="groupBox_paymentMethod">
+     <property name="title">
+      <string>Payment Method</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_payment">
+      <item>
+       <widget class="QRadioButton" name="radioButton_shah">
+        <property name="text">
+         <string>Native SHAH</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_shahToken">
+        <property name="text">
+         <string>SHAHtoken (SHI-20)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_stripe">
+        <property name="text">
+         <string>Credit Card (USD)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   
+   <!-- Premium Add-ons Section -->
+   <item>
+    <widget class="QGroupBox" name="groupBox_addOns">
+     <property name="title">
+      <string>Premium Add-ons (Optional)</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_addOns">
+      <item>
+       <widget class="QCheckBox" name="checkBox_customLogo">
+        <property name="text">
+         <string>Custom Logo Upload (+$10)</string>
+        </property>
+        <property name="toolTip">
+         <string>Upload your own logo for the token</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_verifiedBadge">
+        <property name="text">
+         <string>Verified Badge (+$20)</string>
+        </property>
+        <property name="toolTip">
+         <string>Get verified badge in ShahExplorer and Web Wallet</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_upgradeableContract">
+        <property name="text">
+         <string>Upgradeable Contract (+$15)</string>
+        </property>
+        <property name="toolTip">
+         <string>Make your contract upgradeable for future improvements</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_airdropTool">
+        <property name="text">
+         <string>Token Airdrop Tool (+$8)</string>
+        </property>
+        <property name="toolTip">
+         <string>Built-in airdrop functionality for your token</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   
+   <item>
+    <spacer name="verticalSpacer_bottom">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   
+   <!-- Terms and Conditions -->
+   <item>
+    <widget class="QCheckBox" name="checkBox_terms">
+     <property name="text">
+      <string>I understand this is a permanent blockchain action</string>
+     </property>
+    </widget>
+   </item>
+   
+   <!-- Action Buttons -->
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_buttons">
+     <item>
+      <widget class="QPushButton" name="pushButton_calculateFee">
+       <property name="text">
+        <string>Calculate Fee</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_payVerify">
+       <property name="text">
+        <string>Pay &amp; Verify</string>
+       </property>
+       <property name="toolTip">
+        <string>Pay the per-token fee using the selected method. Payment must be verified before deployment.</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_cancel">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_confirmCreate">
+       <property name="text">
+        <string>Confirm &amp; Create Token</string>
+       </property>
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>lineEdit_tokenName</tabstop>
+  <tabstop>lineEdit_tokenSymbol</tabstop>
+  <tabstop>spinBox_decimals</tabstop>
+  <tabstop>lineEdit_maxSupply</tabstop>
+  <tabstop>lineEdit_initialSupply</tabstop>
+  <tabstop>checkBox_customLogo</tabstop>
+  <tabstop>checkBox_verifiedBadge</tabstop>
+  <tabstop>checkBox_upgradeableContract</tabstop>
+  <tabstop>checkBox_airdropTool</tabstop>
+  <tabstop>checkBox_terms</tabstop>
+  <tabstop>pushButton_calculateFee</tabstop>
+  <tabstop>pushButton_cancel</tabstop>
+  <tabstop>pushButton_confirmCreate</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

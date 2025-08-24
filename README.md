@@ -1,57 +1,110 @@
-# Shahcoin Core
+# SHAHCOIN® - Advanced Blockchain Platform
 
-**Official repository for Shahcoin Core – a Bitcoin-based blockchain for secure, decentralized transactions and community growth.**
+## ⚠️ LEGAL DISCLAIMER & BRANDING RESTRICTIONS
 
-Shahcoin Core is a full-featured blockchain software suite based on Bitcoin Core, providing a robust and secure foundation for decentralized transactions and community-driven development.
+**SHAHCOIN® is a registered trademark owned by Hamid Rad.**  
+**Unauthorized use of the Shahcoin name, logo, or associated assets is strictly prohibited.**
 
----
+This repository is licensed under the Apache 2.0 License. You may fork and use the code with attribution, but you may not use the Shahcoin name, logo, or branding in your projects or imply affiliation without permission.
 
-## What is Shahcoin Core?
+### 🚫 FORKING AND BRANDING RESTRICTIONS
 
-Shahcoin Core connects to the Shahcoin peer-to-peer network to download and fully validate blocks and transactions. It includes a wallet and optional graphical user interface.
+- You may fork this code under Apache 2.0 license
+- You may NOT use SHAHCOIN®, SHAH, or any derivative branding
+- You may NOT create tokens/NFTs with SHAH-branded names
+- You may NOT use SHAHCOIN logos, graphics, or visual assets
+- Violations will result in legal action and takedown requests
 
-Further information about Shahcoin Core is available in the [doc folder](/doc).
+**Respect the trademark. Build your own brand.**
 
----
+### 📜 License and Legal Notice
 
-## License
+This project is licensed under the Apache 2.0 License for core blockchain code.
 
-Shahcoin Core is released under the terms of the MIT license. See [COPYING](COPYING) for details or visit https://opensource.org/licenses/MIT.
+⚠️ **"SHAHCOIN", "SHAH", "SHAHI", and associated logos are registered trademarks of the Shahcoin project. Unauthorized use of these names, marks, or graphical assets is strictly prohibited.**
 
----
+You may not use the Shahcoin branding, name, or logos in forked projects or derivative works without written permission.
 
-## Development Process
-
-The `main` branch is regularly updated and tested, but may not be fully stable. New releases are created from release branches and tagged for stability.
-
-For detailed instructions on contributing, see [CONTRIBUTING.md](CONTRIBUTING.md).
-
----
-
-## Testing
-
-Testing and code review is crucial for development. Please be patient and help by testing others’ pull requests and reporting issues.
-
-### Automated Testing
-
-Developers are encouraged to write [unit tests](src/test/README.md) for new code and submit new unit tests for old code. Unit tests can be compiled and run (if not disabled in configure) with: `make check`. Further details are in [/src/test/README.md](/src/test/README.md).
-
-Regression and integration tests (written in Python) can be run with: `test/functional/test_runner.py`.
-
-### Manual QA Testing
-
-Changes should be tested by someone other than the developer who wrote the code, especially for large or high-risk changes. A test plan should be added to the pull request description if needed.
+→ See LICENSE file and trademark guidelines for details.
 
 ---
 
-## Translations
+## About SHAHCOIN®
 
-Translation changes or new translations can be submitted to
-[Shahcoin Core's Transifex page](https://www.transifex.com/shahcoin/shahcoin/).  
-Note: We do not accept translation changes via GitHub pull requests as they will be overwritten in future updates.
+SHAHCOIN® is a comprehensive blockchain platform featuring advanced wallet functionality, marketplace integration, premium subscription services, and cross-platform compatibility.
 
----
+### Features
 
+- **Multi-Platform Wallet**: Qt desktop, Web3, and Telegram Mini App
+- **Advanced Marketplace**: Token/NFT trading with moderation
+- **Premium Tier System**: Subscription-based monetization
+- **Tesla Mode**: AI-powered portfolio analysis and smart UX
+- **Cross-Platform Sync**: Seamless data synchronization
+- **Modern UI**: Glassmorphism design with animations
 
+### Project Structure
 
+```
+/mnt/c/Users/hamid/shahcoin-core/
+└── shahcoin/                    # Main project directory
+    ├── src/                     # Core source code
+    ├── doc/                     # Documentation
+    ├── contrib/                 # Contrib scripts and tools
+    ├── test/                    # Test files
+    ├── build_msvc/              # Windows build files
+    ├── sdk/                     # SDK packages
+    ├── sdk-core/                # Core SDK modules
+    ├── web/                     # Web components
+    ├── api/                     # API services
+    └── game-plugins/            # Game engine integrations
+```
 
+### Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/SHAHCoinvip/shahcoin
+cd shahcoin
+
+# Build Qt Wallet
+make -f Makefile.unix
+
+# Run the wallet
+./src/qt/shahcoin-qt
+```
+
+### Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+```
+
+### Documentation
+
+- [API Documentation](docs/api.md)
+- [Development Guide](docs/development.md)
+- [Deployment Guide](docs/deployment.md)
+
+### Contributing
+
+We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting pull requests.
+
+### License
+
+This project is licensed under Apache 2.0.
+
+© 2025 Hamid Rad – All Rights Reserved. SHAHCOIN® is a registered trademark.  
+See [LICENSE](LICENSE.md) and [NOTICE](NOTICE.md) for full details.
+
+### Legal
+
+SHAHCOIN® is a registered trademark owned by Hamid Rad. Unauthorized use of the SHAHCOIN name, logo, or brand identity is strictly prohibited and will result in legal action.
+
+For trademark licensing inquiries: info@shah.vip

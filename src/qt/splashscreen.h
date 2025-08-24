@@ -1,72 +1,87 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef SHAHCOIN_QT_SPLASHSCREEN_H
 #define SHAHCOIN_QT_SPLASHSCREEN_H
 
-#include <QWidget>
+#include <QSplashScreen>
+#include <QTimer>
+#include <QPropertyAnimation>
+#include <QLabel>
+#include <QVBoxLayout>
+#include <QProgressBar>
 
-#include <memory>
-
-class NetworkStyle;
-
-namespace interfaces {
-class Handler;
-class Node;
-class Wallet;
-};
+class QPixmap;
 
 /** Class for the splashscreen with information of the running client.
  *
- * @note this is intentionally not a QSplashScreen. Shahcoin Core initialization
+ * @note this is intentionally not a QSplashScreen. SHAHCOIN Core initialization
  * can take a long time, and in that case a progress window that cannot be
- * moved around and minimized has turned out to be frustrating to the user.
+ * moved around and doesn't show any mouse cursor must be used to prevent the
+ * mouse cursor from disappearing into an infinite loop.
  */
 class SplashScreen : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit SplashScreen(const NetworkStyle *networkStyle);
+    explicit SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle);
     ~SplashScreen();
-    void setNode(interfaces::Node& node);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
     void closeEvent(QCloseEvent *event) override;
 
 public Q_SLOTS:
+    /** Hide the splash screen window and schedule the splash screen object for deletion */
+    void finish();
+
     /** Show message and progress */
     void showMessage(const QString &message, int alignment, const QColor &color);
 
-    /** Handle wallet load notifications. */
-    void handleLoadWallet();
+    /** Sets the break action */
+    void setBreakAction(const std::function<void(void)> &action);
 
-protected:
-    bool eventFilter(QObject * obj, QEvent * ev) override;
+    void setProgress(int progress);
 
 private:
-    /** Connect core signals to splash screen */
     void subscribeToCoreSignals();
-    /** Disconnect core signals to splash screen */
     void unsubscribeFromCoreSignals();
-    /** Initiate shutdown */
-    void shutdown();
+    void connectWallet(WalletModel* walletModel);
+    void connectBlockchain();
+    void showProgress(const QString &title, int nProgress);
+    void setVisible(bool visible);
+    void alignWidget(QWidget *widget, const QWidget *host, int alignment, int dx, int dy);
 
-    QPixmap pixmap;
-    QString curMessage;
-    QColor curColor;
-    int curAlignment{0};
+    QLabel *m_icon_label = nullptr;
+    QLabel *m_title_label = nullptr;
+    QLabel *m_tagline_label = nullptr;
+    QLabel *m_version_label = nullptr;
+    QLabel *m_network_label = nullptr;
+    QProgressBar *m_progress_bar = nullptr;
+    QLabel *m_status_label = nullptr;
+    QLabel *m_loading_label = nullptr;
+    
+    QPropertyAnimation *m_fade_animation = nullptr;
+    QPropertyAnimation *m_progress_animation = nullptr;
+    QTimer *m_loading_timer = nullptr;
+    
+    int m_progress = 0;
+    int m_loading_dots = 0;
+    
+    std::function<void(void)> breakAction;
+    const NetworkStyle *m_network_style;
+    bool m_show = false;
+    bool m_closed = false;
+    std::list<WalletModel*> m_connected_wallets;
+    std::list<WalletModel*> m_connected_wallets_wait;
+    
+    int curAlignment = Qt::AlignLeft | Qt::AlignTop;
+    QColor curColor = Qt::white;
 
-    interfaces::Node* m_node = nullptr;
-    bool m_shutdown = false;
-    std::unique_ptr<interfaces::Handler> m_handler_init_message;
-    std::unique_ptr<interfaces::Handler> m_handler_show_progress;
-    std::unique_ptr<interfaces::Handler> m_handler_init_wallet;
-    std::unique_ptr<interfaces::Handler> m_handler_load_wallet;
-    std::list<std::unique_ptr<interfaces::Wallet>> m_connected_wallets;
-    std::list<std::unique_ptr<interfaces::Handler>> m_connected_wallet_handlers;
+Q_SIGNALS:
+    void clicked();
 };
 
 #endif // SHAHCOIN_QT_SPLASHSCREEN_H

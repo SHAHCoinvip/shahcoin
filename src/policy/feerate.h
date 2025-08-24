@@ -1,5 +1,5 @@
-// Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2022 The Shahcoin Core developers
+// Copyright (c) 2009-2010 Shahi Nakamoto
+// Copyright (C) 2025 The SHAHCOIN Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -27,52 +27,52 @@ enum class FeeEstimateMode {
 };
 
 /**
- * Fee rate in satoshis per kilovirtualbyte: CAmount / kvB
+ * Fee rate in shahis per kilovirtualbyte: CAmount / kvB
  */
 class CFeeRate
 {
 private:
-    /** Fee rate in sat/kvB (satoshis per 1000 virtualbytes) */
-    CAmount nSatoshisPerK;
+    /** Fee rate in sat/kvB (shahis per 1000 virtualbytes) */
+    CAmount nshahisPerK;
 
 public:
-    /** Fee rate of 0 satoshis per kvB */
-    CFeeRate() : nSatoshisPerK(0) { }
+    /** Fee rate of 0 shahis per kvB */
+    CFeeRate() : nshahisPerK(0) { }
     template<typename I>
-    explicit CFeeRate(const I _nSatoshisPerK): nSatoshisPerK(_nSatoshisPerK) {
+    explicit CFeeRate(const I _nshahisPerK): nshahisPerK(_nshahisPerK) {
         // We've previously had bugs creep in from silent double->int conversion...
         static_assert(std::is_integral<I>::value, "CFeeRate should be used without floats");
     }
 
     /**
-     * Construct a fee rate from a fee in satoshis and a vsize in vB.
+     * Construct a fee rate from a fee in shahis and a vsize in vB.
      *
-     * param@[in]   nFeePaid    The fee paid by a transaction, in satoshis
+     * param@[in]   nFeePaid    The fee paid by a transaction, in shahis
      * param@[in]   num_bytes   The vsize of a transaction, in vbytes
      */
     CFeeRate(const CAmount& nFeePaid, uint32_t num_bytes);
 
     /**
-     * Return the fee in satoshis for the given vsize in vbytes.
-     * If the calculated fee would have fractional satoshis, then the
-     * returned fee will always be rounded up to the nearest satoshi.
+     * Return the fee in shahis for the given vsize in vbytes.
+     * If the calculated fee would have fractional shahis, then the
+     * returned fee will always be rounded up to the nearest shahi.
      */
     CAmount GetFee(uint32_t num_bytes) const;
 
     /**
-     * Return the fee in satoshis for a vsize of 1000 vbytes
+     * Return the fee in shahis for a vsize of 1000 vbytes
      */
-    CAmount GetFeePerK() const { return nSatoshisPerK; }
-    friend bool operator<(const CFeeRate& a, const CFeeRate& b) { return a.nSatoshisPerK < b.nSatoshisPerK; }
-    friend bool operator>(const CFeeRate& a, const CFeeRate& b) { return a.nSatoshisPerK > b.nSatoshisPerK; }
-    friend bool operator==(const CFeeRate& a, const CFeeRate& b) { return a.nSatoshisPerK == b.nSatoshisPerK; }
-    friend bool operator<=(const CFeeRate& a, const CFeeRate& b) { return a.nSatoshisPerK <= b.nSatoshisPerK; }
-    friend bool operator>=(const CFeeRate& a, const CFeeRate& b) { return a.nSatoshisPerK >= b.nSatoshisPerK; }
-    friend bool operator!=(const CFeeRate& a, const CFeeRate& b) { return a.nSatoshisPerK != b.nSatoshisPerK; }
-    CFeeRate& operator+=(const CFeeRate& a) { nSatoshisPerK += a.nSatoshisPerK; return *this; }
+    CAmount GetFeePerK() const { return nshahisPerK; }
+    friend bool operator<(const CFeeRate& a, const CFeeRate& b) { return a.nshahisPerK < b.nshahisPerK; }
+    friend bool operator>(const CFeeRate& a, const CFeeRate& b) { return a.nshahisPerK > b.nshahisPerK; }
+    friend bool operator==(const CFeeRate& a, const CFeeRate& b) { return a.nshahisPerK == b.nshahisPerK; }
+    friend bool operator<=(const CFeeRate& a, const CFeeRate& b) { return a.nshahisPerK <= b.nshahisPerK; }
+    friend bool operator>=(const CFeeRate& a, const CFeeRate& b) { return a.nshahisPerK >= b.nshahisPerK; }
+    friend bool operator!=(const CFeeRate& a, const CFeeRate& b) { return a.nshahisPerK != b.nshahisPerK; }
+    CFeeRate& operator+=(const CFeeRate& a) { nshahisPerK += a.nshahisPerK; return *this; }
     std::string ToString(const FeeEstimateMode& fee_estimate_mode = FeeEstimateMode::SHAH_KVB) const;
 
-    SERIALIZE_METHODS(CFeeRate, obj) { READWRITE(obj.nSatoshisPerK); }
+    SERIALIZE_METHODS(CFeeRate, obj) { READWRITE(obj.nshahisPerK); }
 };
 
 #endif // SHAHCOIN_POLICY_FEERATE_H

@@ -5,7 +5,7 @@ This is a maintenance release to fix a critical bug;
 we urge all users to upgrade.
 
 Please report bugs using the issue tracker at github:
-  https://github.com/shahcoin/shahcoin/issues
+  https://github.com/SHAHCoinvip/shahcoin/issues
 
 
 How to Upgrade

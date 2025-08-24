@@ -12,7 +12,7 @@ It is best if the maintainers are present during the release, so they can help e
 
 This process also assumes that there will be no minor releases for old major releases.
 
-We aim to cut a regular release every 3-4 months, approximately twice as frequent as major Shahcoin Core releases. Every second release should be published one month before the feature freeze of the next major Shahcoin Core release, allowing sufficient time to update the library in Core.
+We aim to cut a regular release every 3-4 months, approximately twice as frequent as major SHAHCOIN Core releases. Every second release should be published one month before the feature freeze of the next major SHAHCOIN Core release, allowing sufficient time to update the library in Core.
 
 ## Sanity Checks
 Perform these checks before creating a release:

@@ -1,13 +1,13 @@
-Shahcoin Core version 0.10.0 is now available from:
+SHAHCOIN Core version 0.10.0 is now available from:
 
-  https://shahcoin.org/bin/0.10.0/
+  https://shah.vip/bin/0.10.0/
 
 This is a new major version release, bringing both new features and
 bug fixes.
 
 Please report bugs using the issue tracker at github:
 
-  https://github.com/shahcoin/shahcoin/issues
+  https://github.com/SHAHCoinvip/shahcoin/issues
 
 Upgrading and downgrading
 =========================
@@ -25,7 +25,7 @@ Downgrading warning
 
 Because release 0.10.0 makes use of headers-first synchronization and parallel
 block download (see further), the block files and databases are not
-backwards-compatible with older versions of Shahcoin Core or other software:
+backwards-compatible with older versions of SHAHCOIN Core or other software:
 
 * Blocks will be stored on disk out of order (in the order they are
 received, really), which makes it incompatible with some tools or
@@ -50,7 +50,7 @@ Notable changes
 Faster synchronization
 ----------------------
 
-Shahcoin Core now uses 'headers-first synchronization'. This means that we first
+SHAHCOIN Core now uses 'headers-first synchronization'. This means that we first
 ask peers for block headers (a total of 27 megabytes, as of December 2014) and
 validate those. In a second stage, when the headers have been discovered, we
 download the blocks. However, as we already know about the whole chain in
@@ -222,7 +222,7 @@ addresses need to added to the wallet before the payment, though.
 Consensus library
 -----------------
 
-Starting from 0.10.0, the Shahcoin Core distribution includes a consensus library.
+Starting from 0.10.0, the SHAHCOIN Core distribution includes a consensus library.
 
 The purpose of this library is to make the verification functionality that is
 critical to Shahcoin's consensus available to other applications, e.g. to language
@@ -230,7 +230,7 @@ bindings such as [python-shahcoinlib](https://pypi.python.org/pypi/python-shahco
 alternative node implementations.
 
 This library is called `libshahcoinconsensus.so` (or, `.dll` for Windows).
-Its interface is defined in the C header [shahcoinconsensus.h](https://github.com/shahcoin/shahcoin/blob/0.10/src/script/shahcoinconsensus.h).
+Its interface is defined in the C header [shahcoinconsensus.h](https://github.com/SHAHCoinvip/shahcoin/blob/0.10/src/script/shahcoinconsensus.h).
 
 In its initial version the API includes two functions:
 
@@ -249,7 +249,7 @@ redemption scripts, allowing applications to make use of any valid
 script type, such as "n-of-m OR y", hash-locked oracle addresses, etc.
 While the Shahcoin protocol has always supported these types of script,
 actually using them on mainnet has been previously inconvenient as
-standard Shahcoin Core nodes wouldn't relay them to miners, nor would
+standard SHAHCOIN Core nodes wouldn't relay them to miners, nor would
 most miners include them in blocks they mined.
 
 shahcoin-tx
@@ -279,7 +279,7 @@ key and script operations easily accessible via command line.
 Mining and relay policy enhancements
 ------------------------------------
 
-Shahcoin Core's block templates are now for version 3 blocks only, and any mining
+SHAHCOIN Core's block templates are now for version 3 blocks only, and any mining
 software relying on its `getblocktemplate` must be updated in parallel to use
 libblkmaker either version 0.4.2 or any version from 0.5.1 onward.
 If you are solo mining, this will affect you the moment you upgrade Shahcoin
@@ -292,10 +292,10 @@ achieving its 951/1001 status.
 The `prioritisetransaction` RPC method has been added to enable miners to
 manipulate the priority of transactions on an individual basis.
 
-Shahcoin Core now supports BIP 22 long polling, so mining software can be
+SHAHCOIN Core now supports BIP 22 long polling, so mining software can be
 notified immediately of new templates rather than having to poll periodically.
 
-Support for BIP 23 block proposals is now available in Shahcoin Core's
+Support for BIP 23 block proposals is now available in SHAHCOIN Core's
 `getblocktemplate` method. This enables miners to check the basic validity of
 their next block before expending work on it, reducing risks of accidental
 hardforks or mining invalid blocks.
@@ -313,7 +313,7 @@ AllowFreeThreshold(), in which case they are relayed subject to the rate limiter
 BIP 66: strict DER encoding for signatures
 ------------------------------------------
 
-Shahcoin Core 0.10 implements BIP 66, which introduces block version 3, and a new
+SHAHCOIN Core 0.10 implements BIP 66, which introduces block version 3, and a new
 consensus rule, which prohibits non-DER signatures. Such transactions have been
 non-standard since Shahcoin v0.8.0 (released in February 2013), but were
 technically still permitted inside blocks.
@@ -510,11 +510,11 @@ Wallet:
 - `d5087d1` Use script matching rather than destination matching for watch-only
 - `d88af56` Fee fixes
 - `a35b55b` Dont run full check every time we decrypt wallet
-- `3a7c348` Fix make_change to not create half-satoshis
+- `3a7c348` Fix make_change to not create half-shahi
 - `f606bb9` fix a possible memory leak in CWalletDB::Recover
 - `870da77` fix possible memory leaks in CWallet::EncryptWallet
 - `ccca27a` Watch-only fixes
-- `9b1627d` [Wallet] Reduce minTxFee for transaction creation to 1000 satoshis
+- `9b1627d` [Wallet] Reduce minTxFee for transaction creation to 1000 shahi
 - `a53fd41` Deterministic signing
 - `15ad0b5` Apply AreSane() checks to the fees from the network
 - `11855c1` Enforce minRelayTxFee on wallet created tx and add a maxtxfee option
@@ -522,7 +522,7 @@ Wallet:
 GUI:
 - `c21c74b` osx: Fix missing dock menu with qt5
 - `b90711c` Fix Transaction details shows wrong To:
-- `516053c` Make links in 'About Shahcoin Core' clickable
+- `516053c` Make links in 'About SHAHCOIN Core' clickable
 - `bdc83e8` Ensure payment request network matches client network
 - `65f78a1` Add GUI view of peer information
 - `06a91d9` VerifyDB progress reporting

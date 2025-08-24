@@ -1,13 +1,13 @@
-Shahcoin Core version 0.9.4 is now available from:
+SHAHCOIN Core version 0.9.4 is now available from:
 
-  https://shahcoin.org/bin/0.9.4/
+  https://shah.vip/bin/0.9.4/
 
 This is a new minor version release, bringing only bug fixes and updated
 translations. Upgrading to this release is recommended.
 
 Please report bugs using the issue tracker at github:
 
-  https://github.com/shahcoin/shahcoin/issues
+  https://github.com/SHAHCoinvip/shahcoin/issues
 
 How to Upgrade
 ===============
@@ -25,15 +25,15 @@ various operating system maintainers. Review by Gregory Maxwell determined that
 this update is incompatible with the Shahcoin system and could lead to consensus
 forks.
 
-Shahcoin Core released binaries from https://shahcoin.org are unaffected,
+SHAHCOIN Core released binaries from https://shah.vip are unaffected,
 as are any built with the gitian deterministic build system.
 
 However, if you are running either
 
 - The Ubuntu PPA from https://launchpad.net/~shahcoin/+archive/ubuntu/shahcoin
-- A third-party or self-compiled Shahcoin Core
+- A third-party or self-compiled SHAHCOIN Core
 
-upgrade to Shahcoin Core 0.9.4, which includes a workaround, **before** updating
+upgrade to SHAHCOIN Core 0.9.4, which includes a workaround, **before** updating
 OpenSSL.
 
 The incompatibility is due to the OpenSSL update changing the

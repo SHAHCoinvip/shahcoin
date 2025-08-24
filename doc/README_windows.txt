@@ -1,4 +1,4 @@
-Shahcoin Core
+SHAHCOIN Core
 =============
 
 Intro
@@ -13,7 +13,7 @@ Setup
 -----
 Unpack the files into a directory and run shahcoin-qt.exe.
 
-Shahcoin Core is the original Shahcoin client and it builds the backbone of the network.
+SHAHCOIN Core is the original Shahcoin client and it builds the backbone of the network.
 However, it downloads and stores the entire history of Shahcoin transactions;
 depending on the speed of your computer and network connection, the synchronization
 process can take anywhere from a few hours to a day or more.

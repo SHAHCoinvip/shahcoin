@@ -1,0 +1,90 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2025 Hamid Rad / SHAHCOIN Core */
+
+.legal-footer {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-top: 1px solid #dee2e6;
+    padding: 20px 0;
+    margin-top: auto;
+    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+}
+
+.legal-footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.legal-disclaimer {
+    margin-bottom: 15px;
+}
+
+.legal-disclaimer p {
+    margin: 0;
+    line-height: 1.5;
+    color: #6c757d;
+    font-size: 12px;
+}
+
+.legal-links {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.legal-link {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.legal-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.separator {
+    color: #6c757d;
+    font-size: 12px;
+}
+
+.build-signature {
+    border-top: 1px solid #dee2e6;
+    padding-top: 15px;
+}
+
+.build-info {
+    margin: 0;
+    font-size: 11px;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .legal-footer {
+        padding: 15px 0;
+    }
+    
+    .legal-footer-content {
+        padding: 0 15px;
+    }
+    
+    .legal-disclaimer p {
+        font-size: 11px;
+    }
+    
+    .legal-links {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .separator {
+        display: none;
+    }
+}

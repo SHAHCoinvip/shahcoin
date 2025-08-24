@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2022 The Shahcoin Core developers
+// Copyright (c) 2019-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -8,6 +8,7 @@
 #include <compressor.h>
 #include <consensus/amount.h>
 #include <consensus/merkle.h>
+#include <consensus/validation.h>
 #include <core_io.h>
 #include <crypto/common.h>
 #include <crypto/siphash.h>
@@ -43,7 +44,7 @@
 
 void initialize_integer()
 {
-    SelectParams(ChainType::REGTEST);
+    SelectParams("regtest");
 }
 
 FUZZ_TARGET(integer, .init = initialize_integer)

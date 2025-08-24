@@ -1,4 +1,4 @@
-// Copyright (c) 2009-2022 The Shahcoin Core developers
+// Copyright (C) 2025 The SHAHCOIN Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -730,7 +730,7 @@ RPCHelpMan dumpwallet()
 
     /* Prevent arbitrary files from being overwritten. There have been reports
      * that users have overwritten wallet files this way:
-     * https://github.com/shahcoin/shahcoin/issues/9934
+     * https://github.com/SHAHCoinvip/shahcoin/issues/9934
      * It may also avoid other security issues.
      */
     if (fs::exists(filepath)) {

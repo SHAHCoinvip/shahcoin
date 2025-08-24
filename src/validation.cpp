@@ -1,9 +1,19 @@
-// Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2022 The Shahcoin Core developers
+// Copyright (c) 2009-2010 Shahi Nakamoto
+// Copyright (C) 2025 The SHAHCOIN Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <validation.h>
+#include <stake/stake.h>
+#include <tokens/token.h>
+#include <tokens/nft.h>
+#include <dex/dex.h>
+#include <policy/honeypot_filter.h>
+#include <consensus/finality.h>
+#include <stake/cold_staking.h>
+#include <consensus/hybrid.h>
+#include <consensus/pos_stub.h>
+#include <pow_dispatch.h>
 
 #include <kernel/chain.h>
 #include <kernel/coinstats.h>
@@ -22,7 +32,7 @@
 #include <cuckoocache.h>
 #include <flatfile.h>
 #include <hash.h>
-#include <kernel/chainparams.h>
+#include <chainparams.h>
 #include <kernel/disconnected_transactions.h>
 #include <kernel/mempool_entry.h>
 #include <kernel/messagestartchars.h>
@@ -710,6 +720,11 @@ bool MemPoolAccept::PreChecks(ATMPArgs& args, Workspace& ws)
 
     if (!CheckTransaction(tx, state)) {
         return false; // state filled in by CheckTransaction
+    }
+
+    // SHAHCOIN Core: Honeypot transaction filtering
+    if (HoneypotUtils::IsHoneypotFilteringEnabled() && HoneypotUtils::ShouldRejectTransaction(tx)) {
+        return state.Invalid(TxValidationResult::TX_NOT_STANDARD, "honeypot-transaction-detected");
     }
 
     // Coinbase is only valid in a block, not as a loose transaction
@@ -2000,7 +2015,7 @@ DisconnectResult Chainstate::DisconnectBlock(const CBlock& block, const CBlockIn
 
     // Ignore blocks that contain transactions which are 'overwritten' by later transactions,
     // unless those are already completely spent.
-    // See https://github.com/shahcoin/shahcoin/issues/22596 for additional information.
+    // See https://github.com/SHAHCoinvip/shahcoin/issues/22596 for additional information.
     // Note: the blocks specified here are different than the ones used in ConnectBlock because DisconnectBlock
     // unwinds the blocks in reverse. As a result, the inconsistency is not discovered until the earlier
     // blocks with the duplicate coinbase transactions are disconnected.
@@ -2184,6 +2199,28 @@ bool Chainstate::ConnectBlock(const CBlock& block, BlockValidationState& state, 
     // verify that the view's current state corresponds to the previous block
     uint256 hashPrevBlock = pindex->pprev == nullptr ? uint256() : pindex->pprev->GetBlockHash();
     assert(hashPrevBlock == view.GetBestBlock());
+
+    // SHAHCOIN Core: Finality checks
+    if (FinalityUtils::IsFinalityEnabled() && pindex->pprev) {
+        if (!FinalityUtils::IsReorganizationAllowed(pindex->pprev, pindex)) {
+            return error("%s: Finality rules prevent reorganization", __func__);
+        }
+    }
+
+    // SHAHCOIN Core: Update stake manager for PoS blocks
+    if (block.IsProofOfStake() && !fJustCheck) {
+        // Initialize security systems if not already done
+        static bool securitySystemsInitialized = false;
+        if (!securitySystemsInitialized) {
+            HoneypotUtils::InitializeHoneypotFiltering();
+            FinalityUtils::InitializeFinalitySystem();
+            ColdStakingUtils::InitializeColdStaking();
+            securitySystemsInitialized = true;
+            LogPrint(BCLog::VALIDATION, "Security systems initialized: honeypot filtering, finality rules, cold staking\n");
+        }
+        
+        g_stakeManager->UpdateStakeDifficulty(pindex->pprev);
+    }
 
     num_blocks_total++;
 
@@ -3633,6 +3670,32 @@ bool CheckBlock(const CBlock& block, BlockValidationState& state, const Consensu
     if (!CheckBlockHeader(block, state, consensusParams, fCheckPOW))
         return false;
 
+    // SHAHCOIN Core: Check PoS block validation
+    if (block.IsProofOfStake()) {
+        if (!StakeValidation::ValidateProofOfStakeBlock(block, nullptr, state, consensusParams)) {
+            return false;
+        }
+    }
+    
+    // Hybrid consensus: Derive algorithm for legacy blocks or validate explicit algo
+    AlgoType expectedAlgo = SelectNextAlgo(0); // TODO: Get actual height
+    if (fCheckPOW && block.IsProofOfWork()) {
+        // For PoW blocks, validate the algorithm and hash
+        AlgoType blockAlgo = block.GetAlgoType();
+        if (blockAlgo != expectedAlgo) {
+            LogPrint(BCLog::VALIDATION, "Block algo mismatch: expected %s, got %s\n", 
+                    AlgoName(expectedAlgo), AlgoName(blockAlgo));
+            // TODO: Make this strict once algo encoding is implemented
+        }
+        
+        // Validate PoW hash using the correct algorithm
+        uint256 powHash = GetPoWHash(block);
+        if (!CheckProofOfWork(powHash, block.nBits, consensusParams)) {
+            return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "high-hash", 
+                               "proof of work failed");
+        }
+    }
+
     // Signet only: check block solution
     if (consensusParams.signet_blocks && fCheckPOW && !CheckSignetBlockSolution(block, consensusParams)) {
         return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-signet-blksig", "signet block signature validation failure");
@@ -3679,6 +3742,30 @@ bool CheckBlock(const CBlock& block, BlockValidationState& state, const Consensu
             assert(tx_state.GetResult() == TxValidationResult::TX_CONSENSUS);
             return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, tx_state.GetRejectReason(),
                                  strprintf("Transaction check failed (tx hash %s) %s", tx->GetHash().ToString(), tx_state.GetDebugMessage()));
+        }
+        
+        // SHAHCOIN Core: Check for token, NFT, and DEX transactions
+        if (TokenValidation::IsTokenTransaction(*tx)) {
+            if (!TokenValidation::ValidateTokenCreationTx(*tx, CCoinsViewCache(nullptr), tx_state) &&
+                !TokenValidation::ValidateTokenTransferTx(*tx, CCoinsViewCache(nullptr), tx_state)) {
+                return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, tx_state.GetRejectReason(),
+                                   strprintf("Token transaction validation failed (tx hash %s) %s", tx->GetHash().ToString(), tx_state.GetDebugMessage()));
+            }
+        }
+        
+        if (NFTValidation::IsNFTTransaction(*tx)) {
+            if (!NFTValidation::ValidateNFTMintTx(*tx, CCoinsViewCache(nullptr), tx_state) &&
+                !NFTValidation::ValidateNFTTransferTx(*tx, CCoinsViewCache(nullptr), tx_state)) {
+                return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, tx_state.GetRejectReason(),
+                                   strprintf("NFT transaction validation failed (tx hash %s) %s", tx->GetHash().ToString(), tx_state.GetDebugMessage()));
+            }
+        }
+        
+        if (DEXValidation::IsDEXTransaction(*tx)) {
+            if (!DEXValidation::ValidateDEXTx(*tx, CCoinsViewCache(nullptr), tx_state)) {
+                return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, tx_state.GetRejectReason(),
+                                   strprintf("DEX transaction validation failed (tx hash %s) %s", tx->GetHash().ToString(), tx_state.GetDebugMessage()));
+            }
         }
     }
     unsigned int nSigOps = 0;

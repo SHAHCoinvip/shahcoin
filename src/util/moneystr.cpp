@@ -1,11 +1,11 @@
-// Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2022 The Shahcoin Core developers
+// Copyright (c) 2009-2010 Shahi Nakamoto
+// Copyright (C) 2025 The SHAHCOIN Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <util/moneystr.h>
 
-#include <consensus/amount.h>
+#include <consensus/validation.h>
 #include <tinyformat.h>
 #include <util/strencodings.h>
 #include <util/string.h>

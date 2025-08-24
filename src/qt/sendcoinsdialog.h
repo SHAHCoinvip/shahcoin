@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2022 The Shahcoin Core developers
+// Copyright (c) 2011-2022 The SHAHCOIN Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -12,6 +12,9 @@
 #include <QMessageBox>
 #include <QString>
 #include <QTimer>
+#include <QSet>
+#include <qt/enhancedaddressbook.h>
+#include <qt/customfeeselectiondialog.h>
 
 class PlatformStyle;
 class SendCoinsEntry;
@@ -72,6 +75,10 @@ private:
     bool fNewRecipientAllowed{true};
     bool fFeeMinimized{true};
     const PlatformStyle *platformStyle;
+    
+    // Enhanced multi-recipient support
+    QSet<QString> m_usedAddresses;
+    static const int MAX_RECIPIENTS = 50;
 
     // Copy PSBT to clipboard and offer to save it.
     void presentPSBT(PartiallySignedTransaction& psbt);
@@ -93,6 +100,13 @@ private:
     bool signWithExternalSigner(PartiallySignedTransaction& psbt, CMutableTransaction& mtx, bool& complete);
     void updateFeeMinimizedLabel();
     void updateCoinControlState();
+    
+    // Enhanced multi-recipient methods
+    void updateTotalAmount();
+    bool checkDuplicateAddresses();
+    void validateRecipients();
+    void updateAddRecipientButton();
+    void onRecipientAddressChanged(const QString& address, SendCoinsEntry* entry);
 
 private Q_SLOTS:
     void sendButtonClicked(bool checked);
@@ -115,6 +129,13 @@ private Q_SLOTS:
     void updateFeeSectionControls();
     void updateNumberOfBlocks(int count, const QDateTime& blockDate, double nVerificationProgress, SyncType synctype, SynchronizationState sync_state);
     void updateSmartFeeLabel();
+    
+    // Enhanced multi-recipient slots
+    void onAddRecipientClicked();
+    void onRecipientAmountChanged();
+    
+    // Custom fee selection
+    void onCustomFeeSelectionClicked();
 
 Q_SIGNALS:
     // Fired when a message should be reported to the user

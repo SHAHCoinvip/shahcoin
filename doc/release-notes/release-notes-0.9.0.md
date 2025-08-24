@@ -1,13 +1,13 @@
-Shahcoin Core version 0.9.0 is now available from:
+SHAHCOIN Core version 0.9.0 is now available from:
 
-  https://shahcoin.org/bin/0.9.0/
+  https://shah.vip/bin/0.9.0/
 
 This is a new major version release, bringing both new features and
 bug fixes.
 
 Please report bugs using the issue tracker at github:
 
-  https://github.com/shahcoin/shahcoin/issues
+  https://github.com/SHAHCoinvip/shahcoin/issues
 
 How to Upgrade
 --------------
@@ -59,11 +59,11 @@ Also, the first time you run a 0.8.x release on a 0.9 wallet it will rescan
 the blockchain for missing spent coins, which will take a long time (tens
 of minutes on a typical machine).
 
-Rebranding to Shahcoin Core
+Rebranding to SHAHCOIN Core
 ---------------------------
 
 To reduce confusion between Shahcoin-the-network and Shahcoin-the-software we
-have renamed the reference client to Shahcoin Core.
+have renamed the reference client to SHAHCOIN Core.
 
 
 OP_RETURN and data in the block chain
@@ -295,7 +295,7 @@ GUI:
 - Add Coin Control Features
 - Improve receive coins workflow: make the 'Receive' tab into a form to request
   payments, and move historical address list functionality to File menu.
-- Rebrand to `Shahcoin Core`
+- Rebrand to `SHAHCOIN Core`
 - Move initialization/shutdown to a thread. This prevents "Not responding"
   messages during startup. Also show a window during shutdown.
 - Don't regenerate autostart link on every client startup

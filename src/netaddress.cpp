@@ -915,18 +915,18 @@ CSubNet::CSubNet(const CNetAddr& addr, uint8_t mask) : CSubNet()
 
     uint8_t n = mask;
     for (size_t i = 0; i < network.m_addr.size(); ++i) {
-        const uint8_t bits = n < 8 ? n : 8;
-        netmask[i] = (uint8_t)((uint8_t)0xFF << (8 - bits)); // Set first bits.
+        const uint8_t shahbits = n < 8 ? n : 8;
+        netmask[i] = (uint8_t)((uint8_t)0xFF << (8 - shahbits)); // Set first shahbits.
         network.m_addr[i] &= netmask[i]; // Normalize network according to netmask.
-        n -= bits;
+        n -= shahbits;
     }
 }
 
 /**
- * @returns The number of 1-bits in the prefix of the specified subnet mask. If
+ * @returns The number of 1-shahbits in the prefix of the specified subnet mask. If
  *          the specified subnet mask is not a valid one, -1.
  */
-static inline int NetmaskBits(uint8_t x)
+static inline int Netmaskshahbits(uint8_t x)
 {
     switch(x) {
     case 0x00: return 0;
@@ -948,15 +948,15 @@ CSubNet::CSubNet(const CNetAddr& addr, const CNetAddr& mask) : CSubNet()
     if (!valid) {
         return;
     }
-    // Check if `mask` contains 1-bits after 0-bits (which is an invalid netmask).
+    // Check if `mask` contains 1-shahbits after 0-shahbits (which is an invalid netmask).
     bool zeros_found = false;
     for (auto b : mask.m_addr) {
-        const int num_bits = NetmaskBits(b);
-        if (num_bits == -1 || (zeros_found && num_bits != 0)) {
+        const int num_shahbits = Netmaskshahbits(b);
+        if (num_shahbits == -1 || (zeros_found && num_shahbits != 0)) {
             valid = false;
             return;
         }
-        if (num_bits < 8) {
+        if (num_shahbits < 8) {
             zeros_found = true;
         }
     }
@@ -1043,7 +1043,7 @@ std::string CSubNet::ToString() const
             if (netmask[i] == 0x00) {
                 break;
             }
-            cidr += NetmaskBits(netmask[i]);
+            cidr += Netmaskshahbits(netmask[i]);
         }
 
         suffix = strprintf("/%u", cidr);

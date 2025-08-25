@@ -72,7 +72,7 @@ class SimulateTxTest(ShahcoinTestFramework):
         tx1changepos = funding["changepos"]
         shahcoin_fee = Decimal(funding["fee"])
 
-        # w0 sees fee + 5 btc decrease, w2 sees + 5 btc
+        # w0 sees fee + 5 SHAH decrease, w2 sees + 5 SHAH
         assert_approx(w0.simulaterawtransaction([tx1])["balance_change"], -(Decimal("5") + shahcoin_fee))
         assert_approx(w2.simulaterawtransaction([tx1])["balance_change"], Decimal("5"))
 

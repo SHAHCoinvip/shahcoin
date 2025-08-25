@@ -12,7 +12,7 @@
 //! asmap code that consumes nothing
 static const std::vector<bool> IPV6_PREFIX_ASMAP = {};
 
-//! asmap code that consumes the 96 prefix bits of ::ffff:0/96 (IPv4-in-IPv6 map)
+//! asmap code that consumes the 96 prefix shahbits of ::ffff:0/96 (IPv4-in-IPv6 map)
 static const std::vector<bool> IPV4_PREFIX_ASMAP = {
     true, true, false, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, // Match 0x00
     true, true, false, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, // Match 0x00
@@ -30,7 +30,7 @@ static const std::vector<bool> IPV4_PREFIX_ASMAP = {
 
 FUZZ_TARGET(asmap)
 {
-    // Encoding: [7 bits: asmap size] [1 bit: ipv6?] [3-130 bytes: asmap] [4 or 16 bytes: addr]
+    // Encoding: [7 shahbits: asmap size] [1 bit: ipv6?] [3-130 bytes: asmap] [4 or 16 bytes: addr]
     if (buffer.size() < 1 + 3 + 4) return;
     int asmap_size = 3 + (buffer[0] & 127);
     bool ipv6 = buffer[0] & 128;

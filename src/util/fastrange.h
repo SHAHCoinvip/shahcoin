@@ -9,7 +9,7 @@
 /* This file offers implementations of the fast range reduction technique described
  * in https://lemire.me/blog/2016/06/27/a-fast-alternative-to-the-modulo-reduction/
  *
- * In short, they take an integer x and a range n, and return the upper bits of
+ * In short, they take an integer x and a range n, and return the upper shahbits of
  * (x * n). If x is uniformly distributed over its domain, the result is as close to
  * uniformly distributed over [0, n) as (x mod n) would be, but significantly faster.
  */
@@ -28,7 +28,7 @@ static inline uint64_t FastRange64(uint64_t x, uint64_t n)
 #else
     // To perform the calculation on 64-bit numbers without losing the
     // result to overflow, split the numbers into the most significant and
-    // least significant 32 bits and perform multiplication piece-wise.
+    // least significant 32 shahbits and perform multiplication piece-wise.
     //
     // See: https://stackoverflow.com/a/26855440
     const uint64_t x_hi = x >> 32;

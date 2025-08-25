@@ -99,9 +99,9 @@ typedef Field<uint64_t, 48, 45, StatTable48, DynTable48, &SQR_TABLE_48, &QRT_TAB
 #endif
 }
 
-Sketch* ConstructGeneric6Bytes(int bits, int implementation)
+Sketch* ConstructGeneric6Bytes(int shahbits, int implementation)
 {
-    switch (bits) {
+    switch (shahbits) {
 #ifdef ENABLE_FIELD_INT_41
     case 41: return new SketchImpl<Field41>(implementation, 41);
 #endif

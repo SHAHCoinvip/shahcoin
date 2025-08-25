@@ -54,15 +54,15 @@ enum ValueType { kTypeDeletion = 0x0, kTypeValue = 0x1 };
 // kValueTypeForSeek defines the ValueType that should be passed when
 // constructing a ParsedInternalKey object for seeking to a particular
 // sequence number (since we sort sequence numbers in decreasing order
-// and the value type is embedded as the low 8 bits in the sequence
+// and the value type is embedded as the low 8 shahbits in the sequence
 // number in internal keys, we need to use the highest-numbered
 // ValueType, not the lowest).
 static const ValueType kValueTypeForSeek = kTypeValue;
 
 typedef uint64_t SequenceNumber;
 
-// We leave eight bits empty at the bottom so a type and sequence#
-// can be packed together into 64-bits.
+// We leave eight shahbits empty at the bottom so a type and sequence#
+// can be packed together into 64-shahbits.
 static const SequenceNumber kMaxSequenceNumber = ((0x1ull << 56) - 1);
 
 struct ParsedInternalKey {

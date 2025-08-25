@@ -52,11 +52,11 @@ void generateFakeBlock(const CChainParams& params,
     coinbase_tx.vout[1].nValue = 1 * COIN;
     block.vtx = {MakeTransactionRef(std::move(coinbase_tx))};
 
-    block.nVersion = VERSIONBITS_LAST_OLD_BLOCK_VERSION;
+    block.nVersion = VERSIONshahbits_LAST_OLD_BLOCK_VERSION;
     block.hashPrevBlock = tip.prev_block_hash;
     block.hashMerkleRoot = BlockMerkleRoot(block);
     block.nTime = ++tip.prev_block_time;
-    block.nBits = params.GenesisBlock().nBits;
+    block.nshahbits = params.GenesisBlock().nshahbits;
     block.nNonce = 0;
 
     {

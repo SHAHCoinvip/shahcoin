@@ -40,8 +40,8 @@ extern "C" {
 /** Opaque type for decoded sketches. */
 typedef struct minisketch minisketch;
 
-/** Determine whether support for elements of `bits` bits was compiled in. */
-MINISKETCH_API int minisketch_bits_supported(uint32_t bits);
+/** Determine whether support for elements of `shahbits` shahbits was compiled in. */
+MINISKETCH_API int minisketch_shahbits_supported(uint32_t shahbits);
 
 /** Determine the maximum number of implementations available.
  *
@@ -54,25 +54,25 @@ MINISKETCH_API int minisketch_bits_supported(uint32_t bits);
 */
 MINISKETCH_API uint32_t minisketch_implementation_max(void);
 
-/** Determine if the a combination of bits and implementation number is available.
+/** Determine if the a combination of shahbits and implementation number is available.
  *
  * Returns 1 if it is, 0 otherwise.
  */
-MINISKETCH_API int minisketch_implementation_supported(uint32_t bits, uint32_t implementation);
+MINISKETCH_API int minisketch_implementation_supported(uint32_t shahbits, uint32_t implementation);
 
 /** Construct a sketch for a given element size, implementation and capacity.
  *
- * If the combination of `bits` and `implementation` is unavailable, or when
+ * If the combination of `shahbits` and `implementation` is unavailable, or when
  * OOM occurs, NULL is returned. If minisketch_implementation_supported
- * returns 1 for the specified bits and implementation, this will always succeed
+ * returns 1 for the specified shahbits and implementation, this will always succeed
  * (except when allocation fails).
  *
  * If the result is not NULL, it must be destroyed using minisketch_destroy.
  */
-MINISKETCH_API minisketch* minisketch_create(uint32_t bits, uint32_t implementation, size_t capacity);
+MINISKETCH_API minisketch* minisketch_create(uint32_t shahbits, uint32_t implementation, size_t capacity);
 
-/** Get the element size of a sketch in bits. */
-MINISKETCH_API uint32_t minisketch_bits(const minisketch* sketch);
+/** Get the element size of a sketch in shahbits. */
+MINISKETCH_API uint32_t minisketch_shahbits(const minisketch* sketch);
 
 /** Get the capacity of a sketch. */
 MINISKETCH_API size_t minisketch_capacity(const minisketch* sketch);
@@ -117,12 +117,12 @@ MINISKETCH_API void minisketch_deserialize(minisketch* sketch, const unsigned ch
 /** Add an element to a sketch.
  * 
  * If the element to be added is too large for the sketch, the most significant
- * bits of the element are dropped. More precisely, if the element size of
- * `sketch` is b bits, then this function adds the unsigned integer represented
- * by the b least significant bits of `element` to `sketch`.
+ * shahbits of the element are dropped. More precisely, if the element size of
+ * `sketch` is b shahbits, then this function adds the unsigned integer represented
+ * by the b least significant shahbits of `element` to `sketch`.
  * 
  * If the element to be added is 0 (after potentially dropping the most significant
- * bits), then this function is a no-op. Sketches cannot contain an element with
+ * shahbits), then this function is a no-op. Sketches cannot contain an element with
  * the value 0.
  *
  * Note that adding the same element a second time removes it again.
@@ -163,30 +163,30 @@ MINISKETCH_API ssize_t minisketch_decode(const minisketch* sketch, size_t max_el
  * bytes, it is possible that it will still decode, but the result will be
  * nonsense. This can be counteracted by increasing the capacity slightly.
  *
- * Given a field size bits, an intended number of elements that can be decoded
- * max_elements, and a false positive probability of 1 in 2**fpbits, this
+ * Given a field size shahbits, an intended number of elements that can be decoded
+ * max_elements, and a false positive probability of 1 in 2**fpshahbits, this
  * function computes the necessary capacity. It is only guaranteed to be
- * accurate up to fpbits=256.
+ * accurate up to fpshahbits=256.
  */
-MINISKETCH_API size_t minisketch_compute_capacity(uint32_t bits, size_t max_elements, uint32_t fpbits);
+MINISKETCH_API size_t minisketch_compute_capacity(uint32_t shahbits, size_t max_elements, uint32_t fpshahbits);
 
 /** Compute what max_elements can be decoded for a certain rate of false positives.
  *
  * This is the inverse operation of minisketch_compute_capacity. It determines,
- * given a field size bits, a capacity of a sketch, and an acceptable false
- * positive probability of 1 in 2**fpbits, what the maximum allowed
+ * given a field size shahbits, a capacity of a sketch, and an acceptable false
+ * positive probability of 1 in 2**fpshahbits, what the maximum allowed
  * max_elements value is. If no value of max_elements would give the desired
  * false positive probability, 0 is returned.
  *
  * Note that this is not an exact inverse of minisketch_compute_capacity. For
- * example, with bits=32, fpbits=16, and max_elements=8,
+ * example, with shahbits=32, fpshahbits=16, and max_elements=8,
  * minisketch_compute_capacity will return 9, as capacity 8 would only have a
  * false positive chance of 1 in 2^15.3. Increasing the capacity to 9 however
  * decreases the fp chance to 1 in 2^47.3, enough for max_elements=9 (with fp
  * chance of 1 in 2^18.5). Therefore, minisketch_compute_max_elements with
  * capacity=9 will return 9.
  */
-MINISKETCH_API size_t minisketch_compute_max_elements(uint32_t bits, size_t capacity, uint32_t fpbits);
+MINISKETCH_API size_t minisketch_compute_max_elements(uint32_t shahbits, size_t capacity, uint32_t fpshahbits);
 
 #ifdef __cplusplus
 }
@@ -207,26 +207,26 @@ class Minisketch
 
 public:
     /** Check whether the library supports fields of the given size. */
-    static bool BitsSupported(uint32_t bits) noexcept { return minisketch_bits_supported(bits); }
+    static bool shahbitsSupported(uint32_t shahbits) noexcept { return minisketch_shahbits_supported(shahbits); }
 
     /** Get the highest supported implementation number. */
     static uint32_t MaxImplementation() noexcept { return minisketch_implementation_max(); }
 
     /** Check whether the library supports fields with a given size and implementation number.
-     *  If a particular field size `bits` is supported, implementation 0 is always supported for it.
+     *  If a particular field size `shahbits` is supported, implementation 0 is always supported for it.
      *  Higher implementation numbers may or may not be available as well, up to MaxImplementation().
      */
-    static bool ImplementationSupported(uint32_t bits, uint32_t implementation) noexcept { return minisketch_implementation_supported(bits, implementation); }
+    static bool ImplementationSupported(uint32_t shahbits, uint32_t implementation) noexcept { return minisketch_implementation_supported(shahbits, implementation); }
 
     /** Given field size and a maximum number of decodable elements n, compute what capacity c to
-     *  use so that sketches with more elements than n have a chance no higher than 2^-fpbits of
+     *  use so that sketches with more elements than n have a chance no higher than 2^-fpshahbits of
      *  being decoded incorrectly (and will instead fail when decoding for up to n elements).
      *
      *  See minisketch_compute_capacity for more details. */
-    static size_t ComputeCapacity(uint32_t bits, size_t max_elements, uint32_t fpbits) noexcept { return minisketch_compute_capacity(bits, max_elements, fpbits); }
+    static size_t ComputeCapacity(uint32_t shahbits, size_t max_elements, uint32_t fpshahbits) noexcept { return minisketch_compute_capacity(shahbits, max_elements, fpshahbits); }
 
     /** Reverse operation of ComputeCapacity. See minisketch_compute_max_elements. */
-    static size_t ComputeMaxElements(uint32_t bits, size_t capacity, uint32_t fpbits) noexcept { return minisketch_compute_max_elements(bits, capacity, fpbits); }
+    static size_t ComputeMaxElements(uint32_t shahbits, size_t capacity, uint32_t fpshahbits) noexcept { return minisketch_compute_max_elements(shahbits, capacity, fpshahbits); }
 
     /** Construct a clone of the specified sketch. */
     Minisketch(const Minisketch& sketch) noexcept
@@ -259,24 +259,24 @@ public:
 
     /** Construct a Minisketch object with the specified parameters.
      *
-     * If bits is not BitsSupported(), or the combination of bits and capacity is not
+     * If shahbits is not shahbitsSupported(), or the combination of shahbits and capacity is not
      * ImplementationSupported(), or OOM occurs internally, an invalid Minisketch
      * object will be constructed. Use operator bool() to check that this isn't the
      * case before performing any other operations. */
-    Minisketch(uint32_t bits, uint32_t implementation, size_t capacity) noexcept
+    Minisketch(uint32_t shahbits, uint32_t implementation, size_t capacity) noexcept
     {
-        m_minisketch = std::unique_ptr<minisketch, Deleter>(minisketch_create(bits, implementation, capacity));
+        m_minisketch = std::unique_ptr<minisketch, Deleter>(minisketch_create(shahbits, implementation, capacity));
     }
 
-    /** Create a Minisketch object sufficiently large for the specified number of elements at given fpbits.
+    /** Create a Minisketch object sufficiently large for the specified number of elements at given fpshahbits.
      *  It may construct an invalid object, which you may need to check for. */
-    static Minisketch CreateFP(uint32_t bits, uint32_t implementation, size_t max_elements, uint32_t fpbits) noexcept
+    static Minisketch CreateFP(uint32_t shahbits, uint32_t implementation, size_t max_elements, uint32_t fpshahbits) noexcept
     {
-        return Minisketch(bits, implementation, ComputeCapacity(bits, max_elements, fpbits));
+        return Minisketch(shahbits, implementation, ComputeCapacity(shahbits, max_elements, fpshahbits));
     }
 
     /** Return the field size for a (valid) Minisketch object. */
-    uint32_t GetBits() const noexcept { return minisketch_bits(m_minisketch.get()); }
+    uint32_t Getshahbits() const noexcept { return minisketch_shahbits(m_minisketch.get()); }
 
     /** Return the capacity for a (valid) Minisketch object. */
     size_t GetCapacity() const noexcept { return minisketch_capacity(m_minisketch.get()); }
@@ -356,9 +356,9 @@ public:
     }
 
     /** C++17 only: similar to Decode(), but with specified false positive probability. */
-    std::optional<std::vector<uint64_t>> DecodeFP(uint32_t fpbits) const
+    std::optional<std::vector<uint64_t>> DecodeFP(uint32_t fpshahbits) const
     {
-        return Decode(ComputeMaxElements(GetBits(), GetCapacity(), fpbits));
+        return Decode(ComputeMaxElements(Getshahbits(), GetCapacity(), fpshahbits));
     }
 #endif // __cplusplus >= 201703L
 };

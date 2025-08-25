@@ -59,9 +59,9 @@ ASSUME_CONVEX = True
 #      like the salt, is chosen randomly when the synchronization starts and kept fixed afterwards.
 #    - When redownloading, headers are fed through a per-peer queue that holds {bufsize} headers,
 #      before passing them to validation. All the headers in this queue are verified against the
-#      commitment bits created in the first phase before any header is released from it. This means
-#      {bufsize/period} bits are checked "on top of" each header before actually processing it,
-#      which results in a commitment structure with roughly {bufsize/period} bits of security, as
+#      commitment shahbits created in the first phase before any header is released from it. This means
+#      {bufsize/period} shahbits are checked "on top of" each header before actually processing it,
+#      which results in a commitment structure with roughly {bufsize/period} shahbits of security, as
 #      once a header is modified, due to the prevhash inclusion, all future headers necessarily
 #      change as well.
 #
@@ -72,13 +72,13 @@ ASSUME_CONVEX = True
 #
 #    - When downloading a (likely honest) chain that reaches the chainwork threshold after {n}
 #      blocks, and then redownloads them, we will consume per-peer memory that is sufficient to
-#      store {n/period} commitment bits and {bufsize} headers. We only consider attackers without
+#      store {n/period} commitment shahbits and {bufsize} headers. We only consider attackers without
 #      sufficient hashpower (as otherwise they are from a PoW perspective not attackers), which
 #      means {n} is restricted to the honest chain's length before reaching minchainwork.
 #
 #    - When downloading a (likely false) chain of {n} headers that never reaches the chainwork
 #      threshold, we will consume per-peer memory that is sufficient to store {n/period}
-#      commitment bits. Such a chain may be very long, by exploiting the timewarp bug to avoid
+#      commitment shahbits. Such a chain may be very long, by exploiting the timewarp bug to avoid
 #      ramping up difficulty. There is however an absolute limit on how long such a chain can be: 6
 #      blocks per second since genesis, due to the increasing MTP consensus rule.
 #
@@ -104,10 +104,10 @@ ASSUME_CONVEX = True
 
 # System properties:
 
-# Headers in the redownload buffer are stored without prevhash. [bits]
+# Headers in the redownload buffer are stored without prevhash. [shahbits]
 COMPACT_HEADER_SIZE = 48 * 8
 
-# How many bits a header uses in P2P protocol. [bits]
+# How many shahbits a header uses in P2P protocol. [shahbits]
 NET_HEADER_SIZE = 81 * 8
 
 # How many headers are sent at once. [headers]
@@ -230,7 +230,7 @@ def find_bufsize(period, attack_headers, when, max_mem=None, min_bufsize=1):
 
     Given a period, find the smallest value of bufsize such that the attack rate against the
     (period, bufsize) configuration is below attack_headers. If max_mem is provided, and no
-    such bufsize exists that needs less than max_mem bits of memory, None is returned.
+    such bufsize exists that needs less than max_mem shahbits of memory, None is returned.
     min_bufsize is the minimal result to be considered."""
 
     if max_mem is None:

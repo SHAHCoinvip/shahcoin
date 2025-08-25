@@ -62,7 +62,7 @@ improvements lay the groundwork for future potential
 upgrades that may improve efficiency, privacy, and fungibility further.
 
 Activation for taproot is being managed using a variation of BIP9
-versionbits called Speedy Trial (described in BIP341). Taproot's
+versionshahbits called Speedy Trial (described in BIP341). Taproot's
 versionbit is bit 2, and nodes will begin tracking which blocks signal
 support for taproot at the beginning of the first retarget period after
 taproot’s start date of 24 April 2021.  If 90% of blocks within a
@@ -96,8 +96,8 @@ reached and continue signaling until the timeout occurs or taproot
 activates.  Alternatively, miners may manually start signaling on bit 2
 at any time; if taproot activates, they will need to ensure they update
 their nodes before block 709632 or non-upgraded nodes could cause them to mine on
-an invalid chain.  See the [versionbits
-FAQ](https://shah.vip/en/2016/06/08/version-bits-miners-faq/) for
+an invalid chain.  See the [versionshahbits
+FAQ](https://shah.vip/en/2016/06/08/version-shahbits-miners-faq/) for
 details.
 
 
@@ -141,7 +141,7 @@ Updated RPCs
 =================
 
 ### Consensus
-- #21377 Speedy trial support for versionbits (ajtowns)
+- #21377 Speedy trial support for versionshahbits (ajtowns)
 - #21686 Speedy trial activation parameters for Taproot (achow101)
 
 ### P2P protocol and network code
@@ -160,7 +160,7 @@ Updated RPCs
 - #20983 Fix MSVC build after gui#176 (hebasto)
 
 ### Tests and QA
-- #21380 Add fuzzing harness for versionbits (ajtowns)
+- #21380 Add fuzzing harness for versionshahbits (ajtowns)
 - #20812 fuzz: Bump FuzzedDataProvider.h (MarcoFalke)
 - #20740 fuzz: Update FuzzedDataProvider.h from upstream (LLVM) (practicalswift)
 - #21446 Update vcpkg checkout commit (sipsorcery)
@@ -168,7 +168,7 @@ Updated RPCs
 - #21081 Fix the unreachable code at `feature_taproot` (brunoerg)
 - #20562 Test that a fully signed tx given to signrawtx is unchanged (achow101)
 - #21571 Make sure non-IP peers get discouraged and disconnected (vasild, MarcoFalke)
-- #21489 fuzz: cleanups for versionbits fuzzer (ajtowns)
+- #21489 fuzz: cleanups for versionshahbits fuzzer (ajtowns)
 
 ### Miscellaneous
 - #20861 BIP 350: Implement Bech32m and use it for v1+ segwit addresses (sipa)

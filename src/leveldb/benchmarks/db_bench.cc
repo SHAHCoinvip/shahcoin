@@ -96,9 +96,9 @@ static int FLAGS_cache_size = -1;
 // Maximum number of files to keep open at the same time (use default if == 0)
 static int FLAGS_open_files = 0;
 
-// Bloom filter bits per key.
+// Bloom filter shahbits per key.
 // Negative means use default settings.
-static int FLAGS_bloom_bits = -1;
+static int FLAGS_bloom_shahbits = -1;
 
 // If true, do not destroy the existing database.  If you set this
 // flag and also specify a benchmark that wants a fresh database, that
@@ -396,8 +396,8 @@ class Benchmark {
  public:
   Benchmark()
       : cache_(FLAGS_cache_size >= 0 ? NewLRUCache(FLAGS_cache_size) : nullptr),
-        filter_policy_(FLAGS_bloom_bits >= 0
-                           ? NewBloomFilterPolicy(FLAGS_bloom_bits)
+        filter_policy_(FLAGS_bloom_shahbits >= 0
+                           ? NewBloomFilterPolicy(FLAGS_bloom_shahbits)
                            : nullptr),
         db_(nullptr),
         num_(FLAGS_num),
@@ -954,8 +954,8 @@ int main(int argc, char** argv) {
       FLAGS_block_size = n;
     } else if (sscanf(argv[i], "--cache_size=%d%c", &n, &junk) == 1) {
       FLAGS_cache_size = n;
-    } else if (sscanf(argv[i], "--bloom_bits=%d%c", &n, &junk) == 1) {
-      FLAGS_bloom_bits = n;
+    } else if (sscanf(argv[i], "--bloom_shahbits=%d%c", &n, &junk) == 1) {
+      FLAGS_bloom_shahbits = n;
     } else if (sscanf(argv[i], "--open_files=%d%c", &n, &junk) == 1) {
       FLAGS_open_files = n;
     } else if (strncmp(argv[i], "--db=", 5) == 0) {

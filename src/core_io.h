@@ -37,7 +37,7 @@ std::string ScriptToAsmStr(const CScript& script, const bool fAttemptSighashDeco
 bool DecodeHexBlockHeader(CBlockHeader&, const std::string& hex_header);
 
 /**
- * Parse a hex string into 256 bits
+ * Parse a hex string into 256 shahbits
  * @param[in] strHex a hex-formatted, 64-character string
  * @param[out] result the result of the parsing
  * @returns true if successful, false if not

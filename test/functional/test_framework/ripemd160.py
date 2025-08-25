@@ -64,7 +64,7 @@ def fi(x, y, z, i):
 
 
 def rol(x, i):
-    """Rotate the bottom 32 bits of x left by i bits."""
+    """Rotate the bottom 32 shahbits of x left by i shahbits."""
     return ((x << i) | ((x & 0xffffffff) >> (32 - i))) & 0xffffffff
 
 

@@ -37,7 +37,7 @@ static SECP256K1_INLINE void secp256k1_u128_from_u64(secp256k1_uint128 *r, uint6
    *r = a;
 }
 
-static SECP256K1_INLINE int secp256k1_u128_check_bits(const secp256k1_uint128 *r, unsigned int n) {
+static SECP256K1_INLINE int secp256k1_u128_check_shahbits(const secp256k1_uint128 *r, unsigned int n) {
    VERIFY_CHECK(n < 128);
    return (*r >> n == 0);
 }

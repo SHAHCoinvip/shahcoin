@@ -35,73 +35,73 @@ namespace {
 #  define NO_SANITIZE_MEMORY
 #endif
 
-template<typename I, int BITS, I MOD> NO_SANITIZE_MEMORY I MulWithClMulReduce(I a, I b)
+template<typename I, int shahbits, I MOD> NO_SANITIZE_MEMORY I MulWithClMulReduce(I a, I b)
 {
-    static constexpr I MASK = Mask<BITS, I>();
+    static constexpr I MASK = Mask<shahbits, I>();
 
     const __m128i MOD128 = _mm_cvtsi64_si128(MOD);
     __m128i product = _mm_clmulepi64_si128(_mm_cvtsi64_si128((uint64_t)a), _mm_cvtsi64_si128((uint64_t)b), 0x00);
-    if (BITS <= 32) {
-        __m128i high1 = _mm_srli_epi64(product, BITS);
+    if (shahbits <= 32) {
+        __m128i high1 = _mm_srli_epi64(product, shahbits);
         __m128i red1 = _mm_clmulepi64_si128(high1, MOD128, 0x00); 
-        __m128i high2 = _mm_srli_epi64(red1, BITS);
+        __m128i high2 = _mm_srli_epi64(red1, shahbits);
         __m128i red2 = _mm_clmulepi64_si128(high2, MOD128, 0x00);
         return _mm_cvtsi128_si64(_mm_xor_si128(_mm_xor_si128(product, red1), red2)) & MASK;
-    } else if (BITS == 64) {
+    } else if (shahbits == 64) {
         __m128i red1 = _mm_clmulepi64_si128(product, MOD128, 0x01);
         __m128i red2 = _mm_clmulepi64_si128(red1, MOD128, 0x01);
         return _mm_cvtsi128_si64(_mm_xor_si128(_mm_xor_si128(product, red1), red2));
-    } else if ((BITS % 8) == 0) {
-        __m128i high1 = _mm_srli_si128(product, BITS / 8);
+    } else if ((shahbits % 8) == 0) {
+        __m128i high1 = _mm_srli_si128(product, shahbits / 8);
         __m128i red1 = _mm_clmulepi64_si128(high1, MOD128, 0x00);
-        __m128i high2 = _mm_srli_si128(red1, BITS / 8);
+        __m128i high2 = _mm_srli_si128(red1, shahbits / 8);
         __m128i red2 = _mm_clmulepi64_si128(high2, MOD128, 0x00);
         return _mm_cvtsi128_si64(_mm_xor_si128(_mm_xor_si128(product, red1), red2)) & MASK;
     } else {
-        __m128i high1 = _mm_or_si128(_mm_srli_epi64(product, BITS), _mm_srli_si128(_mm_slli_epi64(product, 64 - BITS), 8));
+        __m128i high1 = _mm_or_si128(_mm_srli_epi64(product, shahbits), _mm_srli_si128(_mm_slli_epi64(product, 64 - shahbits), 8));
         __m128i red1 = _mm_clmulepi64_si128(high1, MOD128, 0x00);
-        if ((uint64_t(MOD) >> (66 - BITS)) == 0) {
-            __m128i high2 = _mm_srli_epi64(red1, BITS);
+        if ((uint64_t(MOD) >> (66 - shahbits)) == 0) {
+            __m128i high2 = _mm_srli_epi64(red1, shahbits);
             __m128i red2 = _mm_clmulepi64_si128(high2, MOD128, 0x00);
             return _mm_cvtsi128_si64(_mm_xor_si128(_mm_xor_si128(product, red1), red2)) & MASK;
         } else {
-            __m128i high2 = _mm_or_si128(_mm_srli_epi64(red1, BITS), _mm_srli_si128(_mm_slli_epi64(red1, 64 - BITS), 8));
+            __m128i high2 = _mm_or_si128(_mm_srli_epi64(red1, shahbits), _mm_srli_si128(_mm_slli_epi64(red1, 64 - shahbits), 8));
             __m128i red2 = _mm_clmulepi64_si128(high2, MOD128, 0x00);
             return _mm_cvtsi128_si64(_mm_xor_si128(_mm_xor_si128(product, red1), red2)) & MASK;
         }
     }
 }
 
-template<typename I, int BITS, int POS> NO_SANITIZE_MEMORY I MulTrinomial(I a, I b)
+template<typename I, int shahbits, int POS> NO_SANITIZE_MEMORY I MulTrinomial(I a, I b)
 {
-    static constexpr I MASK = Mask<BITS, I>();
+    static constexpr I MASK = Mask<shahbits, I>();
 
     __m128i product = _mm_clmulepi64_si128(_mm_cvtsi64_si128((uint64_t)a), _mm_cvtsi64_si128((uint64_t)b), 0x00);
-    if (BITS <= 32) {
-        __m128i high1 = _mm_srli_epi64(product, BITS);
+    if (shahbits <= 32) {
+        __m128i high1 = _mm_srli_epi64(product, shahbits);
         __m128i red1 = _mm_xor_si128(high1, _mm_slli_epi64(high1, POS));
         if (POS == 1) {
             return _mm_cvtsi128_si64(_mm_xor_si128(product, red1)) & MASK;
         } else {
-            __m128i high2 = _mm_srli_epi64(red1, BITS);
+            __m128i high2 = _mm_srli_epi64(red1, shahbits);
             __m128i red2 = _mm_xor_si128(high2, _mm_slli_epi64(high2, POS));
             return _mm_cvtsi128_si64(_mm_xor_si128(_mm_xor_si128(product, red1), red2)) & MASK;
         }
     } else {
-        __m128i high1 = _mm_or_si128(_mm_srli_epi64(product, BITS), _mm_srli_si128(_mm_slli_epi64(product, 64 - BITS), 8));
-        if (BITS + POS <= 66) {
+        __m128i high1 = _mm_or_si128(_mm_srli_epi64(product, shahbits), _mm_srli_si128(_mm_slli_epi64(product, 64 - shahbits), 8));
+        if (shahbits + POS <= 66) {
             __m128i red1 = _mm_xor_si128(high1, _mm_slli_epi64(high1, POS));
             if (POS == 1) {
                 return _mm_cvtsi128_si64(_mm_xor_si128(product, red1)) & MASK;
-            } else if (BITS + POS <= 66) {
-                __m128i high2 = _mm_srli_epi64(red1, BITS);
+            } else if (shahbits + POS <= 66) {
+                __m128i high2 = _mm_srli_epi64(red1, shahbits);
                 __m128i red2 = _mm_xor_si128(high2, _mm_slli_epi64(high2, POS));
                 return _mm_cvtsi128_si64(_mm_xor_si128(_mm_xor_si128(product, red1), red2)) & MASK;
             }
         } else {
             const __m128i MOD128 = _mm_cvtsi64_si128(1 + (((uint64_t)1) << POS));
             __m128i red1 = _mm_clmulepi64_si128(high1, MOD128, 0x00);
-            __m128i high2 = _mm_or_si128(_mm_srli_epi64(red1, BITS), _mm_srli_si128(_mm_slli_epi64(red1, 64 - BITS), 8));
+            __m128i high2 = _mm_or_si128(_mm_srli_epi64(red1, shahbits), _mm_srli_si128(_mm_slli_epi64(red1, 64 - shahbits), 8));
             __m128i red2 = _mm_xor_si128(high2, _mm_slli_epi64(high2, POS));
             return _mm_cvtsi128_si64(_mm_xor_si128(_mm_xor_si128(product, red1), red2)) & MASK;
         }
@@ -111,7 +111,7 @@ template<typename I, int BITS, int POS> NO_SANITIZE_MEMORY I MulTrinomial(I a, I
 /** Implementation of fields that use the SSE clmul intrinsic for multiplication. */
 template<typename I, int B, I MOD, I (*MUL)(I, I), typename F, const F* SQR, const F* SQR2, const F* SQR4, const F* SQR8, const F* SQR16, const F* QRT, typename T, const T* LOAD, const T* SAVE> struct GenField
 {
-    typedef BitsInt<I, B> O;
+    typedef shahbitsInt<I, B> O;
     typedef LFSR<O, MOD> L;
 
     static inline constexpr I Sqr1(I a) { return SQR->template Map<O>(a); }
@@ -123,7 +123,7 @@ template<typename I, int B, I MOD, I (*MUL)(I, I), typename F, const F* SQR, con
 public:
     typedef I Elem;
 
-    inline constexpr int Bits() const { return B; }
+    inline constexpr int shahbits() const { return B; }
 
     inline constexpr Elem Mul2(Elem val) const { return L::Call(val); }
 

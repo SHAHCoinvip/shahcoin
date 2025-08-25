@@ -281,7 +281,7 @@ def default_signature(ctx):
         flip_p = get(ctx, "flag_flip_p")
         aux = bytes([0] * 32)
         if not deterministic:
-            aux = random.getrandbits(256).to_bytes(32, 'big')
+            aux = random.getrandshahbits(256).to_bytes(32, 'big')
         return sign_schnorr(key, sighash, flip_r=flip_r, flip_p=flip_p, aux=aux)
     else:
         key = get(ctx, "key")
@@ -891,7 +891,7 @@ def spenders_taproot_active():
     csa_low_val = random.randrange(0, 17) # Within range for OP_n
     csa_low_result = csa_low_val + 1
 
-    csa_high_val = random.randrange(17, 100) if random.getrandbits(1) else random.randrange(-100, -1) # Outside OP_n range
+    csa_high_val = random.randrange(17, 100) if random.getrandshahbits(1) else random.randrange(-100, -1) # Outside OP_n range
     csa_high_result = csa_high_val + 1
 
     OVERSIZE_NUMBER = 2**31

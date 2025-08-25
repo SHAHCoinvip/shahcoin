@@ -89,11 +89,11 @@ static int AppInitUtil(ArgsManager& args, int argc, char* argv[])
     return CONTINUE_EXECUTION;
 }
 
-static void grind_task(uint32_t nBits, CBlockHeader header, uint32_t offset, uint32_t step, std::atomic<bool>& found, uint32_t& proposed_nonce)
+static void grind_task(uint32_t nshahbits, CBlockHeader header, uint32_t offset, uint32_t step, std::atomic<bool>& found, uint32_t& proposed_nonce)
 {
     arith_uint256 target;
     bool neg, over;
-    target.SetCompact(nBits, &neg, &over);
+    target.SetCompact(nshahbits, &neg, &over);
     if (target == 0 || neg || over) return;
     header.nNonce = offset;
 
@@ -127,7 +127,7 @@ static int Grind(const std::vector<std::string>& args, std::string& strPrint)
         return EXIT_FAILURE;
     }
 
-    uint32_t nBits = header.nBits;
+    uint32_t nshahbits = header.nshahbits;
     std::atomic<bool> found{false};
     uint32_t proposed_nonce{};
 
@@ -135,7 +135,7 @@ static int Grind(const std::vector<std::string>& args, std::string& strPrint)
     int n_tasks = std::max(1u, std::thread::hardware_concurrency());
     threads.reserve(n_tasks);
     for (int i = 0; i < n_tasks; ++i) {
-        threads.emplace_back(grind_task, nBits, header, i, n_tasks, std::ref(found), std::ref(proposed_nonce));
+        threads.emplace_back(grind_task, nshahbits, header, i, n_tasks, std::ref(found), std::ref(proposed_nonce));
     }
     for (auto& t : threads) {
         t.join();

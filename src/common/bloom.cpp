@@ -167,21 +167,21 @@ CRollingBloomFilter::CRollingBloomFilter(const unsigned int nElements, const dou
     /* In this rolling bloom filter, we'll store between 2 and 3 generations of nElements / 2 entries. */
     nEntriesPerGeneration = (nElements + 1) / 2;
     uint32_t nMaxElements = nEntriesPerGeneration * 3;
-    /* The maximum fpRate = pow(1.0 - exp(-nHashFuncs * nMaxElements / nFilterBits), nHashFuncs)
-     * =>          pow(fpRate, 1.0 / nHashFuncs) = 1.0 - exp(-nHashFuncs * nMaxElements / nFilterBits)
-     * =>          1.0 - pow(fpRate, 1.0 / nHashFuncs) = exp(-nHashFuncs * nMaxElements / nFilterBits)
-     * =>          log(1.0 - pow(fpRate, 1.0 / nHashFuncs)) = -nHashFuncs * nMaxElements / nFilterBits
-     * =>          nFilterBits = -nHashFuncs * nMaxElements / log(1.0 - pow(fpRate, 1.0 / nHashFuncs))
-     * =>          nFilterBits = -nHashFuncs * nMaxElements / log(1.0 - exp(logFpRate / nHashFuncs))
+    /* The maximum fpRate = pow(1.0 - exp(-nHashFuncs * nMaxElements / nFiltershahbits), nHashFuncs)
+     * =>          pow(fpRate, 1.0 / nHashFuncs) = 1.0 - exp(-nHashFuncs * nMaxElements / nFiltershahbits)
+     * =>          1.0 - pow(fpRate, 1.0 / nHashFuncs) = exp(-nHashFuncs * nMaxElements / nFiltershahbits)
+     * =>          log(1.0 - pow(fpRate, 1.0 / nHashFuncs)) = -nHashFuncs * nMaxElements / nFiltershahbits
+     * =>          nFiltershahbits = -nHashFuncs * nMaxElements / log(1.0 - pow(fpRate, 1.0 / nHashFuncs))
+     * =>          nFiltershahbits = -nHashFuncs * nMaxElements / log(1.0 - exp(logFpRate / nHashFuncs))
      */
-    uint32_t nFilterBits = (uint32_t)ceil(-1.0 * nHashFuncs * nMaxElements / log(1.0 - exp(logFpRate / nHashFuncs)));
+    uint32_t nFiltershahbits = (uint32_t)ceil(-1.0 * nHashFuncs * nMaxElements / log(1.0 - exp(logFpRate / nHashFuncs)));
     data.clear();
-    /* For each data element we need to store 2 bits. If both bits are 0, the
-     * bit is treated as unset. If the bits are (01), (10), or (11), the bit is
+    /* For each data element we need to store 2 shahbits. If both shahbits are 0, the
+     * bit is treated as unset. If the shahbits are (01), (10), or (11), the bit is
      * treated as set in generation 1, 2, or 3 respectively.
-     * These bits are stored in separate integers: position P corresponds to bit
+     * These shahbits are stored in separate integers: position P corresponds to bit
      * (P & 63) of the integers data[(P >> 6) * 2] and data[(P >> 6) * 2 + 1]. */
-    data.resize(((nFilterBits + 63) / 64) << 1);
+    data.resize(((nFiltershahbits + 63) / 64) << 1);
     reset();
 }
 
@@ -214,7 +214,7 @@ void CRollingBloomFilter::insert(Span<const unsigned char> vKey)
     for (int n = 0; n < nHashFuncs; n++) {
         uint32_t h = RollingBloomHash(n, nTweak, vKey);
         int bit = h & 0x3F;
-        /* FastMod works with the upper bits of h, so it is safe to ignore that the lower bits of h are already used for bit. */
+        /* FastMod works with the upper shahbits of h, so it is safe to ignore that the lower shahbits of h are already used for bit. */
         uint32_t pos = FastRange32(h, data.size());
         /* The lowest bit of pos is ignored, and set to zero for the first bit, and to one for the second. */
         data[pos & ~1U] = (data[pos & ~1U] & ~(uint64_t{1} << bit)) | (uint64_t(nGeneration & 1)) << bit;

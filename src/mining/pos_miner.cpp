@@ -249,9 +249,9 @@ bool CPoSBlockBuilder::BuildBlock(const CStakeValidator& validator, CBlock& bloc
     block.SetBlockType(BLOCK_TYPE_POS);
     
     // Set block header
-    block.nVersion = VERSIONBITS_TOP_BITS;
+    block.nVersion = VERSIONshahbits_TOP_shahbits;
     block.nTime = GetTime();
-    block.nBits = g_stakeManager->GetStakeDifficulty(nullptr);
+    block.nshahbits = g_stakeManager->GetStakeDifficulty(nullptr);
     block.nNonce = 0;
     block.nAlgorithm = 0; // Not used for PoS blocks
     
@@ -409,7 +409,7 @@ bool CPoSBlockValidator::ValidateBlockDifficulty(const CBlock& block, int nHeigh
 {
     // Validate stake difficulty
     uint256 requiredDifficulty = g_stakeManager->GetStakeDifficulty(nullptr);
-    if (block.nBits != requiredDifficulty.GetCompact()) {
+    if (block.nshahbits != requiredDifficulty.GetCompact()) {
         return false;
     }
     

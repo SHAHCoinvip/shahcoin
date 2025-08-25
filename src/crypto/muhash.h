@@ -37,7 +37,7 @@ public:
     limb_t limbs[LIMBS];
 
     // Sanity check for Num3072 constants
-    static_assert(LIMB_SIZE * LIMBS == 3072, "Num3072 isn't 3072 bits");
+    static_assert(LIMB_SIZE * LIMBS == 3072, "Num3072 isn't 3072 shahbits");
     static_assert(sizeof(double_limb_t) == sizeof(limb_t) * 2, "bad size for double_limb_t");
     static_assert(sizeof(limb_t) * 8 == LIMB_SIZE, "LIMB_SIZE is incorrect");
 

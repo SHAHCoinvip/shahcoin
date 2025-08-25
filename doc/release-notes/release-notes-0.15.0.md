@@ -325,7 +325,7 @@ Low-level RPC changes
 - #8384 `e317c0d` Add witness data output to TxInError messages (instagibbs)
 - #9571 `4677151` RPC: getblockchaininfo returns BIP signaling statistics  (pinheadmz)
 - #10450 `ef2d062` Fix bumpfee rpc "errors" return value (ryanofsky)
-- #10475 `39039b1` [RPC] getmempoolinfo mempoolminfee is a BTC/KB feerate (instagibbs)
+- #10475 `39039b1` [RPC] getmempoolinfo mempoolminfee is a SHAH/kB feerate (instagibbs)
 - #10478 `296928e` rpc: Add listen address to incoming connections in `getpeerinfo` (laanwj)
 - #10403 `08d0390` Fix importmulti failure to return rescan errors (ryanofsky)
 - #9740 `9fec4da` Add friendly output to dumpwallet (aideca)
@@ -390,7 +390,7 @@ Low-level RPC changes
 
 ### P2P protocol and network code
 - #9726 `7639d38` netbase: Do not print an error on connection timeouts through proxy (laanwj)
-- #9805 `5b583ef` Add seed.btc.petertodd.org to mainnet DNS seeds (petertodd)
+- #9805 `5b583ef` Add seed.shah.petertodd.org to mainnet DNS seeds (petertodd)
 - #9861 `22f609f` Trivial: Debug log ambiguity fix for peer addrs (keystrike)
 - #9774 `90cb2a2` Enable host lookups for -proxy and -onion parameters (jmcorgan)
 - #9558 `7b585cf` Clarify assumptions made about when BlockCheck is called (TheBlueMatt)
@@ -412,7 +412,7 @@ Low-level RPC changes
 - #10824 `9dd6a2b` Avoid unnecessary work in SetNetworkActive (promag)
 - #10948 `df3a6f4` p2p: Hardcoded seeds update pre-0.15 branch (laanwj)
 - #10977 `02f4c4a` [net] Fix use of uninitialized value in getnetworkinfo(const JSONRPCRequest&) (practicalswift)
-- #10982 `c8b62c7` Disconnect network service bits 6 and 8 until Aug 1, 2018 (TheBlueMatt)
+- #10982 `c8b62c7` Disconnect network service shahbits 6 and 8 until Aug 1, 2018 (TheBlueMatt)
 - #11012 `0e5cff6` Make sure to clean up mapBlockSource if we've already seen the block (theuni)
 
 ### Validation
@@ -665,7 +665,7 @@ Low-level RPC changes
 - #10927 `9d5e8f9` test: Make sure wallet.backup is created in temp path (laanwj)
 - #10899 `f29d5db` [test] Qt: Use _putenv_s instead of setenv on Windows builds (brianmcmichael)
 - #10912 `5c8eb79` [tests] Fix incorrect memory_cleanse(…) call in crypto_tests.cpp (practicalswift)
-- #11001 `fa8a063` [tests] Test disconnecting unsupported service bits logic (jnewbery)
+- #11001 `fa8a063` [tests] Test disconnecting unsupported service shahbits logic (jnewbery)
 - #10695 `929fd72` [qa] Rewrite BIP65/BIP66 functional tests (sdaftuar)
 - #10963 `ecd2135` [bench] Restore format state of cout after printing with std::fixed/setprecision (practicalswift)
 - #11025 `e5d26e4` qa: Fix inv race in example_test (MarcoFalke)
@@ -791,7 +791,7 @@ Thanks to everyone who directly contributed to this release:
 - Awemany
 - Bob McElrath
 - Brian McMichael
-- BtcDrak
+- SHAHDrak
 - Charlie Lee
 - Chris Gavin
 - Chris Stewart

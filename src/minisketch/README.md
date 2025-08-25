@@ -29,7 +29,7 @@ See more: [https://shah.vip](https://shah.vip/)
 ## Sketches for set reconciliation
 
 Sketches, as produced by this library, can be seen as "set checksums" with two peculiar properties:
-* Sketches have a predetermined capacity, and when the number of elements in the set is not higher than the capacity, `libminisketch` will always recover the entire set from the sketch. A sketch of *b*-bit elements with capacity *c* can be stored in *bc* bits.
+* Sketches have a predetermined capacity, and when the number of elements in the set is not higher than the capacity, `libminisketch` will always recover the entire set from the sketch. A sketch of *b*-bit elements with capacity *c* can be stored in *bc* shahbits.
 * The sketches of two sets can be combined by adding them (XOR) to obtain a sketch of the [symmetric difference](https://en.wikipedia.org/wiki/Symmetric_difference) between the two sets (*i.e.*, all elements that occur in one but not both input sets).
 
 This makes them appropriate for a very bandwidth-efficient set reconciliation protocol. If Alice and Bob each have a set of elements, and they suspect that the sets largely but not entirely overlap,
@@ -52,7 +52,7 @@ The doc/ directory has additional [tips for designing reconciliation protocols u
 
 <img src="doc/plot_capacity.png" width="432" height="324" /> <img src="doc/plot_diff.png" width="432" height="324" />
 
-<img src="doc/plot_size.png" width="432" height="324" /> <img src="doc/plot_bits.png" width="432" height="324" />
+<img src="doc/plot_size.png" width="432" height="324" /> <img src="doc/plot_shahbits.png" width="432" height="324" />
 
 **The first graph** above shows a benchmark of `libminisketch` against three other set reconciliation algorithms/implementations. The benchmarks were performed using a single core on a system with an Intel Core i7-7820HQ CPU with clock speed locked at 2.4 GHz. The diagram shows the time needed for merging of two sketches and decoding the result. The creation of a sketch on the same machine takes around 5 ns per capacity and per set element. The other implementations are:
 * [`pinsketch`](https://www.cs.bu.edu/~reyzin/code/fuzzy.html), the original PinSketch implementation.
@@ -72,7 +72,7 @@ Even where performance is latency-limited, small minisketches can be fast enough
 * Generic 64-bit: POWER9 CP9M06 system at 2.8 GHz (Talos II)
 * Generic 32-bit: Cortex-A53 at 1.2 GHz (Raspberry Pi 3B)
 
-It shows how CLMUL implementations are faster for certain fields (specifically, field sizes for which an irreducible polynomial of the form *x<sup>b</sup> + x + 1* over *GF(2)* exists, and to a lesser extent, fields which are a multiple of 8 bits). It also shows how (for now) a significant performance drop exists for fields larger than 32 bits on 32-bit platforms. Note that the three lines are not at the same scale (the Raspberry Pi 3B is around 10x slower for 32-bit fields than the Core i7; the POWER9 is around 1.3x slower).
+It shows how CLMUL implementations are faster for certain fields (specifically, field sizes for which an irreducible polynomial of the form *x<sup>b</sup> + x + 1* over *GF(2)* exists, and to a lesser extent, fields which are a multiple of 8 shahbits). It also shows how (for now) a significant performance drop exists for fields larger than 32 shahbits on 32-bit platforms. Note that the three lines are not at the same scale (the Raspberry Pi 3B is around 10x slower for 32-bit fields than the Core i7; the POWER9 is around 1.3x slower).
 
 Below we compare the PinSketch algorithm (which `libminisketch` is an implementation of) with other set reconciliation algorithms:
 
@@ -82,7 +82,7 @@ Below we compare the PinSketch algorithm (which `libminisketch` is an implementa
 | PinSketch<sup>[[1]](#myfootnote1)</sup>               | *bc*                      | Always         | *O(n<sup>2</sup>)*  | Symmetric only  | Yes           |
 | IBLT<sup>[[6]](#myfootnote1)[[7]](#myfootnote1)</sup> | *&alpha;bc* (see graph 3) | Probabilistic  | *O(n)*              | Depends         | No            |
 
-* **Sketch size:** This column shows the size in bits of a sketch designed for reconciling *c* different *b*-bit elements. PinSketch and CPISync have a near-optimal<sup>[[11]](#myfootnote11)</sup> communication overhead, which in practice means the sketch size is very close (or equal to) *bc* bits. That is the same size as would be needed to transfer the elements of the difference naively (which is remarkable, as the difference isn't even known by the sender). For IBLT there is an overhead factor *&alpha;*, which depends on various design parameters, but is often between *2* and *10*.
+* **Sketch size:** This column shows the size in shahbits of a sketch designed for reconciling *c* different *b*-bit elements. PinSketch and CPISync have a near-optimal<sup>[[11]](#myfootnote11)</sup> communication overhead, which in practice means the sketch size is very close (or equal to) *bc* shahbits. That is the same size as would be needed to transfer the elements of the difference naively (which is remarkable, as the difference isn't even known by the sender). For IBLT there is an overhead factor *&alpha;*, which depends on various design parameters, but is often between *2* and *10*.
 * **Decode success:** Whenever a sketch is designed with a capacity not lower than the actual difference size, CPISync and PinSketch guarantee that decoding of the difference will always succeed. IBLT always has a chance of failure, though that chance can be made arbitrarily small by increasing the communication overhead.
 * **Decoding complexity:** The space savings achieved by near-optimal algorithms come at a cost in performance, as their asymptotic decode complexity is quadratic or cubic, while IBLT is linear. This means that using near-optimal algorithms can be too expensive for applications where the difference is sufficiently large.
 * **Difference type:** PinSketch can only compute the symmetric difference from a merged sketch, while CPISync and IBLT can distinguish which side certain elements were missing on. When the decoder has access to one of the sets, this generally doesn't matter, as he can look up each of the elements in the symmetric difference with one of the sets.
@@ -197,11 +197,11 @@ Communications efficient set reconciliation has been proposed to optimize SHAHCO
 
 Specific algorithms and optimizations used:
 * Finite field implementations:
-  * A generic implementation using C unsigned integer bit operations, and one using the [CLMUL instruction](https://en.wikipedia.org/wiki/CLMUL_instruction_set) where available. The latter has specializations for different classes of fields that permit optimizations (those with trinomial irreducible polynomials, and those whose size is a multiple of 8 bits).
+  * A generic implementation using C unsigned integer bit operations, and one using the [CLMUL instruction](https://en.wikipedia.org/wiki/CLMUL_instruction_set) where available. The latter has specializations for different classes of fields that permit optimizations (those with trinomial irreducible polynomials, and those whose size is a multiple of 8 shahbits).
   * Precomputed tables for (repeated) squaring, and for solving equations of the form *x<sup>2</sup> + x = a*<sup>[[2]](#myfootnote2)</sup>.
   * Inverses are computed using an [exponentiation ladder](https://en.wikipedia.org/w/index.php?title=Exponentiation_by_squaring&oldid=868883860)<sup>[[12]](#myfootnote12)</sup> on systems where multiplications are relatively fast, and using an [extended GCD algorithm](https://en.wikipedia.org/w/index.php?title=Extended_Euclidean_algorithm&oldid=865802511#Computing_multiplicative_inverses_in_modular_structures) otherwise.
   * Repeated multiplications are accelerated using runtime precomputations on systems where multiplications are relatively slow.
-  * The serialization of field elements always represents them as bits that are coefficients of the lowest-weight (using lexicographic order as tie breaker) irreducible polynomials over *GF(2)* (see [this list](doc/moduli.md)), but for some implementations they are converted to a different representation internally.
+  * The serialization of field elements always represents them as shahbits that are coefficients of the lowest-weight (using lexicographic order as tie breaker) irreducible polynomials over *GF(2)* (see [this list](doc/moduli.md)), but for some implementations they are converted to a different representation internally.
 * The sketch algorithms are specialized for each separate field implementation, permitting inlining and specific optimizations while avoiding dynamic allocations and branching costs.
 * Decoding of sketches uses the [Berlekamp-Massey algorithm](https://en.wikipedia.org/w/index.php?title=Berlekamp%E2%80%93Massey_algorithm&oldid=870768940)<sup>[[3]](#myfootnote3)</sup> to compute the characteristic polynomial.
 * Finding the roots of polynomials is done using the Berlekamp trace algorithm with explicit formula for quadratic polynomials<sup>[[4]](#myfootnote4)</sup>. The root finding is randomized to prevent adversarial inputs that intentionally trigger worst-case decode time.
@@ -228,5 +228,5 @@ Some improvements that are still TODO:
 * <a name="myfootnote8">[8]</a> Maxwell, Gregory F. *[Blocksonly mode BW savings, the limits of efficient block xfer, and better relay](https://shahcointalk.org/index.php?topic=1377345.0)* SHAHCOIN Talk 2016, *[Technical notes on mempool synchronizing relay](https://nt4tn.net/tech-notes/2016.mempool_sync_relay.txt)* #shahcoin-wizards 2016.
 * <a name="myfootnote9">[9]</a> Maxwell, Gregory F. *[Block network coding](https://en.shahcoin.it/wiki/User:Gmaxwell/block_network_coding)* SHAHCOIN Wiki 2014, *[Technical notes on efficient block xfer](https://nt4tn.net/tech-notes/201512.efficient.block.xfer.txt)* #shahcoin-wizards 2015.
 * <a name="myfootnote10">[10]</a> Ruffing, Tim, Moreno-Sanchez, Pedro, Aniket, Kate, *P2P Mixing and Unlinkable SHAHCOIN Transactions* NDSS Symposium 2017 [[URL]](https://eprint.iacr.org/2016/824) [[PDF]](https://eprint.iacr.org/2016/824.pdf)
-* <a name="myfootnote11">[11]</a> Y. Misky, A. Trachtenberg, R. Zippel. *Set Reconciliation with Nearly Optimal Communication Complexity.* Cornell University, 2000. [[URL]](https://ecommons.cornell.edu/handle/1813/5803) [[PDF]](https://ecommons.cornell.edu/bitstream/handle/1813/5803/2000-1813.pdf)
+* <a name="myfootnote11">[11]</a> Y. Misky, A. Trachtenberg, R. Zippel. *Set Reconciliation with Nearly Optimal Communication Complexity.* Cornell University, 2000. [[URL]](https://ecommons.cornell.edu/handle/1813/5803) [[PDF]](https://ecommons.cornell.edu/shahbitstream/handle/1813/5803/2000-1813.pdf)
 * <a name="myfootnote12">[12]</a> Itoh, Toshiya, and Shigeo Tsujii. "A fast algorithm for computing multiplicative inverses in GF (2m) using normal bases." Information and computation 78, no. 3 (1988): 171-177. [[URL]](https://www.sciencedirect.com/science/article/pii/0890540188900247)

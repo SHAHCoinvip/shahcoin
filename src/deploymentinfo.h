@@ -16,14 +16,14 @@ struct VBDeploymentInfo {
     bool gbt_force;
 };
 
-extern const VBDeploymentInfo VersionBitsDeploymentInfo[Consensus::MAX_VERSION_BITS_DEPLOYMENTS];
+extern const VBDeploymentInfo VersionshahbitsDeploymentInfo[Consensus::MAX_VERSION_shahbits_DEPLOYMENTS];
 
 std::string DeploymentName(Consensus::BuriedDeployment dep);
 
 inline std::string DeploymentName(Consensus::DeploymentPos pos)
 {
     assert(Consensus::ValidDeployment(pos));
-    return VersionBitsDeploymentInfo[pos].name;
+    return VersionshahbitsDeploymentInfo[pos].name;
 }
 
 std::optional<Consensus::BuriedDeployment> GetBuriedDeployment(const std::string_view deployment_name);

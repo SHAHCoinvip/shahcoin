@@ -83,7 +83,7 @@ The Tesla Mode implementation transforms the Shahcoin Qt Wallet into a modern, i
 - **Script Runner Console**: Sandboxed environment for running custom scripts
 - **Batch Transfer Tools**: Efficient batch transfer operations
 - **Balance Management**: Advanced balance tracking and management
-- **Wallet Importer**: Import read-only wallets from other chains (BTC, LTC, ETH)
+- **Wallet Importer**: Import read-only wallets from other chains (SHAH, LTC, ETH)
 - **Dev Sandbox Mode**: Testnet/devnet toggle for development and testing
 
 ## 🎨 UI/Visual Enhancements

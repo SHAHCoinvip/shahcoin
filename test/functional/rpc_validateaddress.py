@@ -115,7 +115,7 @@ INVALID_DATA = [
     ),
     (
         "bc1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7v07qwwzcrf",
-        "Invalid padding in Bech32 data section",  # zero padding of more than 4 bits
+        "Invalid padding in Bech32 data section",  # zero padding of more than 4 shahbits
         [],
     ),
     (

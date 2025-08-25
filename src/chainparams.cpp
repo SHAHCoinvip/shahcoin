@@ -8,7 +8,7 @@
 #include <consensus/amount.h>
 #include <tinyformat.h>
 #include <util/strencodings.h>
-#include <versionbits.h>
+#include <versionshahbits.h>
 #include <common/args.h>
 #include <util/chaintype.h>
 #include <primitives/transaction.h>
@@ -24,7 +24,7 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
 
-static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
+static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nshahbits, int32_t nVersion, const CAmount& genesisReward)
 {
     const char* pszTimestamp = "SHAHCOIN GENESIS BLOCK – Victory through Code – July 2025";
     
@@ -57,7 +57,7 @@ static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits
 
     CBlock genesis;
     genesis.nTime    = nTime;
-    genesis.nBits    = nBits;
+    genesis.nshahbits    = nshahbits;
     genesis.nNonce   = nNonce;
     genesis.nVersion = nVersion;
     genesis.SetAlgorithm(ALGO_SHA256D); // SHAHCOIN Core genesis block uses SHA256d
@@ -68,9 +68,9 @@ static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits
     return genesis;
 }
 
-static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion)
+static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nshahbits, int32_t nVersion)
 {
-    return CreateGenesisBlock(nTime, nNonce, nBits, nVersion, 100 * COIN); // SHAHCOIN Core 100 SHAH block reward
+    return CreateGenesisBlock(nTime, nNonce, nshahbits, nVersion, 100 * COIN); // SHAHCOIN Core 100 SHAH block reward
 }
 
 /**

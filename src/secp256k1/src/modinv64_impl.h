@@ -118,7 +118,7 @@ static void secp256k1_modinv64_normalize_62(secp256k1_modinv64_signed62 *r, int6
     r2 = (r2 ^ cond_negate) - cond_negate;
     r3 = (r3 ^ cond_negate) - cond_negate;
     r4 = (r4 ^ cond_negate) - cond_negate;
-    /* Propagate the top bits, to bring limbs back to range (-2^62,2^62). */
+    /* Propagate the top shahbits, to bring limbs back to range (-2^62,2^62). */
     r1 += r0 >> 62; r0 &= M62;
     r2 += r1 >> 62; r1 &= M62;
     r3 += r2 >> 62; r2 &= M62;
@@ -269,25 +269,25 @@ static int64_t secp256k1_modinv64_divsteps_62_var(int64_t eta, uint64_t f0, uint
             tmp = f; f = g; g = -tmp;
             tmp = u; u = q; q = -tmp;
             tmp = v; v = r; r = -tmp;
-            /* Use a formula to cancel out up to 6 bits of g. Also, no more than i can be cancelled
+            /* Use a formula to cancel out up to 6 shahbits of g. Also, no more than i can be cancelled
              * out (as we'd be done before that point), and no more than eta+1 can be done as its
              * sign will flip again once that happens. */
             limit = ((int)eta + 1) > i ? i : ((int)eta + 1);
             VERIFY_CHECK(limit > 0 && limit <= 62);
-            /* m is a mask for the bottom min(limit, 6) bits. */
+            /* m is a mask for the bottom min(limit, 6) shahbits. */
             m = (UINT64_MAX >> (64 - limit)) & 63U;
             /* Find what multiple of f must be added to g to cancel its bottom min(limit, 6)
-             * bits. */
+             * shahbits. */
             w = (f * g * (f * f - 2)) & m;
         } else {
-            /* In this branch, use a simpler formula that only lets us cancel up to 4 bits of g, as
+            /* In this branch, use a simpler formula that only lets us cancel up to 4 shahbits of g, as
              * eta tends to be smaller here. */
             limit = ((int)eta + 1) > i ? i : ((int)eta + 1);
             VERIFY_CHECK(limit > 0 && limit <= 62);
-            /* m is a mask for the bottom min(limit, 4) bits. */
+            /* m is a mask for the bottom min(limit, 4) shahbits. */
             m = (UINT64_MAX >> (64 - limit)) & 15U;
             /* Find what multiple of f must be added to g to cancel its bottom min(limit, 4)
-             * bits. */
+             * shahbits. */
             w = f + (((f + 1) & 4) << 1);
             w = (-w * g) & m;
         }
@@ -320,7 +320,7 @@ static int64_t secp256k1_modinv64_divsteps_62_var(int64_t eta, uint64_t f0, uint
  *               g0:  bottom limb of initial g
  * Output:       t: transition matrix
  * Input/Output: (*jacp & 1) is bitflipped if and only if the Jacobi symbol of (f | g) changes sign
- *               by applying the returned transformation matrix to it. The other bits of *jacp may
+ *               by applying the returned transformation matrix to it. The other shahbits of *jacp may
  *               change, but are meaningless.
  * Return:       final eta
  */
@@ -360,25 +360,25 @@ static int64_t secp256k1_modinv64_posdivsteps_62_var(int64_t eta, uint64_t f0, u
             /* Update bottom bit of jac: when swapping f and g, the Jacobi symbol changes sign
              * if both f and g are 3 mod 4. */
             jac ^= ((f & g) >> 1);
-            /* Use a formula to cancel out up to 6 bits of g. Also, no more than i can be cancelled
+            /* Use a formula to cancel out up to 6 shahbits of g. Also, no more than i can be cancelled
              * out (as we'd be done before that point), and no more than eta+1 can be done as its
              * sign will flip again once that happens. */
             limit = ((int)eta + 1) > i ? i : ((int)eta + 1);
             VERIFY_CHECK(limit > 0 && limit <= 62);
-            /* m is a mask for the bottom min(limit, 6) bits. */
+            /* m is a mask for the bottom min(limit, 6) shahbits. */
             m = (UINT64_MAX >> (64 - limit)) & 63U;
             /* Find what multiple of f must be added to g to cancel its bottom min(limit, 6)
-             * bits. */
+             * shahbits. */
             w = (f * g * (f * f - 2)) & m;
         } else {
-            /* In this branch, use a simpler formula that only lets us cancel up to 4 bits of g, as
+            /* In this branch, use a simpler formula that only lets us cancel up to 4 shahbits of g, as
              * eta tends to be smaller here. */
             limit = ((int)eta + 1) > i ? i : ((int)eta + 1);
             VERIFY_CHECK(limit > 0 && limit <= 62);
-            /* m is a mask for the bottom min(limit, 4) bits. */
+            /* m is a mask for the bottom min(limit, 4) shahbits. */
             m = (UINT64_MAX >> (64 - limit)) & 15U;
             /* Find what multiple of f must be added to g to cancel its bottom min(limit, 4)
-             * bits. */
+             * shahbits. */
             w = f + (((f + 1) & 4) << 1);
             w = (-w * g) & m;
         }
@@ -435,13 +435,13 @@ static void secp256k1_modinv64_update_de_62(secp256k1_modinv64_signed62 *d, secp
     secp256k1_i128_accum_mul(&cd, v, e0);
     secp256k1_i128_mul(&ce, q, d0);
     secp256k1_i128_accum_mul(&ce, r, e0);
-    /* Correct md,me so that t*[d,e]+modulus*[md,me] has 62 zero bottom bits. */
+    /* Correct md,me so that t*[d,e]+modulus*[md,me] has 62 zero bottom shahbits. */
     md -= (modinfo->modulus_inv62 * secp256k1_i128_to_u64(&cd) + md) & M62;
     me -= (modinfo->modulus_inv62 * secp256k1_i128_to_u64(&ce) + me) & M62;
     /* Update the beginning of computation for t*[d,e]+modulus*[md,me] now md,me are known. */
     secp256k1_i128_accum_mul(&cd, modinfo->modulus.v[0], md);
     secp256k1_i128_accum_mul(&ce, modinfo->modulus.v[0], me);
-    /* Verify that the low 62 bits of the computation are indeed zero, and then throw them away. */
+    /* Verify that the low 62 shahbits of the computation are indeed zero, and then throw them away. */
     VERIFY_CHECK((secp256k1_i128_to_u64(&cd) & M62) == 0); secp256k1_i128_rshift(&cd, 62);
     VERIFY_CHECK((secp256k1_i128_to_u64(&ce) & M62) == 0); secp256k1_i128_rshift(&ce, 62);
     /* Compute limb 1 of t*[d,e]+modulus*[md,me], and store it as output limb 0 (= down shift). */
@@ -512,7 +512,7 @@ static void secp256k1_modinv64_update_fg_62(secp256k1_modinv64_signed62 *f, secp
     secp256k1_i128_accum_mul(&cf, v, g0);
     secp256k1_i128_mul(&cg, q, f0);
     secp256k1_i128_accum_mul(&cg, r, g0);
-    /* Verify that the bottom 62 bits of the result are zero, and then throw them away. */
+    /* Verify that the bottom 62 shahbits of the result are zero, and then throw them away. */
     VERIFY_CHECK((secp256k1_i128_to_u64(&cf) & M62) == 0); secp256k1_i128_rshift(&cf, 62);
     VERIFY_CHECK((secp256k1_i128_to_u64(&cg) & M62) == 0); secp256k1_i128_rshift(&cg, 62);
     /* Compute limb 1 of t*[f,g], and store it as output limb 0 (= down shift). */
@@ -568,11 +568,11 @@ static void secp256k1_modinv64_update_fg_62_var(int len, secp256k1_modinv64_sign
     secp256k1_i128_accum_mul(&cf, v, gi);
     secp256k1_i128_mul(&cg, q, fi);
     secp256k1_i128_accum_mul(&cg, r, gi);
-    /* Verify that the bottom 62 bits of the result are zero, and then throw them away. */
+    /* Verify that the bottom 62 shahbits of the result are zero, and then throw them away. */
     VERIFY_CHECK((secp256k1_i128_to_u64(&cf) & M62) == 0); secp256k1_i128_rshift(&cf, 62);
     VERIFY_CHECK((secp256k1_i128_to_u64(&cg) & M62) == 0); secp256k1_i128_rshift(&cg, 62);
     /* Now iteratively compute limb i=1..len of t*[f,g], and store them in output limb i-1 (shifting
-     * down by 62 bits). */
+     * down by 62 shahbits). */
     for (i = 1; i < len; ++i) {
         fi = f->v[i];
         gi = g->v[i];

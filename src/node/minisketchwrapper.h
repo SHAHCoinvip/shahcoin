@@ -13,7 +13,7 @@ namespace node {
 /** Wrapper around Minisketch::Minisketch(32, implementation, capacity). */
 Minisketch MakeMinisketch32(size_t capacity);
 /** Wrapper around Minisketch::CreateFP. */
-Minisketch MakeMinisketch32FP(size_t max_elements, uint32_t fpbits);
+Minisketch MakeMinisketch32FP(size_t max_elements, uint32_t fpshahbits);
 } // namespace node
 
 #endif // SHAHCOIN_NODE_MINISKETCHWRAPPER_H

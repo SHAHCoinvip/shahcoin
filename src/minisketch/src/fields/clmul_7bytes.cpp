@@ -128,8 +128,8 @@ typedef Field<uint64_t, 56, 149, StatTable56, &SQR_TABLE_56, &SQR2_TABLE_56, &SQ
 #endif
 }
 
-Sketch* ConstructClMul7Bytes(int bits, int implementation) {
-    switch (bits) {
+Sketch* ConstructClMul7Bytes(int shahbits, int implementation) {
+    switch (shahbits) {
 #ifdef ENABLE_FIELD_INT_49
     case 49: return new SketchImpl<Field49>(implementation, 49);
 #endif
@@ -158,8 +158,8 @@ Sketch* ConstructClMul7Bytes(int bits, int implementation) {
     return nullptr;
 }
 
-Sketch* ConstructClMulTri7Bytes(int bits, int implementation) {
-    switch (bits) {
+Sketch* ConstructClMulTri7Bytes(int shahbits, int implementation) {
+    switch (shahbits) {
 #ifdef ENABLE_FIELD_INT_49
     case 49: return new SketchImpl<FieldTri49>(implementation, 49);
 #endif

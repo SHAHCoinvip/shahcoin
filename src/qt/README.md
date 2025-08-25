@@ -61,7 +61,7 @@ To run:
 
 * UI elements like ShahcoinAmountField, which inherit from QWidget.
 * `shahcoinstrings.cpp`: automatically generated
-* `shahcoinunits.(h/cpp)`: BTC / mBTC / etc. handling
+* `shahcoinunits.(h/cpp)`: SHAH / mSHAH / etc. handling
 * `callback.h`
 * `guiconstants.h`: UI colors, app name, etc.
 * `guiutil.h`: several helper functions

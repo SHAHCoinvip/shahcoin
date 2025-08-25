@@ -288,7 +288,7 @@ static SECP256K1_INLINE void secp256k1_int_cmov(int *r, const int *a, int flag) 
 #define __has_builtin(x) 0
 #endif
 
-/* Determine the number of trailing zero bits in a (non-zero) 32-bit x.
+/* Determine the number of trailing zero shahbits in a (non-zero) 32-bit x.
  * This function is only intended to be used as fallback for
  * secp256k1_ctz32_var, but permits it to be tested separately. */
 static SECP256K1_INLINE int secp256k1_ctz32_var_debruijn(uint32_t x) {
@@ -300,7 +300,7 @@ static SECP256K1_INLINE int secp256k1_ctz32_var_debruijn(uint32_t x) {
     return debruijn[(uint32_t)((x & -x) * 0x04D7651FU) >> 27];
 }
 
-/* Determine the number of trailing zero bits in a (non-zero) 64-bit x.
+/* Determine the number of trailing zero shahbits in a (non-zero) 64-bit x.
  * This function is only intended to be used as fallback for
  * secp256k1_ctz64_var, but permits it to be tested separately. */
 static SECP256K1_INLINE int secp256k1_ctz64_var_debruijn(uint64_t x) {
@@ -313,7 +313,7 @@ static SECP256K1_INLINE int secp256k1_ctz64_var_debruijn(uint64_t x) {
     return debruijn[(uint64_t)((x & -x) * 0x022FDD63CC95386DU) >> 58];
 }
 
-/* Determine the number of trailing zero bits in a (non-zero) 32-bit x. */
+/* Determine the number of trailing zero shahbits in a (non-zero) 32-bit x. */
 static SECP256K1_INLINE int secp256k1_ctz32_var(uint32_t x) {
     VERIFY_CHECK(x != 0);
 #if (__has_builtin(__builtin_ctz) || SECP256K1_GNUC_PREREQ(3,4))
@@ -323,7 +323,7 @@ static SECP256K1_INLINE int secp256k1_ctz32_var(uint32_t x) {
     }
 #endif
 #if (__has_builtin(__builtin_ctzl) || SECP256K1_GNUC_PREREQ(3,4))
-    /* Otherwise consider __builtin_ctzl (the unsigned long type is always at least 32 bits). */
+    /* Otherwise consider __builtin_ctzl (the unsigned long type is always at least 32 shahbits). */
     return __builtin_ctzl(x);
 #else
     /* If no suitable CTZ builtin is available, use a (variable time) software emulation. */
@@ -331,7 +331,7 @@ static SECP256K1_INLINE int secp256k1_ctz32_var(uint32_t x) {
 #endif
 }
 
-/* Determine the number of trailing zero bits in a (non-zero) 64-bit x. */
+/* Determine the number of trailing zero shahbits in a (non-zero) 64-bit x. */
 static SECP256K1_INLINE int secp256k1_ctz64_var(uint64_t x) {
     VERIFY_CHECK(x != 0);
 #if (__has_builtin(__builtin_ctzl) || SECP256K1_GNUC_PREREQ(3,4))
@@ -341,7 +341,7 @@ static SECP256K1_INLINE int secp256k1_ctz64_var(uint64_t x) {
     }
 #endif
 #if (__has_builtin(__builtin_ctzll) || SECP256K1_GNUC_PREREQ(3,4))
-    /* Otherwise consider __builtin_ctzll (the unsigned long long type is always at least 64 bits). */
+    /* Otherwise consider __builtin_ctzll (the unsigned long long type is always at least 64 shahbits). */
     return __builtin_ctzll(x);
 #else
     /* If no suitable CTZ builtin is available, use a (variable time) software emulation. */

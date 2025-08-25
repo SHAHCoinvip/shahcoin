@@ -248,7 +248,7 @@ enum jtokentype getJsonToken(std::string& tokenVal, unsigned int& consumed,
     }
 }
 
-enum expect_bits : unsigned {
+enum expect_shahbits : unsigned {
     EXP_OBJ_NAME = (1U << 0),
     EXP_COLON = (1U << 1),
     EXP_ARR_VALUE = (1U << 2),

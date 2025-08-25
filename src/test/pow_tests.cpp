@@ -20,15 +20,15 @@ BOOST_AUTO_TEST_CASE(get_next_work)
     CBlockIndex pindexLast;
     pindexLast.nHeight = 32255;
     pindexLast.nTime = 1262152739;  // Block #32255
-    pindexLast.nBits = 0x1d00ffff;
+    pindexLast.nshahbits = 0x1d00ffff;
 
-    // Here (and below): expected_nbits is calculated in
+    // Here (and below): expected_nshahbits is calculated in
     // CalculateNextWorkRequired(); redoing the calculation here would be just
     // reimplementing the same code that is written in pow.cpp. Rather than
     // copy that code, we just hardcode the expected result.
-    unsigned int expected_nbits = 0x1d00d86aU;
-    BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), expected_nbits);
-    BOOST_CHECK(PermittedDifficultyTransition(chainParams->GetConsensus(), pindexLast.nHeight+1, pindexLast.nBits, expected_nbits));
+    unsigned int expected_nshahbits = 0x1d00d86aU;
+    BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), expected_nshahbits);
+    BOOST_CHECK(PermittedDifficultyTransition(chainParams->GetConsensus(), pindexLast.nHeight+1, pindexLast.nshahbits, expected_nshahbits));
 }
 
 /* Test the constraint on the upper bound for next work */
@@ -39,10 +39,10 @@ BOOST_AUTO_TEST_CASE(get_next_work_pow_limit)
     CBlockIndex pindexLast;
     pindexLast.nHeight = 2015;
     pindexLast.nTime = 1233061996;  // Block #2015
-    pindexLast.nBits = 0x1d00ffff;
-    unsigned int expected_nbits = 0x1d00ffffU;
-    BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), expected_nbits);
-    BOOST_CHECK(PermittedDifficultyTransition(chainParams->GetConsensus(), pindexLast.nHeight+1, pindexLast.nBits, expected_nbits));
+    pindexLast.nshahbits = 0x1d00ffff;
+    unsigned int expected_nshahbits = 0x1d00ffffU;
+    BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), expected_nshahbits);
+    BOOST_CHECK(PermittedDifficultyTransition(chainParams->GetConsensus(), pindexLast.nHeight+1, pindexLast.nshahbits, expected_nshahbits));
 }
 
 /* Test the constraint on the lower bound for actual time taken */
@@ -53,13 +53,13 @@ BOOST_AUTO_TEST_CASE(get_next_work_lower_limit_actual)
     CBlockIndex pindexLast;
     pindexLast.nHeight = 68543;
     pindexLast.nTime = 1279297671;  // Block #68543
-    pindexLast.nBits = 0x1c05a3f4;
-    unsigned int expected_nbits = 0x1c0168fdU;
-    BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), expected_nbits);
-    BOOST_CHECK(PermittedDifficultyTransition(chainParams->GetConsensus(), pindexLast.nHeight+1, pindexLast.nBits, expected_nbits));
-    // Test that reducing nbits further would not be a PermittedDifficultyTransition.
-    unsigned int invalid_nbits = expected_nbits-1;
-    BOOST_CHECK(!PermittedDifficultyTransition(chainParams->GetConsensus(), pindexLast.nHeight+1, pindexLast.nBits, invalid_nbits));
+    pindexLast.nshahbits = 0x1c05a3f4;
+    unsigned int expected_nshahbits = 0x1c0168fdU;
+    BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), expected_nshahbits);
+    BOOST_CHECK(PermittedDifficultyTransition(chainParams->GetConsensus(), pindexLast.nHeight+1, pindexLast.nshahbits, expected_nshahbits));
+    // Test that reducing nshahbits further would not be a PermittedDifficultyTransition.
+    unsigned int invalid_nshahbits = expected_nshahbits-1;
+    BOOST_CHECK(!PermittedDifficultyTransition(chainParams->GetConsensus(), pindexLast.nHeight+1, pindexLast.nshahbits, invalid_nshahbits));
 }
 
 /* Test the constraint on the upper bound for actual time taken */
@@ -70,67 +70,67 @@ BOOST_AUTO_TEST_CASE(get_next_work_upper_limit_actual)
     CBlockIndex pindexLast;
     pindexLast.nHeight = 46367;
     pindexLast.nTime = 1269211443;  // Block #46367
-    pindexLast.nBits = 0x1c387f6f;
-    unsigned int expected_nbits = 0x1d00e1fdU;
-    BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), expected_nbits);
-    BOOST_CHECK(PermittedDifficultyTransition(chainParams->GetConsensus(), pindexLast.nHeight+1, pindexLast.nBits, expected_nbits));
-    // Test that increasing nbits further would not be a PermittedDifficultyTransition.
-    unsigned int invalid_nbits = expected_nbits+1;
-    BOOST_CHECK(!PermittedDifficultyTransition(chainParams->GetConsensus(), pindexLast.nHeight+1, pindexLast.nBits, invalid_nbits));
+    pindexLast.nshahbits = 0x1c387f6f;
+    unsigned int expected_nshahbits = 0x1d00e1fdU;
+    BOOST_CHECK_EQUAL(CalculateNextWorkRequired(&pindexLast, nLastRetargetTime, chainParams->GetConsensus()), expected_nshahbits);
+    BOOST_CHECK(PermittedDifficultyTransition(chainParams->GetConsensus(), pindexLast.nHeight+1, pindexLast.nshahbits, expected_nshahbits));
+    // Test that increasing nshahbits further would not be a PermittedDifficultyTransition.
+    unsigned int invalid_nshahbits = expected_nshahbits+1;
+    BOOST_CHECK(!PermittedDifficultyTransition(chainParams->GetConsensus(), pindexLast.nHeight+1, pindexLast.nshahbits, invalid_nshahbits));
 }
 
 BOOST_AUTO_TEST_CASE(CheckProofOfWork_test_negative_target)
 {
     const auto consensus = CreateChainParams("main")->GetConsensus();
     uint256 hash;
-    unsigned int nBits;
-    nBits = UintToArith256(consensus.powLimit).GetCompact(true);
+    unsigned int nshahbits;
+    nshahbits = UintToArith256(consensus.powLimit).GetCompact(true);
     hash.SetHex("0x1");
-    BOOST_CHECK(!CheckProofOfWork(hash, nBits, consensus));
+    BOOST_CHECK(!CheckProofOfWork(hash, nshahbits, consensus));
 }
 
 BOOST_AUTO_TEST_CASE(CheckProofOfWork_test_overflow_target)
 {
     const auto consensus = CreateChainParams("main")->GetConsensus();
     uint256 hash;
-    unsigned int nBits{~0x00800000U};
+    unsigned int nshahbits{~0x00800000U};
     hash.SetHex("0x1");
-    BOOST_CHECK(!CheckProofOfWork(hash, nBits, consensus));
+    BOOST_CHECK(!CheckProofOfWork(hash, nshahbits, consensus));
 }
 
 BOOST_AUTO_TEST_CASE(CheckProofOfWork_test_too_easy_target)
 {
     const auto consensus = CreateChainParams("main")->GetConsensus();
     uint256 hash;
-    unsigned int nBits;
-    arith_uint256 nBits_arith = UintToArith256(consensus.powLimit);
-    nBits_arith *= 2;
-    nBits = nBits_arith.GetCompact();
+    unsigned int nshahbits;
+    arith_uint256 nshahbits_arith = UintToArith256(consensus.powLimit);
+    nshahbits_arith *= 2;
+    nshahbits = nshahbits_arith.GetCompact();
     hash.SetHex("0x1");
-    BOOST_CHECK(!CheckProofOfWork(hash, nBits, consensus));
+    BOOST_CHECK(!CheckProofOfWork(hash, nshahbits, consensus));
 }
 
 BOOST_AUTO_TEST_CASE(CheckProofOfWork_test_biger_hash_than_target)
 {
     const auto consensus = CreateChainParams("main")->GetConsensus();
     uint256 hash;
-    unsigned int nBits;
+    unsigned int nshahbits;
     arith_uint256 hash_arith = UintToArith256(consensus.powLimit);
-    nBits = hash_arith.GetCompact();
-    hash_arith *= 2; // hash > nBits
+    nshahbits = hash_arith.GetCompact();
+    hash_arith *= 2; // hash > nshahbits
     hash = ArithToUint256(hash_arith);
-    BOOST_CHECK(!CheckProofOfWork(hash, nBits, consensus));
+    BOOST_CHECK(!CheckProofOfWork(hash, nshahbits, consensus));
 }
 
 BOOST_AUTO_TEST_CASE(CheckProofOfWork_test_zero_target)
 {
     const auto consensus = CreateChainParams("main")->GetConsensus();
     uint256 hash;
-    unsigned int nBits;
+    unsigned int nshahbits;
     arith_uint256 hash_arith{0};
-    nBits = hash_arith.GetCompact();
+    nshahbits = hash_arith.GetCompact();
     hash = ArithToUint256(hash_arith);
-    BOOST_CHECK(!CheckProofOfWork(hash, nBits, consensus));
+    BOOST_CHECK(!CheckProofOfWork(hash, nshahbits, consensus));
 }
 
 BOOST_AUTO_TEST_CASE(GetBlockProofEquivalentTime_test)
@@ -141,7 +141,7 @@ BOOST_AUTO_TEST_CASE(GetBlockProofEquivalentTime_test)
         blocks[i].pprev = i ? &blocks[i - 1] : nullptr;
         blocks[i].nHeight = i;
         blocks[i].nTime = 1269211443 + i * chainParams->GetConsensus().nPowTargetSpacing;
-        blocks[i].nBits = 0x207fffff; /* target 0x7fffff000... */
+        blocks[i].nshahbits = 0x207fffff; /* target 0x7fffff000... */
         blocks[i].nChainWork = i ? blocks[i - 1].nChainWork + GetBlockProof(blocks[i - 1]) : arith_uint256(0);
     }
 
@@ -166,10 +166,10 @@ void sanity_check_chainparams(const ArgsManager& args, const std::string& chain_
     // target timespan is an even multiple of spacing
     BOOST_CHECK_EQUAL(consensus.nPowTargetTimespan % consensus.nPowTargetSpacing, 0);
 
-    // genesis nBits is positive, doesn't overflow and is lower than powLimit
+    // genesis nshahbits is positive, doesn't overflow and is lower than powLimit
     arith_uint256 pow_compact;
     bool neg, over;
-    pow_compact.SetCompact(chainParams->GenesisBlock().nBits, &neg, &over);
+    pow_compact.SetCompact(chainParams->GenesisBlock().nshahbits, &neg, &over);
     BOOST_CHECK(!neg && pow_compact != 0);
     BOOST_CHECK(!over);
     BOOST_CHECK(UintToArith256(consensus.powLimit) >= pow_compact);

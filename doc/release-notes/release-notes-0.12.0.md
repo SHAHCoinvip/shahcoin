@@ -273,10 +273,10 @@ with `-txconfirmtarget=<m>` (default: `2`).
 
 Sometimes, it is not possible to give good estimates, or an estimate
 at all. Therefore, a fallback value can be set with `-fallbackfee=<f>`
-(default: `0.0002` BTC/kB).
+(default: `0.0002` SHAH/kB).
 
 At all times, SHAHCOIN Core will cap fees at `-maxtxfee=<x>` (default:
-0.10) BTC.
+0.10) SHAH.
 Furthermore, SHAHCOIN Core will never create transactions paying less than
 the current minimum relay fee.
 Finally, a user can set the minimum fee rate for all transactions with
@@ -593,7 +593,7 @@ git merge commit are mentioned.
 - #6310 `66e5465` banlist.dat: store banlist on disk (Jonas Schnelli)
 - #6412 `1a2de32` Test whether created sockets are select()able (Pieter Wuille)
 - #6498 `219b916` Keep track of recently rejected transactions with a rolling bloom filter (cont'd) (Peter Todd)
-- #6556 `70ec975` Fix masking of irrelevant bits in address groups. (Alex Morcos)
+- #6556 `70ec975` Fix masking of irrelevant shahbits in address groups. (Alex Morcos)
 - #6530 `ea19c2b` Improve addrman Select() performance when buckets are nearly empty (Pieter Wuille)
 - #6583 `af9305a` add support for miniupnpc api version 14 (Pavel Vasin)
 - #6374 `69dc5b5` Connection slot exhaustion DoS mitigation (Patrick Strateman)
@@ -772,7 +772,7 @@ git merge commit are mentioned.
 - #6149 `633fe10` Buffer log messages and explicitly open logs (Adam Weiss)
 - #6488 `7cbed7f` Avoid leaking file descriptors in RegisterLoad (Casey Rodarmor)
 - #6497 `a2bf40d` Make sure LogPrintf strings are line-terminated (Wladimir J. van der Laan)
-- #6504 `b6fee6b` Rationalize currency unit to "BTC" (Ross Nicoll)
+- #6504 `b6fee6b` Rationalize currency unit to "SHAH" (Ross Nicoll)
 - #6507 `9bb4dd8` Removed contrib/bitrpc (Casey Rodarmor)
 - #6527 `41d650f` Use unique name for AlertNotify tempfile (Casey Rodarmor)
 - #6561 `e08a7d9` limitedmap fixes and tests (Casey Rodarmor)
@@ -808,7 +808,7 @@ Thanks to everyone who directly contributed to this release:
 - Ashley Holman
 - Bob McElrath
 - Braydon Fuller
-- BtcDrak
+- SHAHDrak
 - Casey Rodarmor
 - centaur1
 - Chris Kleeschulte

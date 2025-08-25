@@ -75,25 +75,25 @@ def bech32_decode(bech):
     return (encoding, hrp, data[:-6])
 
 
-def convertbits(data, frombits, tobits, pad=True):
+def convertshahbits(data, fromshahbits, toshahbits, pad=True):
     """General power-of-2 base conversion."""
     acc = 0
-    bits = 0
+    shahbits = 0
     ret = []
-    maxv = (1 << tobits) - 1
-    max_acc = (1 << (frombits + tobits - 1)) - 1
+    maxv = (1 << toshahbits) - 1
+    max_acc = (1 << (fromshahbits + toshahbits - 1)) - 1
     for value in data:
-        if value < 0 or (value >> frombits):
+        if value < 0 or (value >> fromshahbits):
             return None
-        acc = ((acc << frombits) | value) & max_acc
-        bits += frombits
-        while bits >= tobits:
-            bits -= tobits
-            ret.append((acc >> bits) & maxv)
+        acc = ((acc << fromshahbits) | value) & max_acc
+        shahbits += fromshahbits
+        while shahbits >= toshahbits:
+            shahbits -= toshahbits
+            ret.append((acc >> shahbits) & maxv)
     if pad:
-        if bits:
-            ret.append((acc << (tobits - bits)) & maxv)
-    elif bits >= frombits or ((acc << (tobits - bits)) & maxv):
+        if shahbits:
+            ret.append((acc << (toshahbits - shahbits)) & maxv)
+    elif shahbits >= fromshahbits or ((acc << (toshahbits - shahbits)) & maxv):
         return None
     return ret
 
@@ -103,7 +103,7 @@ def decode_segwit_address(hrp, addr):
     encoding, hrpgot, data = bech32_decode(addr)
     if hrpgot != hrp:
         return (None, None)
-    decoded = convertbits(data[1:], 5, 8, False)
+    decoded = convertshahbits(data[1:], 5, 8, False)
     if decoded is None or len(decoded) < 2 or len(decoded) > 40:
         return (None, None)
     if data[0] > 16:
@@ -118,7 +118,7 @@ def decode_segwit_address(hrp, addr):
 def encode_segwit_address(hrp, witver, witprog):
     """Encode a segwit address."""
     encoding = Encoding.BECH32 if witver == 0 else Encoding.BECH32M
-    ret = bech32_encode(encoding, hrp, [witver] + convertbits(witprog, 8, 5))
+    ret = bech32_encode(encoding, hrp, [witver] + convertshahbits(witprog, 8, 5))
     if decode_segwit_address(hrp, ret) == (None, None):
         return None
     return ret

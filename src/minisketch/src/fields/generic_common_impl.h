@@ -24,12 +24,12 @@ namespace {
 /** Generic implementation for fields whose elements can be represented by an integer type. */
 template<typename I, int B, uint32_t MOD, typename F, typename T, const F* SQR, const F* QRT> class Field
 {
-    typedef BitsInt<I, B> O;
+    typedef shahbitsInt<I, B> O;
     typedef LFSR<O, MOD> L;
 
 public:
     typedef I Elem;
-    constexpr int Bits() const { return B; }
+    constexpr int shahbits() const { return B; }
 
     constexpr inline Elem Mul2(Elem val) const { return L::Call(val); }
 

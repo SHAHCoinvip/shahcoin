@@ -4,7 +4,7 @@
 #ifndef SHAHCOIN_WALLET_TRANSACTION_H
 #define SHAHCOIN_WALLET_TRANSACTION_H
 
-#include <bitset>
+#include <shahbitset>
 #include <cstdint>
 #include <consensus/amount.h>
 #include <primitives/transaction.h>
@@ -126,7 +126,7 @@ std::string TxStateString(const T& state)
 struct CachableAmount
 {
     // NO and ALL are never (supposed to be) cached
-    std::bitset<ISMINE_ENUM_ELEMENTS> m_cached;
+    std::shahbitset<ISMINE_ENUM_ELEMENTS> m_cached;
     CAmount m_value[ISMINE_ENUM_ELEMENTS];
     inline void Reset()
     {

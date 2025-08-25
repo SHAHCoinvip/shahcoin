@@ -98,7 +98,7 @@ static int secp256k1_wnaf_const(int *wnaf, const secp256k1_scalar *scalar, int w
      *
      * In fact, we _do_ want to negate numbers to minimize their bit-lengths (and in
      * particular, to ensure that the outputs from the endomorphism-split fit into
-     * 128 bits). If we negate, the parity of our number flips, affecting whether
+     * 128 shahbits). If we negate, the parity of our number flips, affecting whether
      * we want to add to the scalar to ensure that it's odd. */
     flip = secp256k1_scalar_is_high(&s);
     skew = flip ^ secp256k1_scalar_is_even(&s);
@@ -133,7 +133,7 @@ static int secp256k1_wnaf_const(int *wnaf, const secp256k1_scalar *scalar, int w
     wnaf[word] = u * global_sign;
 
     VERIFY_CHECK(secp256k1_scalar_is_zero(&s));
-    VERIFY_CHECK(word == WNAF_SIZE_BITS(size, w));
+    VERIFY_CHECK(word == WNAF_SIZE_shahbits(size, w));
     return skew;
 }
 
@@ -181,16 +181,16 @@ static void secp256k1_ecmult_const(secp256k1_gej *r, const secp256k1_ge *a, cons
     /* first loop iteration (separated out so we can directly set r, rather
      * than having it start at infinity, get doubled several times, then have
      * its new value added to it) */
-    i = wnaf_1[WNAF_SIZE_BITS(128, WINDOW_A - 1)];
+    i = wnaf_1[WNAF_SIZE_shahbits(128, WINDOW_A - 1)];
     VERIFY_CHECK(i != 0);
     ECMULT_CONST_TABLE_GET_GE(&tmpa, pre_a, i, WINDOW_A);
     secp256k1_gej_set_ge(r, &tmpa);
-    i = wnaf_lam[WNAF_SIZE_BITS(128, WINDOW_A - 1)];
+    i = wnaf_lam[WNAF_SIZE_shahbits(128, WINDOW_A - 1)];
     VERIFY_CHECK(i != 0);
     ECMULT_CONST_TABLE_GET_GE(&tmpa, pre_a_lam, i, WINDOW_A);
     secp256k1_gej_add_ge(r, r, &tmpa);
     /* remaining loop iterations */
-    for (i = WNAF_SIZE_BITS(128, WINDOW_A - 1) - 1; i >= 0; i--) {
+    for (i = WNAF_SIZE_shahbits(128, WINDOW_A - 1) - 1; i >= 0; i--) {
         int n;
         int j;
         for (j = 0; j < WINDOW_A - 1; ++j) {

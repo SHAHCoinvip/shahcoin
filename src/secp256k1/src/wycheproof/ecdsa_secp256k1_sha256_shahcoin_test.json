@@ -36,7 +36,7 @@
     },
     "IntegerOverflow" : {
       "bugType" : "CAN_OF_WORMS",
-      "description" : "The test vector contains an r and s that has been modified, so that the original value is restored if the implementation ignores the most significant bits.",
+      "description" : "The test vector contains an r and s that has been modified, so that the original value is restored if the implementation ignores the most significant shahbits.",
       "effect" : "Without further analysis it is unclear if the modification can be used to forge signatures."
     },
     "InvalidEncoding" : {
@@ -112,7 +112,7 @@
     },
     "SpecialCaseHash" : {
       "bugType" : "EDGE_CASE",
-      "description" : "The test vector contains a signature where the hash of the message is a special case, e.g., contains a long run of 0 or 1 bits."
+      "description" : "The test vector contains a signature where the hash of the message is a special case, e.g., contains a long run of 0 or 1 shahbits."
     },
     "ValidSignature" : {
       "bugType" : "BASIC",

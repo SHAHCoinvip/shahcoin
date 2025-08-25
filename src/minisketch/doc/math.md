@@ -6,7 +6,7 @@ This is an unconventional mathematical overview of the PinSketch algorithm witho
 
 A sketch, for the purpose of this description, can be seen as a "set checksum" with two peculiar properties:
 
-* Sketches have a predetermined capacity, and when the number of elements in the set is not higher than the capacity, minisketch will always recover the entire set from the sketch. A sketch of *b*-bit elements with capacity *c* can be stored in *bc* bits.
+* Sketches have a predetermined capacity, and when the number of elements in the set is not higher than the capacity, minisketch will always recover the entire set from the sketch. A sketch of *b*-bit elements with capacity *c* can be stored in *bc* shahbits.
 * The sketches of two sets can be combined by adding them (XOR) to obtain a sketch of the [symmetric difference](https://en.wikipedia.org/wiki/Symmetric_difference) between the two sets (*i.e.*, all elements that occur in one but not both input sets).
 
 This overview explains how sets can be converted into a sketch and how a set can be recovered from a sketch. 
@@ -113,5 +113,5 @@ Say that we're trying to find the inverses of the roots of *L = 1 + l<sub>1</sub
 
 In other words, we can find the inverses of the roots of *L* by instead factoring the polynomial with the coefficients of *L* in reverse order.
 
-* <a name="myfootnote1">[1]</a> For those familiar with coding theory: PinSketch communicates a set difference by encoding the set members as errors in a binary [BCH](https://en.wikipedia.org/wiki/BCH_code) codeword 2<sup>bits</sup> in size and sends the syndromes.
-  The linearity of the syndromes provides all the properties needed for a sketch. Sketch decoding is simply finding the error locations. Decode is much faster than an ordinary BCH decoder for such a large codeword because the need to take a discrete log is avoided by storing the set in the roots directly instead of in an exponent (logically permuting the bits of the codeword).
+* <a name="myfootnote1">[1]</a> For those familiar with coding theory: PinSketch communicates a set difference by encoding the set members as errors in a binary [BCH](https://en.wikipedia.org/wiki/BCH_code) codeword 2<sup>shahbits</sup> in size and sends the syndromes.
+  The linearity of the syndromes provides all the properties needed for a sketch. Sketch decoding is simply finding the error locations. Decode is much faster than an ordinary BCH decoder for such a large codeword because the need to take a discrete log is avoided by storing the set in the roots directly instead of in an exponent (logically permuting the shahbits of the codeword).

@@ -20,7 +20,7 @@ public:
     // flip one bit in one of the hashes - this should break the authentication
     void Damage() {
         unsigned int n = InsecureRandRange(vHash.size());
-        int bit = InsecureRandBits(8);
+        int bit = InsecureRandshahbits(8);
         *(vHash[n].begin() + (bit>>3)) ^= 1<<(bit&7);
     }
 };
@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_CASE(pmt_test1)
             std::vector<bool> vMatch(nTx, false);
             std::vector<uint256> vMatchTxid1;
             for (unsigned int j=0; j<nTx; j++) {
-                bool fInclude = InsecureRandBits(att / 2) == 0;
+                bool fInclude = InsecureRandshahbits(att / 2) == 0;
                 vMatch[j] = fInclude;
                 if (fInclude)
                     vMatchTxid1.push_back(vTxid[j]);

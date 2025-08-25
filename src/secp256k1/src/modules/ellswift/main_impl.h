@@ -161,8 +161,8 @@ static void secp256k1_ellswift_swiftec_var(secp256k1_ge *p, const secp256k1_fe *
  *   - no result with t=0 will be returned
  *   - no result for which u^3 + t^2 + 7 = 0 will be returned.
  *
- * The rather unusual encoding of bits in c (a large "if" based on the middle bit, and then
- * using the low and high bits to pick signs of square roots) is to match the paper's
+ * The rather unusual encoding of shahbits in c (a large "if" based on the middle bit, and then
+ * using the low and high shahbits to pick signs of square roots) is to match the paper's
  * encoding more closely: c=0 through c=3 match branches 1..4 in the paper, while c=4 through
  * c=7 are copies of those with an additional negation of sqrt(w).
  */

@@ -873,7 +873,7 @@ bool CWallet::EncryptWallet(const SecureString& strWalletPassphrase)
         Lock();
 
         // Need to completely rewrite the wallet file; if we don't, bdb might keep
-        // bits of the unencrypted private key in slack space in the database file.
+        // shahbits of the unencrypted private key in slack space in the database file.
         GetDatabase().Rewrite();
 
         // BDB seems to have a bad habit of writing old data into

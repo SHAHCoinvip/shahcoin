@@ -286,7 +286,7 @@ Low-level RPC changes
   `getrawtransaction` RPC commands.
 - New `fees` field introduced in `getrawmempool`, `getmempoolancestors`, `getmempooldescendants` and
    `getmempoolentry` when verbosity is set to `true` with sub-fields `ancestor`, `base`, `modified`
-   and `descendant` denominated in BTC. This new field deprecates previous fee fields, such as
+   and `descendant` denominated in SHAH. This new field deprecates previous fee fields, such as
    `fee`, `modifiedfee`, `ancestorfee` and `descendantfee`.
 - The new RPC `getzmqnotifications` returns information about active ZMQ
   notifications.
@@ -429,7 +429,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13417 `1e90862` Tighten scope in `net_processing` (skeees)
 - #13298 `f8d470e` Bucketing INV delays (1 bucket) for incoming connections to hide tx time (naumenkogs)
 - #13672 `0d8d6be` Modified `in_addr6` cast in CConman class to work with msvc (sipsorcery)
-- #11637 `c575260` Remove dead service bits code (MarcoFalke)
+- #11637 `c575260` Remove dead service shahbits code (MarcoFalke)
 - #13212 `a6f00ce` Fixed a race condition when disabling the network (lmanners)
 - #13656 `1211b15` Remove the boost/algorithm/string/predicate.hpp dependency (251Labs)
 - #13423 `f58674a` Thread safety annotations in `net_processing` (skeees)
@@ -536,7 +536,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #11200 `5f2a399` Allow for aborting rescans in the GUI (achow101)
 - #12791 `3a8a4dc` Expose a transaction's weight via RPC (TheBlueMatt)
 - #12436 `6e67754` Adds a functional test to validate the transaction version number in the RPC output (251Labs)
-- #12240 `6f8b345` Introduced a new `fees` structure that aggregates all sub-field fee types denominated in BTC (mryandao)
+- #12240 `6f8b345` Introduced a new `fees` structure that aggregates all sub-field fee types denominated in SHAH (mryandao)
 - #12321 `eac067a` p2wsh and p2sh-p2wsh address in decodescript (fivepiece)
 - #13090 `17266a1` Remove Safe mode (achow101, laanwj)
 - #12639 `7eb7076` Reduce `cs_main` lock in listunspent (promag)

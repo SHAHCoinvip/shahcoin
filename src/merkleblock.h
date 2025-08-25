@@ -12,8 +12,8 @@
 #include <vector>
 
 // Helper functions for serialization.
-std::vector<unsigned char> BitsToBytes(const std::vector<bool>& bits);
-std::vector<bool> BytesToBits(const std::vector<unsigned char>& bytes);
+std::vector<unsigned char> shahbitsToBytes(const std::vector<bool>& shahbits);
+std::vector<bool> BytesToshahbits(const std::vector<unsigned char>& bytes);
 
 /** Data structure that represents a partial merkle tree.
  *
@@ -27,7 +27,7 @@ std::vector<bool> BytesToBits(const std::vector<unsigned char>& bytes);
  * case we are at the leaf level, or this bit is 0, its merkle node hash is
  * stored, and its children are not explored further. Otherwise, no hash is
  * stored, but we recurse into both (or the only) child branch. During
- * decoding, the same depth-first traversal is performed, consuming bits and
+ * decoding, the same depth-first traversal is performed, consuming shahbits and
  * hashes as they written during encoding.
  *
  * The serialization is fixed and provides a hard guarantee about the
@@ -45,8 +45,8 @@ std::vector<bool> BytesToBits(const std::vector<unsigned char>& bytes);
  *  - uint32     total_transactions (4 bytes)
  *  - varint     number of hashes   (1-3 bytes)
  *  - uint256[]  hashes in depth-first order (<= 32*N bytes)
- *  - varint     number of bytes of flag bits (1-3 bytes)
- *  - byte[]     flag bits, packed per 8 in a byte, least significant bit first (<= 2*N-1 bits)
+ *  - varint     number of bytes of flag shahbits (1-3 bytes)
+ *  - byte[]     flag shahbits, packed per 8 in a byte, least significant bit first (<= 2*N-1 shahbits)
  * The size constraints follow from this.
  */
 class CPartialMerkleTree
@@ -55,8 +55,8 @@ protected:
     /** the total number of transactions in the block */
     unsigned int nTransactions;
 
-    /** node-is-parent-of-matched-txid bits */
-    std::vector<bool> vBits;
+    /** node-is-parent-of-matched-txid shahbits */
+    std::vector<bool> vshahbits;
 
     /** txids and internal hashes */
     std::vector<uint256> vHash;
@@ -72,14 +72,14 @@ protected:
     /** calculate the hash of a node in the merkle tree (at leaf level: the txid's themselves) */
     uint256 CalcHash(int height, unsigned int pos, const std::vector<uint256> &vTxid);
 
-    /** recursive function that traverses tree nodes, storing the data as bits and hashes */
+    /** recursive function that traverses tree nodes, storing the data as shahbits and hashes */
     void TraverseAndBuild(int height, unsigned int pos, const std::vector<uint256> &vTxid, const std::vector<bool> &vMatch);
 
     /**
-     * recursive function that traverses tree nodes, consuming the bits and hashes produced by TraverseAndBuild.
+     * recursive function that traverses tree nodes, consuming the shahbits and hashes produced by TraverseAndBuild.
      * it returns the hash of the respective node and its respective index.
      */
-    uint256 TraverseAndExtract(int height, unsigned int pos, unsigned int &nBitsUsed, unsigned int &nHashUsed, std::vector<uint256> &vMatch, std::vector<unsigned int> &vnIndex);
+    uint256 TraverseAndExtract(int height, unsigned int pos, unsigned int &nshahbitsUsed, unsigned int &nHashUsed, std::vector<uint256> &vMatch, std::vector<unsigned int> &vnIndex);
 
 public:
 
@@ -87,9 +87,9 @@ public:
     {
         READWRITE(obj.nTransactions, obj.vHash);
         std::vector<unsigned char> bytes;
-        SER_WRITE(obj, bytes = BitsToBytes(obj.vBits));
+        SER_WRITE(obj, bytes = shahbitsToBytes(obj.vshahbits));
         READWRITE(bytes);
-        SER_READ(obj, obj.vBits = BytesToBits(bytes));
+        SER_READ(obj, obj.vshahbits = BytesToshahbits(bytes));
         SER_READ(obj, obj.fBad = false);
     }
 

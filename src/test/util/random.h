@@ -52,9 +52,9 @@ static inline uint256 InsecureRand256()
     return g_insecure_rand_ctx.rand256();
 }
 
-static inline uint64_t InsecureRandBits(int bits)
+static inline uint64_t InsecureRandshahbits(int shahbits)
 {
-    return g_insecure_rand_ctx.randbits(bits);
+    return g_insecure_rand_ctx.randshahbits(shahbits);
 }
 
 static inline uint64_t InsecureRandRange(uint64_t range)

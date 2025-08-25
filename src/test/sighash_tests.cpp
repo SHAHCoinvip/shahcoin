@@ -96,13 +96,13 @@ void static RandomTransaction(CMutableTransaction& tx, bool fSingle)
     tx.vin.clear();
     tx.vout.clear();
     tx.nLockTime = (InsecureRandBool()) ? InsecureRand32() : 0;
-    int ins = (InsecureRandBits(2)) + 1;
-    int outs = fSingle ? ins : (InsecureRandBits(2)) + 1;
+    int ins = (InsecureRandshahbits(2)) + 1;
+    int outs = fSingle ? ins : (InsecureRandshahbits(2)) + 1;
     for (int in = 0; in < ins; in++) {
         tx.vin.emplace_back();
         CTxIn &txin = tx.vin.back();
         txin.prevout.hash = InsecureRand256();
-        txin.prevout.n = InsecureRandBits(2);
+        txin.prevout.n = InsecureRandshahbits(2);
         RandomScript(txin.scriptSig);
         txin.nSequence = (InsecureRandBool()) ? InsecureRand32() : std::numeric_limits<uint32_t>::max();
     }

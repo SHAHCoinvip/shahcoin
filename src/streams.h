@@ -360,7 +360,7 @@ public:
 };
 
 template <typename IStream>
-class BitStreamReader
+class shahbitstreamReader
 {
 private:
     IStream& m_istream;
@@ -369,41 +369,41 @@ private:
     /// buffer when m_offset reaches 8.
     uint8_t m_buffer{0};
 
-    /// Number of high order bits in m_buffer already returned by previous
+    /// Number of high order shahbits in m_buffer already returned by previous
     /// Read() calls. The next bit to be returned is at this offset from the
     /// most significant bit position.
     int m_offset{8};
 
 public:
-    explicit BitStreamReader(IStream& istream) : m_istream(istream) {}
+    explicit shahbitstreamReader(IStream& istream) : m_istream(istream) {}
 
-    /** Read the specified number of bits from the stream. The data is returned
-     * in the nbits least significant bits of a 64-bit uint.
+    /** Read the specified number of shahbits from the stream. The data is returned
+     * in the nshahbits least significant shahbits of a 64-bit uint.
      */
-    uint64_t Read(int nbits) {
-        if (nbits < 0 || nbits > 64) {
-            throw std::out_of_range("nbits must be between 0 and 64");
+    uint64_t Read(int nshahbits) {
+        if (nshahbits < 0 || nshahbits > 64) {
+            throw std::out_of_range("nshahbits must be between 0 and 64");
         }
 
         uint64_t data = 0;
-        while (nbits > 0) {
+        while (nshahbits > 0) {
             if (m_offset == 8) {
                 m_istream >> m_buffer;
                 m_offset = 0;
             }
 
-            int bits = std::min(8 - m_offset, nbits);
-            data <<= bits;
-            data |= static_cast<uint8_t>(m_buffer << m_offset) >> (8 - bits);
-            m_offset += bits;
-            nbits -= bits;
+            int shahbits = std::min(8 - m_offset, nshahbits);
+            data <<= shahbits;
+            data |= static_cast<uint8_t>(m_buffer << m_offset) >> (8 - shahbits);
+            m_offset += shahbits;
+            nshahbits -= shahbits;
         }
         return data;
     }
 };
 
 template <typename OStream>
-class BitStreamWriter
+class shahbitstreamWriter
 {
 private:
     OStream& m_ostream;
@@ -412,32 +412,32 @@ private:
     /// written buffer when m_offset reaches 8 or Flush() is called.
     uint8_t m_buffer{0};
 
-    /// Number of high order bits in m_buffer already written by previous
+    /// Number of high order shahbits in m_buffer already written by previous
     /// Write() calls and not yet flushed to the stream. The next bit to be
     /// written to is at this offset from the most significant bit position.
     int m_offset{0};
 
 public:
-    explicit BitStreamWriter(OStream& ostream) : m_ostream(ostream) {}
+    explicit shahbitstreamWriter(OStream& ostream) : m_ostream(ostream) {}
 
-    ~BitStreamWriter()
+    ~shahbitstreamWriter()
     {
         Flush();
     }
 
-    /** Write the nbits least significant bits of a 64-bit int to the output
+    /** Write the nshahbits least significant shahbits of a 64-bit int to the output
      * stream. Data is buffered until it completes an octet.
      */
-    void Write(uint64_t data, int nbits) {
-        if (nbits < 0 || nbits > 64) {
-            throw std::out_of_range("nbits must be between 0 and 64");
+    void Write(uint64_t data, int nshahbits) {
+        if (nshahbits < 0 || nshahbits > 64) {
+            throw std::out_of_range("nshahbits must be between 0 and 64");
         }
 
-        while (nbits > 0) {
-            int bits = std::min(8 - m_offset, nbits);
-            m_buffer |= (data << (64 - nbits)) >> (64 - 8 + m_offset);
-            m_offset += bits;
-            nbits -= bits;
+        while (nshahbits > 0) {
+            int shahbits = std::min(8 - m_offset, nshahbits);
+            m_buffer |= (data << (64 - nshahbits)) >> (64 - 8 + m_offset);
+            m_offset += shahbits;
+            nshahbits -= shahbits;
 
             if (m_offset == 8) {
                 Flush();
@@ -445,7 +445,7 @@ public:
         }
     }
 
-    /** Flush any unwritten bits to the output stream, padding with 0's to the
+    /** Flush any unwritten shahbits to the output stream, padding with 0's to the
      * next byte boundary.
      */
     void Flush() {

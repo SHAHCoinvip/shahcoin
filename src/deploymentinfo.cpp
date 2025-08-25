@@ -7,7 +7,7 @@
 
 #include <string_view>
 
-const struct VBDeploymentInfo VersionBitsDeploymentInfo[Consensus::MAX_VERSION_BITS_DEPLOYMENTS] = {
+const struct VBDeploymentInfo VersionshahbitsDeploymentInfo[Consensus::MAX_VERSION_shahbits_DEPLOYMENTS] = {
     {
         /*.name =*/ "testdummy",
         /*.gbt_force =*/ true,

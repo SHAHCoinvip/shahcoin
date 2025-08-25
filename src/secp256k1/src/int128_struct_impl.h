@@ -103,7 +103,7 @@ static SECP256K1_INLINE void secp256k1_u128_from_u64(secp256k1_uint128 *r, uint6
    r->lo = a;
 }
 
-static SECP256K1_INLINE int secp256k1_u128_check_bits(const secp256k1_uint128 *r, unsigned int n) {
+static SECP256K1_INLINE int secp256k1_u128_check_shahbits(const secp256k1_uint128 *r, unsigned int n) {
    VERIFY_CHECK(n < 128);
    return n >= 64 ? r->hi >> (n - 64) == 0
                   : r->hi == 0 && r->lo >> n == 0;
@@ -181,7 +181,7 @@ static SECP256K1_INLINE uint64_t secp256k1_i128_to_u64(const secp256k1_int128 *a
 }
 
 static SECP256K1_INLINE int64_t secp256k1_i128_to_i64(const secp256k1_int128 *a) {
-   /* Verify that a represents a 64 bit signed value by checking that the high bits are a sign extension of the low bits. */
+   /* Verify that a represents a 64 bit signed value by checking that the high shahbits are a sign extension of the low shahbits. */
    VERIFY_CHECK(a->hi == -(a->lo >> 63));
    return (int64_t)secp256k1_i128_to_u64(a);
 }

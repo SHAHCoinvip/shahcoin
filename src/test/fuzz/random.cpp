@@ -16,7 +16,7 @@ FUZZ_TARGET(random)
     FuzzedDataProvider fuzzed_data_provider(buffer.data(), buffer.size());
     FastRandomContext fast_random_context{ConsumeUInt256(fuzzed_data_provider)};
     (void)fast_random_context.rand64();
-    (void)fast_random_context.randbits(fuzzed_data_provider.ConsumeIntegralInRange<int>(0, 64));
+    (void)fast_random_context.randshahbits(fuzzed_data_provider.ConsumeIntegralInRange<int>(0, 64));
     (void)fast_random_context.randrange(fuzzed_data_provider.ConsumeIntegralInRange<uint64_t>(FastRandomContext::min() + 1, FastRandomContext::max()));
     (void)fast_random_context.randbytes(fuzzed_data_provider.ConsumeIntegralInRange<size_t>(0, 1024));
     (void)fast_random_context.rand32();

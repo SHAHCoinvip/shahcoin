@@ -129,7 +129,7 @@ struct PoSParams {
 
 #### **Algorithm Encoding in Block Headers**
 - **Files Updated**: `src/primitives/block.h`
-- **Implementation**: Version bits encoding for algorithm type
+- **Implementation**: Version shahbits encoding for algorithm type
 - **Backward Compatibility**: Legacy block support
 
 **Algorithm Encoding**:
@@ -137,9 +137,9 @@ struct PoSParams {
 AlgoType GetAlgoType() const {
     // Check if this is a hybrid consensus block (version >= 0x20000000)
     if (nVersion >= 0x20000000) {
-        // Extract algorithm from version bits (bits 28-30)
-        uint8_t algo_bits = (nVersion >> 28) & 0x07;
-        return static_cast<AlgoType>(algo_bits);
+        // Extract algorithm from version shahbits (shahbits 28-30)
+        uint8_t algo_shahbits = (nVersion >> 28) & 0x07;
+        return static_cast<AlgoType>(algo_shahbits);
     }
     
     // Legacy blocks: derive from height-based rotation
@@ -208,7 +208,7 @@ uint64_t CalculateStakeWeight(const StakeInput& input, uint32_t currentTime) {
 
 #### **Version Bit Encoding**
 - **Hybrid Consensus Flag**: Version >= 0x20000000
-- **Algorithm Bits**: Bits 28-30 encode algorithm type
+- **Algorithm shahbits**: shahbits 28-30 encode algorithm type
 - **Backward Compatibility**: Legacy blocks use height-based rotation
 - **Future-Proof**: Extensible for additional algorithms
 

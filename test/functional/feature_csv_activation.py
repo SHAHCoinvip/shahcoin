@@ -26,7 +26,7 @@ BIP 113:
 bip113tx - modify the nLocktime variable
 
 BIP 68:
-bip68txs - 16 txs with nSequence relative locktime of 10 with various bits set as per the relative_locktimes below
+bip68txs - 16 txs with nSequence relative locktime of 10 with various shahbits set as per the relative_locktimes below
 
 BIP 112:
 bip112txs_vary_nSequence - 16 txs with nSequence relative_locktimes of 10 evaluated against 10 OP_CSV OP_DROP
@@ -69,7 +69,7 @@ SEQ_RANDOM_LOW_BIT = 1 << 18
 
 
 def relative_locktime(sdf, srhb, stf, srlb):
-    """Returns a locktime with certain bits set."""
+    """Returns a locktime with certain shahbits set."""
 
     locktime = BASE_RELATIVE_LOCKTIME
     if sdf:
@@ -128,7 +128,7 @@ class BIP68_112_113Test(ShahcoinTestFramework):
         return self.miniwallet.send_self_transfer(from_node=self.nodes[0], utxo_to_spend=utxo_to_spend)['tx']
 
     def create_bip68txs(self, bip68inputs, txversion, locktime_delta=0):
-        """Returns a list of bip68 transactions with different bits set."""
+        """Returns a list of bip68 transactions with different shahbits set."""
         txs = []
         assert len(bip68inputs) >= 16
         for i, (sdf, srhb, stf, srlb) in enumerate(product(*[[True, False]] * 4)):
@@ -142,7 +142,7 @@ class BIP68_112_113Test(ShahcoinTestFramework):
         return txs
 
     def create_bip112txs(self, bip112inputs, varyOP_CSV, txversion, locktime_delta=0):
-        """Returns a list of bip68 transactions with different bits set."""
+        """Returns a list of bip68 transactions with different shahbits set."""
         txs = []
         assert len(bip112inputs) >= 16
         for i, (sdf, srhb, stf, srlb) in enumerate(product(*[[True, False]] * 4)):

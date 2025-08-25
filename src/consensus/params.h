@@ -30,10 +30,10 @@ constexpr bool ValidDeployment(BuriedDeployment dep) { return dep <= DEPLOYMENT_
 enum DeploymentPos : uint16_t {
     DEPLOYMENT_TESTDUMMY,
     DEPLOYMENT_TAPROOT, // Deployment of Schnorr/Taproot (BIPs 340-342)
-    // NOTE: Also add new deployments to VersionBitsDeploymentInfo in deploymentinfo.cpp
-    MAX_VERSION_BITS_DEPLOYMENTS
+    // NOTE: Also add new deployments to VersionshahbitsDeploymentInfo in deploymentinfo.cpp
+    MAX_VERSION_shahbits_DEPLOYMENTS
 };
-constexpr bool ValidDeployment(DeploymentPos dep) { return dep < MAX_VERSION_BITS_DEPLOYMENTS; }
+constexpr bool ValidDeployment(DeploymentPos dep) { return dep < MAX_VERSION_shahbits_DEPLOYMENTS; }
 
 /**
  * Struct for each individual consensus rule change using BIP9.
@@ -41,7 +41,7 @@ constexpr bool ValidDeployment(DeploymentPos dep) { return dep < MAX_VERSION_BIT
 struct BIP9Deployment {
     /** Bit position to select the particular bit in nVersion. */
     int bit{28};
-    /** Start MedianTime for version bits miner confirmation. Can be a date in the past */
+    /** Start MedianTime for version shahbits miner confirmation. Can be a date in the past */
     int64_t nStartTime{NEVER_ACTIVE};
     /** Timeout/expiry MedianTime for the deployment attempt. */
     int64_t nTimeout{NEVER_ACTIVE};
@@ -102,7 +102,7 @@ struct Params {
      */
     uint32_t nRuleChangeActivationThreshold;
     uint32_t nMinerConfirmationWindow;
-    BIP9Deployment vDeployments[MAX_VERSION_BITS_DEPLOYMENTS];
+    BIP9Deployment vDeployments[MAX_VERSION_shahbits_DEPLOYMENTS];
     /** Proof of work parameters */
     uint256 powLimit;
     bool fPowAllowMinDifficultyBlocks;

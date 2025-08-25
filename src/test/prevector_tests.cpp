@@ -220,69 +220,69 @@ BOOST_AUTO_TEST_CASE(PrevectorTestInt)
     for (int j = 0; j < 64; j++) {
         prevector_tester<8, int> test;
         for (int i = 0; i < 2048; i++) {
-            if (InsecureRandBits(2) == 0) {
+            if (InsecureRandshahbits(2) == 0) {
                 test.insert(InsecureRandRange(test.size() + 1), int(InsecureRand32()));
             }
-            if (test.size() > 0 && InsecureRandBits(2) == 1) {
+            if (test.size() > 0 && InsecureRandshahbits(2) == 1) {
                 test.erase(InsecureRandRange(test.size()));
             }
-            if (InsecureRandBits(3) == 2) {
+            if (InsecureRandshahbits(3) == 2) {
                 int new_size = std::max(0, std::min(30, (int)test.size() + (int)InsecureRandRange(5) - 2));
                 test.resize(new_size);
             }
-            if (InsecureRandBits(3) == 3) {
+            if (InsecureRandshahbits(3) == 3) {
                 test.insert(InsecureRandRange(test.size() + 1), 1 + InsecureRandBool(), int(InsecureRand32()));
             }
-            if (InsecureRandBits(3) == 4) {
+            if (InsecureRandshahbits(3) == 4) {
                 int del = std::min<int>(test.size(), 1 + (InsecureRandBool()));
                 int beg = InsecureRandRange(test.size() + 1 - del);
                 test.erase(beg, beg + del);
             }
-            if (InsecureRandBits(4) == 5) {
+            if (InsecureRandshahbits(4) == 5) {
                 test.push_back(int(InsecureRand32()));
             }
-            if (test.size() > 0 && InsecureRandBits(4) == 6) {
+            if (test.size() > 0 && InsecureRandshahbits(4) == 6) {
                 test.pop_back();
             }
-            if (InsecureRandBits(5) == 7) {
+            if (InsecureRandshahbits(5) == 7) {
                 int values[4];
-                int num = 1 + (InsecureRandBits(2));
+                int num = 1 + (InsecureRandshahbits(2));
                 for (int k = 0; k < num; k++) {
                     values[k] = int(InsecureRand32());
                 }
                 test.insert_range(InsecureRandRange(test.size() + 1), values, values + num);
             }
-            if (InsecureRandBits(5) == 8) {
-                int del = std::min<int>(test.size(), 1 + (InsecureRandBits(2)));
+            if (InsecureRandshahbits(5) == 8) {
+                int del = std::min<int>(test.size(), 1 + (InsecureRandshahbits(2)));
                 int beg = InsecureRandRange(test.size() + 1 - del);
                 test.erase(beg, beg + del);
             }
-            if (InsecureRandBits(5) == 9) {
-                test.reserve(InsecureRandBits(5));
+            if (InsecureRandshahbits(5) == 9) {
+                test.reserve(InsecureRandshahbits(5));
             }
-            if (InsecureRandBits(6) == 10) {
+            if (InsecureRandshahbits(6) == 10) {
                 test.shrink_to_fit();
             }
             if (test.size() > 0) {
                 test.update(InsecureRandRange(test.size()), int(InsecureRand32()));
             }
-            if (InsecureRandBits(10) == 11) {
+            if (InsecureRandshahbits(10) == 11) {
                 test.clear();
             }
-            if (InsecureRandBits(9) == 12) {
-                test.assign(InsecureRandBits(5), int(InsecureRand32()));
+            if (InsecureRandshahbits(9) == 12) {
+                test.assign(InsecureRandshahbits(5), int(InsecureRand32()));
             }
-            if (InsecureRandBits(3) == 3) {
+            if (InsecureRandshahbits(3) == 3) {
                 test.swap();
             }
-            if (InsecureRandBits(4) == 8) {
+            if (InsecureRandshahbits(4) == 8) {
                 test.copy();
             }
-            if (InsecureRandBits(5) == 18) {
+            if (InsecureRandshahbits(5) == 18) {
                 test.move();
             }
-            if (InsecureRandBits(5) == 19) {
-                unsigned int num = 1 + (InsecureRandBits(4));
+            if (InsecureRandshahbits(5) == 19) {
+                unsigned int num = 1 + (InsecureRandshahbits(4));
                 std::vector<int> values(num);
                 for (int& v : values) {
                     v = int(InsecureRand32());

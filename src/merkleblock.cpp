@@ -7,16 +7,16 @@
 #include <consensus/consensus.h>
 
 
-std::vector<unsigned char> BitsToBytes(const std::vector<bool>& bits)
+std::vector<unsigned char> shahbitsToBytes(const std::vector<bool>& shahbits)
 {
-    std::vector<unsigned char> ret((bits.size() + 7) / 8);
-    for (unsigned int p = 0; p < bits.size(); p++) {
-        ret[p / 8] |= bits[p] << (p % 8);
+    std::vector<unsigned char> ret((shahbits.size() + 7) / 8);
+    for (unsigned int p = 0; p < shahbits.size(); p++) {
+        ret[p / 8] |= shahbits[p] << (p % 8);
     }
     return ret;
 }
 
-std::vector<bool> BytesToBits(const std::vector<unsigned char>& bytes)
+std::vector<bool> BytesToshahbits(const std::vector<unsigned char>& bytes)
 {
     std::vector<bool> ret(bytes.size() * 8);
     for (unsigned int p = 0; p < ret.size(); p++) {
@@ -78,7 +78,7 @@ void CPartialMerkleTree::TraverseAndBuild(int height, unsigned int pos, const st
     for (unsigned int p = pos << height; p < (pos+1) << height && p < nTransactions; p++)
         fParentOfMatch |= vMatch[p];
     // store as flag bit
-    vBits.push_back(fParentOfMatch);
+    vshahbits.push_back(fParentOfMatch);
     if (height==0 || !fParentOfMatch) {
         // if at height 0, or nothing interesting below, store hash and stop
         vHash.push_back(CalcHash(height, pos, vTxid));
@@ -90,13 +90,13 @@ void CPartialMerkleTree::TraverseAndBuild(int height, unsigned int pos, const st
     }
 }
 
-uint256 CPartialMerkleTree::TraverseAndExtract(int height, unsigned int pos, unsigned int &nBitsUsed, unsigned int &nHashUsed, std::vector<uint256> &vMatch, std::vector<unsigned int> &vnIndex) {
-    if (nBitsUsed >= vBits.size()) {
-        // overflowed the bits array - failure
+uint256 CPartialMerkleTree::TraverseAndExtract(int height, unsigned int pos, unsigned int &nshahbitsUsed, unsigned int &nHashUsed, std::vector<uint256> &vMatch, std::vector<unsigned int> &vnIndex) {
+    if (nshahbitsUsed >= vshahbits.size()) {
+        // overflowed the shahbits array - failure
         fBad = true;
         return uint256();
     }
-    bool fParentOfMatch = vBits[nBitsUsed++];
+    bool fParentOfMatch = vshahbits[nshahbitsUsed++];
     if (height==0 || !fParentOfMatch) {
         // if at height 0, or nothing interesting below, use stored hash and do not descend
         if (nHashUsed >= vHash.size()) {
@@ -112,9 +112,9 @@ uint256 CPartialMerkleTree::TraverseAndExtract(int height, unsigned int pos, uns
         return hash;
     } else {
         // otherwise, descend into the subtrees to extract matched txids and hashes
-        uint256 left = TraverseAndExtract(height-1, pos*2, nBitsUsed, nHashUsed, vMatch, vnIndex), right;
+        uint256 left = TraverseAndExtract(height-1, pos*2, nshahbitsUsed, nHashUsed, vMatch, vnIndex), right;
         if (pos*2+1 < CalcTreeWidth(height-1)) {
-            right = TraverseAndExtract(height-1, pos*2+1, nBitsUsed, nHashUsed, vMatch, vnIndex);
+            right = TraverseAndExtract(height-1, pos*2+1, nshahbitsUsed, nHashUsed, vMatch, vnIndex);
             if (right == left) {
                 // The left and right branches should never be identical, as the transaction
                 // hashes covered by them must each be unique.
@@ -130,7 +130,7 @@ uint256 CPartialMerkleTree::TraverseAndExtract(int height, unsigned int pos, uns
 
 CPartialMerkleTree::CPartialMerkleTree(const std::vector<uint256> &vTxid, const std::vector<bool> &vMatch) : nTransactions(vTxid.size()), fBad(false) {
     // reset state
-    vBits.clear();
+    vshahbits.clear();
     vHash.clear();
 
     // calculate height of tree
@@ -156,20 +156,20 @@ uint256 CPartialMerkleTree::ExtractMatches(std::vector<uint256> &vMatch, std::ve
     if (vHash.size() > nTransactions)
         return uint256();
     // there must be at least one bit per node in the partial tree, and at least one node per hash
-    if (vBits.size() < vHash.size())
+    if (vshahbits.size() < vHash.size())
         return uint256();
     // calculate height of tree
     int nHeight = 0;
     while (CalcTreeWidth(nHeight) > 1)
         nHeight++;
     // traverse the partial tree
-    unsigned int nBitsUsed = 0, nHashUsed = 0;
-    uint256 hashMerkleRoot = TraverseAndExtract(nHeight, 0, nBitsUsed, nHashUsed, vMatch, vnIndex);
+    unsigned int nshahbitsUsed = 0, nHashUsed = 0;
+    uint256 hashMerkleRoot = TraverseAndExtract(nHeight, 0, nshahbitsUsed, nHashUsed, vMatch, vnIndex);
     // verify that no problems occurred during the tree traversal
     if (fBad)
         return uint256();
-    // verify that all bits were consumed (except for the padding caused by serializing it as a byte sequence)
-    if ((nBitsUsed+7)/8 != (vBits.size()+7)/8)
+    // verify that all shahbits were consumed (except for the padding caused by serializing it as a byte sequence)
+    if ((nshahbitsUsed+7)/8 != (vshahbits.size()+7)/8)
         return uint256();
     // verify that all hashes were consumed
     if (nHashUsed != vHash.size())

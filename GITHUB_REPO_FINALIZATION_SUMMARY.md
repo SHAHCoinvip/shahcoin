@@ -50,7 +50,7 @@ This document summarizes the complete finalization of the SHAHCOIN Core GitHub r
 ### 2. Repository Branding Verification
 
 #### ✅ Branding Consistency
-- All mentions of Bitcoin, Litecoin, old domains removed
+- All mentions of legacy references, old domains removed
 - Only approved contacts remain:
   - Email: info@shah.vip
   - Website: https://shah.vip

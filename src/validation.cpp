@@ -2079,16 +2079,16 @@ void StopScriptCheckWorkerThreads()
 }
 
 /**
- * Threshold condition checker that triggers when unknown versionbits are seen on the network.
+ * Threshold condition checker that triggers when unknown versionshahbits are seen on the network.
  */
-class WarningBitsConditionChecker : public AbstractThresholdConditionChecker
+class WarningshahbitsConditionChecker : public AbstractThresholdConditionChecker
 {
 private:
     const ChainstateManager& m_chainman;
     int m_bit;
 
 public:
-    explicit WarningBitsConditionChecker(const ChainstateManager& chainman, int bit) : m_chainman{chainman}, m_bit(bit) {}
+    explicit WarningshahbitsConditionChecker(const ChainstateManager& chainman, int bit) : m_chainman{chainman}, m_bit(bit) {}
 
     int64_t BeginTime(const Consensus::Params& params) const override { return 0; }
     int64_t EndTime(const Consensus::Params& params) const override { return std::numeric_limits<int64_t>::max(); }
@@ -2098,9 +2098,9 @@ public:
     bool Condition(const CBlockIndex* pindex, const Consensus::Params& params) const override
     {
         return pindex->nHeight >= params.MinBIP9WarningHeight &&
-               ((pindex->nVersion & VERSIONBITS_TOP_MASK) == VERSIONBITS_TOP_BITS) &&
+               ((pindex->nVersion & VERSIONshahbits_TOP_MASK) == VERSIONshahbits_TOP_shahbits) &&
                ((pindex->nVersion >> m_bit) & 1) != 0 &&
-               ((m_chainman.m_versionbitscache.ComputeBlockVersion(pindex->pprev, params) >> m_bit) & 1) == 0;
+               ((m_chainman.m_versionshahbitscache.ComputeBlockVersion(pindex->pprev, params) >> m_bit) & 1) == 0;
     }
 };
 
@@ -2776,8 +2776,8 @@ void Chainstate::UpdateTip(const CBlockIndex* pindexNew)
     bilingual_str warning_messages;
     if (!m_chainman.IsInitialBlockDownload()) {
         const CBlockIndex* pindex = pindexNew;
-        for (int bit = 0; bit < VERSIONBITS_NUM_BITS; bit++) {
-            WarningBitsConditionChecker checker(m_chainman, bit);
+        for (int bit = 0; bit < VERSIONshahbits_NUM_shahbits; bit++) {
+            WarningshahbitsConditionChecker checker(m_chainman, bit);
             ThresholdState state = checker.GetStateFor(pindex, params.GetConsensus(), m_chainman.m_warningcache.at(bit));
             if (state == ThresholdState::ACTIVE || state == ThresholdState::LOCKED_IN) {
                 const bilingual_str warning = strprintf(_("Unknown new rules activated (versionbit %i)"), bit);
@@ -3650,7 +3650,7 @@ void ChainstateManager::ReceivedBlockTransactions(const CBlock& block, CBlockInd
 static bool CheckBlockHeader(const CBlockHeader& block, BlockValidationState& state, const Consensus::Params& consensusParams, bool fCheckPOW = true)
 {
     // Check proof of work matches claimed amount
-    if (fCheckPOW && !CheckProofOfWork(block.GetHash(), block.nBits, consensusParams))
+    if (fCheckPOW && !CheckProofOfWork(block.GetHash(), block.nshahbits, consensusParams))
         return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "high-hash", "proof of work failed");
 
     return true;
@@ -3688,7 +3688,7 @@ bool CheckBlock(const CBlock& block, BlockValidationState& state, const Consensu
         
         // Validate PoW hash using the correct algorithm
         uint256 powHash = GetPoWHash(block);
-        if (!CheckProofOfWork(powHash, block.nBits, consensusParams)) {
+        if (!CheckProofOfWork(powHash, block.nshahbits, consensusParams)) {
             return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "high-hash", 
                                "proof of work failed");
         }
@@ -3822,7 +3822,7 @@ std::vector<unsigned char> ChainstateManager::GenerateCoinbaseCommitment(CBlock&
 bool HasValidProofOfWork(const std::vector<CBlockHeader>& headers, const Consensus::Params& consensusParams)
 {
     return std::all_of(headers.cbegin(), headers.cend(),
-            [&](const auto& header) { return CheckProofOfWork(header.GetHash(), header.nBits, consensusParams);});
+            [&](const auto& header) { return CheckProofOfWork(header.GetHash(), header.nshahbits, consensusParams);});
 }
 
 arith_uint256 CalculateHeadersWork(const std::vector<CBlockHeader>& headers)
@@ -3852,8 +3852,8 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, BlockValidatio
 
     // Check proof of work
     const Consensus::Params& consensusParams = chainman.GetConsensus();
-    if (block.nBits != GetNextWorkRequired(pindexPrev, &block, consensusParams))
-        return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "bad-diffbits", "incorrect proof of work");
+    if (block.nshahbits != GetNextWorkRequired(pindexPrev, &block, consensusParams))
+        return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "bad-diffshahbits", "incorrect proof of work");
 
     // Check against checkpoints
     if (chainman.m_options.checkpoints_enabled) {
@@ -5859,7 +5859,7 @@ ChainstateManager::~ChainstateManager()
 {
     LOCK(::cs_main);
 
-    m_versionbitscache.Clear();
+    m_versionshahbitscache.Clear();
 }
 
 bool ChainstateManager::DetectSnapshotChainstate()

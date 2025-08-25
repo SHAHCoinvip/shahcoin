@@ -61,10 +61,10 @@ public:
     Allocate()
     {
         if (m_total_allocated > 0x1000000) return;
-        size_t alignment_bits = m_provider.ConsumeIntegralInRange<size_t>(0, 7);
-        size_t alignment = 1 << alignment_bits;
-        size_t size_bits = m_provider.ConsumeIntegralInRange<size_t>(0, 16 - alignment_bits);
-        size_t size = m_provider.ConsumeIntegralInRange<size_t>(1U << size_bits, (1U << (size_bits + 1)) - 1U) << alignment_bits;
+        size_t alignment_shahbits = m_provider.ConsumeIntegralInRange<size_t>(0, 7);
+        size_t alignment = 1 << alignment_shahbits;
+        size_t size_shahbits = m_provider.ConsumeIntegralInRange<size_t>(0, 16 - alignment_shahbits);
+        size_t size = m_provider.ConsumeIntegralInRange<size_t>(1U << size_shahbits, (1U << (size_shahbits + 1)) - 1U) << alignment_shahbits;
         Allocate(size, alignment);
     }
 

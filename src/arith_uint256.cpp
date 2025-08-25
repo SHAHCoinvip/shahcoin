@@ -7,18 +7,18 @@
 #include <crypto/common.h>
 
 
-template <unsigned int BITS>
-base_uint<BITS>::base_uint(const std::string& str)
+template <unsigned int shahbits>
+base_uint<shahbits>::base_uint(const std::string& str)
 {
-    static_assert(BITS/32 > 0 && BITS%32 == 0, "Template parameter BITS must be a positive multiple of 32.");
+    static_assert(shahbits/32 > 0 && shahbits%32 == 0, "Template parameter shahbits must be a positive multiple of 32.");
 
     SetHex(str);
 }
 
-template <unsigned int BITS>
-base_uint<BITS>& base_uint<BITS>::operator<<=(unsigned int shift)
+template <unsigned int shahbits>
+base_uint<shahbits>& base_uint<shahbits>::operator<<=(unsigned int shift)
 {
-    base_uint<BITS> a(*this);
+    base_uint<shahbits> a(*this);
     for (int i = 0; i < WIDTH; i++)
         pn[i] = 0;
     int k = shift / 32;
@@ -32,10 +32,10 @@ base_uint<BITS>& base_uint<BITS>::operator<<=(unsigned int shift)
     return *this;
 }
 
-template <unsigned int BITS>
-base_uint<BITS>& base_uint<BITS>::operator>>=(unsigned int shift)
+template <unsigned int shahbits>
+base_uint<shahbits>& base_uint<shahbits>::operator>>=(unsigned int shift)
 {
-    base_uint<BITS> a(*this);
+    base_uint<shahbits> a(*this);
     for (int i = 0; i < WIDTH; i++)
         pn[i] = 0;
     int k = shift / 32;
@@ -49,8 +49,8 @@ base_uint<BITS>& base_uint<BITS>::operator>>=(unsigned int shift)
     return *this;
 }
 
-template <unsigned int BITS>
-base_uint<BITS>& base_uint<BITS>::operator*=(uint32_t b32)
+template <unsigned int shahbits>
+base_uint<shahbits>& base_uint<shahbits>::operator*=(uint32_t b32)
 {
     uint64_t carry = 0;
     for (int i = 0; i < WIDTH; i++) {
@@ -61,10 +61,10 @@ base_uint<BITS>& base_uint<BITS>::operator*=(uint32_t b32)
     return *this;
 }
 
-template <unsigned int BITS>
-base_uint<BITS>& base_uint<BITS>::operator*=(const base_uint& b)
+template <unsigned int shahbits>
+base_uint<shahbits>& base_uint<shahbits>::operator*=(const base_uint& b)
 {
-    base_uint<BITS> a;
+    base_uint<shahbits> a;
     for (int j = 0; j < WIDTH; j++) {
         uint64_t carry = 0;
         for (int i = 0; i + j < WIDTH; i++) {
@@ -77,19 +77,19 @@ base_uint<BITS>& base_uint<BITS>::operator*=(const base_uint& b)
     return *this;
 }
 
-template <unsigned int BITS>
-base_uint<BITS>& base_uint<BITS>::operator/=(const base_uint& b)
+template <unsigned int shahbits>
+base_uint<shahbits>& base_uint<shahbits>::operator/=(const base_uint& b)
 {
-    base_uint<BITS> div = b;     // make a copy, so we can shift.
-    base_uint<BITS> num = *this; // make a copy, so we can subtract.
+    base_uint<shahbits> div = b;     // make a copy, so we can shift.
+    base_uint<shahbits> num = *this; // make a copy, so we can subtract.
     *this = 0;                   // the quotient.
-    int num_bits = num.bits();
-    int div_bits = div.bits();
-    if (div_bits == 0)
+    int num_shahbits = num.shahbits();
+    int div_shahbits = div.shahbits();
+    if (div_shahbits == 0)
         throw uint_error("Division by zero");
-    if (div_bits > num_bits) // the result is certainly 0.
+    if (div_shahbits > num_shahbits) // the result is certainly 0.
         return *this;
-    int shift = num_bits - div_bits;
+    int shift = num_shahbits - div_shahbits;
     div <<= shift; // shift so that div and num align.
     while (shift >= 0) {
         if (num >= div) {
@@ -103,8 +103,8 @@ base_uint<BITS>& base_uint<BITS>::operator/=(const base_uint& b)
     return *this;
 }
 
-template <unsigned int BITS>
-int base_uint<BITS>::CompareTo(const base_uint<BITS>& b) const
+template <unsigned int shahbits>
+int base_uint<shahbits>::CompareTo(const base_uint<shahbits>& b) const
 {
     for (int i = WIDTH - 1; i >= 0; i--) {
         if (pn[i] < b.pn[i])
@@ -115,8 +115,8 @@ int base_uint<BITS>::CompareTo(const base_uint<BITS>& b) const
     return 0;
 }
 
-template <unsigned int BITS>
-bool base_uint<BITS>::EqualTo(uint64_t b) const
+template <unsigned int shahbits>
+bool base_uint<shahbits>::EqualTo(uint64_t b) const
 {
     for (int i = WIDTH - 1; i >= 2; i--) {
         if (pn[i])
@@ -129,8 +129,8 @@ bool base_uint<BITS>::EqualTo(uint64_t b) const
     return true;
 }
 
-template <unsigned int BITS>
-double base_uint<BITS>::getdouble() const
+template <unsigned int shahbits>
+double base_uint<shahbits>::getdouble() const
 {
     double ret = 0.0;
     double fact = 1.0;
@@ -141,46 +141,46 @@ double base_uint<BITS>::getdouble() const
     return ret;
 }
 
-template <unsigned int BITS>
-std::string base_uint<BITS>::GetHex() const
+template <unsigned int shahbits>
+std::string base_uint<shahbits>::GetHex() const
 {
-    base_blob<BITS> b;
+    base_blob<shahbits> b;
     for (int x = 0; x < this->WIDTH; ++x) {
         WriteLE32(b.begin() + x*4, this->pn[x]);
     }
     return b.GetHex();
 }
 
-template <unsigned int BITS>
-void base_uint<BITS>::SetHex(const char* psz)
+template <unsigned int shahbits>
+void base_uint<shahbits>::SetHex(const char* psz)
 {
-    base_blob<BITS> b;
+    base_blob<shahbits> b;
     b.SetHex(psz);
     for (int x = 0; x < this->WIDTH; ++x) {
         this->pn[x] = ReadLE32(b.begin() + x*4);
     }
 }
 
-template <unsigned int BITS>
-void base_uint<BITS>::SetHex(const std::string& str)
+template <unsigned int shahbits>
+void base_uint<shahbits>::SetHex(const std::string& str)
 {
     SetHex(str.c_str());
 }
 
-template <unsigned int BITS>
-std::string base_uint<BITS>::ToString() const
+template <unsigned int shahbits>
+std::string base_uint<shahbits>::ToString() const
 {
     return GetHex();
 }
 
-template <unsigned int BITS>
-unsigned int base_uint<BITS>::bits() const
+template <unsigned int shahbits>
+unsigned int base_uint<shahbits>::shahbits() const
 {
     for (int pos = WIDTH - 1; pos >= 0; pos--) {
         if (pn[pos]) {
-            for (int nbits = 31; nbits > 0; nbits--) {
-                if (pn[pos] & 1U << nbits)
-                    return 32 * pos + nbits + 1;
+            for (int nshahbits = 31; nshahbits > 0; nshahbits--) {
+                if (pn[pos] & 1U << nshahbits)
+                    return 32 * pos + nshahbits + 1;
             }
             return 32 * pos + 1;
         }
@@ -215,7 +215,7 @@ arith_uint256& arith_uint256::SetCompact(uint32_t nCompact, bool* pfNegative, bo
 
 uint32_t arith_uint256::GetCompact(bool fNegative) const
 {
-    int nSize = (bits() + 7) / 8;
+    int nSize = (shahbits() + 7) / 8;
     uint32_t nCompact = 0;
     if (nSize <= 3) {
         nCompact = GetLow64() << 8 * (3 - nSize);

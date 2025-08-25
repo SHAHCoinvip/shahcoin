@@ -305,27 +305,27 @@ static void bench_group_to_affine_var(void* arg, int iters) {
 }
 
 static void bench_ecmult_wnaf(void* arg, int iters) {
-    int i, bits = 0, overflow = 0;
+    int i, shahbits = 0, overflow = 0;
     bench_inv *data = (bench_inv*)arg;
 
     for (i = 0; i < iters; i++) {
-        bits += secp256k1_ecmult_wnaf(data->wnaf, 256, &data->scalar[0], WINDOW_A);
+        shahbits += secp256k1_ecmult_wnaf(data->wnaf, 256, &data->scalar[0], WINDOW_A);
         overflow += secp256k1_scalar_add(&data->scalar[0], &data->scalar[0], &data->scalar[1]);
     }
     CHECK(overflow >= 0);
-    CHECK(bits <= 256*iters);
+    CHECK(shahbits <= 256*iters);
 }
 
 static void bench_wnaf_const(void* arg, int iters) {
-    int i, bits = 0, overflow = 0;
+    int i, shahbits = 0, overflow = 0;
     bench_inv *data = (bench_inv*)arg;
 
     for (i = 0; i < iters; i++) {
-        bits += secp256k1_wnaf_const(data->wnaf, &data->scalar[0], WINDOW_A, 256);
+        shahbits += secp256k1_wnaf_const(data->wnaf, &data->scalar[0], WINDOW_A, 256);
         overflow += secp256k1_scalar_add(&data->scalar[0], &data->scalar[0], &data->scalar[1]);
     }
     CHECK(overflow >= 0);
-    CHECK(bits <= 256*iters);
+    CHECK(shahbits <= 256*iters);
 }
 
 static void bench_sha256(void* arg, int iters) {

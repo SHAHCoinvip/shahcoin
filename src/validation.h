@@ -31,7 +31,7 @@
 #include <util/hasher.h>
 #include <util/result.h>
 #include <util/translation.h>
-#include <versionbits.h>
+#include <versionshahbits.h>
 
 #include <atomic>
 #include <map>
@@ -355,7 +355,7 @@ bool TestBlockValidity(BlockValidationState& state,
                        bool fCheckPOW = true,
                        bool fCheckMerkleRoot = true) EXCLUSIVE_LOCKS_REQUIRED(cs_main);
 
-/** Check with the proof of work on each blockheader matches the value in nBits */
+/** Check with the proof of work on each blockheader matches the value in nshahbits */
 bool HasValidProofOfWork(const std::vector<CBlockHeader>& headers, const Consensus::Params& consensusParams);
 
 /** Return the sum of the work on a given set of headers */
@@ -881,7 +881,7 @@ private:
     /** Most recent headers presync progress update, for rate-limiting. */
     std::chrono::time_point<std::chrono::steady_clock> m_last_presync_update GUARDED_BY(::cs_main) {};
 
-    std::array<ThresholdConditionCache, VERSIONBITS_NUM_BITS> m_warningcache GUARDED_BY(::cs_main);
+    std::array<ThresholdConditionCache, VERSIONshahbits_NUM_shahbits> m_warningcache GUARDED_BY(::cs_main);
 
     //! Return true if a chainstate is considered usable.
     //!
@@ -1059,7 +1059,7 @@ public:
     /**
      * Track versionbit status
      */
-    mutable VersionBitsCache m_versionbitscache;
+    mutable VersionshahbitsCache m_versionshahbitscache;
 
     //! @returns true if a snapshot-based chainstate is in use. Also implies
     //!          that a background validation chainstate is also in use.
@@ -1249,13 +1249,13 @@ public:
 template<typename DEP>
 bool DeploymentActiveAfter(const CBlockIndex* pindexPrev, const ChainstateManager& chainman, DEP dep)
 {
-    return DeploymentActiveAfter(pindexPrev, chainman.GetConsensus(), dep, chainman.m_versionbitscache);
+    return DeploymentActiveAfter(pindexPrev, chainman.GetConsensus(), dep, chainman.m_versionshahbitscache);
 }
 
 template<typename DEP>
 bool DeploymentActiveAt(const CBlockIndex& index, const ChainstateManager& chainman, DEP dep)
 {
-    return DeploymentActiveAt(index, chainman.GetConsensus(), dep, chainman.m_versionbitscache);
+    return DeploymentActiveAt(index, chainman.GetConsensus(), dep, chainman.m_versionshahbitscache);
 }
 
 template<typename DEP>

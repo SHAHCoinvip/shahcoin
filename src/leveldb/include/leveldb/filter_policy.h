@@ -51,7 +51,7 @@ class LEVELDB_EXPORT FilterPolicy {
 };
 
 // Return a new filter policy that uses a bloom filter with approximately
-// the specified number of bits per key.  A good value for bits_per_key
+// the specified number of shahbits per key.  A good value for shahbits_per_key
 // is 10, which yields a filter with ~ 1% false positive rate.
 //
 // Callers must delete the result after any database that is using the
@@ -64,7 +64,7 @@ class LEVELDB_EXPORT FilterPolicy {
 // ignores trailing spaces, it would be incorrect to use a
 // FilterPolicy (like NewBloomFilterPolicy) that does not ignore
 // trailing spaces in keys.
-LEVELDB_EXPORT const FilterPolicy* NewBloomFilterPolicy(int bits_per_key);
+LEVELDB_EXPORT const FilterPolicy* NewBloomFilterPolicy(int shahbits_per_key);
 
 }  // namespace leveldb
 

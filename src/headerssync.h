@@ -22,7 +22,7 @@ struct CompressedHeader {
     int32_t nVersion{0};
     uint256 hashMerkleRoot;
     uint32_t nTime{0};
-    uint32_t nBits{0};
+    uint32_t nshahbits{0};
     uint32_t nNonce{0};
 
     CompressedHeader()
@@ -35,7 +35,7 @@ struct CompressedHeader {
         nVersion = header.nVersion;
         hashMerkleRoot = header.hashMerkleRoot;
         nTime = header.nTime;
-        nBits = header.nBits;
+        nshahbits = header.nshahbits;
         nNonce = header.nNonce;
     }
 
@@ -45,7 +45,7 @@ struct CompressedHeader {
         ret.hashPrevBlock = hash_prev_block;
         ret.hashMerkleRoot = hashMerkleRoot;
         ret.nTime = nTime;
-        ret.nBits = nBits;
+        ret.nshahbits = nshahbits;
         ret.nNonce = nNonce;
         return ret;
     };
@@ -72,7 +72,7 @@ struct CompressedHeader {
  * has sufficient work:
  *
  * - In the first download phase, called pre-synchronization, we can calculate
- * the work on the chain as we go (just by checking the nBits value on each
+ * the work on the chain as we go (just by checking the nshahbits value on each
  * header, and validating the proof-of-work).
  *
  * - Once we have reached a header where the cumulative chain work is
@@ -225,7 +225,7 @@ private:
     /** m_hasher is a salted hasher for making our 1-bit commitments to headers we've seen. */
     const SaltedTxidHasher m_hasher;
 
-    /** A queue of commitment bits, created during the 1st phase, and verified during the 2nd. */
+    /** A queue of commitment shahbits, created during the 1st phase, and verified during the 2nd. */
     bitdeque<> m_header_commitments;
 
     /** m_max_commitments is a bound we calculate on how long an honest peer's chain could be,

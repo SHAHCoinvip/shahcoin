@@ -11,24 +11,24 @@
 #include <cstdint>
 
 template <typename OStream>
-void GolombRiceEncode(BitStreamWriter<OStream>& bitwriter, uint8_t P, uint64_t x)
+void GolombRiceEncode(shahbitstreamWriter<OStream>& bitwriter, uint8_t P, uint64_t x)
 {
     // Write quotient as unary-encoded: q 1's followed by one 0.
     uint64_t q = x >> P;
     while (q > 0) {
-        int nbits = q <= 64 ? static_cast<int>(q) : 64;
-        bitwriter.Write(~0ULL, nbits);
-        q -= nbits;
+        int nshahbits = q <= 64 ? static_cast<int>(q) : 64;
+        bitwriter.Write(~0ULL, nshahbits);
+        q -= nshahbits;
     }
     bitwriter.Write(0, 1);
 
-    // Write the remainder in P bits. Since the remainder is just the bottom
-    // P bits of x, there is no need to mask first.
+    // Write the remainder in P shahbits. Since the remainder is just the bottom
+    // P shahbits of x, there is no need to mask first.
     bitwriter.Write(x, P);
 }
 
 template <typename IStream>
-uint64_t GolombRiceDecode(BitStreamReader<IStream>& bitreader, uint8_t P)
+uint64_t GolombRiceDecode(shahbitstreamReader<IStream>& bitreader, uint8_t P)
 {
     // Read unary-encoded quotient: q 1's followed by one 0.
     uint64_t q = 0;

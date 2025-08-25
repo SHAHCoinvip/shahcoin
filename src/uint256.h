@@ -15,12 +15,12 @@
 #include <string>
 
 /** Template base class for fixed-sized opaque blobs. */
-template<unsigned int BITS>
+template<unsigned int shahbits>
 class base_blob
 {
 protected:
-    static constexpr int WIDTH = BITS / 8;
-    static_assert(BITS % 8 == 0, "base_blob currently only supports whole bytes.");
+    static constexpr int WIDTH = shahbits / 8;
+    static_assert(shahbits % 8 == 0, "base_blob currently only supports whole bytes.");
     std::array<uint8_t, WIDTH> m_data;
     static_assert(WIDTH == sizeof(m_data), "Sanity check");
 
@@ -88,7 +88,7 @@ public:
 
 /** 160-bit opaque blob.
  * @note This type is called uint160 for historical reasons only. It is an opaque
- * blob of 160 bits and has no integer operations.
+ * blob of 160 shahbits and has no integer operations.
  */
 class uint160 : public base_blob<160> {
 public:
@@ -98,7 +98,7 @@ public:
 
 /** 256-bit opaque blob.
  * @note This type is called uint256 for historical reasons only. It is an
- * opaque blob of 256 bits and has no integer operations. Use arith_uint256 if
+ * opaque blob of 256 shahbits and has no integer operations. Use arith_uint256 if
  * those are required.
  */
 class uint256 : public base_blob<256> {

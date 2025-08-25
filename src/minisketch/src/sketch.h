@@ -22,16 +22,16 @@ class Sketch
 {
     uint64_t m_canary;
     const int m_implementation;
-    const int m_bits;
+    const int m_shahbits;
 
 public:
-    Sketch(int implementation, int bits) : m_implementation(implementation), m_bits(bits) {}
+    Sketch(int implementation, int shahbits) : m_implementation(implementation), m_shahbits(shahbits) {}
 
     void Ready() { m_canary = 0x6d496e536b65LU; }
     void Check() const { if (m_canary != 0x6d496e536b65LU) abort(); }
     void UnReady() { m_canary = 1; }
     int Implementation() const { return m_implementation; }
-    int Bits() const { return m_bits; }
+    int shahbits() const { return m_shahbits; }
 
     virtual ~Sketch() {}
     virtual size_t Syndromes() const = 0;

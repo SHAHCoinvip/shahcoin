@@ -31,12 +31,12 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
             {
                 // Return the last non-special-min-difficulty-rules-block
                 const CBlockIndex* pindex = pindexLast;
-                while (pindex->pprev && pindex->nHeight % params.DifficultyAdjustmentInterval() != 0 && pindex->nBits == nProofOfWorkLimit)
+                while (pindex->pprev && pindex->nHeight % params.DifficultyAdjustmentInterval() != 0 && pindex->nshahbits == nProofOfWorkLimit)
                     pindex = pindex->pprev;
-                return pindex->nBits;
+                return pindex->nshahbits;
             }
         }
-        return pindexLast->nBits;
+        return pindexLast->nshahbits;
     }
 
     // Go back by what we want to be 14 days worth of blocks
@@ -51,7 +51,7 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
 unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nFirstBlockTime, const Consensus::Params& params)
 {
     if (params.fPowNoRetargeting)
-        return pindexLast->nBits;
+        return pindexLast->nshahbits;
 
     // Limit adjustment step
     int64_t nActualTimespan = pindexLast->GetBlockTime() - nFirstBlockTime;
@@ -63,7 +63,7 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
     // Retarget
     const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
     arith_uint256 bnNew;
-    bnNew.SetCompact(pindexLast->nBits);
+    bnNew.SetCompact(pindexLast->nshahbits);
     bnNew *= nActualTimespan;
     bnNew /= params.nPowTargetTimespan;
 
@@ -93,12 +93,12 @@ unsigned int GetNextWorkRequiredMultiAlgo(const CBlockIndex* pindexLast, const C
             {
                 // Return the last non-special-min-difficulty-rules-block
                 const CBlockIndex* pindex = pindexLast;
-                while (pindex->pprev && pindex->nHeight % params.DifficultyAdjustmentInterval() != 0 && pindex->nBits == nProofOfWorkLimit)
+                while (pindex->pprev && pindex->nHeight % params.DifficultyAdjustmentInterval() != 0 && pindex->nshahbits == nProofOfWorkLimit)
                     pindex = pindex->pprev;
-                return pindex->nBits;
+                return pindex->nshahbits;
             }
         }
-        return pindexLast->nBits;
+        return pindexLast->nshahbits;
     }
 
     // Calculate difficulty for the specific algorithm
@@ -114,7 +114,7 @@ unsigned int GetNextWorkRequiredMultiAlgo(const CBlockIndex* pindexLast, const C
 unsigned int CalculateNextWorkRequiredMultiAlgo(const CBlockIndex* pindexLast, int64_t nFirstBlockTime, const Consensus::Params& params, MiningAlgorithm algo)
 {
     if (params.fPowNoRetargeting)
-        return pindexLast->nBits;
+        return pindexLast->nshahbits;
 
     // Limit adjustment step
     int64_t nActualTimespan = pindexLast->GetBlockTime() - nFirstBlockTime;
@@ -126,7 +126,7 @@ unsigned int CalculateNextWorkRequiredMultiAlgo(const CBlockIndex* pindexLast, i
     // Retarget with algorithm-specific adjustments
     const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
     arith_uint256 bnNew;
-    bnNew.SetCompact(pindexLast->nBits);
+    bnNew.SetCompact(pindexLast->nshahbits);
     bnNew *= nActualTimespan;
     bnNew /= params.nPowTargetTimespan;
 
@@ -143,7 +143,7 @@ unsigned int CalculateNextWorkRequiredMultiAlgo(const CBlockIndex* pindexLast, i
 
 // Check that on difficulty adjustments, the new difficulty does not increase
 // or decrease beyond the permitted limits.
-bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t height, uint32_t old_nbits, uint32_t new_nbits)
+bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t height, uint32_t old_nshahbits, uint32_t new_nshahbits)
 {
     if (params.fPowAllowMinDifficultyBlocks) return true;
 
@@ -153,11 +153,11 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig
 
         const arith_uint256 pow_limit = UintToArith256(params.powLimit);
         arith_uint256 observed_new_target;
-        observed_new_target.SetCompact(new_nbits);
+        observed_new_target.SetCompact(new_nshahbits);
 
         // Calculate the largest difficulty value possible:
         arith_uint256 largest_difficulty_target;
-        largest_difficulty_target.SetCompact(old_nbits);
+        largest_difficulty_target.SetCompact(old_nshahbits);
         largest_difficulty_target *= largest_timespan;
         largest_difficulty_target /= params.nPowTargetTimespan;
 
@@ -173,7 +173,7 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig
 
         // Calculate the smallest difficulty value possible:
         arith_uint256 smallest_difficulty_target;
-        smallest_difficulty_target.SetCompact(old_nbits);
+        smallest_difficulty_target.SetCompact(old_nshahbits);
         smallest_difficulty_target *= smallest_timespan;
         smallest_difficulty_target /= params.nPowTargetTimespan;
 
@@ -186,19 +186,19 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig
         arith_uint256 minimum_new_target;
         minimum_new_target.SetCompact(smallest_difficulty_target.GetCompact());
         if (minimum_new_target > observed_new_target) return false;
-    } else if (old_nbits != new_nbits) {
+    } else if (old_nshahbits != new_nshahbits) {
         return false;
     }
     return true;
 }
 
-bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params& params)
+bool CheckProofOfWork(uint256 hash, unsigned int nshahbits, const Consensus::Params& params)
 {
     bool fNegative;
     bool fOverflow;
     arith_uint256 bnTarget;
 
-    bnTarget.SetCompact(nBits, &fNegative, &fOverflow);
+    bnTarget.SetCompact(nshahbits, &fNegative, &fOverflow);
 
     // Check range
     if (fNegative || bnTarget == 0 || fOverflow || bnTarget > UintToArith256(params.powLimit))
@@ -212,13 +212,13 @@ bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params&
 }
 
 // SHAHCOIN Core multi-algorithm proof of work check
-bool CheckProofOfWorkMultiAlgo(uint256 hash, unsigned int nBits, const Consensus::Params& params, MiningAlgorithm algo)
+bool CheckProofOfWorkMultiAlgo(uint256 hash, unsigned int nshahbits, const Consensus::Params& params, MiningAlgorithm algo)
 {
     bool fNegative;
     bool fOverflow;
     arith_uint256 bnTarget;
 
-    bnTarget.SetCompact(nBits, &fNegative, &fOverflow);
+    bnTarget.SetCompact(nshahbits, &fNegative, &fOverflow);
 
     // Check range
     if (fNegative || bnTarget == 0 || fOverflow || bnTarget > UintToArith256(params.powLimit))

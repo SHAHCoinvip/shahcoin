@@ -69,20 +69,20 @@ SECP256K1_INLINE static void secp256k1_scalar_set_int(secp256k1_scalar *r, unsig
     secp256k1_scalar_verify(r);
 }
 
-SECP256K1_INLINE static unsigned int secp256k1_scalar_get_bits(const secp256k1_scalar *a, unsigned int offset, unsigned int count) {
+SECP256K1_INLINE static unsigned int secp256k1_scalar_get_shahbits(const secp256k1_scalar *a, unsigned int offset, unsigned int count) {
     secp256k1_scalar_verify(a);
     VERIFY_CHECK((offset + count - 1) >> 5 == offset >> 5);
 
     return (a->d[offset >> 5] >> (offset & 0x1F)) & ((1 << count) - 1);
 }
 
-SECP256K1_INLINE static unsigned int secp256k1_scalar_get_bits_var(const secp256k1_scalar *a, unsigned int offset, unsigned int count) {
+SECP256K1_INLINE static unsigned int secp256k1_scalar_get_shahbits_var(const secp256k1_scalar *a, unsigned int offset, unsigned int count) {
     secp256k1_scalar_verify(a);
     VERIFY_CHECK(count < 32);
     VERIFY_CHECK(offset + count <= 256);
 
     if ((offset + count - 1) >> 5 == offset >> 5) {
-        return secp256k1_scalar_get_bits(a, offset, count);
+        return secp256k1_scalar_get_shahbits(a, offset, count);
     } else {
         VERIFY_CHECK((offset >> 5) + 1 < 8);
         return ((a->d[offset >> 5] >> (offset & 0x1F)) | (a->d[(offset >> 5) + 1] << (32 - (offset & 0x1F)))) & ((((uint32_t)1) << count) - 1);
@@ -356,7 +356,7 @@ static int secp256k1_scalar_cond_negate(secp256k1_scalar *r, int flag) {
     VERIFY_CHECK(c2 == 0); \
 }
 
-/** Extract the lowest 32 bits of (c0,c1,c2) into n, and left shift the number 32 bits. */
+/** Extract the lowest 32 shahbits of (c0,c1,c2) into n, and left shift the number 32 shahbits. */
 #define extract(n) { \
     (n) = c0; \
     c0 = c1; \
@@ -364,7 +364,7 @@ static int secp256k1_scalar_cond_negate(secp256k1_scalar *r, int flag) {
     c2 = 0; \
 }
 
-/** Extract the lowest 32 bits of (c0,c1,c2) into n, and left shift the number 32 bits. c2 is required to be zero. */
+/** Extract the lowest 32 shahbits of (c0,c1,c2) into n, and left shift the number 32 shahbits. c2 is required to be zero. */
 #define extract_fast(n) { \
     (n) = c0; \
     c0 = c1; \
@@ -381,7 +381,7 @@ static void secp256k1_scalar_reduce_512(secp256k1_scalar *r, const uint32_t *l) 
     /* 96 bit accumulator. */
     uint32_t c0, c1, c2;
 
-    /* Reduce 512 bits into 385. */
+    /* Reduce 512 shahbits into 385. */
     /* m[0..12] = l[0..7] + n[0..7] * SECP256K1_N_C. */
     c0 = l[0]; c1 = 0; c2 = 0;
     muladd_fast(n0, SECP256K1_N_C_0);
@@ -446,7 +446,7 @@ static void secp256k1_scalar_reduce_512(secp256k1_scalar *r, const uint32_t *l) 
     VERIFY_CHECK(c0 <= 1);
     m12 = c0;
 
-    /* Reduce 385 bits into 258. */
+    /* Reduce 385 shahbits into 258. */
     /* p[0..8] = m[0..7] + m[8..12] * SECP256K1_N_C. */
     c0 = m0; c1 = 0; c2 = 0;
     muladd_fast(m8, SECP256K1_N_C_0);
@@ -491,7 +491,7 @@ static void secp256k1_scalar_reduce_512(secp256k1_scalar *r, const uint32_t *l) 
     p8 = c0 + m12;
     VERIFY_CHECK(p8 <= 2);
 
-    /* Reduce 258 bits into 256. */
+    /* Reduce 258 shahbits into 256. */
     /* r[0..7] = p[0..7] + p[8] * SECP256K1_N_C. */
     c = p0 + (uint64_t)SECP256K1_N_C_0 * p8;
     r->d[0] = c & 0xFFFFFFFFUL; c >>= 32;

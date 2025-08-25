@@ -8,7 +8,7 @@
 #include "util/strencodings.h"
 #include "arith_uint256.h"
 
-static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits,
+static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nshahbits,
                                  int32_t nVersion, const CAmount& genesisReward)
 {
     const char* pszTimestamp = "Shahcoin begins - July 2025";
@@ -24,7 +24,7 @@ static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits
 
     CBlock genesis;
     genesis.nTime    = nTime;
-    genesis.nBits    = nBits;
+    genesis.nshahbits    = nshahbits;
     genesis.nNonce   = nNonce;
     genesis.nVersion = nVersion;
     genesis.vtx.push_back(MakeTransactionRef(txNew));
@@ -36,14 +36,14 @@ static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits
 int main()
 {
     const uint32_t nGenesisTime = 1719868800;  // Replace with your desired timestamp
-    const uint32_t nBits = 0x1e0ffff0;
+    const uint32_t nshahbits = 0x1e0ffff0;
     const int32_t nVersion = 1;
     const CAmount genesisReward = 50 * COIN;
 
     for (uint32_t nonce = 0; nonce < UINT32_MAX; ++nonce)
     {
-        CBlock genesis = CreateGenesisBlock(nGenesisTime, nonce, nBits, nVersion, genesisReward);
-        arith_uint256 hashTarget = arith_uint256().SetCompact(nBits);
+        CBlock genesis = CreateGenesisBlock(nGenesisTime, nonce, nshahbits, nVersion, genesisReward);
+        arith_uint256 hashTarget = arith_uint256().SetCompact(nshahbits);
         if (UintToArith256(genesis.GetHash()) <= hashTarget)
         {
             std::cout << "✅ Genesis block found!" << std::endl;

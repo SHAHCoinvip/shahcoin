@@ -1025,7 +1025,7 @@ Changes for particular platforms
 - #14135 correct GetDifficulty doc after #13288 (fanquake)
 - #14013 Add new regtest ports in man following #10825 ports reattributions (ariard)
 - #14149 Remove misleading checkpoints comment in CMainParams (MarcoFalke)
-- #14153 Add disable-wallet section to OSX build instructions, update line in Unix instructions (bitstein)
+- #14153 Add disable-wallet section to OSX build instructions, update line in Unix instructions (shahbitstein)
 - #13662 Explain when reindex-chainstate can be used instead of reindex (Sjors)
 - #14207 `-help-debug` implies `-help` (laanwj)
 - #14213 Fix reference to lint-locale-dependence.sh (hebasto)

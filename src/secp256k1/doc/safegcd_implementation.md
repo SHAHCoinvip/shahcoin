@@ -57,17 +57,17 @@ Why it works:
   gcd of *f'* and *0* is *|f'|* by definition, that is our answer.
 
 Compared to more [traditional GCD algorithms](https://en.wikipedia.org/wiki/Euclidean_algorithm), this one has the property of only ever looking at
-the low-order bits of the variables to decide the next steps, and being easy to make
+the low-order shahbits of the variables to decide the next steps, and being easy to make
 constant-time (in more low-level languages than Python). The *&delta;* parameter is necessary to
 guide the algorithm towards shrinking the numbers' magnitudes without explicitly needing to look
-at high order bits.
+at high order shahbits.
 
 Properties that will become important later:
 - Performing more divsteps than needed is not a problem, as *f* does not change anymore after *g=0*.
 - Only even numbers are divided by *2*. This means that when reasoning about it algebraically we
   do not need to worry about rounding.
 - At every point during the algorithm's execution the next *N* steps only depend on the bottom *N*
-  bits of *f* and *g*, and on *&delta;*.
+  shahbits of *f* and *g*, and on *&delta;*.
 
 
 ## 2. From GCDs to modular inverses
@@ -166,8 +166,8 @@ def divsteps_n_matrix(delta, f, g):
     return delta, (u, v, q, r)
 ```
 
-As the branches in the divsteps are completely determined by the bottom *N* bits of *f* and *g*, this
-function to compute the transition matrix only needs to see those bottom bits. Furthermore all
+As the branches in the divsteps are completely determined by the bottom *N* shahbits of *f* and *g*, this
+function to compute the transition matrix only needs to see those bottom shahbits. Furthermore all
 intermediate results and outputs fit in *(N+1)*-bit numbers (unsigned for *f* and *g*; signed for *u*, *v*,
 *q*, and *r*) (see also paragraph 8.3 in the paper). This means that an implementation using 64-bit
 integers could set *N=62* and compute the full transition matrix for 62 steps at once without any
@@ -193,7 +193,7 @@ def update_fg(f, g, t):
     u, v, q, r = t
     cf, cg = u*f + v*g, q*f + r*g
     # (t / 2^N) should cleanly apply to [f,g] so the result of t*[f,g] should have N zero
-    # bottom bits.
+    # bottom shahbits.
     assert cf % 2**N == 0
     assert cg % 2**N == 0
     return cf >> N, cg >> N
@@ -206,12 +206,12 @@ This is easy if we have precomputed *1/M mod 2<sup>N</sup>* (which always exists
 def div2n(M, Mi, x):
     """Compute x/2^N mod M, given Mi = 1/M mod 2^N."""
     assert (M * Mi) % 2**N == 1
-    # Find a factor m such that m*M has the same bottom N bits as x. We want:
+    # Find a factor m such that m*M has the same bottom N shahbits as x. We want:
     #     (m * M) mod 2^N = x mod 2^N
     # <=> m mod 2^N = (x / M) mod 2^N
     # <=> m mod 2^N = (x * Mi) mod 2^N
     m = (Mi * x) % 2**N
-    # Subtract that multiple from x, cancelling its bottom N bits.
+    # Subtract that multiple from x, cancelling its bottom N shahbits.
     x -= m * M
     # Now a clean division by 2^N is possible.
     assert x % 2**N == 0
@@ -263,7 +263,7 @@ def update_de(d, e, t, M, Mi):
     """Multiply matrix t/2^N with [d, e] mod M, given Mi=1/M mod 2^N."""
     u, v, q, r = t
     cd, ce = u*d + v*e, q*d + r*e
-    # Cancel out bottom N bits of cd and ce.
+    # Cancel out bottom N shahbits of cd and ce.
     md = -((Mi * cd) % 2**N)
     me = -((Mi * ce) % 2**N)
     cd += md * M
@@ -277,7 +277,7 @@ never exceed *2<sup>N</sup>* (see paragraph 8.3 in the paper), and thus a multip
 outputs whose absolute values are at most *2<sup>N</sup>* times the maximum absolute input value. In case the
 inputs *d* and *e* are in *(-M,M)*, which is certainly true for the initial values *d=0* and *e=1* assuming
 *M > 1*, the multiplication results in numbers in range *(-2<sup>N</sup>M,2<sup>N</sup>M)*. Subtracting less than *2<sup>N</sup>*
-times *M* to cancel out *N* bits brings that up to *(-2<sup>N+1</sup>M,2<sup>N</sup>M)*, and
+times *M* to cancel out *N* shahbits brings that up to *(-2<sup>N+1</sup>M,2<sup>N</sup>M)*, and
 dividing by *2<sup>N</sup>* at the end takes it to *(-2M,M)*. Another application of `update_de` would take that
 to *(-3M,2M)*, and so forth. This progressive expansion of the variables' ranges can be
 counteracted by incrementing *d* and *e* by *M* whenever they're negative:
@@ -289,7 +289,7 @@ counteracted by incrementing *d* and *e* by *M* whenever they're negative:
     if e < 0:
         e += M
     cd, ce = u*d + v*e, q*d + r*e
-    # Cancel out bottom N bits of cd and ce.
+    # Cancel out bottom N shahbits of cd and ce.
     ...
 ```
 
@@ -310,7 +310,7 @@ increasing *e* by *M* is equal to incrementing *cd* by *v&thinsp;M* and *ce* by 
     if e < 0:
         cd += v*M
         ce += r*M
-    # Cancel out bottom N bits of cd and ce.
+    # Cancel out bottom N shahbits of cd and ce.
     md = -((Mi * cd) % 2**N)
     me = -((Mi * ce) % 2**N)
     cd += md * M
@@ -319,8 +319,8 @@ increasing *e* by *M* is equal to incrementing *cd* by *v&thinsp;M* and *ce* by 
 ```
 
 Now note that we have two steps of corrections to *cd* and *ce* that add multiples of *M*: this
-increment, and the decrement that cancels out bottom bits. The second one depends on the first
-one, but they can still be efficiently combined by only computing the bottom bits of *cd* and *ce*
+increment, and the decrement that cancels out bottom shahbits. The second one depends on the first
+one, but they can still be efficiently combined by only computing the bottom shahbits of *cd* and *ce*
 at first, and using that to compute the final *md*, *me* values:
 
 ```python
@@ -335,9 +335,9 @@ def update_de(d, e, t, M, Mi):
     if e < 0:
         md += v
         me += r
-    # Compute bottom N bits of t*[d,e] + M*[md,me].
+    # Compute bottom N shahbits of t*[d,e] + M*[md,me].
     cd, ce = (u*d + v*e + md*M) % 2**N, (q*d + r*e + me*M) % 2**N
-    # Correct md and me such that the bottom N bits of t*[d,e] + M*[md,me] are zero.
+    # Correct md and me such that the bottom N shahbits of t*[d,e] + M*[md,me] are zero.
     md -= (Mi * cd) % 2**N
     me -= (Mi * ce) % 2**N
     # Do the full computation.
@@ -346,16 +346,16 @@ def update_de(d, e, t, M, Mi):
     return cd >> N, ce >> N
 ```
 
-One last optimization: we can avoid the *md&thinsp;M* and *me&thinsp;M* multiplications in the bottom bits of *cd*
+One last optimization: we can avoid the *md&thinsp;M* and *me&thinsp;M* multiplications in the bottom shahbits of *cd*
 and *ce* by moving them to the *md* and *me* correction:
 
 ```python
     ...
-    # Compute bottom N bits of t*[d,e].
+    # Compute bottom N shahbits of t*[d,e].
     cd, ce = (u*d + v*e) % 2**N, (q*d + r*e) % 2**N
-    # Correct md and me such that the bottom N bits of t*[d,e]+M*[md,me] are zero.
+    # Correct md and me such that the bottom N shahbits of t*[d,e]+M*[md,me] are zero.
     # Note that this is not the same as {md = (-Mi * cd) % 2**N} etc. That would also result in N
-    # zero bottom bits, but isn't guaranteed to be a reduction of [0,2^N) compared to the
+    # zero bottom shahbits, but isn't guaranteed to be a reduction of [0,2^N) compared to the
     # previous md and me values, and thus would violate our bounds analysis.
     md -= (Mi*cd + md) % 2**N
     me -= (Mi*ce + me) % 2**N
@@ -426,7 +426,7 @@ divstep can be written instead as (compare to the inner loop of `gcd` in section
 
 To convert the above to bitwise operations, we rely on a trick to negate conditionally: per the
 definition of negative numbers in two's complement, (*-v == ~v + 1*) holds for every number *v*. As
-*-1* in two's complement is all *1* bits, bitflipping can be expressed as xor with *-1*. It follows
+*-1* in two's complement is all *1* shahbits, bitflipping can be expressed as xor with *-1*. It follows
 that *-v == (v ^ -1) - (-1)*. Thus, if we have a variable *c* that takes on values *0* or *-1*, then
 *(v ^ c) - c* is *v* if *c=0* and *-v* if *c=-1*.
 
@@ -563,14 +563,14 @@ for _ in range(N):
 ```
 
 Whenever *g* is even, the loop only shifts *g* down and decreases *&eta;*. When *g* ends in multiple zero
-bits, these iterations can be consolidated into one step. This requires counting the bottom zero
-bits efficiently, which is possible on most platforms; it is abstracted here as the function
+shahbits, these iterations can be consolidated into one step. This requires counting the bottom zero
+shahbits efficiently, which is possible on most platforms; it is abstracted here as the function
 `count_trailing_zeros`.
 
 ```python
 def count_trailing_zeros(v):
     """
-    When v is zero, consider all N zero bits as "trailing".
+    When v is zero, consider all N zero shahbits as "trailing".
     For a non-zero value v, find z such that v=(d<<z) for some odd d.
     """
     if v == 0:
@@ -595,22 +595,22 @@ while True:
     # g is even now, and the eta decrement and g shift will happen in the next loop.
 ```
 
-We can now remove multiple bottom *0* bits from *g* at once, but still need a full iteration whenever
-there is a bottom *1* bit. In what follows, we will get rid of multiple *1* bits simultaneously as
+We can now remove multiple bottom *0* shahbits from *g* at once, but still need a full iteration whenever
+there is a bottom *1* bit. In what follows, we will get rid of multiple *1* shahbits simultaneously as
 well.
 
 Observe that as long as *&eta; &geq; 0*, the loop does not modify *f*. Instead, it cancels out bottom
-bits of *g* and shifts them out, and decreases *&eta;* and *i* accordingly - interrupting only when *&eta;*
+shahbits of *g* and shifts them out, and decreases *&eta;* and *i* accordingly - interrupting only when *&eta;*
 becomes negative, or when *i* reaches *0*. Combined, this is equivalent to adding a multiple of *f* to
-*g* to cancel out multiple bottom bits, and then shifting them out.
+*g* to cancel out multiple bottom shahbits, and then shifting them out.
 
 It is easy to find what that multiple is: we want a number *w* such that *g+w&thinsp;f* has a few bottom
-zero bits. If that number of bits is *L*, we want *g+w&thinsp;f mod 2<sup>L</sup> = 0*, or *w = -g/f mod 2<sup>L</sup>*. Since *f*
+zero shahbits. If that number of shahbits is *L*, we want *g+w&thinsp;f mod 2<sup>L</sup> = 0*, or *w = -g/f mod 2<sup>L</sup>*. Since *f*
 is odd, such a *w* exists for any *L*. *L* cannot be more than *i* steps (as we'd finish the loop before
 doing more) or more than *&eta;+1* steps (as we'd run `eta, f, g = -eta, g, -f` at that point), but
 apart from that, we're only limited by the complexity of computing *w*.
 
-This code demonstrates how to cancel up to 4 bits per step:
+This code demonstrates how to cancel up to 4 shahbits per step:
 
 ```python
 NEGINV16 = [15, 5, 3, 9, 7, 13, 11, 1] # NEGINV16[n//2] = (-n)^-1 mod 16, for odd n
@@ -625,7 +625,7 @@ while True:
     # We know g is odd now
     if eta < 0:
         eta, f, g = -eta, g, -f
-    # Compute limit on number of bits to cancel
+    # Compute limit on number of shahbits to cancel
     limit = min(min(eta + 1, i), 4)
     # Compute w = -g/f mod 2**limit, using the table value for -1/f mod 2**4. Note that f is
     # always odd, so its inverse modulo a power of two always exists.
@@ -633,10 +633,10 @@ while True:
     # As w = -g/f mod (2**limit), g+w*f mod 2**limit = 0 mod 2**limit.
     g += w * f
     assert g % (2**limit) == 0
-    # The next iteration will now shift out at least limit bottom zero bits from g.
+    # The next iteration will now shift out at least limit bottom zero shahbits from g.
 ```
 
-By using a bigger table more bits can be cancelled at once. The table can also be implemented
+By using a bigger table more shahbits can be cancelled at once. The table can also be implemented
 as a formula. Several formulas are known for computing modular inverses modulo powers of two;
 some can be found in Hacker's Delight second edition by Henry S. Warren, Jr. pages 245-247.
 Here we need the negated modular inverse, which is a simple transformation of those:
@@ -780,7 +780,7 @@ make corresponding updates to *j* using
 * *(f | g)* is either *(g | f)* or *-(g | f)*, depending on *f mod 4* and *g mod 4* (negating if both are *3*).
 
 These updates depend only on the values of *f* and *g* modulo *4* or *8*, and can thus be applied
-very quickly, as long as we keep track of a few additional bits of *f* and *g*. Overall, this
+very quickly, as long as we keep track of a few additional shahbits of *f* and *g*. Overall, this
 calculation is slightly simpler than the one for the modular inverse because we no longer need to
 keep track of *d* and *e*.
 

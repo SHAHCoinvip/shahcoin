@@ -8,7 +8,7 @@
 #include <test/fuzz/fuzz.h>
 #include <txrequest.h>
 
-#include <bitset>
+#include <shahbitset>
 #include <cstdint>
 #include <queue>
 #include <vector>
@@ -39,8 +39,8 @@ struct Initializer
         // DELAYS[N] for N=16..127 has randomly-looking but roughly exponentially increasing values up to
         // 198.416453 seconds.
         for (; i < 128; ++i) {
-            int diff_bits = ((i - 10) * 2) / 9;
-            uint64_t diff = 1 + (CSipHasher(0, 0).Write(i).Finalize() >> (64 - diff_bits));
+            int diff_shahbits = ((i - 10) * 2) / 9;
+            uint64_t diff = 1 + (CSipHasher(0, 0).Write(i).Finalize() >> (64 - diff_shahbits));
             DELAYS[i] = DELAYS[i - 1] + std::chrono::microseconds{diff};
         }
         // DELAYS[N] for N=128..255 are negative delays with the same magnitude as N=0..127.

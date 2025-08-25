@@ -17,7 +17,7 @@
 #include <util/strencodings.h>
 #include <util/time.h>
 #include <validation.h>
-#include <versionbits.h>
+#include <versionshahbits.h>
 
 #include <test/util/setup_common.h>
 
@@ -619,7 +619,7 @@ BOOST_AUTO_TEST_CASE(CreateNewBlock_validity)
         CBlock *pblock = &pblocktemplate->block; // pointer for convenience
         {
             LOCK(cs_main);
-            pblock->nVersion = VERSIONBITS_TOP_BITS;
+            pblock->nVersion = VERSIONshahbits_TOP_shahbits;
             pblock->nTime = m_node.chainman->ActiveChain().Tip()->GetMedianTimePast()+1;
             CMutableTransaction txCoinbase(*pblock->vtx[0]);
             txCoinbase.nVersion = 1;

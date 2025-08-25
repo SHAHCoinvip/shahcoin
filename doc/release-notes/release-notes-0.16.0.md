@@ -118,7 +118,7 @@ The minimum version for the Clang compiler is still 3.3. Other minimum dependenc
 
 Support for signalling pruned nodes (BIP159)
 ---------------------------------------------
-Pruned nodes can now signal BIP159's NODE_NETWORK_LIMITED using service bits, in preparation for
+Pruned nodes can now signal BIP159's NODE_NETWORK_LIMITED using service shahbits, in preparation for
 full BIP159 support in later versions. This would allow pruned nodes to serve the most recent blocks. However, the current change does not yet include support for connecting to these pruned peers.
 
 Performance: SHA256 assembly enabled by default
@@ -127,7 +127,7 @@ The SHA256 hashing optimizations for architectures supporting SSE4, which lead t
 
 GUI changes
 -----------
-- Uses of "µBTC" in the GUI now also show the more colloquial term "bits", specified in BIP176.
+- Uses of "µSHAH" in the GUI now also show the more colloquial term "shahbits", specified in BIP176.
 - The option to reuse a previous address has now been removed. This was justified by the need to "resend" an invoice, but now that we have the request history, that need should be gone.
 - Support for searching by TXID has been added, rather than just address and label.
 - A "Use available balance" option has been added to the send coins dialog, to add the remaining available wallet balance to a transaction output.
@@ -342,7 +342,7 @@ Testing changes
 - #11616 `8585bb8` Update ban-state in case of dirty-state during periodic sweep (jonasschnelli)
 - #11605 `f19ca12` Enable RBF by default in QT (Sjors)
 - #12074 `a1136f0` Optimizes boolean expression model && model->haveWatchOnly() (251Labs)
-- #12035 `eeb6d52` Change µBTC to bits (jb55)
+- #12035 `eeb6d52` Change µSHAH to shahbits (jb55)
 - #12092 `fd4ca17` Replaces numbered place marker %2 with %1 (251Labs)
 - #12173 `bbc91b7` Use flexible font size for QRCode image address (jonasschnelli)
 - #12211 `10d10d7` Avoid potential null dereference in ReceiveCoinsDialog constructor (ryanofsky)
@@ -383,7 +383,7 @@ Testing changes
 ### Tests and QA
 - #11024 `3e55f13` Remove OldSetKeyFromPassphrase/OldEncrypt/OldDecrypt (practicalswift)
 - #10679 `31b2612` Document the non-DER-conformance of one test in tx_valid.json (schildbach)
-- #11160 `ede386c` Improve versionbits_computeblockversion test code consistency (danra)
+- #11160 `ede386c` Improve versionshahbits_computeblockversion test code consistency (danra)
 - #10303 `f088a1b` Include ms/blk stats in Connect* benchmarks (kallewoof)
 - #10777 `d81dccf` Avoid redundant assignments. Remove unused variables (practicalswift)
 - #11260 `52f8877` travis: Assert default datadir isn't created, Run scripted diff only once (MarcoFalke)
@@ -448,7 +448,7 @@ Testing changes
 - #12227 `b987ca4` test_runner: Readable output if create_cache.py fails (ryanofsky)
 - #12089 `126000b` Make TestNodeCLI command optional in send_cli (MarcoFalke)
 - #11774 `6970b30` Rename functional tests (ajtowns)
-- #12264 `598a9c4` Fix versionbits warning test (jnewbery)
+- #12264 `598a9c4` Fix versionshahbits warning test (jnewbery)
 - #12217 `1213be6` Add missing syncwithvalidationinterfacequeue to tests (MarcoFalke)
 - #12292 `eebe458` Fix names of excluded extended tests for travis (ajtowns)
 - #11789 `60d739e` [travis-ci] Combine logs on failure (jnewbery)
@@ -486,7 +486,7 @@ Testing changes
 - #11392 `a3b4c59` Fix stale link in gitian-building.md (shooterman)
 - #11401 `4202273` Move gitian building to external repo (MarcoFalke)
 - #11414 `bbc901d` Remove partial gitian build instructions from descriptors dir (fanquake)
-- #11571 `c95832d` Fixed a couple small grammatical errors (BitsInMyBlood)
+- #11571 `c95832d` Fixed a couple small grammatical errors (shahbitsInMyBlood)
 - #11624 `f9b74ef` Change formatting for sequence of steps (vivganes)
 - #11597 `6f01dcf` Fix error messages in CFeeBumper (kallewoof)
 - #11438 `7fbf3c6` Updated Windows build doc for WSL/Xenial workaround (sipsorcery)

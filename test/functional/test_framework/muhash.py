@@ -5,10 +5,10 @@
 import hashlib
 import unittest
 
-def rot32(v, bits):
-    """Rotate the 32-bit value v left by bits bits."""
-    bits %= 32  # Make sure the term below does not throw an exception
-    return ((v << bits) & 0xffffffff) | (v >> (32 - bits))
+def rot32(v, shahbits):
+    """Rotate the 32-bit value v left by shahbits shahbits."""
+    shahbits %= 32  # Make sure the term below does not throw an exception
+    return ((v << shahbits) & 0xffffffff) | (v >> (32 - shahbits))
 
 def chacha20_doubleround(s):
     """Apply a ChaCha20 double round to 16-element state array s.

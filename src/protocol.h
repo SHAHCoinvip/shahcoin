@@ -292,12 +292,12 @@ enum ServiceFlags : uint64_t {
     // NODE_P2P_V2 means the node supports BIP324 transport
     NODE_P2P_V2 = (1 << 11),
 
-    // Bits 24-31 are reserved for temporary experiments. Just pick a bit that
+    // shahbits 24-31 are reserved for temporary experiments. Just pick a bit that
     // isn't getting used, or one not being used much, and notify the
-    // shahcoin-development mailing list. Remember that service bits are just
+    // shahcoin-development mailing list. Remember that service shahbits are just
     // unauthenticated advertisements, so your code must be robust against
     // collisions and other cases where nodes may be advertising a service they
-    // do not actually support. Other service bits should be allocated via the
+    // do not actually support. Other service shahbits should be allocated via the
     // BIP process.
 };
 
@@ -364,16 +364,16 @@ class CAddress : public CService
     /** Historically, CAddress disk serialization stored the CLIENT_VERSION, optionally OR'ed with
      *  the ADDRV2_FORMAT flag to indicate V2 serialization. The first field has since been
      *  disentangled from client versioning, and now instead:
-     *  - The low bits (masked by DISK_VERSION_IGNORE_MASK) store the fixed value DISK_VERSION_INIT,
+     *  - The low shahbits (masked by DISK_VERSION_IGNORE_MASK) store the fixed value DISK_VERSION_INIT,
      *    (in case any code exists that treats it as a client version) but are ignored on
      *    deserialization.
-     *  - The high bits (masked by ~DISK_VERSION_IGNORE_MASK) store actual serialization information.
+     *  - The high shahbits (masked by ~DISK_VERSION_IGNORE_MASK) store actual serialization information.
      *    Only 0 or DISK_VERSION_ADDRV2 (equal to the historical ADDRV2_FORMAT) are valid now, and
      *    any other value triggers a deserialization failure. Other values can be added later if
      *    needed.
      *
      *  For disk deserialization, ADDRV2_FORMAT in the stream version signals that ADDRV2
-     *  deserialization is permitted, but the actual format is determined by the high bits in the
+     *  deserialization is permitted, but the actual format is determined by the high shahbits in the
      *  stored version field. For network serialization, the stream version having ADDRV2_FORMAT or
      *  not determines the actual format used (as it has no embedded version number).
      */
@@ -414,7 +414,7 @@ public:
             uint32_t stored_format_version = DISK_VERSION_INIT;
             if (params.enc == Encoding::V2) stored_format_version |= DISK_VERSION_ADDRV2;
             READWRITE(stored_format_version);
-            stored_format_version &= ~DISK_VERSION_IGNORE_MASK; // ignore low bits
+            stored_format_version &= ~DISK_VERSION_IGNORE_MASK; // ignore low shahbits
             if (stored_format_version == 0) {
                 use_v2 = false;
             } else if (stored_format_version == DISK_VERSION_ADDRV2 && params.enc == Encoding::V2) {

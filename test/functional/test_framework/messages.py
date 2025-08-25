@@ -34,7 +34,7 @@ MAX_BLOCK_WEIGHT = 4000000
 MAX_BLOOM_FILTER_SIZE = 36000
 MAX_BLOOM_HASH_FUNCS = 50
 
-COIN = 100000000  # 1 btc in shahis
+COIN = 100000000  # 1 SHAH in shahis
 MAX_MONEY = 21000000 * COIN
 
 MAX_BIP125_RBF_SEQUENCE = 0xfffffffd  # Sequence number that is rbf-opt-in (BIP 125) and csv-opt-out (BIP 68)
@@ -672,7 +672,7 @@ class CTransaction:
 
 
 class CBlockHeader:
-    __slots__ = ("hash", "hashMerkleRoot", "hashPrevBlock", "nBits", "nNonce",
+    __slots__ = ("hash", "hashMerkleRoot", "hashPrevBlock", "nshahbits", "nNonce",
                  "nTime", "nVersion", "sha256")
 
     def __init__(self, header=None):
@@ -683,7 +683,7 @@ class CBlockHeader:
             self.hashPrevBlock = header.hashPrevBlock
             self.hashMerkleRoot = header.hashMerkleRoot
             self.nTime = header.nTime
-            self.nBits = header.nBits
+            self.nshahbits = header.nshahbits
             self.nNonce = header.nNonce
             self.sha256 = header.sha256
             self.hash = header.hash
@@ -694,7 +694,7 @@ class CBlockHeader:
         self.hashPrevBlock = 0
         self.hashMerkleRoot = 0
         self.nTime = 0
-        self.nBits = 0
+        self.nshahbits = 0
         self.nNonce = 0
         self.sha256 = None
         self.hash = None
@@ -704,7 +704,7 @@ class CBlockHeader:
         self.hashPrevBlock = deser_uint256(f)
         self.hashMerkleRoot = deser_uint256(f)
         self.nTime = struct.unpack("<I", f.read(4))[0]
-        self.nBits = struct.unpack("<I", f.read(4))[0]
+        self.nshahbits = struct.unpack("<I", f.read(4))[0]
         self.nNonce = struct.unpack("<I", f.read(4))[0]
         self.sha256 = None
         self.hash = None
@@ -715,7 +715,7 @@ class CBlockHeader:
         r += ser_uint256(self.hashPrevBlock)
         r += ser_uint256(self.hashMerkleRoot)
         r += struct.pack("<I", self.nTime)
-        r += struct.pack("<I", self.nBits)
+        r += struct.pack("<I", self.nshahbits)
         r += struct.pack("<I", self.nNonce)
         return r
 
@@ -726,7 +726,7 @@ class CBlockHeader:
             r += ser_uint256(self.hashPrevBlock)
             r += ser_uint256(self.hashMerkleRoot)
             r += struct.pack("<I", self.nTime)
-            r += struct.pack("<I", self.nBits)
+            r += struct.pack("<I", self.nshahbits)
             r += struct.pack("<I", self.nNonce)
             self.sha256 = uint256_from_str(hash256(r))
             self.hash = hash256(r)[::-1].hex()
@@ -737,9 +737,9 @@ class CBlockHeader:
         return self.sha256
 
     def __repr__(self):
-        return "CBlockHeader(nVersion=%i hashPrevBlock=%064x hashMerkleRoot=%064x nTime=%s nBits=%08x nNonce=%08x)" \
+        return "CBlockHeader(nVersion=%i hashPrevBlock=%064x hashMerkleRoot=%064x nTime=%s nshahbits=%08x nNonce=%08x)" \
             % (self.nVersion, self.hashPrevBlock, self.hashMerkleRoot,
-               time.ctime(self.nTime), self.nBits, self.nNonce)
+               time.ctime(self.nTime), self.nshahbits, self.nNonce)
 
 BLOCK_HEADER_SIZE = len(CBlockHeader().serialize())
 assert_equal(BLOCK_HEADER_SIZE, 80)
@@ -795,7 +795,7 @@ class CBlock(CBlockHeader):
 
     def is_valid(self):
         self.calc_sha256()
-        target = uint256_from_compact(self.nBits)
+        target = uint256_from_compact(self.nshahbits)
         if self.sha256 > target:
             return False
         for tx in self.vtx:
@@ -807,7 +807,7 @@ class CBlock(CBlockHeader):
 
     def solve(self):
         self.rehash()
-        target = uint256_from_compact(self.nBits)
+        target = uint256_from_compact(self.nshahbits)
         while self.sha256 > target:
             self.nNonce += 1
             self.rehash()
@@ -820,9 +820,9 @@ class CBlock(CBlockHeader):
         return (WITNESS_SCALE_FACTOR - 1) * without_witness_size + with_witness_size
 
     def __repr__(self):
-        return "CBlock(nVersion=%i hashPrevBlock=%064x hashMerkleRoot=%064x nTime=%s nBits=%08x nNonce=%08x vtx=%s)" \
+        return "CBlock(nVersion=%i hashPrevBlock=%064x hashMerkleRoot=%064x nTime=%s nshahbits=%08x nNonce=%08x vtx=%s)" \
             % (self.nVersion, self.hashPrevBlock, self.hashMerkleRoot,
-               time.ctime(self.nTime), self.nBits, self.nNonce, repr(self.vtx))
+               time.ctime(self.nTime), self.nshahbits, self.nNonce, repr(self.vtx))
 
 
 class PrefilledTransaction:
@@ -1046,33 +1046,33 @@ class BlockTransactions:
 
 
 class CPartialMerkleTree:
-    __slots__ = ("nTransactions", "vBits", "vHash")
+    __slots__ = ("nTransactions", "vshahbits", "vHash")
 
     def __init__(self):
         self.nTransactions = 0
         self.vHash = []
-        self.vBits = []
+        self.vshahbits = []
 
     def deserialize(self, f):
         self.nTransactions = struct.unpack("<i", f.read(4))[0]
         self.vHash = deser_uint256_vector(f)
         vBytes = deser_string(f)
-        self.vBits = []
+        self.vshahbits = []
         for i in range(len(vBytes) * 8):
-            self.vBits.append(vBytes[i//8] & (1 << (i % 8)) != 0)
+            self.vshahbits.append(vBytes[i//8] & (1 << (i % 8)) != 0)
 
     def serialize(self):
         r = b""
         r += struct.pack("<i", self.nTransactions)
         r += ser_uint256_vector(self.vHash)
-        vBytesArray = bytearray([0x00] * ((len(self.vBits) + 7)//8))
-        for i in range(len(self.vBits)):
-            vBytesArray[i // 8] |= self.vBits[i] << (i % 8)
+        vBytesArray = bytearray([0x00] * ((len(self.vshahbits) + 7)//8))
+        for i in range(len(self.vshahbits)):
+            vBytesArray[i // 8] |= self.vshahbits[i] << (i % 8)
         r += ser_string(bytes(vBytesArray))
         return r
 
     def __repr__(self):
-        return "CPartialMerkleTree(nTransactions=%d, vHash=%s, vBits=%s)" % (self.nTransactions, repr(self.vHash), repr(self.vBits))
+        return "CPartialMerkleTree(nTransactions=%d, vHash=%s, vshahbits=%s)" % (self.nTransactions, repr(self.vHash), repr(self.vshahbits))
 
 
 class CMerkleBlock:
@@ -1108,7 +1108,7 @@ class msg_version:
         self.nTime = int(time.time())
         self.addrTo = CAddress()
         self.addrFrom = CAddress()
-        self.nNonce = random.getrandbits(64)
+        self.nNonce = random.getrandshahbits(64)
         self.strSubVer = ''
         self.nStartingHeight = -1
         self.relay = 0

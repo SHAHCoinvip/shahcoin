@@ -131,7 +131,7 @@ arith_uint256 GetBlockProof(const CBlockIndex& block)
     arith_uint256 bnTarget;
     bool fNegative;
     bool fOverflow;
-    bnTarget.SetCompact(block.nBits, &fNegative, &fOverflow);
+    bnTarget.SetCompact(block.nshahbits, &fNegative, &fOverflow);
     if (fNegative || fOverflow || bnTarget == 0)
         return 0;
     // We need to compute 2**256 / (bnTarget+1), but we can't represent 2**256
@@ -152,7 +152,7 @@ int64_t GetBlockProofEquivalentTime(const CBlockIndex& to, const CBlockIndex& fr
         sign = -1;
     }
     r = r * arith_uint256(params.nPowTargetSpacing) / GetBlockProof(tip);
-    if (r.bits() > 63) {
+    if (r.shahbits() > 63) {
         return sign * std::numeric_limits<int64_t>::max();
     }
     return sign * int64_t(r.GetLow64());

@@ -32,7 +32,7 @@ This document summarizes the complete setup of the SHAHCOIN premine for mainnet 
 ### **Genesis Block Parameters**
 - **Timestamp**: `1743638400` (July 1, 2025 00:00:00 UTC)
 - **Nonce**: `0x12345678`
-- **Bits**: `0x1d00ffff`
+- **shahbits**: `0x1d00ffff`
 - **Version**: `0x20000000` (Hybrid consensus enabled)
 - **Block Time**: 150 seconds (2.5 minutes)
 

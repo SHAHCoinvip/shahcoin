@@ -54,7 +54,7 @@ class SignetMinerTest(ShahcoinTestFramework):
                 'generate',
                 f'--address={node.getnewaddress()}',
                 f'--grind-cmd={self.options.shahcoinutil} grind',
-                '--nbits=1d00ffff',
+                '--nshahbits=1d00ffff',
                 f'--set-block-time={int(time.time())}',
             ], check=True, stderr=subprocess.STDOUT)
         assert_equal(node.getblockcount(), 1)

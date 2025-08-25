@@ -5,8 +5,8 @@
 
 #include <util/strencodings.h>
 
-template <unsigned int BITS>
-std::string base_blob<BITS>::GetHex() const
+template <unsigned int shahbits>
+std::string base_blob<shahbits>::GetHex() const
 {
     uint8_t m_data_rev[WIDTH];
     for (int i = 0; i < WIDTH; ++i) {
@@ -15,8 +15,8 @@ std::string base_blob<BITS>::GetHex() const
     return HexStr(m_data_rev);
 }
 
-template <unsigned int BITS>
-void base_blob<BITS>::SetHex(const char* psz)
+template <unsigned int shahbits>
+void base_blob<shahbits>::SetHex(const char* psz)
 {
     std::fill(m_data.begin(), m_data.end(), 0);
 
@@ -43,14 +43,14 @@ void base_blob<BITS>::SetHex(const char* psz)
     }
 }
 
-template <unsigned int BITS>
-void base_blob<BITS>::SetHex(const std::string& str)
+template <unsigned int shahbits>
+void base_blob<shahbits>::SetHex(const std::string& str)
 {
     SetHex(str.c_str());
 }
 
-template <unsigned int BITS>
-std::string base_blob<BITS>::ToString() const
+template <unsigned int shahbits>
+std::string base_blob<shahbits>::ToString() const
 {
     return (GetHex());
 }

@@ -44,7 +44,7 @@ struct SigNetOptions {
 struct RegTestOptions {
     bool fastprune{false};
     std::map<Consensus::DeploymentPos, int> activation_heights;
-    std::map<Consensus::DeploymentPos, Consensus::BIP9Deployment> version_bits_parameters;
+    std::map<Consensus::DeploymentPos, Consensus::BIP9Deployment> version_shahbits_parameters;
 };
 
 // Complete AssumeutxoData definition for mainnet-only (assumeutxo disabled)

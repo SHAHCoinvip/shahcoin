@@ -590,7 +590,7 @@ class FullBlockTest(ShahcoinTestFramework):
         b44 = CBlock()
         b44.nTime = self.tip.nTime + 1
         b44.hashPrevBlock = self.tip.sha256
-        b44.nBits = 0x207fffff
+        b44.nshahbits = 0x207fffff
         b44.vtx.append(coinbase)
         tx = self.create_and_sign_transaction(out[14], 1)
         b44.vtx.append(tx)
@@ -606,7 +606,7 @@ class FullBlockTest(ShahcoinTestFramework):
         b45 = CBlock()
         b45.nTime = self.tip.nTime + 1
         b45.hashPrevBlock = self.tip.sha256
-        b45.nBits = 0x207fffff
+        b45.nshahbits = 0x207fffff
         b45.vtx.append(non_coinbase)
         b45.hashMerkleRoot = b45.calc_merkle_root()
         b45.solve()
@@ -620,7 +620,7 @@ class FullBlockTest(ShahcoinTestFramework):
         b46 = CBlock()
         b46.nTime = b44.nTime + 1
         b46.hashPrevBlock = b44.sha256
-        b46.nBits = 0x207fffff
+        b46.nshahbits = 0x207fffff
         b46.vtx = []
         b46.hashMerkleRoot = 0
         b46.solve()
@@ -633,7 +633,7 @@ class FullBlockTest(ShahcoinTestFramework):
         self.log.info("Reject a block with invalid work")
         self.move_tip(44)
         b47 = self.next_block(47)
-        target = uint256_from_compact(b47.nBits)
+        target = uint256_from_compact(b47.nshahbits)
         while b47.sha256 <= target:
             # Rehash nonces until an invalid too-high-hash block is found.
             b47.nNonce += 1
@@ -658,9 +658,9 @@ class FullBlockTest(ShahcoinTestFramework):
         self.log.info("Reject a block with incorrect POW limit")
         self.move_tip(44)
         b50 = self.next_block(50)
-        b50.nBits = b50.nBits - 1
+        b50.nshahbits = b50.nshahbits - 1
         b50.solve()
-        self.send_blocks([b50], False, force_send=True, reject_reason='bad-diffbits', reconnect=True)
+        self.send_blocks([b50], False, force_send=True, reject_reason='bad-diffshahbits', reconnect=True)
 
         self.log.info("Reject a block with two coinbase transactions")
         self.move_tip(44)

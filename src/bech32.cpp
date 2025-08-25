@@ -124,7 +124,7 @@ uint32_t EncodingConstant(Encoding encoding) {
 
 /** This function will compute what 6 5-bit values to XOR into the last 6 input values, in order to
  *  make the checksum 0. These 6 values are packed together in a single 30-bit integer. The higher
- *  bits correspond to earlier values. */
+ *  shahbits correspond to earlier values. */
 uint32_t PolyMod(const data& v)
 {
     // The input is interpreted as a list of coefficients of a polynomial over F = GF(32), with an
@@ -142,7 +142,7 @@ uint32_t PolyMod(const data& v)
     // Note that the coefficients are elements of GF(32), here represented as decimal numbers
     // between {}. In this finite field, addition is just XOR of the corresponding numbers. For
     // example, {27} + {13} = {27 ^ 13} = {22}. Multiplication is more complicated, and requires
-    // treating the bits of values themselves as coefficients of a polynomial over a smaller field,
+    // treating the shahbits of values themselves as coefficients of a polynomial over a smaller field,
     // GF(2), and multiplying those polynomials mod a^5 + a^3 + 1. For example, {5} * {26} =
     // (a^2 + 1) * (a^4 + a^3 + a) = (a^4 + a^3 + a) * a^2 + (a^4 + a^3 + a) = a^6 + a^5 + a^4 + a
     // = a^3 + 1 (mod a^5 + a^3 + 1) = {9}.
@@ -228,7 +228,7 @@ uint32_t PolyMod(const data& v)
  *
  * Now note that all of the (e)^(j*i) for i in [5..0] are constants and can be precomputed.
  * But even more than that, we can consider each coefficient as a bit-string.
- * For example, take r5 = (b_5, b_4, b_3, b_2, b_1) written out as 5 bits. Then:
+ * For example, take r5 = (b_5, b_4, b_3, b_2, b_1) written out as 5 shahbits. Then:
  * r5*(e)^j = b_1*(e)^j + b_2*(2*(e)^j) + b_3*(4*(e)^j) + b_4*(8*(e)^j) + b_5*(16*(e)^j)
  * where all the (2^i*(e)^j) are constants and can be precomputed.
  *
@@ -254,10 +254,10 @@ constexpr std::array<uint32_t, 25> SYNDROME_CONSTS = GenerateSyndromeConstants()
 
 /**
  * Syndrome returns the three values s_997, s_998, and s_999 described above,
- * packed into a 30-bit integer, where each group of 10 bits encodes one value.
+ * packed into a 30-bit integer, where each group of 10 shahbits encodes one value.
  */
 uint32_t Syndrome(const uint32_t residue) {
-    // low is the first 5 bits, corresponding to the r6 in the residue
+    // low is the first 5 shahbits, corresponding to the r6 in the residue
     // (the constant term of the polynomial).
     uint32_t low = residue & 0x1f;
 
@@ -266,7 +266,7 @@ uint32_t Syndrome(const uint32_t residue) {
 
     // Then for each following bit, we add the corresponding precomputed constant if the bit is 1.
     // For example, 0x31edd3c4 is 1100011110 1101110100 1111000100 when unpacked in groups of 10
-    // bits, corresponding exactly to a^999 || a^998 || a^997 (matching the corresponding values in
+    // shahbits, corresponding exactly to a^999 || a^998 || a^997 (matching the corresponding values in
     // GF1024_EXP above). In this way, we compute all three values of s_j for j in (997, 998, 999)
     // simultaneously. Recall that XOR corresponds to addition in a characteristic 2 field.
     for (int i = 0; i < 25; ++i) {

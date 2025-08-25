@@ -132,9 +132,9 @@ unsigned int GetNextWorkRequiredSHA256(int height) {
 ### **4. Encode AlgoType in Block Header**
 - **Goal**: Proper algorithm encoding in block headers
 - **Options**:
-  - Use version bits (BIP9-style)
+  - Use version shahbits (BIP9-style)
   - Add explicit algorithm field
-  - Use nVersion bits for algorithm encoding
+  - Use nVersion shahbits for algorithm encoding
   - Maintain backward compatibility
 
 ## 📊 **CURRENT STATUS**

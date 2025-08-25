@@ -31,16 +31,16 @@ unsigned int GetNextStakeTarget(const CBlockIndex* pindexLast, const Consensus::
 // Hybrid consensus: Overload for AlgoType
 uint256 GetPoWHash(const CBlockHeader& hdr);
 
-/** Check whether a block hash satisfies the proof-of-work requirement specified by nBits */
-bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params&);
+/** Check whether a block hash satisfies the proof-of-work requirement specified by nshahbits */
+bool CheckProofOfWork(uint256 hash, unsigned int nshahbits, const Consensus::Params&);
 
 /** Check whether a block hash satisfies the proof-of-work requirement for SHAHCOIN Core multi-algorithm mining */
-bool CheckProofOfWorkMultiAlgo(uint256 hash, unsigned int nBits, const Consensus::Params&, MiningAlgorithm algo);
+bool CheckProofOfWorkMultiAlgo(uint256 hash, unsigned int nshahbits, const Consensus::Params&, MiningAlgorithm algo);
 
 /**
- * Return false if the proof-of-work requirement specified by new_nbits at a
+ * Return false if the proof-of-work requirement specified by new_nshahbits at a
  * given height is not possible, given the proof-of-work on the prior block as
- * specified by old_nbits.
+ * specified by old_nshahbits.
  *
  * This function only checks that the new value is within a factor of 4 of the
  * old value for blocks at the difficulty adjustment interval, and otherwise
@@ -49,6 +49,6 @@ bool CheckProofOfWorkMultiAlgo(uint256 hash, unsigned int nBits, const Consensus
  * Always returns true on networks where min difficulty blocks are allowed,
  * such as regtest/testnet.
  */
-bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t height, uint32_t old_nbits, uint32_t new_nbits);
+bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t height, uint32_t old_nshahbits, uint32_t new_nshahbits);
 
 #endif // SHAHCOIN_POW_H

@@ -36,7 +36,7 @@ earlier.
 Notable changes
 ===============
 
-First version bits BIP9 softfork deployment
+First version shahbits BIP9 softfork deployment
 -------------------------------------------
 
 This release includes a soft fork deployment to enforce [BIP68][],
@@ -45,7 +45,7 @@ This release includes a soft fork deployment to enforce [BIP68][],
 The deployment sets the block version number to 0x20000001 between
 midnight 1st May 2016 and midnight 1st May 2017 to signal readiness for 
 deployment. The version number consists of 0x20000000 to indicate version
-bits together with setting bit 0 to indicate support for this combined
+shahbits together with setting bit 0 to indicate support for this combined
 deployment, shown as "csv" in the `getblockchaininfo` RPC call.
 
 For more information about the soft forking change, please see
@@ -152,7 +152,7 @@ git merge commit are mentioned.
 - #7739 `7ffc2bd` Add abandoned status to listtransactions (jonasschnelli)
 
 ### Block and transaction handling
-- #7543 `834aaef` Backport BIP9, BIP68 and BIP112 with softfork (btcdrak)
+- #7543 `834aaef` Backport BIP9, BIP68 and BIP112 with softfork (SHAHDrak)
 
 ### P2P protocol and network code
 - #7804 `90f1d24` Track block download times per individual block (sipa)
@@ -174,8 +174,8 @@ git merge commit are mentioned.
 ### Miscellaneous
 - #7617 `f04f4fd` Fix markdown syntax and line terminate LogPrint (MarcoFalke)
 - #7747 `4d035bc` added depends cross compile info (accraze)
-- #7741 `a0cea89` Mark p2p alert system as deprecated (btcdrak)
-- #7780 `c5f94f6` Disable bad-chain alert (btcdrak)
+- #7741 `a0cea89` Mark p2p alert system as deprecated (SHAHDrak)
+- #7780 `c5f94f6` Disable bad-chain alert (SHAHDrak)
 
 Credits
 =======
@@ -184,7 +184,7 @@ Thanks to everyone who directly contributed to this release:
 
 - accraze
 - Alex Morcos
-- BtcDrak
+- SHAHDrak
 - Jonas Schnelli
 - Luke Dashjr
 - MarcoFalke

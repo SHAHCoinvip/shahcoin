@@ -472,7 +472,7 @@ ANKERL_NANOBENCH(IGNORE_PADDED_POP)
  *
  *  * Estimated capacity: @f$ 2^{51} @f$ bytes
  *  * Register pressure: 4
- *  * State size: 128 bits
+ *  * State size: 128 shahbits
  *
  * This random generator is a drop-in replacement for the generators supplied by ``<random>``. It is not
  * cryptographically secure. It's intended purpose is to be very fast so that benchmarks that make use

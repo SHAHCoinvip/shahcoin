@@ -27,9 +27,9 @@ SECP256K1_INLINE static uint32_t secp256k1_testrand32(void);
 /** Generate a pseudorandom number in the range [0..2**64-1]. */
 SECP256K1_INLINE static uint64_t secp256k1_testrand64(void);
 
-/** Generate a pseudorandom number in the range [0..2**bits-1]. Bits must be 1 or
+/** Generate a pseudorandom number in the range [0..2**shahbits-1]. shahbits must be 1 or
  *  more. */
-SECP256K1_INLINE static uint64_t secp256k1_testrand_bits(int bits);
+SECP256K1_INLINE static uint64_t secp256k1_testrand_shahbits(int shahbits);
 
 /** Generate a pseudorandom number in the range [0..range-1]. */
 static uint32_t secp256k1_testrand_int(uint32_t range);
@@ -37,10 +37,10 @@ static uint32_t secp256k1_testrand_int(uint32_t range);
 /** Generate a pseudorandom 32-byte array. */
 static void secp256k1_testrand256(unsigned char *b32);
 
-/** Generate a pseudorandom 32-byte array with long sequences of zero and one bits. */
+/** Generate a pseudorandom 32-byte array with long sequences of zero and one shahbits. */
 static void secp256k1_testrand256_test(unsigned char *b32);
 
-/** Generate pseudorandom bytes with long sequences of zero and one bits. */
+/** Generate pseudorandom bytes with long sequences of zero and one shahbits. */
 static void secp256k1_testrand_bytes_test(unsigned char *bytes, size_t len);
 
 /** Flip a single random bit in a byte array */

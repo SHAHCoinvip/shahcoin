@@ -63,7 +63,7 @@ void ChaCha20SplitFuzz(FuzzedDataProvider& provider)
     uint64_t iv = provider.ConsumeIntegral<uint64_t>();
     uint32_t iv_prefix = provider.ConsumeIntegral<uint32_t>();
     uint64_t total_bytes = provider.ConsumeIntegralInRange<uint64_t>(0, 1000000);
-    /* ~x = 2^BITS - 1 - x, so ~(total_bytes >> 6) is the maximal seek position. */
+    /* ~x = 2^shahbits - 1 - x, so ~(total_bytes >> 6) is the maximal seek position. */
     uint32_t seek = provider.ConsumeIntegralInRange<uint32_t>(0, ~(uint32_t)(total_bytes >> 6));
 
     // Initialize two ChaCha20 ciphers, with the same key/iv/position.

@@ -265,7 +265,7 @@ bool TimingResistantEqual(const T& a, const T& b)
 [[nodiscard]] bool ParseFixedPoint(std::string_view, int decimals, int64_t *amount_out);
 
 namespace {
-/** Helper class for the default infn argument to ConvertBits (just returns the input). */
+/** Helper class for the default infn argument to Convertshahbits (just returns the input). */
 struct IntIdentity
 {
     [[maybe_unused]] int operator()(int x) const { return x; }
@@ -274,26 +274,26 @@ struct IntIdentity
 } // namespace
 
 /** Convert from one power-of-2 number base to another. */
-template<int frombits, int tobits, bool pad, typename O, typename It, typename I = IntIdentity>
-bool ConvertBits(O outfn, It it, It end, I infn = {}) {
+template<int fromshahbits, int toshahbits, bool pad, typename O, typename It, typename I = IntIdentity>
+bool Convertshahbits(O outfn, It it, It end, I infn = {}) {
     size_t acc = 0;
-    size_t bits = 0;
-    constexpr size_t maxv = (1 << tobits) - 1;
-    constexpr size_t max_acc = (1 << (frombits + tobits - 1)) - 1;
+    size_t shahbits = 0;
+    constexpr size_t maxv = (1 << toshahbits) - 1;
+    constexpr size_t max_acc = (1 << (fromshahbits + toshahbits - 1)) - 1;
     while (it != end) {
         int v = infn(*it);
         if (v < 0) return false;
-        acc = ((acc << frombits) | v) & max_acc;
-        bits += frombits;
-        while (bits >= tobits) {
-            bits -= tobits;
-            outfn((acc >> bits) & maxv);
+        acc = ((acc << fromshahbits) | v) & max_acc;
+        shahbits += fromshahbits;
+        while (shahbits >= toshahbits) {
+            shahbits -= toshahbits;
+            outfn((acc >> shahbits) & maxv);
         }
         ++it;
     }
     if (pad) {
-        if (bits) outfn((acc << (tobits - bits)) & maxv);
-    } else if (bits >= frombits || ((acc << (tobits - bits)) & maxv)) {
+        if (shahbits) outfn((acc << (toshahbits - shahbits)) & maxv);
+    } else if (shahbits >= fromshahbits || ((acc << (toshahbits - shahbits)) & maxv)) {
         return false;
     }
     return true;

@@ -66,7 +66,7 @@ The SHAHCOIN Core GitHub repository has been **successfully finalized** and is n
 
 #### 🎨 Branding Consistency
 - **Status**: ✅ **COMPLETE**
-- All mentions of Bitcoin, Litecoin, old domains removed
+- All mentions of legacy references, old domains removed
 - Only approved contacts remain:
   - Email: info@shah.vip
   - Website: https://shah.vip

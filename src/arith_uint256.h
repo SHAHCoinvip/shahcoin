@@ -18,12 +18,12 @@ public:
 };
 
 /** Template base class for unsigned big integers. */
-template<unsigned int BITS>
+template<unsigned int shahbits>
 class base_uint
 {
 protected:
-    static_assert(BITS / 32 > 0 && BITS % 32 == 0, "Template parameter BITS must be a positive multiple of 32.");
-    static constexpr int WIDTH = BITS / 32;
+    static_assert(shahbits / 32 > 0 && shahbits % 32 == 0, "Template parameter shahbits must be a positive multiple of 32.");
+    static constexpr int WIDTH = shahbits / 32;
     uint32_t pn[WIDTH];
 public:
 
@@ -230,11 +230,11 @@ public:
      * Returns the position of the highest bit set plus one, or zero if the
      * value is zero.
      */
-    unsigned int bits() const;
+    unsigned int shahbits() const;
 
     uint64_t GetLow64() const
     {
-        static_assert(WIDTH >= 2, "Assertion WIDTH >= 2 failed (WIDTH = BITS / 32). BITS is a template parameter.");
+        static_assert(WIDTH >= 2, "Assertion WIDTH >= 2 failed (WIDTH = shahbits / 32). shahbits is a template parameter.");
         return pn[0] | (uint64_t)pn[1] << 32;
     }
 };
@@ -251,9 +251,9 @@ public:
      * The "compact" format is a representation of a whole
      * number N using an unsigned 32bit number similar to a
      * floating point format.
-     * The most significant 8 bits are the unsigned exponent of base 256.
+     * The most significant 8 shahbits are the unsigned exponent of base 256.
      * This exponent can be thought of as "number of bytes of N".
-     * The lower 23 bits are the mantissa.
+     * The lower 23 shahbits are the mantissa.
      * Bit number 24 (0x800000) represents the sign of N.
      * N = (-1^sign) * mantissa * 256^(exponent-3)
      *

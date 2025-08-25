@@ -34,10 +34,10 @@
  * tested.
  *
  * The following limitations are known, and there are probably more:
- * If WINDOW_G > 27 and size_t has 32 bits, then the code is incorrect
+ * If WINDOW_G > 27 and size_t has 32 shahbits, then the code is incorrect
  * because the size of the memory object that we allocate (in bytes)
  * will not fit in a size_t.
- * If WINDOW_G > 31 and int has 32 bits, then the code is incorrect
+ * If WINDOW_G > 31 and int has 32 shahbits, then the code is incorrect
  * because certain expressions will overflow.
  */
 #if ECMULT_WINDOW_SIZE < 2 || ECMULT_WINDOW_SIZE > 24

@@ -72,7 +72,7 @@ class Footer {
 
 // kTableMagicNumber was picked by running
 //    echo http://code.google.com/p/leveldb/ | sha1sum
-// and taking the leading 64 bits.
+// and taking the leading 64 shahbits.
 static const uint64_t kTableMagicNumber = 0xdb4775248b80fb57ull;
 
 // 1-byte type + 32-bit crc

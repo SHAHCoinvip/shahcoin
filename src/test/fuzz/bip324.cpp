@@ -73,10 +73,10 @@ FUZZ_TARGET(bip324_cipher_roundtrip, .init=Initialize)
         bool ignore = mode & 1;
         bool from_init = mode & 2;
         bool damage = mode & 4;
-        unsigned aad_length_bits = 4 * ((mode >> 3) & 3);
-        unsigned aad_length = provider.ConsumeIntegralInRange<unsigned>(0, (1 << aad_length_bits) - 1);
-        unsigned length_bits = 2 * ((mode >> 5) & 7);
-        unsigned length = provider.ConsumeIntegralInRange<unsigned>(0, (1 << length_bits) - 1);
+        unsigned aad_length_shahbits = 4 * ((mode >> 3) & 3);
+        unsigned aad_length = provider.ConsumeIntegralInRange<unsigned>(0, (1 << aad_length_shahbits) - 1);
+        unsigned length_shahbits = 2 * ((mode >> 5) & 7);
+        unsigned length = provider.ConsumeIntegralInRange<unsigned>(0, (1 << length_shahbits) - 1);
         // Generate aad and content.
         std::vector<std::byte> aad(aad_length);
         for (auto& val : aad) val = std::byte{(uint8_t)rng()};

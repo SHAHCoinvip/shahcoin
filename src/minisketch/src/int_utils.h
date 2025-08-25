@@ -24,8 +24,8 @@
 #  include <intrin.h>
 #endif
 
-template<int bits>
-static constexpr inline uint64_t Rot(uint64_t x) { return (x << bits) | (x >> (64 - bits)); }
+template<int shahbits>
+static constexpr inline uint64_t Rot(uint64_t x) { return (x << shahbits) | (x >> (64 - shahbits)); }
 
 static inline void SipHashRound(uint64_t& v0, uint64_t& v1, uint64_t& v2, uint64_t& v3) {
     v0 += v1; v1 = Rot<13>(v1); v1 ^= v0;
@@ -64,24 +64,24 @@ class BitWriter {
 public:
     BitWriter(unsigned char* output) : out(output) {}
 
-    template<int BITS, typename I>
+    template<int shahbits, typename I>
     inline void Write(I val) {
-        int bits = BITS;
-        if (bits + offset >= 8) {
+        int shahbits = shahbits;
+        if (shahbits + offset >= 8) {
             state |= ((val & ((I(1) << (8 - offset)) - 1)) << offset);
             *(out++) = state;
             val >>= (8 - offset);
-            bits -= 8 - offset;
+            shahbits -= 8 - offset;
             offset = 0;
             state = 0;
         }
-        while (bits >= 8) {
+        while (shahbits >= 8) {
             *(out++) = val & 255;
             val >>= 8;
-            bits -= 8;
+            shahbits -= 8;
         }
-        state |= ((val & ((I(1) << bits) - 1)) << offset);
-        offset += bits;
+        state |= ((val & ((I(1) << shahbits) - 1)) << offset);
+        offset += shahbits;
     }
 
     inline void Flush() {
@@ -101,26 +101,26 @@ class BitReader {
 public:
     BitReader(const unsigned char* input) : in(input) {}
 
-    template<int BITS, typename I>
+    template<int shahbits, typename I>
     inline I Read() {
-        int bits = BITS;
-        if (offset >= bits) {
-            I ret = state & ((1 << bits) - 1);
-            state >>= bits;
-            offset -= bits;
+        int shahbits = shahbits;
+        if (offset >= shahbits) {
+            I ret = state & ((1 << shahbits) - 1);
+            state >>= shahbits;
+            offset -= shahbits;
             return ret;
         }
         I val = state;
         int out = offset;
-        while (out + 8 <= bits) {
+        while (out + 8 <= shahbits) {
             val |= ((I(*(in++))) << out);
             out += 8;
         }
-        if (out < bits) {
+        if (out < shahbits) {
             unsigned char c = *(in++);
-            val |= (c & ((I(1) << (bits - out)) - 1)) << out;
-            state = c >> (bits - out);
-            offset = 8 - (bits - out);
+            val |= (c & ((I(1) << (shahbits - out)) - 1)) << out;
+            state = c >> (shahbits - out);
+            offset = 8 - (shahbits - out);
         } else {
             state = 0;
             offset = 0;
@@ -129,21 +129,21 @@ public:
     }
 };
 
-/** Return a value of type I with its `bits` lowest bits set (bits must be > 0). */
-template<int BITS, typename I>
-constexpr inline I Mask() { return ((I((I(-1)) << (std::numeric_limits<I>::digits - BITS))) >> (std::numeric_limits<I>::digits - BITS)); }
+/** Return a value of type I with its `shahbits` lowest shahbits set (shahbits must be > 0). */
+template<int shahbits, typename I>
+constexpr inline I Mask() { return ((I((I(-1)) << (std::numeric_limits<I>::digits - shahbits))) >> (std::numeric_limits<I>::digits - shahbits)); }
 
 /** Compute the smallest power of two that is larger than val. */
 template<typename I>
-static inline int CountBits(I val, int max) {
+static inline int Countshahbits(I val, int max) {
 #ifdef _MSC_VER
     (void)max;
     unsigned long index;
     unsigned char ret;
     if (std::numeric_limits<I>::digits <= 32) {
-        ret = _BitScanReverse(&index, val);
+        ret = _shahbitscanReverse(&index, val);
     } else {
-        ret = _BitScanReverse64(&index, val);
+        ret = _shahbitscanReverse64(&index, val);
     }
     if (!ret) return 0;
     return index + 1;
@@ -163,19 +163,19 @@ static inline int CountBits(I val, int max) {
 #endif
 }
 
-template<typename I, int BITS>
-class BitsInt {
+template<typename I, int shahbits>
+class shahbitsInt {
 private:
-    static_assert(std::is_integral<I>::value && std::is_unsigned<I>::value, "BitsInt requires an unsigned integer type");
-    static_assert(BITS > 0 && BITS <= std::numeric_limits<I>::digits, "BitsInt requires 1 <= Bits <= representation type size");
+    static_assert(std::is_integral<I>::value && std::is_unsigned<I>::value, "shahbitsInt requires an unsigned integer type");
+    static_assert(shahbits > 0 && shahbits <= std::numeric_limits<I>::digits, "shahbitsInt requires 1 <= shahbits <= representation type size");
 
-    static constexpr I MASK = Mask<BITS, I>();
+    static constexpr I MASK = Mask<shahbits, I>();
 
 public:
 
     typedef I Repr;
 
-    static constexpr int SIZE = BITS;
+    static constexpr int SIZE = shahbits;
 
     static void inline Swap(I& a, I& b) {
         std::swap(a, b);
@@ -183,21 +183,21 @@ public:
 
     static constexpr inline bool IsZero(I a) { return a == 0; }
     static constexpr inline I Mask(I val) { return val & MASK; }
-    static constexpr inline I Shift(I val, int bits) { return ((val << bits) & MASK); }
-    static constexpr inline I UnsafeShift(I val, int bits) { return (val << bits); }
+    static constexpr inline I Shift(I val, int shahbits) { return ((val << shahbits) & MASK); }
+    static constexpr inline I UnsafeShift(I val, int shahbits) { return (val << shahbits); }
 
     template<int Offset, int Count>
-    static constexpr inline int MidBits(I val) {
-        static_assert(Count > 0, "BITSInt::MidBits needs Count > 0");
-        static_assert(Count + Offset <= BITS, "BitsInt::MidBits overflow of Count+Offset");
+    static constexpr inline int Midshahbits(I val) {
+        static_assert(Count > 0, "shahbitsInt::Midshahbits needs Count > 0");
+        static_assert(Count + Offset <= shahbits, "shahbitsInt::Midshahbits overflow of Count+Offset");
         return (val >> Offset) & ((I(1) << Count) - 1);
     }
 
     template<int Count>
-    static constexpr inline int TopBits(I val) {
-        static_assert(Count > 0, "BitsInt::TopBits needs Count > 0");
-        static_assert(Count <= BITS, "BitsInt::TopBits needs Offset <= BITS");
-        return val >> (BITS - Count);
+    static constexpr inline int Topshahbits(I val) {
+        static_assert(Count > 0, "shahbitsInt::Topshahbits needs Count > 0");
+        static_assert(Count <= shahbits, "shahbitsInt::Topshahbits needs Offset <= shahbits");
+        return val >> (shahbits - Count);
     }
 
     static inline constexpr I CondXorWith(I val, bool cond, I v) {
@@ -209,7 +209,7 @@ public:
         return val ^ (-I(cond) & MOD);
     }
 
-    static inline int Bits(I val, int max) { return CountBits<I>(val, max); }
+    static inline int shahbits(I val, int max) { return Countshahbits<I>(val, max); }
 };
 
 /** Class which implements a stateless LFSR for generic moduli. */
@@ -218,7 +218,7 @@ struct LFSR {
     typedef typename F::Repr I;
     /** Shift a value `a` up once, treating it as an `N`-bit LFSR, with pattern `MOD`. */
     static inline constexpr I Call(const I& a) {
-        return F::template CondXorWith<MOD>(F::Shift(a, 1), F::template TopBits<1>(a));
+        return F::template CondXorWith<MOD>(F::Shift(a, 1), F::template Topshahbits<1>(a));
     }
 };
 
@@ -230,25 +230,25 @@ template<typename I, int N, typename L, typename F> struct GFMulHelper<I, N, L, 
 };
 template<typename I, int N, typename L, typename F, int K> struct GFMulHelper
 {
-    static inline constexpr I Run(const I& a, const I& b) { return F::CondXorWith(GFMulHelper<I, N, L, F, K - 1>::Run(L::Call(a), b), F::template MidBits<N - K, 1>(b), a); }
+    static inline constexpr I Run(const I& a, const I& b) { return F::CondXorWith(GFMulHelper<I, N, L, F, K - 1>::Run(L::Call(a), b), F::template Midshahbits<N - K, 1>(b), a); }
 };
 
-/** Compute the carry-less multiplication of a and b, with N bits, using L as LFSR type. */
+/** Compute the carry-less multiplication of a and b, with N shahbits, using L as LFSR type. */
 template<typename I, int N, typename L, typename F> inline constexpr I GFMul(const I& a, const I& b) { return GFMulHelper<I, N, L, F, N>::Run(a, b); }
 
 /** Compute the inverse of x using an extgcd algorithm. */
-template<typename I, typename F, int BITS, uint32_t MOD>
+template<typename I, typename F, int shahbits, uint32_t MOD>
 inline I InvExtGCD(I x)
 {
     if (F::IsZero(x)) return x;
     I t(0), newt(1);
     I r(MOD), newr = x;
-    int rlen = BITS + 1, newrlen = F::Bits(newr, BITS);
+    int rlen = shahbits + 1, newrlen = F::shahbits(newr, shahbits);
     while (newr) {
         int q = rlen - newrlen;
         r ^= F::Shift(newr, q);
         t ^= F::UnsafeShift(newt, q);
-        rlen = F::Bits(r, rlen - 1);
+        rlen = F::shahbits(r, rlen - 1);
         if (r < newr) {
             F::Swap(t, newt);
             F::Swap(r, newr);
@@ -263,10 +263,10 @@ inline I InvExtGCD(I x)
  * The `MUL` argument is a multiplication function, `SQR` is a squaring function, and the `SQRi` arguments
  * compute x**(2**i).
  */
-template<typename I, typename F, int BITS, I (*MUL)(I, I), I (*SQR)(I), I (*SQR2)(I), I(*SQR4)(I), I(*SQR8)(I), I(*SQR16)(I)>
+template<typename I, typename F, int shahbits, I (*MUL)(I, I), I (*SQR)(I), I (*SQR2)(I), I(*SQR4)(I), I(*SQR8)(I), I(*SQR16)(I)>
 inline I InvLadder(I x1)
 {
-    static constexpr int INV_EXP = BITS - 1;
+    static constexpr int INV_EXP = shahbits - 1;
     I x2 = (INV_EXP >= 2) ? MUL(SQR(x1), x1) : I();
     I x4 = (INV_EXP >= 4) ? MUL(SQR2(x2), x2) : I();
     I x8 = (INV_EXP >= 8) ? MUL(SQR4(x4), x4) : I();

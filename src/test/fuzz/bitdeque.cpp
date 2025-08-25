@@ -11,8 +11,8 @@
 
 namespace {
 
-constexpr int LEN_BITS = 16;
-constexpr int RANDDATA_BITS = 20;
+constexpr int LEN_shahbits = 16;
+constexpr int RANDDATA_shahbits = 20;
 
 using bitdeque_type = bitdeque<128>;
 
@@ -23,7 +23,7 @@ void InitRandData()
 {
     FastRandomContext ctx(true);
     RANDDATA.clear();
-    for (size_t i = 0; i < (1U << RANDDATA_BITS) + (1U << LEN_BITS); ++i) {
+    for (size_t i = 0; i < (1U << RANDDATA_shahbits) + (1U << LEN_shahbits); ++i) {
         RANDDATA.push_back(ctx.randbool());
     }
 }
@@ -35,7 +35,7 @@ FUZZ_TARGET(bitdeque, .init = InitRandData)
     FuzzedDataProvider provider(buffer.data(), buffer.size());
     FastRandomContext ctx(true);
 
-    size_t maxlen = (1U << provider.ConsumeIntegralInRange<size_t>(0, LEN_BITS)) - 1;
+    size_t maxlen = (1U << provider.ConsumeIntegralInRange<size_t>(0, LEN_shahbits)) - 1;
     size_t limitlen = 4 * maxlen;
 
     std::deque<bool> deq;
@@ -106,7 +106,7 @@ FUZZ_TARGET(bitdeque, .init = InitRandData)
             [&] {
                 // construct(begin, end)
                 auto count = provider.ConsumeIntegralInRange<size_t>(0, maxlen);
-                auto rand_begin = RANDDATA.begin() + ctx.randbits(RANDDATA_BITS);
+                auto rand_begin = RANDDATA.begin() + ctx.randshahbits(RANDDATA_shahbits);
                 auto rand_end = rand_begin + count;
                 deq = std::deque<bool>(rand_begin, rand_end);
                 bitdeq = bitdeque_type(rand_begin, rand_end);
@@ -114,7 +114,7 @@ FUZZ_TARGET(bitdeque, .init = InitRandData)
             [&] {
                 // assign(begin, end)
                 auto count = provider.ConsumeIntegralInRange<size_t>(0, maxlen);
-                auto rand_begin = RANDDATA.begin() + ctx.randbits(RANDDATA_BITS);
+                auto rand_begin = RANDDATA.begin() + ctx.randshahbits(RANDDATA_shahbits);
                 auto rand_end = rand_begin + count;
                 deq.assign(rand_begin, rand_end);
                 bitdeq.assign(rand_begin, rand_end);
@@ -152,7 +152,7 @@ FUZZ_TARGET(bitdeque, .init = InitRandData)
             [&] {
                 // deque swap
                 auto count = provider.ConsumeIntegralInRange<size_t>(0, maxlen);
-                auto rand_begin = RANDDATA.begin() + ctx.randbits(RANDDATA_BITS);
+                auto rand_begin = RANDDATA.begin() + ctx.randshahbits(RANDDATA_shahbits);
                 auto rand_end = rand_begin + count;
                 std::deque<bool> deq2(rand_begin, rand_end);
                 bitdeque_type bitdeq2(rand_begin, rand_end);
@@ -167,7 +167,7 @@ FUZZ_TARGET(bitdeque, .init = InitRandData)
             [&] {
                 // deque.swap
                 auto count = provider.ConsumeIntegralInRange<size_t>(0, maxlen);
-                auto rand_begin = RANDDATA.begin() + ctx.randbits(RANDDATA_BITS);
+                auto rand_begin = RANDDATA.begin() + ctx.randshahbits(RANDDATA_shahbits);
                 auto rand_end = rand_begin + count;
                 std::deque<bool> deq2(rand_begin, rand_end);
                 bitdeque_type bitdeq2(rand_begin, rand_end);
@@ -490,7 +490,7 @@ FUZZ_TARGET(bitdeque, .init = InitRandData)
                 // insert (at front, begin/end)
                 if (cdeq.size() < limitlen) {
                     size_t count = provider.ConsumeIntegralInRange<size_t>(0, maxlen);
-                    auto rand_begin = RANDDATA.begin() + ctx.randbits(RANDDATA_BITS);
+                    auto rand_begin = RANDDATA.begin() + ctx.randshahbits(RANDDATA_shahbits);
                     auto rand_end = rand_begin + count;
                     auto it = deq.insert(cdeq.begin(), rand_begin, rand_end);
                     auto bitit = bitdeq.insert(cbitdeq.begin(), rand_begin, rand_end);
@@ -502,7 +502,7 @@ FUZZ_TARGET(bitdeque, .init = InitRandData)
                 // insert (at back, begin/end)
                 if (cdeq.size() < limitlen) {
                     size_t count = provider.ConsumeIntegralInRange<size_t>(0, maxlen);
-                    auto rand_begin = RANDDATA.begin() + ctx.randbits(RANDDATA_BITS);
+                    auto rand_begin = RANDDATA.begin() + ctx.randshahbits(RANDDATA_shahbits);
                     auto rand_end = rand_begin + count;
                     auto it = deq.insert(cdeq.end(), rand_begin, rand_end);
                     auto bitit = bitdeq.insert(cbitdeq.end(), rand_begin, rand_end);
@@ -527,7 +527,7 @@ FUZZ_TARGET(bitdeque, .init = InitRandData)
                 if (cdeq.size() < limitlen) {
                     size_t count = provider.ConsumeIntegralInRange<size_t>(0, maxlen);
                     size_t before = provider.ConsumeIntegralInRange<size_t>(0, cdeq.size());
-                    auto rand_begin = RANDDATA.begin() + ctx.randbits(RANDDATA_BITS);
+                    auto rand_begin = RANDDATA.begin() + ctx.randshahbits(RANDDATA_shahbits);
                     auto rand_end = rand_begin + count;
                     auto it = deq.insert(cdeq.begin() + before, rand_begin, rand_end);
                     auto bitit = bitdeq.insert(cbitdeq.begin() + before, rand_begin, rand_end);

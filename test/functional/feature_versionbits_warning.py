@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Copyright (C) 2025 The SHAHCOIN Core Developers# Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test version bits warning system.
+"""Test version shahbits warning system.
 
 Generate chains with block versions that appear to be signalling unknown
 soft-forks, and test that warning alerts are generated.
@@ -14,16 +14,16 @@ from test_framework.messages import msg_block
 from test_framework.p2p import P2PInterface
 from test_framework.test_framework import ShahcoinTestFramework
 
-VB_PERIOD = 144           # versionbits period length for regtest
-VB_THRESHOLD = 108        # versionbits activation threshold for regtest
-VB_TOP_BITS = 0x20000000
+VB_PERIOD = 144           # versionshahbits period length for regtest
+VB_THRESHOLD = 108        # versionshahbits activation threshold for regtest
+VB_TOP_shahbits = 0x20000000
 VB_UNKNOWN_BIT = 27       # Choose a bit unassigned to any deployment
-VB_UNKNOWN_VERSION = VB_TOP_BITS | (1 << VB_UNKNOWN_BIT)
+VB_UNKNOWN_VERSION = VB_TOP_shahbits | (1 << VB_UNKNOWN_BIT)
 
 WARN_UNKNOWN_RULES_ACTIVE = f"Unknown new rules activated (versionbit {VB_UNKNOWN_BIT})"
 VB_PATTERN = re.compile("Unknown new rules activated.*versionbit")
 
-class VersionBitsWarningTest(ShahcoinTestFramework):
+class VersionshahbitsWarningTest(ShahcoinTestFramework):
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 1
@@ -52,8 +52,8 @@ class VersionBitsWarningTest(ShahcoinTestFramework):
             tip = block.sha256
         peer.sync_with_ping()
 
-    def versionbits_in_alert_file(self):
-        """Test that the versionbits warning has been written to the alert file."""
+    def versionshahbits_in_alert_file(self):
+        """Test that the versionshahbits warning has been written to the alert file."""
         with open(self.alert_filename, 'r', encoding='utf8') as f:
             alert_text = f.read()
         return VB_PATTERN.search(alert_text) is not None
@@ -66,7 +66,7 @@ class VersionBitsWarningTest(ShahcoinTestFramework):
         # Mine one period worth of blocks
         self.generatetoaddress(node, VB_PERIOD, node_deterministic_address)
 
-        self.log.info("Check that there is no warning if previous VB_BLOCKS have <VB_THRESHOLD blocks with unknown versionbits version.")
+        self.log.info("Check that there is no warning if previous VB_BLOCKS have <VB_THRESHOLD blocks with unknown versionshahbits version.")
         # Build one period of blocks with < VB_THRESHOLD blocks signaling some unknown bit
         self.send_blocks_with_version(peer, VB_THRESHOLD - 1, VB_UNKNOWN_VERSION)
         self.generatetoaddress(node, VB_PERIOD - VB_THRESHOLD + 1, node_deterministic_address)
@@ -79,7 +79,7 @@ class VersionBitsWarningTest(ShahcoinTestFramework):
         self.send_blocks_with_version(peer, VB_THRESHOLD, VB_UNKNOWN_VERSION)
         self.generatetoaddress(node, VB_PERIOD - VB_THRESHOLD, node_deterministic_address)
 
-        self.log.info("Check that there is a warning if previous VB_BLOCKS have >=VB_THRESHOLD blocks with unknown versionbits version.")
+        self.log.info("Check that there is a warning if previous VB_BLOCKS have >=VB_THRESHOLD blocks with unknown versionshahbits version.")
         # Mine a period worth of expected blocks so the generic block-version warning
         # is cleared. This will move the versionbit state to ACTIVE.
         self.generatetoaddress(node, VB_PERIOD, node_deterministic_address)
@@ -92,11 +92,11 @@ class VersionBitsWarningTest(ShahcoinTestFramework):
         self.wait_until(lambda: not node.getblockchaininfo()['initialblockdownload'])
         # Generating one more block will be enough to generate an error.
         self.generatetoaddress(node, 1, node_deterministic_address)
-        # Check that get*info() shows the versionbits unknown rules warning
+        # Check that get*info() shows the versionshahbits unknown rules warning
         assert WARN_UNKNOWN_RULES_ACTIVE in node.getmininginfo()["warnings"]
         assert WARN_UNKNOWN_RULES_ACTIVE in node.getnetworkinfo()["warnings"]
-        # Check that the alert file shows the versionbits unknown rules warning
-        self.wait_until(lambda: self.versionbits_in_alert_file())
+        # Check that the alert file shows the versionshahbits unknown rules warning
+        self.wait_until(lambda: self.versionshahbits_in_alert_file())
 
 if __name__ == '__main__':
-    VersionBitsWarningTest().main()
+    VersionshahbitsWarningTest().main()

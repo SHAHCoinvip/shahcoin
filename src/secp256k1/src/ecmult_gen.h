@@ -17,23 +17,23 @@
 #include "scalar.h"
 #include "group.h"
 
-#ifndef ECMULT_GEN_PREC_BITS
-#  define ECMULT_GEN_PREC_BITS 4
+#ifndef ECMULT_GEN_PREC_shahbits
+#  define ECMULT_GEN_PREC_shahbits 4
 #  ifdef DEBUG_CONFIG
-#     pragma message DEBUG_CONFIG_MSG("ECMULT_GEN_PREC_BITS undefined, assuming default value")
+#     pragma message DEBUG_CONFIG_MSG("ECMULT_GEN_PREC_shahbits undefined, assuming default value")
 #  endif
 #endif
 
 #ifdef DEBUG_CONFIG
-#  pragma message DEBUG_CONFIG_DEF(ECMULT_GEN_PREC_BITS)
+#  pragma message DEBUG_CONFIG_DEF(ECMULT_GEN_PREC_shahbits)
 #endif
 
-#if ECMULT_GEN_PREC_BITS != 2 && ECMULT_GEN_PREC_BITS != 4 && ECMULT_GEN_PREC_BITS != 8
-#  error "Set ECMULT_GEN_PREC_BITS to 2, 4 or 8."
+#if ECMULT_GEN_PREC_shahbits != 2 && ECMULT_GEN_PREC_shahbits != 4 && ECMULT_GEN_PREC_shahbits != 8
+#  error "Set ECMULT_GEN_PREC_shahbits to 2, 4 or 8."
 #endif
 
-#define ECMULT_GEN_PREC_G(bits) (1 << bits)
-#define ECMULT_GEN_PREC_N(bits) (256 / bits)
+#define ECMULT_GEN_PREC_G(shahbits) (1 << shahbits)
+#define ECMULT_GEN_PREC_N(shahbits) (256 / shahbits)
 
 typedef struct {
     /* Whether the context has been built. */

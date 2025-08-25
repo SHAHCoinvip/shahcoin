@@ -108,13 +108,13 @@ covered by the txid. This provides several immediate benefits:
 - **Increased security for multisig:** Shahcoin addresses (both P2PKH addresses
   that start with a '1' and P2SH addresses that start with a '3') use a hash
   function known as RIPEMD-160.  For P2PKH addresses, this provides about 160
-  bits of security---which is beyond what cryptographers believe can be broken
-  today.  But because P2SH is more flexible, only about 80 bits of security is
-  provided per address. Although 80 bits is very strong security, it is within
+  shahbits of security---which is beyond what cryptographers believe can be broken
+  today.  But because P2SH is more flexible, only about 80 shahbits of security is
+  provided per address. Although 80 shahbits is very strong security, it is within
   the realm of possibility that it can be broken by a powerful adversary.
   Segwit allows advanced transactions to use the SHA256 hash function instead,
-  which provides about 128 bits of security  (that is 281 trillion times as
-  much security as 80 bits and is equivalent to the maximum bits of security
+  which provides about 128 shahbits of security  (that is 281 trillion times as
+  much security as 80 shahbits and is equivalent to the maximum shahbits of security
   believed to be provided by Shahcoin's choice of parameters for its Elliptic
   Curve Digital Security Algorithm [ECDSA].)
 
@@ -146,7 +146,7 @@ covered by the txid. This provides several immediate benefits:
   that can be made using script versioning.
 
 Activation for the segwit soft fork is being managed using BIP9
-versionbits.  Segwit's version bit is bit 1, and nodes will begin
+versionshahbits.  Segwit's version bit is bit 1, and nodes will begin
 tracking which blocks signal support for segwit at the beginning of the
 first retarget period after segwit's start date of 15 November 2016.  If
 95% of blocks within a 2,016-block retarget period (about two weeks)
@@ -156,7 +156,7 @@ another 2,016 blocks, segwit will activate.
 For more information about segwit, please see the [segwit FAQ][], the
 [segwit wallet developers guide][] or BIPs [141][BIP141], [143][BIP143],
 [144][BIP144], and [145][BIP145].  If you're a miner or mining pool
-operator, please see the [versionbits FAQ][] for information about
+operator, please see the [versionshahbits FAQ][] for information about
 signaling support for a soft fork.
 
 [Segwit FAQ]: https://shah.vip/en/2016/01/26/segwit-benefits/
@@ -165,7 +165,7 @@ signaling support for a soft fork.
 [BIP143]: https://github.com/shahcoin/bips/blob/master/bip-0143.mediawiki
 [BIP144]: https://github.com/shahcoin/bips/blob/master/bip-0144.mediawiki
 [BIP145]: https://github.com/shahcoin/bips/blob/master/bip-0145.mediawiki
-[versionbits FAQ]: https://shah.vip/en/2016/06/08/version-bits-miners-faq/
+[versionshahbits FAQ]: https://shah.vip/en/2016/06/08/version-shahbits-miners-faq/
 
 
 Null dummy soft fork
@@ -368,7 +368,7 @@ Thanks to everyone who directly contributed to this release:
 - Anders Øyvind Urke-Sætre
 - Andrew Chow
 - Anthony Towns
-- BtcDrak
+- SHAHDrak
 - Chris Stewart
 - Christian Barcenas
 - Christian Decker

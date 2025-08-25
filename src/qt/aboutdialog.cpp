@@ -306,7 +306,7 @@ void AboutDialog::setupCredits()
         "<br>"
         "<h3>Special Thanks</h3>"
         "<ul>"
-        "<li>Bitcoin Core contributors for the foundation</li>"
+        "<li>SHAHCOIN Core contributors for the foundation</li>"
         "<li>Qt Framework for the GUI toolkit</li>"
         "<li>Open source community for continuous support</li>"
         "</ul>"

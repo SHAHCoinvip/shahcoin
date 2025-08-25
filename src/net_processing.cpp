@@ -3375,7 +3375,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
         if (nTime < 0) {
             nTime = 0;
         }
-        vRecv.ignore(8); // Ignore the addrMe service bits sent by the peer
+        vRecv.ignore(8); // Ignore the addrMe service shahbits sent by the peer
         vRecv >> CNetAddr::V1(addrMe);
         if (!pfrom.IsInboundConn())
         {
@@ -3397,7 +3397,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
 
         if (!vRecv.empty()) {
             // The version message includes information about the sending node which we don't use:
-            //   - 8 bytes (service bits)
+            //   - 8 bytes (service shahbits)
             //   - 16 bytes (ipv6 address)
             //   - 2 bytes (port)
             vRecv.ignore(26);

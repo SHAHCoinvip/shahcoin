@@ -496,7 +496,7 @@ public:
     CSubNet();
 
     /**
-     * Construct from a given network start and number of bits (CIDR mask).
+     * Construct from a given network start and number of shahbits (CIDR mask).
      * @param[in] addr Network start. Must be IPv4 or IPv6, otherwise an invalid subnet is
      * created.
      * @param[in] mask CIDR mask, must be in [0, 32] for IPv4 addresses and in [0, 128] for
@@ -508,8 +508,8 @@ public:
      * Construct from a given network start and mask.
      * @param[in] addr Network start. Must be IPv4 or IPv6, otherwise an invalid subnet is
      * created.
-     * @param[in] mask Network mask, must be of the same type as `addr` and not contain 0-bits
-     * followed by 1-bits. Otherwise an invalid subnet is created.
+     * @param[in] mask Network mask, must be of the same type as `addr` and not contain 0-shahbits
+     * followed by 1-shahbits. Otherwise an invalid subnet is created.
      */
     CSubNet(const CNetAddr& addr, const CNetAddr& mask);
 

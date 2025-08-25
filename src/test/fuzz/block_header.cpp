@@ -25,7 +25,7 @@ FUZZ_TARGET(block_header)
         static const uint256 u256_max(uint256S("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"));
         assert(hash != u256_max);
         assert(block_header->GetBlockTime() == block_header->nTime);
-        assert(block_header->IsNull() == (block_header->nBits == 0));
+        assert(block_header->IsNull() == (block_header->nshahbits == 0));
     }
     {
         CBlockHeader mut_block_header = *block_header;

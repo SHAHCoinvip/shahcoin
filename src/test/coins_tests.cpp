@@ -151,8 +151,8 @@ void SimulationTest(CCoinsView* base, bool fake_best_block)
             // Determine whether to test HaveCoin before or after Access* (or both). As these functions
             // can influence each other's behaviour by pulling things into the cache, all combinations
             // are tested.
-            bool test_havecoin_before = InsecureRandBits(2) == 0;
-            bool test_havecoin_after = InsecureRandBits(2) == 0;
+            bool test_havecoin_before = InsecureRandshahbits(2) == 0;
+            bool test_havecoin_after = InsecureRandshahbits(2) == 0;
 
             bool result_havecoin = test_havecoin_before ? stack.back()->HaveCoin(COutPoint(txid, 0)) : false;
 
@@ -178,12 +178,12 @@ void SimulationTest(CCoinsView* base, bool fake_best_block)
 
                 // Infrequently test adding unspendable coins.
                 if (InsecureRandRange(16) == 0 && coin.IsSpent()) {
-                    newcoin.out.scriptPubKey.assign(1 + InsecureRandBits(6), OP_RETURN);
+                    newcoin.out.scriptPubKey.assign(1 + InsecureRandshahbits(6), OP_RETURN);
                     BOOST_CHECK(newcoin.out.scriptPubKey.IsUnspendable());
                     added_an_unspendable_entry = true;
                 } else {
                     // Random sizes so we can test memory usage accounting
-                    newcoin.out.scriptPubKey.assign(InsecureRandBits(6), 0);
+                    newcoin.out.scriptPubKey.assign(InsecureRandshahbits(6), 0);
                     (coin.IsSpent() ? added_an_entry : updated_an_entry) = true;
                     coin = newcoin;
                 }

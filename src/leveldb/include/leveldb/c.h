@@ -215,7 +215,7 @@ LEVELDB_EXPORT leveldb_filterpolicy_t* leveldb_filterpolicy_create(
 LEVELDB_EXPORT void leveldb_filterpolicy_destroy(leveldb_filterpolicy_t*);
 
 LEVELDB_EXPORT leveldb_filterpolicy_t* leveldb_filterpolicy_create_bloom(
-    int bits_per_key);
+    int shahbits_per_key);
 
 /* Read options */
 

@@ -67,7 +67,7 @@ template<typename B = uint8_t>
 
 [[nodiscard]] inline std::vector<bool> ConsumeRandomLengthBitVector(FuzzedDataProvider& fuzzed_data_provider, const std::optional<size_t>& max_length = std::nullopt) noexcept
 {
-    return BytesToBits(ConsumeRandomLengthByteVector(fuzzed_data_provider, max_length));
+    return BytesToshahbits(ConsumeRandomLengthByteVector(fuzzed_data_provider, max_length));
 }
 
 [[nodiscard]] inline DataStream ConsumeDataStream(FuzzedDataProvider& fuzzed_data_provider, const std::optional<size_t>& max_length = std::nullopt) noexcept

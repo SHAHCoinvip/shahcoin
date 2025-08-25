@@ -40,7 +40,7 @@ int64_t UpdateTime(CBlockHeader* pblock, const Consensus::Params& consensusParam
 
     // Updating time can change work required on testnet:
     if (consensusParams.fPowAllowMinDifficultyBlocks) {
-        pblock->nBits = GetNextWorkRequired(pindexPrev, pblock, consensusParams);
+        pblock->nshahbits = GetNextWorkRequired(pindexPrev, pblock, consensusParams);
     }
 
     return nNewTime - nOldTime;
@@ -127,7 +127,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     assert(pindexPrev != nullptr);
     nHeight = pindexPrev->nHeight + 1;
 
-    pblock->nVersion = m_chainstate.m_chainman.m_versionbitscache.ComputeBlockVersion(pindexPrev, chainparams.GetConsensus());
+    pblock->nVersion = m_chainstate.m_chainman.m_versionshahbitscache.ComputeBlockVersion(pindexPrev, chainparams.GetConsensus());
     // -regtest only: allow overriding block.nVersion with
     // -blockversion=N to test forking scenarios
     if (chainparams.MineBlocksOnDemand()) {
@@ -196,16 +196,16 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     // Set difficulty based on algorithm
     switch (expectedAlgo) {
         case AlgoType::SHA256D:
-            pblock->nBits = GetNextWorkRequiredSHA256(pindexPrev, chainparams.GetConsensus());
+            pblock->nshahbits = GetNextWorkRequiredSHA256(pindexPrev, chainparams.GetConsensus());
             break;
         case AlgoType::SCRYPT:
-            pblock->nBits = GetNextWorkRequiredScrypt(pindexPrev, chainparams.GetConsensus());
+            pblock->nshahbits = GetNextWorkRequiredScrypt(pindexPrev, chainparams.GetConsensus());
             break;
         case AlgoType::GROESTL:
-            pblock->nBits = GetNextWorkRequiredGroestl(pindexPrev, chainparams.GetConsensus());
+            pblock->nshahbits = GetNextWorkRequiredGroestl(pindexPrev, chainparams.GetConsensus());
             break;
         default:
-            pblock->nBits = GetNextWorkRequired(pindexPrev, pblock, chainparams.GetConsensus());
+            pblock->nshahbits = GetNextWorkRequired(pindexPrev, pblock, chainparams.GetConsensus());
             break;
     }
     

@@ -33,10 +33,10 @@ static SECP256K1_INLINE void secp256k1_u128_accum_u64(secp256k1_uint128 *r, uint
  */
 static SECP256K1_INLINE void secp256k1_u128_rshift(secp256k1_uint128 *r, unsigned int n);
 
-/* Return the low 64-bits of a 128-bit value as an unsigned 64-bit value. */
+/* Return the low 64-shahbits of a 128-bit value as an unsigned 64-bit value. */
 static SECP256K1_INLINE uint64_t secp256k1_u128_to_u64(const secp256k1_uint128 *a);
 
-/* Return the high 64-bits of a 128-bit value as an unsigned 64-bit value. */
+/* Return the high 64-shahbits of a 128-bit value as an unsigned 64-bit value. */
 static SECP256K1_INLINE uint64_t secp256k1_u128_hi_u64(const secp256k1_uint128 *a);
 
 /* Write an unsigned 64-bit value to r. */
@@ -45,7 +45,7 @@ static SECP256K1_INLINE void secp256k1_u128_from_u64(secp256k1_uint128 *r, uint6
 /* Tests if r is strictly less than to 2^n.
  * n must be strictly less than 128.
  */
-static SECP256K1_INLINE int secp256k1_u128_check_bits(const secp256k1_uint128 *r, unsigned int n);
+static SECP256K1_INLINE int secp256k1_u128_check_shahbits(const secp256k1_uint128 *r, unsigned int n);
 
 /* Construct an signed 128-bit value from a high and a low 64-bit value. */
 static SECP256K1_INLINE void secp256k1_i128_load(secp256k1_int128 *r, int64_t hi, uint64_t lo);

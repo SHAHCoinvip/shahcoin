@@ -12,7 +12,7 @@ CBlock CreateGenesisBlock(
     const CScript& outputScript,
     uint32_t nTime,
     uint32_t nNonce,
-    uint32_t nBits,
+    uint32_t nshahbits,
     int32_t nVersion,
     const CAmount& genesisReward
 );

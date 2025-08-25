@@ -51,7 +51,7 @@
  *
  * - One particular pitfall is that Spans can be constructed from temporaries,
  *   but this is unsafe when the Span is stored in a variable, outliving the
- *   temporary. For example, this will compile, but exhibits undefined behavior:
+ *   temporary. For example, this will compile, but exhishahbits undefined behavior:
  *
  *       Span<const int> sp(std::vector<int>{1, 2, 3});
  *       printf("%i\n", sp.front()); // UB!

@@ -1,22 +1,22 @@
 // Copyright (C) 2025 The SHAHCOIN Core Developers// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef SHAHCOIN_VERSIONBITS_H
-#define SHAHCOIN_VERSIONBITS_H
+#ifndef SHAHCOIN_VERSIONshahbits_H
+#define SHAHCOIN_VERSIONshahbits_H
 
 #include <chain.h>
 #include <sync.h>
 
 #include <map>
 
-/** What block version to use for new blocks (pre versionbits) */
-static const int32_t VERSIONBITS_LAST_OLD_BLOCK_VERSION = 4;
-/** What bits to set in version for versionbits blocks */
-static const int32_t VERSIONBITS_TOP_BITS = 0x20000000UL;
-/** What bitmask determines whether versionbits is in use */
-static const int32_t VERSIONBITS_TOP_MASK = 0xE0000000UL;
-/** Total bits available for versionbits */
-static const int32_t VERSIONBITS_NUM_BITS = 29;
+/** What block version to use for new blocks (pre versionshahbits) */
+static const int32_t VERSIONshahbits_LAST_OLD_BLOCK_VERSION = 4;
+/** What shahbits to set in version for versionshahbits blocks */
+static const int32_t VERSIONshahbits_TOP_shahbits = 0x20000000UL;
+/** What bitmask determines whether versionshahbits is in use */
+static const int32_t VERSIONshahbits_TOP_MASK = 0xE0000000UL;
+/** Total shahbits available for versionshahbits */
+static const int32_t VERSIONshahbits_NUM_shahbits = 29;
 
 /** BIP 9 defines a finite-state-machine to deploy a softfork in multiple stages.
  *  State transitions happen during retarget period if conditions are met
@@ -76,11 +76,11 @@ public:
 
 /** BIP 9 allows multiple softforks to be deployed in parallel. We cache
  *  per-period state for every one of them. */
-class VersionBitsCache
+class VersionshahbitsCache
 {
 private:
     Mutex m_mutex;
-    ThresholdConditionCache m_caches[Consensus::MAX_VERSION_BITS_DEPLOYMENTS] GUARDED_BY(m_mutex);
+    ThresholdConditionCache m_caches[Consensus::MAX_VERSION_shahbits_DEPLOYMENTS] GUARDED_BY(m_mutex);
 
 public:
     /** Get the numerical statistics for a given deployment for the signalling period that includes pindex.
@@ -103,4 +103,4 @@ public:
     void Clear() EXCLUSIVE_LOCKS_REQUIRED(!m_mutex);
 };
 
-#endif // SHAHCOIN_VERSIONBITS_H
+#endif // SHAHCOIN_VERSIONshahbits_H

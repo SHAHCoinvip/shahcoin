@@ -72,7 +72,7 @@ public:
         uint256 hash;
         uint256 prevHash;
         uint32_t nTime;
-        uint32_t nBits;
+        uint32_t nshahbits;
         uint32_t nNonce;
         uint32_t nHeight;
         bool isValid;

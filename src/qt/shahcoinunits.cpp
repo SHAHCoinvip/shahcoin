@@ -33,7 +33,7 @@ QString ShahcoinUnits::longName(Unit unit)
     switch (unit) {
     case Unit::SHAH: return QString("SHAH");
     case Unit::mSHAH: return QString("mSHAH");
-    case Unit::uSHAH: return QString::fromUtf8("µSHAH (bits)");
+    case Unit::uSHAH: return QString::fromUtf8("µSHAH (shahbits)");
     case Unit::SAT: return QString("shahi (sat)");
     } // no default case, so the compiler can warn about missing cases
     assert(false);
@@ -44,7 +44,7 @@ QString ShahcoinUnits::shortName(Unit unit)
     switch (unit) {
     case Unit::SHAH: return longName(unit);
     case Unit::mSHAH: return longName(unit);
-    case Unit::uSHAH: return QString("bits");
+    case Unit::uSHAH: return QString("shahbits");
     case Unit::SAT: return QString("sat");
     } // no default case, so the compiler can warn about missing cases
     assert(false);
@@ -55,7 +55,7 @@ QString ShahcoinUnits::description(Unit unit)
     switch (unit) {
     case Unit::SHAH: return QString("Shahcoins");
     case Unit::mSHAH: return QString("Milli-Shahcoins (1 / 1" THIN_SP_UTF8 "000)");
-    case Unit::uSHAH: return QString("Micro-Shahcoins (bits) (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+    case Unit::uSHAH: return QString("Micro-Shahcoins (shahbits) (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
     case Unit::SAT: return QString("shahi (sat) (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
     } // no default case, so the compiler can warn about missing cases
     assert(false);
@@ -182,7 +182,7 @@ bool ShahcoinUnits::parse(Unit unit, const QString& value, CAmount* val_out)
 
     if(str.size() > 18)
     {
-        return false; // Longer numbers will exceed 63 bits
+        return false; // Longer numbers will exceed 63 shahbits
     }
     CAmount retvalue(str.toLongLong(&ok));
     if(val_out)

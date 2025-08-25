@@ -138,7 +138,7 @@ BOOST_AUTO_TEST_CASE(test_block_mining_algorithms)
         std::shared_ptr<CBlock> block = std::make_shared<CBlock>();
         block->nVersion = 1;
         block->nTime = static_cast<uint32_t>(time(nullptr));
-        block->nBits = 0x1d00ffff;
+        block->nshahbits = 0x1d00ffff;
         
         // Set algorithm based on height
         AlgoType algo = SelectNextAlgo(i);
@@ -169,7 +169,7 @@ BOOST_AUTO_TEST_CASE(test_block_mining_algorithms)
         header_data.insert(header_data.end(), (unsigned char*)&block->nVersion, (unsigned char*)&block->nVersion + 4);
         header_data.insert(header_data.end(), block->hashPrevBlock.begin(), block->hashPrevBlock.end());
         header_data.insert(header_data.end(), (unsigned char*)&block->nTime, (unsigned char*)&block->nTime + 4);
-        header_data.insert(header_data.end(), (unsigned char*)&block->nBits, (unsigned char*)&block->nBits + 4);
+        header_data.insert(header_data.end(), (unsigned char*)&block->nshahbits, (unsigned char*)&block->nshahbits + 4);
         
         GetPoWHash(header_data, algo, hash);
         

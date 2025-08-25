@@ -60,9 +60,9 @@ SECP256K1_INLINE static uint64_t secp256k1_testrand64(void) {
     return result;
 }
 
-SECP256K1_INLINE static uint64_t secp256k1_testrand_bits(int bits) {
-    if (bits == 0) return 0;
-    return secp256k1_testrand64() >> (64 - bits);
+SECP256K1_INLINE static uint64_t secp256k1_testrand_shahbits(int shahbits) {
+    if (shahbits == 0) return 0;
+    return secp256k1_testrand64() >> (64 - shahbits);
 }
 
 SECP256K1_INLINE static uint32_t secp256k1_testrand32(void) {
@@ -75,7 +75,7 @@ static uint32_t secp256k1_testrand_int(uint32_t range) {
     /* Reduce range by 1, changing its meaning to "maximum value". */
     VERIFY_CHECK(range != 0);
     range -= 1;
-    /* Count the number of bits in range. */
+    /* Count the number of shahbits in range. */
     range_copy = range;
     while (range_copy) {
         mask = (mask << 1) | 1U;
@@ -105,17 +105,17 @@ static void secp256k1_testrand256(unsigned char *b32) {
 }
 
 static void secp256k1_testrand_bytes_test(unsigned char *bytes, size_t len) {
-    size_t bits = 0;
+    size_t shahbits = 0;
     memset(bytes, 0, len);
-    while (bits < len * 8) {
+    while (shahbits < len * 8) {
         int now;
         uint32_t val;
-        now = 1 + (secp256k1_testrand_bits(6) * secp256k1_testrand_bits(5) + 16) / 31;
-        val = secp256k1_testrand_bits(1);
-        while (now > 0 && bits < len * 8) {
-            bytes[bits / 8] |= val << (bits % 8);
+        now = 1 + (secp256k1_testrand_shahbits(6) * secp256k1_testrand_shahbits(5) + 16) / 31;
+        val = secp256k1_testrand_shahbits(1);
+        while (now > 0 && shahbits < len * 8) {
+            bytes[shahbits / 8] |= val << (shahbits % 8);
             now--;
-            bits++;
+            shahbits++;
         }
     }
 }
@@ -125,7 +125,7 @@ static void secp256k1_testrand256_test(unsigned char *b32) {
 }
 
 static void secp256k1_testrand_flip(unsigned char *b, size_t len) {
-    b[secp256k1_testrand_int(len)] ^= (1 << secp256k1_testrand_bits(3));
+    b[secp256k1_testrand_int(len)] ^= (1 << secp256k1_testrand_shahbits(3));
 }
 
 static void secp256k1_testrand_init(const char* hexseed) {

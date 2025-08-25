@@ -18,7 +18,7 @@ const uint64_t PREMINE_AMOUNT = 8000000 * 100000000; // 8M SHAH in satoshis
 // Genesis block parameters
 const uint32_t GENESIS_TIME = 1743638400; // July 1, 2025 00:00:00 UTC
 const uint32_t GENESIS_NONCE = 0x12345678;
-const uint32_t GENESIS_BITS = 0x1d00ffff;
+const uint32_t GENESIS_shahbits = 0x1d00ffff;
 const uint32_t GENESIS_VERSION = 0x20000000; // Hybrid consensus enabled
 
 // Helper function to convert bytes to hex string
@@ -94,11 +94,11 @@ std::vector<unsigned char> generateGenesisHeader() {
     header.push_back((GENESIS_TIME >> 16) & 0xFF);
     header.push_back((GENESIS_TIME >> 24) & 0xFF);
     
-    // Bits (4 bytes, little endian)
-    header.push_back(GENESIS_BITS & 0xFF);
-    header.push_back((GENESIS_BITS >> 8) & 0xFF);
-    header.push_back((GENESIS_BITS >> 16) & 0xFF);
-    header.push_back((GENESIS_BITS >> 24) & 0xFF);
+    // shahbits (4 bytes, little endian)
+    header.push_back(GENESIS_shahbits & 0xFF);
+    header.push_back((GENESIS_shahbits >> 8) & 0xFF);
+    header.push_back((GENESIS_shahbits >> 16) & 0xFF);
+    header.push_back((GENESIS_shahbits >> 24) & 0xFF);
     
     // Nonce (4 bytes, little endian)
     header.push_back(GENESIS_NONCE & 0xFF);
@@ -126,7 +126,7 @@ int main() {
     std::cout << "======================" << std::endl;
     std::cout << "Timestamp: " << GENESIS_TIME << " (July 1, 2025 00:00:00 UTC)" << std::endl;
     std::cout << "Nonce:     " << std::hex << GENESIS_NONCE << std::dec << std::endl;
-    std::cout << "Bits:      " << std::hex << GENESIS_BITS << std::dec << std::endl;
+    std::cout << "shahbits:      " << std::hex << GENESIS_shahbits << std::dec << std::endl;
     std::cout << "Version:   " << std::hex << GENESIS_VERSION << std::dec << std::endl;
     std::cout << std::endl;
     
@@ -163,7 +163,7 @@ int main() {
         genesisFile << "GENESIS PARAMETERS:" << std::endl;
         genesisFile << "Timestamp: " << GENESIS_TIME << " (July 1, 2025 00:00:00 UTC)" << std::endl;
         genesisFile << "Nonce:     " << std::hex << GENESIS_NONCE << std::dec << std::endl;
-        genesisFile << "Bits:      " << std::hex << GENESIS_BITS << std::dec << std::endl;
+        genesisFile << "shahbits:      " << std::hex << GENESIS_shahbits << std::dec << std::endl;
         genesisFile << "Version:   " << std::hex << GENESIS_VERSION << std::dec << std::endl;
         genesisFile << std::endl;
         genesisFile << "GENESIS BLOCK:" << std::endl;

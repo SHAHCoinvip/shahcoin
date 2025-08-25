@@ -20,13 +20,13 @@ private:
     unsigned m_bufsize = 0;
     unsigned m_pos = 0;
 
-    //! Sponge rate in bits.
-    static constexpr unsigned RATE_BITS = 1088;
+    //! Sponge rate in shahbits.
+    static constexpr unsigned RATE_shahbits = 1088;
 
     //! Sponge rate expressed as a multiple of the buffer size.
-    static constexpr unsigned RATE_BUFFERS = RATE_BITS / (8 * sizeof(m_buffer));
+    static constexpr unsigned RATE_BUFFERS = RATE_shahbits / (8 * sizeof(m_buffer));
 
-    static_assert(RATE_BITS % (8 * sizeof(m_buffer)) == 0, "Rate must be a multiple of 8 bytes");
+    static_assert(RATE_shahbits % (8 * sizeof(m_buffer)) == 0, "Rate must be a multiple of 8 bytes");
 
 public:
     static constexpr size_t OUTPUT_SIZE = 32;

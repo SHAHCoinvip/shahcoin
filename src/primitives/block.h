@@ -26,7 +26,7 @@ public:
     uint256 hashPrevBlock;
     uint256 hashMerkleRoot;
     uint32_t nTime;
-    uint32_t nBits;
+    uint32_t nshahbits;
     uint32_t nNonce;
     uint8_t nAlgorithm; // SHAHCOIN Core multi-algorithm mining support
     uint8_t nBlockType; // SHAHCOIN Core block type (PoW/PoS)
@@ -36,13 +36,13 @@ public:
     uint32_t nStakeTime;    // Stake timestamp
     uint256 hashStakeKernel; // Stake kernel hash for validation
     
-    // Hybrid consensus: AlgoType field (encoded in version bits or extra field)
+    // Hybrid consensus: AlgoType field (encoded in version shahbits or extra field)
     AlgoType GetAlgoType() const {
         // Check if this is a hybrid consensus block (version >= 0x20000000)
         if (nVersion >= 0x20000000) {
-            // Extract algorithm from version bits (bits 28-30)
-            uint8_t algo_bits = (nVersion >> 28) & 0x07;
-            return static_cast<AlgoType>(algo_bits);
+            // Extract algorithm from version shahbits (shahbits 28-30)
+            uint8_t algo_shahbits = (nVersion >> 28) & 0x07;
+            return static_cast<AlgoType>(algo_shahbits);
         }
         
         // Legacy blocks: derive from height-based rotation
@@ -62,7 +62,7 @@ public:
     }
 
     SERIALIZE_METHODS(CBlockHeader, obj) { 
-        READWRITE(obj.nVersion, obj.hashPrevBlock, obj.hashMerkleRoot, obj.nTime, obj.nBits, obj.nNonce, obj.nAlgorithm, obj.nBlockType);
+        READWRITE(obj.nVersion, obj.hashPrevBlock, obj.hashMerkleRoot, obj.nTime, obj.nshahbits, obj.nNonce, obj.nAlgorithm, obj.nBlockType);
         if (obj.nBlockType == BLOCK_TYPE_POS) {
             READWRITE(obj.hashStake, obj.nStakeTime, obj.hashStakeKernel);
         }
@@ -74,7 +74,7 @@ public:
         hashPrevBlock.SetNull();
         hashMerkleRoot.SetNull();
         nTime = 0;
-        nBits = 0;
+        nshahbits = 0;
         nNonce = 0;
         nAlgorithm = ALGO_SHA256D; // SHAHCOIN Core default to SHA256d
         nBlockType = BLOCK_TYPE_POW; // SHAHCOIN Core default to PoW
@@ -85,7 +85,7 @@ public:
 
     bool IsNull() const
     {
-        return (nBits == 0);
+        return (nshahbits == 0);
     }
 
     uint256 GetHash() const;
@@ -180,7 +180,7 @@ public:
         block.hashPrevBlock  = hashPrevBlock;
         block.hashMerkleRoot = hashMerkleRoot;
         block.nTime          = nTime;
-        block.nBits          = nBits;
+        block.nshahbits          = nshahbits;
         block.nNonce         = nNonce;
         block.nAlgorithm     = nAlgorithm;
         block.nBlockType     = nBlockType;

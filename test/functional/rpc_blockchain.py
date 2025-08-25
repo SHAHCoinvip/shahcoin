@@ -407,7 +407,7 @@ class BlockchainTest(ShahcoinTestFramework):
         assert_is_hash_string(header['hash'])
         assert_is_hash_string(header['previousblockhash'])
         assert_is_hash_string(header['merkleroot'])
-        assert_is_hash_string(header['bits'], length=None)
+        assert_is_hash_string(header['shahbits'], length=None)
         assert isinstance(header['time'], int)
         assert_equal(header['mediantime'], TIME_RANGE_MTP)
         assert isinstance(header['nonce'], int)

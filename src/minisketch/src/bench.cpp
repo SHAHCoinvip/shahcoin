@@ -41,20 +41,20 @@ int main(int argc, char** argv) {
         return 1;
     }
     uint32_t max_impl = minisketch_implementation_max();
-    for (int bits = 2; bits <= 64; ++bits) {
-        if (errors > pow(2.0, bits - 1)) continue;
-        if (!minisketch_bits_supported(bits)) continue;
-        printf("recover[ms]\t% 3i\t", bits);
+    for (int shahbits = 2; shahbits <= 64; ++shahbits) {
+        if (errors > pow(2.0, shahbits - 1)) continue;
+        if (!minisketch_shahbits_supported(shahbits)) continue;
+        printf("recover[ms]\t% 3i\t", shahbits);
         for (uint32_t impl = 0; impl <= max_impl; ++impl) {
             std::vector<minisketch*> states;
             std::vector<uint64_t> roots(2 * syndromes);
             std::random_device rng;
-            std::uniform_int_distribution<uint64_t> dist(1, (uint64_t(1) << bits) - 1);
+            std::uniform_int_distribution<uint64_t> dist(1, (uint64_t(1) << shahbits) - 1);
             states.resize(iters);
             std::vector<double> benches;
             benches.reserve(iters);
             for (int i = 0; i < iters; ++i) {
-                states[i] = minisketch_create(bits, impl, syndromes);
+                states[i] = minisketch_create(shahbits, impl, syndromes);
                 if (!states[i]) break;
                 std::set<uint64_t> done;
                 for (int j = 0; j < errors; ++j) {
@@ -84,7 +84,7 @@ int main(int argc, char** argv) {
             }
         }
         printf("\n");
-        printf("create[ns]\t% 3i\t", bits);
+        printf("create[ns]\t% 3i\t", shahbits);
         for (uint32_t impl = 0; impl <= max_impl; ++impl) {
             std::vector<minisketch*> states;
             std::random_device rng;
@@ -95,7 +95,7 @@ int main(int argc, char** argv) {
             std::vector<double> benches;
             benches.reserve(iters);
             for (int i = 0; i < iters; ++i) {
-                states[i] = minisketch_create(bits, impl, syndromes);
+                states[i] = minisketch_create(shahbits, impl, syndromes);
             }
             for (size_t i = 0; i < data.size(); ++i) {
                 data[i] = dist(rng);

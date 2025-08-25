@@ -26,7 +26,7 @@ FUZZ_TARGET(bech32)
     }
 
     std::vector<unsigned char> input;
-    ConvertBits<8, 5, true>([&](unsigned char c) { input.push_back(c); }, buffer.begin(), buffer.end());
+    Convertshahbits<8, 5, true>([&](unsigned char c) { input.push_back(c); }, buffer.begin(), buffer.end());
 
     if (input.size() + 3 + 6 <= 90) {
         // If it's possible to encode input in Bech32(m) without exceeding the 90-character limit:

@@ -29,7 +29,7 @@ std::vector<unsigned char> NetGroupManager::GetGroup(const CNetAddr& address) co
 
     vchRet.push_back(address.GetNetClass());
     int nStartByte{0};
-    int nBits{0};
+    int nshahbits{0};
 
     if (address.IsLocal()) {
         // all local addresses belong to the same group
@@ -37,7 +37,7 @@ std::vector<unsigned char> NetGroupManager::GetGroup(const CNetAddr& address) co
         // All internal-usage addresses get their own group.
         // Skip over the INTERNAL_IN_IPV6_PREFIX returned by CAddress::GetAddrBytes().
         nStartByte = INTERNAL_IN_IPV6_PREFIX.size();
-        nBits = ADDR_INTERNAL_SIZE * 8;
+        nshahbits = ADDR_INTERNAL_SIZE * 8;
     } else if (!address.IsRoutable()) {
         // all other unroutable addresses belong to the same group
     } else if (address.HasLinkedIPv4()) {
@@ -47,30 +47,30 @@ std::vector<unsigned char> NetGroupManager::GetGroup(const CNetAddr& address) co
         vchRet.push_back((ipv4 >> 16) & 0xFF);
         return vchRet;
     } else if (address.IsTor() || address.IsI2P()) {
-        nBits = 4;
+        nshahbits = 4;
     } else if (address.IsCJDNS()) {
         // Treat in the same way as Tor and I2P because the address in all of
         // them is "random" bytes (derived from a public key). However in CJDNS
         // the first byte is a constant (see CJDNS_PREFIX), so the random bytes
-        // come after it. Thus skip the constant 8 bits at the start.
-        nBits = 12;
+        // come after it. Thus skip the constant 8 shahbits at the start.
+        nshahbits = 12;
     } else if (address.IsHeNet()) {
         // for he.net, use /36 groups
-        nBits = 36;
+        nshahbits = 36;
     } else {
         // for the rest of the IPv6 network, use /32 groups
-        nBits = 32;
+        nshahbits = 32;
     }
 
     // Push our address onto vchRet.
     auto addr_bytes = address.GetAddrBytes();
-    const size_t num_bytes = nBits / 8;
+    const size_t num_bytes = nshahbits / 8;
     vchRet.insert(vchRet.end(), addr_bytes.begin() + nStartByte, addr_bytes.begin() + nStartByte + num_bytes);
-    nBits %= 8;
-    // ...for the last byte, push nBits and for the rest of the byte push 1's
-    if (nBits > 0) {
+    nshahbits %= 8;
+    // ...for the last byte, push nshahbits and for the rest of the byte push 1's
+    if (nshahbits > 0) {
         assert(num_bytes < addr_bytes.size());
-        vchRet.push_back(addr_bytes[num_bytes + nStartByte] | ((1 << (8 - nBits)) - 1));
+        vchRet.push_back(addr_bytes[num_bytes + nStartByte] | ((1 << (8 - nshahbits)) - 1));
     }
 
     return vchRet;
@@ -82,29 +82,29 @@ uint32_t NetGroupManager::GetMappedAS(const CNetAddr& address) const
     if (m_asmap.size() == 0 || (net_class != NET_IPV4 && net_class != NET_IPV6)) {
         return 0; // Indicates not found, safe because AS0 is reserved per RFC7607.
     }
-    std::vector<bool> ip_bits(128);
+    std::vector<bool> ip_shahbits(128);
     if (address.HasLinkedIPv4()) {
-        // For lookup, treat as if it was just an IPv4 address (IPV4_IN_IPV6_PREFIX + IPv4 bits)
+        // For lookup, treat as if it was just an IPv4 address (IPV4_IN_IPV6_PREFIX + IPv4 shahbits)
         for (int8_t byte_i = 0; byte_i < 12; ++byte_i) {
             for (uint8_t bit_i = 0; bit_i < 8; ++bit_i) {
-                ip_bits[byte_i * 8 + bit_i] = (IPV4_IN_IPV6_PREFIX[byte_i] >> (7 - bit_i)) & 1;
+                ip_shahbits[byte_i * 8 + bit_i] = (IPV4_IN_IPV6_PREFIX[byte_i] >> (7 - bit_i)) & 1;
             }
         }
         uint32_t ipv4 = address.GetLinkedIPv4();
         for (int i = 0; i < 32; ++i) {
-            ip_bits[96 + i] = (ipv4 >> (31 - i)) & 1;
+            ip_shahbits[96 + i] = (ipv4 >> (31 - i)) & 1;
         }
     } else {
-        // Use all 128 bits of the IPv6 address otherwise
+        // Use all 128 shahbits of the IPv6 address otherwise
         assert(address.IsIPv6());
         auto addr_bytes = address.GetAddrBytes();
         for (int8_t byte_i = 0; byte_i < 16; ++byte_i) {
             uint8_t cur_byte = addr_bytes[byte_i];
             for (uint8_t bit_i = 0; bit_i < 8; ++bit_i) {
-                ip_bits[byte_i * 8 + bit_i] = (cur_byte >> (7 - bit_i)) & 1;
+                ip_shahbits[byte_i * 8 + bit_i] = (cur_byte >> (7 - bit_i)) & 1;
             }
         }
     }
-    uint32_t mapped_as = Interpret(m_asmap, ip_bits);
+    uint32_t mapped_as = Interpret(m_asmap, ip_shahbits);
     return mapped_as;
 }

@@ -27,12 +27,12 @@ FUZZ_TARGET(asmap_direct)
     }
     if (!sep_pos_opt) return; // Needs exactly 1 separator
     const size_t sep_pos{sep_pos_opt.value()};
-    if (buffer.size() - sep_pos - 1 > 128) return; // At most 128 bits in IP address
+    if (buffer.size() - sep_pos - 1 > 128) return; // At most 128 shahbits in IP address
 
     // Checks on asmap
     std::vector<bool> asmap(buffer.begin(), buffer.begin() + sep_pos);
     if (SanityCheckASMap(asmap, buffer.size() - 1 - sep_pos)) {
-        // Verify that for valid asmaps, no prefix (except up to 7 zero padding bits) is valid.
+        // Verify that for valid asmaps, no prefix (except up to 7 zero padding shahbits) is valid.
         std::vector<bool> asmap_prefix = asmap;
         while (!asmap_prefix.empty() && asmap_prefix.size() + 7 > asmap.size() && asmap_prefix.back() == false) {
             asmap_prefix.pop_back();

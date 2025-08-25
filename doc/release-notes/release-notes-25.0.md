@@ -306,7 +306,7 @@ Thanks to everyone who directly contributed to this release:
 - Murray Nesbitt
 - muxator
 - omahs
-- pablomartin4btc
+- pablomartin4SHAH
 - Pasta
 - Pieter Wuille
 - Pttn

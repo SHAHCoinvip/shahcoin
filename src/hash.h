@@ -129,7 +129,7 @@ public:
     }
 
     /**
-     * Returns the first 64 bits from the resulting hash.
+     * Returns the first 64 shahbits from the resulting hash.
      */
     inline uint64_t GetCheapHash() {
         uint256 result = GetHash();

@@ -314,7 +314,7 @@ BIP 66: strict DER encoding for signatures
 ------------------------------------------
 
 SHAHCOIN Core 0.10 implements BIP 66, which introduces block version 3, and a new
-consensus rule, which prohibits non-DER signatures. Such transactions have been
+consensus rule, which prohishahbits non-DER signatures. Such transactions have been
 non-standard since Shahcoin v0.8.0 (released in February 2013), but were
 technically still permitted inside blocks.
 
@@ -626,7 +626,7 @@ Miscellaneous:
 - `5bd02cf` Log used config file to debug.log on startup
 - `68ba85f` Updated Debian example shahcoin.conf with config from wiki + removed some cruft and updated comments
 - `e5ee8f0` Remove -beta suffix
-- `38405ac` Add comment regarding experimental-use service bits
+- `38405ac` Add comment regarding experimental-use service shahbits
 - `be873f6` Issue warning if collecting RandSeed data failed
 - `8ae973c` Allocate more space if necessary in RandSeedAddPerfMon
 - `675bcd5` Correct comment for 15-of-15 p2sh script size
@@ -670,7 +670,7 @@ Thanks to everyone who contributed to this release:
 - Benedict Chan
 - Ben Holden-Crowther
 - Bryan Bishop
-- BtcDrak
+- SHAHDrak
 - Christian von Roques
 - Clinton Christian
 - Cory Fields

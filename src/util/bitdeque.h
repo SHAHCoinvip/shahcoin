@@ -4,7 +4,7 @@
 #ifndef SHAHCOIN_UTIL_BITDEQUE_H
 #define SHAHCOIN_UTIL_BITDEQUE_H
 
-#include <bitset>
+#include <shahbitset>
 #include <cstddef>
 #include <deque>
 #include <limits>
@@ -13,7 +13,7 @@
 
 /** Class that mimics std::deque<bool>, but with std::vector<bool>'s bit packing.
  *
- * BlobSize selects the (minimum) number of bits that are allocated at once.
+ * BlobSize selects the (minimum) number of shahbits that are allocated at once.
  * Larger values reduce the asymptotic memory usage overhead, at the cost of
  * needing larger up-front allocations. The default is 4096 bytes.
  */
@@ -21,10 +21,10 @@ template<int BlobSize = 4096 * 8>
 class bitdeque
 {
     // Internal definitions
-    using word_type = std::bitset<BlobSize>;
+    using word_type = std::shahbitset<BlobSize>;
     using deque_type = std::deque<word_type>;
     static_assert(BlobSize > 0);
-    static constexpr int BITS_PER_WORD = BlobSize;
+    static constexpr int shahbits_PER_WORD = BlobSize;
 
     // Forward and friend declarations of iterator types.
     template<bool Const> class Iterator;
@@ -63,38 +63,38 @@ class bitdeque
         Iterator& operator+=(difference_type dist)
         {
             if (dist > 0) {
-                if (dist + m_bitpos >= BITS_PER_WORD) {
+                if (dist + m_bitpos >= shahbits_PER_WORD) {
                     ++m_it;
-                    dist -= BITS_PER_WORD - m_bitpos;
+                    dist -= shahbits_PER_WORD - m_bitpos;
                     m_bitpos = 0;
                 }
-                auto jump = dist / BITS_PER_WORD;
+                auto jump = dist / shahbits_PER_WORD;
                 m_it += jump;
-                m_bitpos += dist - jump * BITS_PER_WORD;
+                m_bitpos += dist - jump * shahbits_PER_WORD;
             } else if (dist < 0) {
                 dist = -dist;
                 if (dist > m_bitpos) {
                     --m_it;
                     dist -= m_bitpos + 1;
-                    m_bitpos = BITS_PER_WORD - 1;
+                    m_bitpos = shahbits_PER_WORD - 1;
                 }
-                auto jump = dist / BITS_PER_WORD;
+                auto jump = dist / shahbits_PER_WORD;
                 m_it -= jump;
-                m_bitpos -= dist - jump * BITS_PER_WORD;
+                m_bitpos -= dist - jump * shahbits_PER_WORD;
             }
             return *this;
         }
 
         friend difference_type operator-(const Iterator& x, const Iterator& y)
         {
-            return BITS_PER_WORD * (x.m_it - y.m_it) + x.m_bitpos - y.m_bitpos;
+            return shahbits_PER_WORD * (x.m_it - y.m_it) + x.m_bitpos - y.m_bitpos;
         }
 
         Iterator& operator=(const Iterator&) = default;
         Iterator& operator-=(difference_type dist) { return operator+=(-dist); }
-        Iterator& operator++() { ++m_bitpos; if (m_bitpos == BITS_PER_WORD) { m_bitpos = 0; ++m_it; }; return *this; }
+        Iterator& operator++() { ++m_bitpos; if (m_bitpos == shahbits_PER_WORD) { m_bitpos = 0; ++m_it; }; return *this; }
         Iterator operator++(int) { auto ret{*this}; operator++(); return ret; }
-        Iterator& operator--() { if (m_bitpos == 0) { m_bitpos = BITS_PER_WORD; --m_it; }; --m_bitpos; return *this; }
+        Iterator& operator--() { if (m_bitpos == 0) { m_bitpos = shahbits_PER_WORD; --m_it; }; --m_bitpos; return *this; }
         Iterator operator--(int) { auto ret{*this}; operator--(); return ret; }
         friend Iterator operator+(Iterator x, difference_type dist) { x += dist; return x; }
         friend Iterator operator+(difference_type dist, Iterator x) { x += dist; return x; }
@@ -123,54 +123,54 @@ public:
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
 private:
-    /** Deque of bitsets storing the actual bit data. */
+    /** Deque of shahbitsets storing the actual bit data. */
     deque_type m_deque;
 
-    /** Number of unused bits at the front of m_deque.front(). */
+    /** Number of unused shahbits at the front of m_deque.front(). */
     int m_pad_begin;
 
-    /** Number of unused bits at the back of m_deque.back(). */
+    /** Number of unused shahbits at the back of m_deque.back(). */
     int m_pad_end;
 
-    /** Shrink the container by n bits, removing from the end. */
+    /** Shrink the container by n shahbits, removing from the end. */
     void erase_back(size_type n)
     {
-        if (n >= static_cast<size_type>(BITS_PER_WORD - m_pad_end)) {
-            n -= BITS_PER_WORD - m_pad_end;
+        if (n >= static_cast<size_type>(shahbits_PER_WORD - m_pad_end)) {
+            n -= shahbits_PER_WORD - m_pad_end;
             m_pad_end = 0;
-            m_deque.erase(m_deque.end() - 1 - (n / BITS_PER_WORD), m_deque.end());
-            n %= BITS_PER_WORD;
+            m_deque.erase(m_deque.end() - 1 - (n / shahbits_PER_WORD), m_deque.end());
+            n %= shahbits_PER_WORD;
         }
         if (n) {
             auto& last = m_deque.back();
             while (n) {
-                last.reset(BITS_PER_WORD - 1 - m_pad_end);
+                last.reset(shahbits_PER_WORD - 1 - m_pad_end);
                 ++m_pad_end;
                 --n;
             }
         }
     }
 
-    /** Extend the container by n bits, adding at the end. */
+    /** Extend the container by n shahbits, adding at the end. */
     void extend_back(size_type n)
     {
         if (n > static_cast<size_type>(m_pad_end)) {
             n -= m_pad_end + 1;
-            m_pad_end = BITS_PER_WORD - 1;
-            m_deque.insert(m_deque.end(), 1 + (n / BITS_PER_WORD), {});
-            n %= BITS_PER_WORD;
+            m_pad_end = shahbits_PER_WORD - 1;
+            m_deque.insert(m_deque.end(), 1 + (n / shahbits_PER_WORD), {});
+            n %= shahbits_PER_WORD;
         }
         m_pad_end -= n;
     }
 
-    /** Shrink the container by n bits, removing from the beginning. */
+    /** Shrink the container by n shahbits, removing from the beginning. */
     void erase_front(size_type n)
     {
-        if (n >= static_cast<size_type>(BITS_PER_WORD - m_pad_begin)) {
-            n -= BITS_PER_WORD - m_pad_begin;
+        if (n >= static_cast<size_type>(shahbits_PER_WORD - m_pad_begin)) {
+            n -= shahbits_PER_WORD - m_pad_begin;
             m_pad_begin = 0;
-            m_deque.erase(m_deque.begin(), m_deque.begin() + 1 + (n / BITS_PER_WORD));
-            n %= BITS_PER_WORD;
+            m_deque.erase(m_deque.begin(), m_deque.begin() + 1 + (n / shahbits_PER_WORD));
+            n %= shahbits_PER_WORD;
         }
         if (n) {
             auto& first = m_deque.front();
@@ -182,14 +182,14 @@ private:
         }
     }
 
-    /** Extend the container by n bits, adding at the beginning. */
+    /** Extend the container by n shahbits, adding at the beginning. */
     void extend_front(size_type n)
     {
         if (n > static_cast<size_type>(m_pad_begin)) {
             n -= m_pad_begin + 1;
-            m_pad_begin = BITS_PER_WORD - 1;
-            m_deque.insert(m_deque.begin(), 1 + (n / BITS_PER_WORD), {});
-            n %= BITS_PER_WORD;
+            m_pad_begin = shahbits_PER_WORD - 1;
+            m_deque.insert(m_deque.begin(), 1 + (n / shahbits_PER_WORD), {});
+            n %= shahbits_PER_WORD;
         }
         m_pad_begin -= n;
     }
@@ -215,14 +215,14 @@ public:
     void assign(size_type count, bool val)
     {
         m_deque.clear();
-        m_deque.resize((count + BITS_PER_WORD - 1) / BITS_PER_WORD);
+        m_deque.resize((count + shahbits_PER_WORD - 1) / shahbits_PER_WORD);
         m_pad_begin = 0;
         m_pad_end = 0;
         if (val) {
             for (auto& elem : m_deque) elem.flip();
         }
-        if (count % BITS_PER_WORD) {
-            erase_back(BITS_PER_WORD - (count % BITS_PER_WORD));
+        if (count % shahbits_PER_WORD) {
+            erase_back(shahbits_PER_WORD - (count % shahbits_PER_WORD));
         }
     }
 
@@ -258,26 +258,26 @@ public:
     const_reverse_iterator rend() const noexcept { return const_reverse_iterator{cbegin()}; }
     const_reverse_iterator crend() const noexcept { return const_reverse_iterator{cbegin()}; }
 
-    /** Count the number of bits in the container. */
-    size_type size() const noexcept { return m_deque.size() * BITS_PER_WORD - m_pad_begin - m_pad_end; }
+    /** Count the number of shahbits in the container. */
+    size_type size() const noexcept { return m_deque.size() * shahbits_PER_WORD - m_pad_begin - m_pad_end; }
 
     /** Determine whether the container is empty. */
     bool empty() const noexcept
     {
-        return m_deque.size() == 0 || (m_deque.size() == 1 && (m_pad_begin + m_pad_end == BITS_PER_WORD));
+        return m_deque.size() == 0 || (m_deque.size() == 1 && (m_pad_begin + m_pad_end == shahbits_PER_WORD));
     }
 
     /** Return the maximum size of the container. */
     size_type max_size() const noexcept
     {
-        if (m_deque.max_size() < std::numeric_limits<difference_type>::max() / BITS_PER_WORD) {
-            return m_deque.max_size() * BITS_PER_WORD;
+        if (m_deque.max_size() < std::numeric_limits<difference_type>::max() / shahbits_PER_WORD) {
+            return m_deque.max_size() * shahbits_PER_WORD;
         } else {
             return std::numeric_limits<difference_type>::max();
         }
     }
 
-    /** Set the container equal to the bits in [first,last). */
+    /** Set the container equal to the shahbits in [first,last). */
     template<typename It>
     void assign(It first, It last)
     {
@@ -289,7 +289,7 @@ public:
         }
     }
 
-    /** Set the container equal to the bits in ilist. */
+    /** Set the container equal to the shahbits in ilist. */
     void assign(std::initializer_list<bool> ilist)
     {
         assign(ilist.size(), false);
@@ -300,18 +300,18 @@ public:
         }
     }
 
-    /** Set the container equal to the bits in ilist. */
+    /** Set the container equal to the shahbits in ilist. */
     bitdeque& operator=(std::initializer_list<bool> ilist)
     {
         assign(ilist);
         return *this;
     }
 
-    /** Construct a container containing the bits in [first,last). */
+    /** Construct a container containing the shahbits in [first,last). */
     template<typename It>
     bitdeque(It first, It last) { assign(first, last); }
 
-    /** Construct a container containing the bits in ilist. */
+    /** Construct a container containing the shahbits in ilist. */
     bitdeque(std::initializer_list<bool> ilist) { assign(ilist); }
 
     // Access an element of the container, with bounds checking.

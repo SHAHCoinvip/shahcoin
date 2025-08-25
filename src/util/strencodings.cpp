@@ -129,7 +129,7 @@ std::string EncodeBase64(Span<const unsigned char> input)
 
     std::string str;
     str.reserve(((input.size() + 2) / 3) * 4);
-    ConvertBits<8, 6, true>([&](int v) { str += pbase64[v]; }, input.begin(), input.end());
+    Convertshahbits<8, 6, true>([&](int v) { str += pbase64[v]; }, input.begin(), input.end());
     while (str.size() % 4) str += '=';
     return str;
 }
@@ -159,7 +159,7 @@ std::optional<std::vector<unsigned char>> DecodeBase64(std::string_view str)
 
     std::vector<unsigned char> ret;
     ret.reserve((str.size() * 3) / 4);
-    bool valid = ConvertBits<6, 8, false>(
+    bool valid = Convertshahbits<6, 8, false>(
         [&](unsigned char c) { ret.push_back(c); },
         str.begin(), str.end(),
         [](char c) { return decode64_table[uint8_t(c)]; }
@@ -175,7 +175,7 @@ std::string EncodeBase32(Span<const unsigned char> input, bool pad)
 
     std::string str;
     str.reserve(((input.size() + 4) / 5) * 8);
-    ConvertBits<8, 5, true>([&](int v) { str += pbase32[v]; }, input.begin(), input.end());
+    Convertshahbits<8, 5, true>([&](int v) { str += pbase32[v]; }, input.begin(), input.end());
     if (pad) {
         while (str.size() % 8) {
             str += '=';
@@ -216,7 +216,7 @@ std::optional<std::vector<unsigned char>> DecodeBase32(std::string_view str)
 
     std::vector<unsigned char> ret;
     ret.reserve((str.size() * 5) / 8);
-    bool valid = ConvertBits<5, 8, false>(
+    bool valid = Convertshahbits<5, 8, false>(
         [&](unsigned char c) { ret.push_back(c); },
         str.begin(), str.end(),
         [](char c) { return decode32_table[uint8_t(c)]; }

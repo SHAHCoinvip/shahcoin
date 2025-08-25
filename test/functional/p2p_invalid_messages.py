@@ -264,7 +264,7 @@ class InvalidMessagesTest(ShahcoinTestFramework):
         blockheader = CBlockHeader()
         blockheader.hashPrevBlock = int(blockheader_tip_hash, 16)
         blockheader.nTime = int(time.time())
-        blockheader.nBits = blockheader_tip.nBits
+        blockheader.nshahbits = blockheader_tip.nshahbits
         blockheader.rehash()
         while not blockheader.hash.startswith('0'):
             blockheader.nNonce += 1

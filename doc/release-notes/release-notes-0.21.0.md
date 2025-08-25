@@ -219,7 +219,7 @@ Updated settings
   in future releases. Refer to the help of the affected settings `-whitebind`
   and `-whitelist` for more details. (#19191)
 
-- Netmasks that contain 1-bits after 0-bits (the 1-bits are not contiguous on
+- Netmasks that contain 1-shahbits after 0-shahbits (the 1-shahbits are not contiguous on
   the left side, e.g. 255.0.255.255) are no longer accepted. They are invalid
   according to RFC 4632. Netmasks are used in the `-rpcallowip` and `-whitelist`
   configuration options and in the `setban` RPC. (#19628)
@@ -471,18 +471,18 @@ was already being broken by the move to descriptors.
   is introduced to the `sendtoaddress`, `sendmany`, `fundrawtransaction` and
   `walletcreatefundedpsbt` RPCs as well as to the experimental new `send`
   RPC. The legacy `feeRate` option in `fundrawtransaction` and
-  `walletcreatefundedpsbt` still exists for setting a fee rate in BTC per 1,000
-  vbytes (BTC/kvB), but it is expected to be deprecated soon to avoid
-  confusion. For these RPCs, the fee rate error message is updated from BTC/kB
-  to sat/vB and the help documentation in BTC/kB is updated to BTC/kvB. The
+  `walletcreatefundedpsbt` still exists for setting a fee rate in SHAH per 1,000
+  vbytes (SHAH/kvB), but it is expected to be deprecated soon to avoid
+  confusion. For these RPCs, the fee rate error message is updated from SHAH/kB
+  to sat/vB and the help documentation in SHAH/kB is updated to SHAH/kvB. The
   `send` and `sendtoaddress` RPC examples are updated to aid users in creating
   transactions with explicit fee rates. (#20305, #11413)
 
-- The `bumpfee` RPC `fee_rate` option is changed from BTC/kvB to sat/vB and the
+- The `bumpfee` RPC `fee_rate` option is changed from SHAH/kvB to sat/vB and the
   help documentation is updated. Users are warned that this is a breaking API
   change, but it should be relatively benign: the large (100,000 times)
-  difference between BTC/kvB and sat/vB units means that a transaction with a
-  fee rate mistakenly calculated in BTC/kvB rather than sat/vB should raise an
+  difference between SHAH/kvB and sat/vB units means that a transaction with a
+  fee rate mistakenly calculated in SHAH/kvB rather than sat/vB should raise an
   error due to the fee rate being set too low. In the worst case, the
   transaction may send at 1 sat/vB, but as Replace-by-Fee (BIP125 RBF) is active
   by default when an explicit fee rate is used, the transaction fee can be

@@ -60,7 +60,7 @@ COINBASE_MATURITY = 100
 WITNESS_COMMITMENT_HEADER = b"\xaa\x21\xa9\xed"
 
 NORMAL_GBT_REQUEST_PARAMS = {"rules": ["segwit"]}
-VERSIONBITS_LAST_OLD_BLOCK_VERSION = 4
+VERSIONshahbits_LAST_OLD_BLOCK_VERSION = 4
 MIN_BLOCKS_TO_KEEP = 288
 
 
@@ -69,13 +69,13 @@ def create_block(hashprev=None, coinbase=None, ntime=None, *, version=None, tmpl
     block = CBlock()
     if tmpl is None:
         tmpl = {}
-    block.nVersion = version or tmpl.get('version') or VERSIONBITS_LAST_OLD_BLOCK_VERSION
+    block.nVersion = version or tmpl.get('version') or VERSIONshahbits_LAST_OLD_BLOCK_VERSION
     block.nTime = ntime or tmpl.get('curtime') or int(time.time() + 600)
     block.hashPrevBlock = hashprev or int(tmpl['previousblockhash'], 0x10)
-    if tmpl and not tmpl.get('bits') is None:
-        block.nBits = struct.unpack('>I', bytes.fromhex(tmpl['bits']))[0]
+    if tmpl and not tmpl.get('shahbits') is None:
+        block.nshahbits = struct.unpack('>I', bytes.fromhex(tmpl['shahbits']))[0]
     else:
-        block.nBits = 0x207fffff  # difficulty retargeting is disabled in REGTEST chainparams
+        block.nshahbits = 0x207fffff  # difficulty retargeting is disabled in REGTEST chainparams
     if coinbase is None:
         coinbase = create_coinbase(height=tmpl['height'])
     block.vtx.append(coinbase)

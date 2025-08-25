@@ -30,7 +30,7 @@ static_assert(__cplusplus >= 201703L, "C++17 standard assumed");
 static_assert(std::numeric_limits<float>::is_iec559, "IEEE 754 float assumed");
 static_assert(std::numeric_limits<double>::is_iec559, "IEEE 754 double assumed");
 
-// Assumption: We assume eight bits per byte (obviously, but remember: don't
+// Assumption: We assume eight shahbits per byte (obviously, but remember: don't
 //             trust -- verify!).
 // Example(s): Everywhere :-)
 static_assert(std::numeric_limits<unsigned char>::digits == 8, "8-bit byte assumed");

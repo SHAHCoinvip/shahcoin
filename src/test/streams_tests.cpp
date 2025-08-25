@@ -176,11 +176,11 @@ BOOST_AUTO_TEST_CASE(streams_vector_reader_rvalue)
     BOOST_CHECK(reader.empty());
 }
 
-BOOST_AUTO_TEST_CASE(bitstream_reader_writer)
+BOOST_AUTO_TEST_CASE(shahbitstream_reader_writer)
 {
     DataStream data{};
 
-    BitStreamWriter bit_writer{data};
+    shahbitstreamWriter bit_writer{data};
     bit_writer.Write(0, 1);
     bit_writer.Write(2, 2);
     bit_writer.Write(6, 3);
@@ -199,7 +199,7 @@ BOOST_AUTO_TEST_CASE(bitstream_reader_writer)
     data >> serialized_int2;
     BOOST_CHECK_EQUAL(serialized_int2, uint16_t{0x1072}); // NOTE: Serialized as LE
 
-    BitStreamReader bit_reader{data_copy};
+    shahbitstreamReader bit_reader{data_copy};
     BOOST_CHECK_EQUAL(bit_reader.Read(1), 0U);
     BOOST_CHECK_EQUAL(bit_reader.Read(2), 2U);
     BOOST_CHECK_EQUAL(bit_reader.Read(3), 6U);

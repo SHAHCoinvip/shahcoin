@@ -111,7 +111,7 @@ BOOST_AUTO_TEST_CASE(dbwrapper_basic_data)
 
         //Simulate file raw data - "F + filename_number + filename"
         std::string file_option_tag = "F";
-        uint8_t filename_length = InsecureRandBits(8);
+        uint8_t filename_length = InsecureRandshahbits(8);
         std::string filename = "randomfilename";
         std::string key_file_option = strprintf("%s%01x%s", file_option_tag,filename_length,filename);
 

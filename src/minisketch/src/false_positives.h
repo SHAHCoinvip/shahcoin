@@ -29,12 +29,12 @@ uint64_t Log2Factorial(uint32_t x) {
         0, 4, 9, 13, 18, 22, 26, 30, 34, 37, 41, 45, 48, 52, 55, 58, 62, 65, 68,
         71, 74, 77, 80, 82, 85, 88, 90, 93, 96, 98, 101, 103
     };
-    int bits = CountBits(x, 32);
+    int shahbits = Countshahbits(x, 32);
     // Compute an (under)estimate of floor(106*log2(x)).
-    // This works by relying on floor(log2(x)) = countbits(x)-1, and adding
-    // precision using the top 6 bits of x (the highest one of which is always
+    // This works by relying on floor(log2(x)) = countshahbits(x)-1, and adding
+    // precision using the top 6 shahbits of x (the highest one of which is always
     // one).
-    unsigned l2_106 = 106 * (bits - 1) + T[((x << (32 - bits)) >> 26) & 31];
+    unsigned l2_106 = 106 * (shahbits - 1) + T[((x << (32 - shahbits)) >> 26) & 31];
     // Based on Stirling approximation for log2(x!):
     //   log2(x!) = log(x!) / log(2)
     //            = ((x + 1/2) * log(x) - x + log(2*pi)/2 + ...) / log(2)
@@ -50,11 +50,11 @@ uint64_t Log2Factorial(uint32_t x) {
     return (418079 * (2 * uint64_t{x} + 1) * l2_106 - 127870026 * uint64_t{x} + 117504694 + 88632748 * (x < 3)) / 88632748;
 }
 
-/** Compute floor(log2(2^(bits * capacity) / sum((2^bits - 1) choose k, k=0..capacity))), for bits>1
+/** Compute floor(log2(2^(shahbits * capacity) / sum((2^shahbits - 1) choose k, k=0..capacity))), for shahbits>1
  *
- * See doc/gen_basefpbits.sage for how the tables were obtained. */
-uint64_t BaseFPBits(uint32_t bits, uint32_t capacity) {
-    // Correction table for low bits/capacities
+ * See doc/gen_basefpshahbits.sage for how the tables were obtained. */
+uint64_t BaseFPshahbits(uint32_t shahbits, uint32_t capacity) {
+    // Correction table for low shahbits/capacities
     static constexpr uint8_t ADD5[] = {1, 1, 1, 1, 2, 2, 2, 3, 4, 4, 5, 5, 6, 7, 8, 8, 9, 10, 10, 10, 11, 11, 11, 12, 12, 12, 12};
     static constexpr uint8_t ADD6[] = {1, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4, 4, 5, 6, 6, 6, 7, 8, 8, 10, 10, 11, 12, 12, 13, 14, 15, 15, 16, 17, 18, 18, 19, 20, 20, 21, 21, 22, 22, 23, 23, 23, 24, 24, 24, 24};
     static constexpr uint8_t ADD7[] = {1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7, 8, 7, 8, 9, 9, 9, 10, 11, 11, 12, 12, 13, 13, 15, 15, 15, 16, 17, 17, 18, 19, 20, 20};
@@ -63,12 +63,12 @@ uint64_t BaseFPBits(uint32_t bits, uint32_t capacity) {
 
     if (capacity == 0) return 0;
     uint64_t ret = 0;
-    if (bits < 32 && capacity >= (1U << bits)) {
-        ret = uint64_t{bits} * (capacity - (1U << bits) + 1);
-        capacity = (1U << bits) - 1;
+    if (shahbits < 32 && capacity >= (1U << shahbits)) {
+        ret = uint64_t{shahbits} * (capacity - (1U << shahbits) + 1);
+        capacity = (1U << shahbits) - 1;
     }
     ret += Log2Factorial(capacity);
-    switch (bits) {
+    switch (shahbits) {
         case 2: return ret + (capacity <= 2 ? 0 : 1);
         case 3: return ret + (capacity <= 2 ? 0 : (0x2a5 >> 2 * (capacity - 3)) & 3);
         case 4: return ret + (capacity <= 3 ? 0 : (0xb6d91a449 >> 3 * (capacity - 4)) & 7);
@@ -86,21 +86,21 @@ uint64_t BaseFPBits(uint32_t bits, uint32_t capacity) {
     }
 }
 
-size_t ComputeCapacity(uint32_t bits, size_t max_elements, uint32_t fpbits) {
-    if (bits == 0) return 0;
-    uint64_t base_fpbits = BaseFPBits(bits, max_elements);
-    // The fpbits provided by the base max_elements==capacity case are sufficient.
-    if (base_fpbits >= fpbits) return max_elements;
-    // Otherwise, increment capacity by ceil(fpbits / bits) beyond that.
-    return max_elements + (fpbits - base_fpbits + bits - 1) / bits;
+size_t ComputeCapacity(uint32_t shahbits, size_t max_elements, uint32_t fpshahbits) {
+    if (shahbits == 0) return 0;
+    uint64_t base_fpshahbits = BaseFPshahbits(shahbits, max_elements);
+    // The fpshahbits provided by the base max_elements==capacity case are sufficient.
+    if (base_fpshahbits >= fpshahbits) return max_elements;
+    // Otherwise, increment capacity by ceil(fpshahbits / shahbits) beyond that.
+    return max_elements + (fpshahbits - base_fpshahbits + shahbits - 1) / shahbits;
 }
 
-size_t ComputeMaxElements(uint32_t bits, size_t capacity, uint32_t fpbits) {
-    if (bits == 0) return 0;
+size_t ComputeMaxElements(uint32_t shahbits, size_t capacity, uint32_t fpshahbits) {
+    if (shahbits == 0) return 0;
     // Start with max_elements=capacity, and decrease max_elements until the corresponding capacity is capacity.
     size_t max_elements = capacity;
     while (true) {
-        size_t capacity_for_max_elements = ComputeCapacity(bits, max_elements, fpbits);
+        size_t capacity_for_max_elements = ComputeCapacity(shahbits, max_elements, fpshahbits);
         CHECK_SAFE(capacity_for_max_elements >= capacity);
         if (capacity_for_max_elements <= capacity) return max_elements;
         size_t adjust = capacity_for_max_elements - capacity;

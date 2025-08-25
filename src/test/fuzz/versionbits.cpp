@@ -7,7 +7,7 @@
 #include <consensus/params.h>
 #include <primitives/block.h>
 #include <util/chaintype.h>
-#include <versionbits.h>
+#include <versionshahbits.h>
 
 #include <test/fuzz/FuzzedDataProvider.h>
 #include <test/fuzz/fuzz.h>
@@ -38,7 +38,7 @@ public:
     {
         assert(m_period > 0);
         assert(0 <= m_threshold && m_threshold <= m_period);
-        assert(0 <= m_bit && m_bit < 32 && m_bit < VERSIONBITS_NUM_BITS);
+        assert(0 <= m_bit && m_bit < 32 && m_bit < VERSIONshahbits_NUM_shahbits);
         assert(0 <= m_min_activation_height);
     }
 
@@ -56,7 +56,7 @@ public:
     bool Condition(int32_t version) const
     {
         uint32_t mask = (uint32_t{1}) << m_bit;
-        return (((version & VERSIONBITS_TOP_MASK) == VERSIONBITS_TOP_BITS) && (version & mask) != 0);
+        return (((version & VERSIONshahbits_TOP_MASK) == VERSIONshahbits_TOP_shahbits) && (version & mask) != 0);
     }
 
     bool Condition(const CBlockIndex* pindex) const { return Condition(pindex->nVersion); }
@@ -88,7 +88,7 @@ public:
         CBlockHeader header;
         header.nVersion = signal ? m_signal : m_no_signal;
         header.nTime = m_start_time + m_blocks.size() * m_interval;
-        header.nBits = 0x1d00ffff;
+        header.nshahbits = 0x1d00ffff;
 
         auto current_block = std::make_unique<CBlockIndex>(header);
         current_block->pprev = tip();
@@ -110,7 +110,7 @@ void initialize()
 
 constexpr uint32_t MAX_START_TIME = 4102444800; // 2100-01-01
 
-FUZZ_TARGET(versionbits, .init = initialize)
+FUZZ_TARGET(versionshahbits, .init = initialize)
 {
     const CChainParams& params = *g_params;
     const int64_t interval = params.GetConsensus().nPowTargetSpacing;
@@ -138,7 +138,7 @@ FUZZ_TARGET(versionbits, .init = initialize)
     const int32_t ver_nosignal = fuzzed_data_provider.ConsumeIntegral<int32_t>();
 
     // select deployment parameters: bit, start time, timeout
-    const int bit = fuzzed_data_provider.ConsumeIntegralInRange<int>(0, VERSIONBITS_NUM_BITS - 1);
+    const int bit = fuzzed_data_provider.ConsumeIntegralInRange<int>(0, VERSIONshahbits_NUM_shahbits - 1);
 
     bool always_active_test = false;
     bool never_active_test = false;
@@ -175,10 +175,10 @@ FUZZ_TARGET(versionbits, .init = initialize)
     if (checker.Condition(ver_nosignal)) return;
     if (ver_nosignal < 0) return;
 
-    // TOP_BITS should ensure version will be positive and meet min
+    // TOP_shahbits should ensure version will be positive and meet min
     // version requirement
     assert(ver_signal > 0);
-    assert(ver_signal >= VERSIONBITS_LAST_OLD_BLOCK_VERSION);
+    assert(ver_signal >= VERSIONshahbits_LAST_OLD_BLOCK_VERSION);
 
     // Now that we have chosen time and versions, setup to mine blocks
     Blocks blocks(block_start_time, interval, ver_signal, ver_nosignal);

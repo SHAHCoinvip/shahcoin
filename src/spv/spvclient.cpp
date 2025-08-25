@@ -365,7 +365,7 @@ void SPVClient::processHeaders(const QJsonArray& headers)
         header.hash = uint256S(headerObj.value("hash").toString().toStdString());
         header.prevHash = uint256S(headerObj.value("prevhash").toString().toStdString());
         header.nTime = headerObj.value("time").toVariant().toUInt();
-        header.nBits = headerObj.value("bits").toVariant().toUInt();
+        header.nshahbits = headerObj.value("shahbits").toVariant().toUInt();
         header.nNonce = headerObj.value("nonce").toVariant().toUInt();
         header.nHeight = headerObj.value("height").toVariant().toUInt();
         header.isValid = false;
@@ -411,10 +411,10 @@ bool SPVClient::verifyHeader(const SPVHeader& header)
     blockHeader.hashPrevBlock = header.prevHash;
     blockHeader.hashMerkleRoot = uint256(); // Will be set later
     blockHeader.nTime = header.nTime;
-    blockHeader.nBits = header.nBits;
+    blockHeader.nshahbits = header.nshahbits;
     blockHeader.nNonce = header.nNonce;
 
-    return CheckProofOfWork(blockHeader.GetHash(), header.nBits, Params().GetConsensus());
+    return CheckProofOfWork(blockHeader.GetHash(), header.nshahbits, Params().GetConsensus());
 }
 
 bool SPVClient::validateHeaderChain(const QList<SPVHeader>& headers)
@@ -734,7 +734,7 @@ void SPVClient::saveHeaders()
             out << QString::fromStdString(header.hash.ToString());
             out << QString::fromStdString(header.prevHash.ToString());
             out << header.nTime;
-            out << header.nBits;
+            out << header.nshahbits;
             out << header.nNonce;
             out << header.nHeight;
             out << header.isValid;
@@ -756,7 +756,7 @@ void SPVClient::loadHeaders()
             SPVHeader header;
             QString hashStr, prevHashStr;
             
-            in >> hashStr >> prevHashStr >> header.nTime >> header.nBits 
+            in >> hashStr >> prevHashStr >> header.nTime >> header.nshahbits 
                >> header.nNonce >> header.nHeight >> header.isValid;
             
             header.hash = uint256S(hashStr.toStdString());

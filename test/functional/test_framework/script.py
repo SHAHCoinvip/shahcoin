@@ -37,10 +37,10 @@ def hash160(s):
 
 def bn2vch(v):
     """Convert number to shahcoin-specific little endian format."""
-    # We need v.bit_length() bits, plus a sign bit for every nonzero number.
-    n_bits = v.bit_length() + (v != 0)
+    # We need v.bit_length() shahbits, plus a sign bit for every nonzero number.
+    n_shahbits = v.bit_length() + (v != 0)
     # The number of bytes for that is:
-    n_bytes = (n_bits + 7) // 8
+    n_bytes = (n_shahbits + 7) // 8
     # Convert number to absolute value + sign in top bit.
     encoded_v = 0 if v == 0 else abs(v) | ((v < 0) << (n_bytes * 8 - 1))
     # Serialize to bytes

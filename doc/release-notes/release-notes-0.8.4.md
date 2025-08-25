@@ -39,7 +39,7 @@ guess attempts; fixes https://github.com/SHAHCoinvip/shahcoin/issues/2838
 
 Implement a better fix for the fill-memory-with-orphan-transactions
 attack that was fixed in 0.8.3. See
-https://bitslog.wordpress.com/2013/07/18/buggy-cve-2013-4627-patch-open-new-vectors-of-attack/
+https://shahbitslog.wordpress.com/2013/07/18/buggy-cve-2013-4627-patch-open-new-vectors-of-attack/
 for a description of the weaknesses of the previous fix.
 (CVE-2013-4627)
 

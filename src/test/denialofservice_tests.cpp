@@ -117,7 +117,7 @@ static void AddRandomOutboundPeer(NodeId& id, std::vector<CNode*>& vNodes, PeerM
     }
 
     while (!addr.IsRoutable()) {
-        addr = CAddress(ip(g_insecure_rand_ctx.randbits(32)), NODE_NONE);
+        addr = CAddress(ip(g_insecure_rand_ctx.randshahbits(32)), NODE_NONE);
     }
 
     vNodes.emplace_back(new CNode{id++,

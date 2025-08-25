@@ -33,8 +33,8 @@ from test_framework.util import (
 from test_framework.wallet import MiniWallet
 
 
-VERSIONBITS_TOP_BITS = 0x20000000
-VERSIONBITS_DEPLOYMENT_TESTDUMMY_BIT = 28
+VERSIONshahbits_TOP_shahbits = 0x20000000
+VERSIONshahbits_DEPLOYMENT_TESTDUMMY_BIT = 28
 DEFAULT_BLOCK_MIN_TX_FEE = 1000  # default `-blockmintxfee` setting [sat/kvB]
 
 
@@ -71,7 +71,7 @@ class MiningTest(ShahcoinTestFramework):
         assert_equal(1337, self.nodes[0].getblocktemplate(NORMAL_GBT_REQUEST_PARAMS)['version'])
         self.restart_node(0, extra_args=[f'-mocktime={t}'])
         self.connect_nodes(0, 1)
-        assert_equal(VERSIONBITS_TOP_BITS + (1 << VERSIONBITS_DEPLOYMENT_TESTDUMMY_BIT), self.nodes[0].getblocktemplate(NORMAL_GBT_REQUEST_PARAMS)['version'])
+        assert_equal(VERSIONshahbits_TOP_shahbits + (1 << VERSIONshahbits_DEPLOYMENT_TESTDUMMY_BIT), self.nodes[0].getblocktemplate(NORMAL_GBT_REQUEST_PARAMS)['version'])
         self.restart_node(0)
         self.connect_nodes(0, 1)
 
@@ -82,24 +82,24 @@ class MiningTest(ShahcoinTestFramework):
 
         # test default (no parameter), zero and a bunch of arbitrary blockmintxfee rates [sat/kvB]
         for blockmintxfee_sat_kvb in (DEFAULT_BLOCK_MIN_TX_FEE, 0, 50, 100, 500, 2500, 5000, 21000, 333333, 2500000):
-            blockmintxfee_btc_kvb = blockmintxfee_sat_kvb / Decimal(COIN)
+            blockmintxfee_SHAH_kvb = blockmintxfee_sat_kvb / Decimal(COIN)
             if blockmintxfee_sat_kvb == DEFAULT_BLOCK_MIN_TX_FEE:
                 self.log.info(f"-> Default -blockmintxfee setting ({blockmintxfee_sat_kvb} sat/kvB)...")
             else:
-                blockmintxfee_parameter = f"-blockmintxfee={blockmintxfee_btc_kvb:.8f}"
+                blockmintxfee_parameter = f"-blockmintxfee={blockmintxfee_SHAH_kvb:.8f}"
                 self.log.info(f"-> Test {blockmintxfee_parameter} ({blockmintxfee_sat_kvb} sat/kvB)...")
                 self.restart_node(0, extra_args=[blockmintxfee_parameter, '-minrelaytxfee=0', '-persistmempool=0'])
                 self.wallet.rescan_utxos()  # to avoid spending outputs of txs that are not in mempool anymore after restart
 
             # submit one tx with exactly the blockmintxfee rate, and one slightly below
-            tx_with_min_feerate = self.wallet.send_self_transfer(from_node=node, fee_rate=blockmintxfee_btc_kvb)
-            assert_equal(tx_with_min_feerate["fee"], get_fee(tx_with_min_feerate["tx"].get_vsize(), blockmintxfee_btc_kvb))
-            if blockmintxfee_btc_kvb > 0:
-                lowerfee_btc_kvb = blockmintxfee_btc_kvb - Decimal(10)/COIN  # 0.01 sat/vbyte lower
-                tx_below_min_feerate = self.wallet.send_self_transfer(from_node=node, fee_rate=lowerfee_btc_kvb)
-                assert_equal(tx_below_min_feerate["fee"], get_fee(tx_below_min_feerate["tx"].get_vsize(), lowerfee_btc_kvb))
+            tx_with_min_feerate = self.wallet.send_self_transfer(from_node=node, fee_rate=blockmintxfee_SHAH_kvb)
+            assert_equal(tx_with_min_feerate["fee"], get_fee(tx_with_min_feerate["tx"].get_vsize(), blockmintxfee_SHAH_kvb))
+            if blockmintxfee_SHAH_kvb > 0:
+                lowerfee_SHAH_kvb = blockmintxfee_SHAH_kvb - Decimal(10)/COIN  # 0.01 sat/vbyte lower
+                tx_below_min_feerate = self.wallet.send_self_transfer(from_node=node, fee_rate=lowerfee_SHAH_kvb)
+                assert_equal(tx_below_min_feerate["fee"], get_fee(tx_below_min_feerate["tx"].get_vsize(), lowerfee_SHAH_kvb))
             else:  # go below zero fee by using modified fees
-                tx_below_min_feerate = self.wallet.send_self_transfer(from_node=node, fee_rate=blockmintxfee_btc_kvb)
+                tx_below_min_feerate = self.wallet.send_self_transfer(from_node=node, fee_rate=blockmintxfee_SHAH_kvb)
                 node.prioritisetransaction(tx_below_min_feerate["txid"], 0, -1)
 
             # check that tx below specified fee-rate is neither in template nor in the actual block
@@ -166,7 +166,7 @@ class MiningTest(ShahcoinTestFramework):
         block.nVersion = tmpl["version"]
         block.hashPrevBlock = int(tmpl["previousblockhash"], 16)
         block.nTime = tmpl["curtime"]
-        block.nBits = int(tmpl["bits"], 16)
+        block.nshahbits = int(tmpl["shahbits"], 16)
         block.nNonce = 0
         block.vtx = [coinbase_tx]
 
@@ -229,10 +229,10 @@ class MiningTest(ShahcoinTestFramework):
             'rules': ['segwit'],
         })
 
-        self.log.info("getblocktemplate: Test bad bits")
+        self.log.info("getblocktemplate: Test bad shahbits")
         bad_block = copy.deepcopy(block)
-        bad_block.nBits = 469762303  # impossible in the real world
-        assert_template(node, bad_block, 'bad-diffbits')
+        bad_block.nshahbits = 469762303  # impossible in the real world
+        assert_template(node, bad_block, 'bad-diffshahbits')
 
         self.log.info("getblocktemplate: Test bad merkle root")
         bad_block = copy.deepcopy(block)

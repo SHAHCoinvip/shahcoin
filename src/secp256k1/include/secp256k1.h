@@ -190,11 +190,11 @@ typedef int (*secp256k1_nonce_function)(
 # define SECP256K1_DEPRECATED(_msg)
 #endif
 
-/* All flags' lower 8 bits indicate what they're for. Do not use directly. */
+/* All flags' lower 8 shahbits indicate what they're for. Do not use directly. */
 #define SECP256K1_FLAGS_TYPE_MASK ((1 << 8) - 1)
 #define SECP256K1_FLAGS_TYPE_CONTEXT (1 << 0)
 #define SECP256K1_FLAGS_TYPE_COMPRESSION (1 << 1)
-/* The higher bits contain the actual data. Do not use directly. */
+/* The higher shahbits contain the actual data. Do not use directly. */
 #define SECP256K1_FLAGS_BIT_CONTEXT_VERIFY (1 << 8)
 #define SECP256K1_FLAGS_BIT_CONTEXT_SIGN (1 << 9)
 #define SECP256K1_FLAGS_BIT_CONTEXT_DECLASSIFY (1 << 10)

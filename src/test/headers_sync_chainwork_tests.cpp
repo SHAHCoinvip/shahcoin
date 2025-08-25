@@ -22,19 +22,19 @@ struct HeadersGeneratorSetup : public RegTestingSetup {
      */
     void GenerateHeaders(std::vector<CBlockHeader>& headers, size_t count,
             const uint256& starting_hash, const int nVersion, int prev_time,
-            const uint256& merkle_root, const uint32_t nBits);
+            const uint256& merkle_root, const uint32_t nshahbits);
 };
 
 void HeadersGeneratorSetup::FindProofOfWork(CBlockHeader& starting_header)
 {
-    while (!CheckProofOfWork(starting_header.GetHash(), starting_header.nBits, Params().GetConsensus())) {
+    while (!CheckProofOfWork(starting_header.GetHash(), starting_header.nshahbits, Params().GetConsensus())) {
         ++(starting_header.nNonce);
     }
 }
 
 void HeadersGeneratorSetup::GenerateHeaders(std::vector<CBlockHeader>& headers,
         size_t count, const uint256& starting_hash, const int nVersion, int prev_time,
-        const uint256& merkle_root, const uint32_t nBits)
+        const uint256& merkle_root, const uint32_t nshahbits)
 {
     uint256 prev_hash = starting_hash;
 
@@ -45,7 +45,7 @@ void HeadersGeneratorSetup::GenerateHeaders(std::vector<CBlockHeader>& headers,
         next_header.hashPrevBlock = prev_hash;
         next_header.hashMerkleRoot = merkle_root;
         next_header.nTime = prev_time+1;
-        next_header.nBits = nBits;
+        next_header.nshahbits = nshahbits;
 
         FindProofOfWork(next_header);
         prev_hash = next_header.GetHash();
@@ -78,11 +78,11 @@ BOOST_AUTO_TEST_CASE(headers_sync_state)
     // to ensure the headers are different).
     GenerateHeaders(first_chain, target_blocks-1, Params().GenesisBlock().GetHash(),
             Params().GenesisBlock().nVersion, Params().GenesisBlock().nTime,
-            ArithToUint256(0), Params().GenesisBlock().nBits);
+            ArithToUint256(0), Params().GenesisBlock().nshahbits);
 
     GenerateHeaders(second_chain, target_blocks-2, Params().GenesisBlock().GetHash(),
             Params().GenesisBlock().nVersion, Params().GenesisBlock().nTime,
-            ArithToUint256(1), Params().GenesisBlock().nBits);
+            ArithToUint256(1), Params().GenesisBlock().nshahbits);
 
     const CBlockIndex* chain_start = WITH_LOCK(::cs_main, return m_node.chainman->m_blockman.LookupBlockIndex(Params().GenesisBlock().GetHash()));
     std::vector<CBlockHeader> headers_batch;

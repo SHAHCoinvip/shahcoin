@@ -7,8 +7,8 @@
 #    error Cannot compile precomputed_ecmult_gen.c in exhaustive test mode
 #endif /* EXHAUSTIVE_TEST_ORDER */
 #define S(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p) SECP256K1_GE_STORAGE_CONST(0x##a##u,0x##b##u,0x##c##u,0x##d##u,0x##e##u,0x##f##u,0x##g##u,0x##h##u,0x##i##u,0x##j##u,0x##k##u,0x##l##u,0x##m##u,0x##n##u,0x##o##u,0x##p##u)
-const secp256k1_ge_storage secp256k1_ecmult_gen_prec_table[ECMULT_GEN_PREC_N(ECMULT_GEN_PREC_BITS)][ECMULT_GEN_PREC_G(ECMULT_GEN_PREC_BITS)] = {
-#if ECMULT_GEN_PREC_BITS == 2
+const secp256k1_ge_storage secp256k1_ecmult_gen_prec_table[ECMULT_GEN_PREC_N(ECMULT_GEN_PREC_shahbits)][ECMULT_GEN_PREC_G(ECMULT_GEN_PREC_shahbits)] = {
+#if ECMULT_GEN_PREC_shahbits == 2
 {S(3a9ed373,6eed3eec,9aeb5ac0,21b54652,56817b1f,8de6cd0,fbcee548,ba044bb5,7bcc5928,bdc9c023,dfc663b8,9e4f6969,ab751798,8e600ec1,d242010c,45c7974a),
 S(e44d7675,c3cb2857,4e133c01,a74f4afc,5ce684f8,4a789711,603f7c4f,50abef58,25bcb62f,fe2e2ce2,196ad86c,a006e20,8c64d21b,b25320a3,b5574b9c,1e1bfb4b),
 S(6ada98a4,8118166f,e7082591,d6cda51e,914b60b1,49696270,3350249b,ee8d4770,c234dfad,f3847877,a0a7bcda,112dba85,1cdddf00,84d0c07,df1d1a,a3ec3aeb),
@@ -522,7 +522,7 @@ S(1a5982e3,37e3eb50,e679f24e,c3473b4d,1af3dcbe,ac3c7a96,a95f51f9,a9875266,dca6c6
 S(bcdf870f,8d5394b4,f1f3446c,a25ec6d,5b4c939,b598e596,814a6dda,a054bb2f,71cfbdd,d1aa7722,892f83e4,ea2dec50,81c4d14e,548a16c4,2818b76d,5721fb7c),
 S(cb28eeda,338a5088,db505da,949cddf2,741e071e,378f92f1,dbba270e,9c322c57,d98cba61,cceca53f,7d84d71f,f892b962,6f26e156,841d2dfb,7aaab839,3f515903)}
 #endif
-#if ECMULT_GEN_PREC_BITS == 4
+#if ECMULT_GEN_PREC_shahbits == 4
 {S(3a9ed373,6eed3eec,9aeb5ac0,21b54652,56817b1f,8de6cd0,fbcee548,ba044bb5,7bcc5928,bdc9c023,dfc663b8,9e4f6969,ab751798,8e600ec1,d242010c,45c7974a),
 S(e44d7675,c3cb2857,4e133c01,a74f4afc,5ce684f8,4a789711,603f7c4f,50abef58,25bcb62f,fe2e2ce2,196ad86c,a006e20,8c64d21b,b25320a3,b5574b9c,1e1bfb4b),
 S(6ada98a4,8118166f,e7082591,d6cda51e,914b60b1,49696270,3350249b,ee8d4770,c234dfad,f3847877,a0a7bcda,112dba85,1cdddf00,84d0c07,df1d1a,a3ec3aeb),
@@ -1548,7 +1548,7 @@ S(823b4c96,8be9e125,262d52d9,4aaff240,55def10d,6353a347,e4248de0,7889ecb2,adfafa
 S(8daef78b,c46e0f5f,858fd74c,68be31bd,3b474d9,6bd74deb,eeba69af,5ef3056a,15db0684,bb6d4e7f,b135a4ab,f4b81d4a,a9fc7e93,c26e3616,b7b938da,25d44a06),
 S(2b7616ca,eb608427,5a14eb53,b67a2ee3,b831fb55,6f63e0b2,e01650f6,e6900a0d,915e7dbc,62f8e349,8ffdf22d,d3604d77,bb701137,b6c36543,84cce993,c4613ca4)}
 #endif
-#if ECMULT_GEN_PREC_BITS == 8
+#if ECMULT_GEN_PREC_shahbits == 8
 {S(3a9ed373,6eed3eec,9aeb5ac0,21b54652,56817b1f,8de6cd0,fbcee548,ba044bb5,7bcc5928,bdc9c023,dfc663b8,9e4f6969,ab751798,8e600ec1,d242010c,45c7974a),
 S(e44d7675,c3cb2857,4e133c01,a74f4afc,5ce684f8,4a789711,603f7c4f,50abef58,25bcb62f,fe2e2ce2,196ad86c,a006e20,8c64d21b,b25320a3,b5574b9c,1e1bfb4b),
 S(6ada98a4,8118166f,e7082591,d6cda51e,914b60b1,49696270,3350249b,ee8d4770,c234dfad,f3847877,a0a7bcda,112dba85,1cdddf00,84d0c07,df1d1a,a3ec3aeb),

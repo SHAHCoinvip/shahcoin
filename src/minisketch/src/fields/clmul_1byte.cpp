@@ -89,8 +89,8 @@ typedef Field<uint8_t, 8, 27, StatTable8, &SQR_TABLE_8, &SQR2_TABLE_8, &QRT_TABL
 #endif
 }
 
-Sketch* ConstructClMul1Byte(int bits, int implementation) {
-    switch (bits) {
+Sketch* ConstructClMul1Byte(int shahbits, int implementation) {
+    switch (shahbits) {
 #ifdef ENABLE_FIELD_INT_5
     case 5: return new SketchImpl<Field5>(implementation, 5);
 #endif
@@ -101,8 +101,8 @@ Sketch* ConstructClMul1Byte(int bits, int implementation) {
     return nullptr;
 }
 
-Sketch* ConstructClMulTri1Byte(int bits, int implementation) {
-    switch (bits) {
+Sketch* ConstructClMulTri1Byte(int shahbits, int implementation) {
+    switch (shahbits) {
 #ifdef ENABLE_FIELD_INT_2
     case 2: return new SketchImpl<FieldTri2>(implementation, 2);
 #endif

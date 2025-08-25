@@ -4,7 +4,7 @@
 #include <deploymentstatus.h>
 
 #include <consensus/params.h>
-#include <versionbits.h>
+#include <versionshahbits.h>
 
 #include <type_traits>
 
@@ -12,7 +12,7 @@
  * ValidDeployment check */
 
 static_assert(ValidDeployment(Consensus::DEPLOYMENT_TESTDUMMY), "sanity check of DeploymentPos failed (TESTDUMMY not valid)");
-static_assert(!ValidDeployment(Consensus::MAX_VERSION_BITS_DEPLOYMENTS), "sanity check of DeploymentPos failed (MAX value considered valid)");
+static_assert(!ValidDeployment(Consensus::MAX_VERSION_shahbits_DEPLOYMENTS), "sanity check of DeploymentPos failed (MAX value considered valid)");
 static_assert(!ValidDeployment(static_cast<Consensus::BuriedDeployment>(Consensus::DEPLOYMENT_TESTDUMMY)), "sanity check of BuriedDeployment failed (overlaps with DeploymentPos)");
 
 /* ValidDeployment only checks upper bounds for ensuring validity.

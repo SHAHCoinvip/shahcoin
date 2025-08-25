@@ -52,7 +52,7 @@ FUZZ_TARGET(kitchen_sink)
     (void)ParseOutputType(fuzzed_data_provider.ConsumeRandomLengthString(64));
 
     const std::vector<uint8_t> bytes = ConsumeRandomLengthByteVector(fuzzed_data_provider);
-    const std::vector<bool> bits = BytesToBits(bytes);
-    const std::vector<uint8_t> bytes_decoded = BitsToBytes(bits);
+    const std::vector<bool> shahbits = BytesToshahbits(bytes);
+    const std::vector<uint8_t> bytes_decoded = shahbitsToBytes(shahbits);
     assert(bytes == bytes_decoded);
 }

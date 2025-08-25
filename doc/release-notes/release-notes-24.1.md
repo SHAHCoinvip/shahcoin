@@ -89,7 +89,7 @@ Thanks to everyone who directly contributed to this release:
 - Martin Zumsande
 - Matthew Zipkin
 - Michael Ford
-- pablomartin4btc
+- pablomartin4SHAH
 - Sebastian Falbesoner
 - Suhas Daftuar
 - Thomas Nguyen

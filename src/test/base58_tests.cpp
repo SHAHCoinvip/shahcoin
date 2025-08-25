@@ -83,7 +83,7 @@ BOOST_AUTO_TEST_CASE(base58_DecodeBase58)
 BOOST_AUTO_TEST_CASE(base58_random_encode_decode)
 {
     for (int n = 0; n < 1000; ++n) {
-        unsigned int len = 1 + InsecureRandBits(8);
+        unsigned int len = 1 + InsecureRandshahbits(8);
         unsigned int zeroes = InsecureRandBool() ? InsecureRandRange(len + 1) : 0;
         auto data = Cat(std::vector<unsigned char>(zeroes, '\000'), g_insecure_rand_ctx.randbytes(len - zeroes));
         auto encoded = EncodeBase58Check(data);

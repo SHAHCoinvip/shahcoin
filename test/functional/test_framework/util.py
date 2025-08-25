@@ -39,16 +39,16 @@ def assert_approx(v, vexp, vspan=0.00001):
         raise AssertionError("%s > [%s..%s]" % (str(v), str(vexp - vspan), str(vexp + vspan)))
 
 
-def assert_fee_amount(fee, tx_size, feerate_BTC_kvB):
+def assert_fee_amount(fee, tx_size, feerate_SHAH_kvB):
     """Assert the fee is in range."""
     assert isinstance(tx_size, int)
-    target_fee = get_fee(tx_size, feerate_BTC_kvB)
+    target_fee = get_fee(tx_size, feerate_SHAH_kvB)
     if fee < target_fee:
-        raise AssertionError("Fee of %s BTC too low! (Should be %s BTC)" % (str(fee), str(target_fee)))
+        raise AssertionError("Fee of %s SHAH too low! (Should be %s SHAH)" % (str(fee), str(target_fee)))
     # allow the wallet's estimation to be at most 2 bytes off
-    high_fee = get_fee(tx_size + 2, feerate_BTC_kvB)
+    high_fee = get_fee(tx_size + 2, feerate_SHAH_kvB)
     if fee > high_fee:
-        raise AssertionError("Fee of %s BTC too high! (Should be %s BTC)" % (str(fee), str(target_fee)))
+        raise AssertionError("Fee of %s SHAH too high! (Should be %s SHAH)" % (str(fee), str(target_fee)))
 
 
 def assert_equal(thing1, thing2, *args):
@@ -203,7 +203,7 @@ def assert_array_result(object_array, to_match, expected, should_not_find=False)
 
 
 def check_json_precision():
-    """Make sure json library being used does not lose precision converting BTC values"""
+    """Make sure json library being used does not lose precision converting SHAH values"""
     n = Decimal("20000000.00000003")
     shahis = int(json.loads(json.dumps(float(n))) * 1.0e8)
     if shahis != 2000000000000003:
@@ -229,11 +229,11 @@ def ceildiv(a, b):
     return -(-a // b)
 
 
-def get_fee(tx_size, feerate_btc_kvb):
-    """Calculate the fee in BTC given a feerate is BTC/kvB. Reflects CFeeRate::GetFee"""
-    feerate_sat_kvb = int(feerate_btc_kvb * Decimal(1e8)) # Fee in sat/kvb as an int to avoid float precision errors
+def get_fee(tx_size, feerate_SHAH_kvb):
+    """Calculate the fee in SHAH given a feerate is SHAH/kvB. Reflects CFeeRate::GetFee"""
+    feerate_sat_kvb = int(feerate_SHAH_kvb * Decimal(1e8)) # Fee in sat/kvb as an int to avoid float precision errors
     target_fee_sat = ceildiv(feerate_sat_kvb * tx_size, 1000) # Round calculated fee up to nearest sat
-    return target_fee_sat / Decimal(1e8) # Return result in  BTC
+    return target_fee_sat / Decimal(1e8) # Return result in  SHAH
 
 
 def shahi_round(amount):
@@ -289,7 +289,7 @@ def sha256sum_file(filename):
 # TODO: Remove and use random.randbytes(n) instead, available in Python 3.9
 def random_bytes(n):
     """Return a random bytes object of length n."""
-    return bytes(random.getrandbits(8) for i in range(n))
+    return bytes(random.getrandshahbits(8) for i in range(n))
 
 
 # RPC/P2P connection constants and functions

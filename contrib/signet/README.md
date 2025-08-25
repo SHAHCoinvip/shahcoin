@@ -27,22 +27,22 @@ You will first need to pick a difficulty target. Since signet chains are primari
     MINER="../contrib/signet/miner"
     GRIND="./shahcoin-util grind"
     $MINER calibrate --grind-cmd="$GRIND"
-    nbits=1e00f403 for 25s average mining time
+    nshahbits=1e00f403 for 25s average mining time
 
-It defaults to estimating an nbits value resulting in 25s average time to find a block, but the --seconds parameter can be used to pick a different target, or the --nbits parameter can be used to estimate how long it will take for a given difficulty.
+It defaults to estimating an nshahbits value resulting in 25s average time to find a block, but the --seconds parameter can be used to pick a different target, or the --nshahbits parameter can be used to estimate how long it will take for a given difficulty.
 
 To mine the first block in your custom chain, you can run:
 
     CLI="./shahcoin-cli -conf=mysignet.conf"
     ADDR=$($CLI -signet getnewaddress)
-    NBITS=1e00f403
-    $MINER --cli="$CLI" generate --grind-cmd="$GRIND" --address="$ADDR" --nbits=$NBITS
+    Nshahbits=1e00f403
+    $MINER --cli="$CLI" generate --grind-cmd="$GRIND" --address="$ADDR" --nshahbits=$Nshahbits
 
 This will mine a single block with a backdated timestamp designed to allow 100 blocks to be mined as quickly as possible, so that it is possible to do transactions.
 
-Adding the --ongoing parameter will then cause the signet miner to create blocks indefinitely. It will pick the time between blocks so that difficulty is adjusted to match the provided --nbits value.
+Adding the --ongoing parameter will then cause the signet miner to create blocks indefinitely. It will pick the time between blocks so that difficulty is adjusted to match the provided --nshahbits value.
 
-    $MINER --cli="$CLI" generate --grind-cmd="$GRIND" --address="$ADDR" --nbits=$NBITS --ongoing
+    $MINER --cli="$CLI" generate --grind-cmd="$GRIND" --address="$ADDR" --nshahbits=$Nshahbits --ongoing
 
 Other options
 -------------
@@ -55,7 +55,7 @@ The --set-block-time option is available to manually move timestamps forward or 
 
 Instead of using a single address, a ranged descriptor may be provided via the --descriptor parameter, with the reward for the block at height H being sent to the H'th address generated from the descriptor.
 
-Instead of calculating a specific nbits value, --min-nbits can be specified instead, in which case the minimum signet difficulty will be targeted. Signet's minimum difficulty corresponds to --nbits=1e0377ae.
+Instead of calculating a specific nshahbits value, --min-nshahbits can be specified instead, in which case the minimum signet difficulty will be targeted. Signet's minimum difficulty corresponds to --nshahbits=1e0377ae.
 
 By default, the signet miner mines blocks at fixed intervals with minimal variation. If you want blocks to appear more randomly, as they do in mainnet, specify the --poisson option.
 

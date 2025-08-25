@@ -20,9 +20,9 @@
 #include "ecmult_gen.h"
 #include "util.h"
 
-static void secp256k1_ecmult_gen_compute_table(secp256k1_ge_storage* table, const secp256k1_ge* gen, int bits) {
-    int g = ECMULT_GEN_PREC_G(bits);
-    int n = ECMULT_GEN_PREC_N(bits);
+static void secp256k1_ecmult_gen_compute_table(secp256k1_ge_storage* table, const secp256k1_ge* gen, int shahbits) {
+    int g = ECMULT_GEN_PREC_G(shahbits);
+    int n = ECMULT_GEN_PREC_N(shahbits);
 
     secp256k1_ge* prec = checked_malloc(&default_error_callback, n * g * sizeof(*prec));
     secp256k1_gej gj;
@@ -48,7 +48,7 @@ static void secp256k1_ecmult_gen_compute_table(secp256k1_ge_storage* table, cons
         (void)r;
         VERIFY_CHECK(r);
         secp256k1_gej_set_ge(&nums_gej, &nums_ge);
-        /* Add G to make the bits in x uniformly distributed. */
+        /* Add G to make the shahbits in x uniformly distributed. */
         secp256k1_gej_add_ge_var(&nums_gej, &nums_gej, gen, NULL);
     }
 
@@ -66,7 +66,7 @@ static void secp256k1_ecmult_gen_compute_table(secp256k1_ge_storage* table, cons
                 secp256k1_gej_add_var(&precj[j*g + i], &precj[j*g + i - 1], &gbase, NULL);
             }
             /* Multiply gbase by PREC_G. */
-            for (i = 0; i < bits; i++) {
+            for (i = 0; i < shahbits; i++) {
                 secp256k1_gej_double_var(&gbase, &gbase, NULL);
             }
             /* Multiply numbase by 2. */

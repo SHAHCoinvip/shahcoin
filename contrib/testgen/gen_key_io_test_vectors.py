@@ -14,7 +14,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../test/functional')
 
 from test_framework.address import base58_to_byte, byte_to_base58, b58chars  # noqa: E402
 from test_framework.script import OP_0, OP_1, OP_2, OP_3, OP_16, OP_DUP, OP_EQUAL, OP_EQUALVERIFY, OP_HASH160, OP_CHECKSIG  # noqa: E402
-from test_framework.segwit_addr import bech32_encode, decode_segwit_address, convertbits, CHARSET, Encoding  # noqa: E402
+from test_framework.segwit_addr import bech32_encode, decode_segwit_address, convertshahbits, CHARSET, Encoding  # noqa: E402
 
 # key types
 PUBKEY_ADDRESS = 0
@@ -141,7 +141,7 @@ def gen_valid_bech32_vector(template):
     witprog = rand_bytes(size=template[2])
     encoding = template[4]
     dst_prefix = bytearray(template[5])
-    rv = bech32_encode(encoding, hrp, [witver] + convertbits(witprog, 8, 5))
+    rv = bech32_encode(encoding, hrp, [witver] + convertshahbits(witprog, 8, 5))
     return rv, dst_prefix + witprog
 
 def gen_valid_vectors():
@@ -205,7 +205,7 @@ def gen_invalid_bech32_vector(template):
     if no_data:
         rv = bech32_encode(encoding, hrp, [])
     else:
-        data = [witver] + convertbits(witprog, 8, 5)
+        data = [witver] + convertshahbits(witprog, 8, 5)
         if template[4] and not no_data:
             if template[2] % 5 in {2, 4}:
                 data[-1] |= 1
@@ -230,7 +230,7 @@ def randbool(p = 0.5):
     return random.random() < p
 
 def rand_bytes(*, size):
-    return bytearray(random.getrandbits(8) for _ in range(size))
+    return bytearray(random.getrandshahbits(8) for _ in range(size))
 
 def gen_invalid_vectors():
     '''Generate invalid test vectors'''

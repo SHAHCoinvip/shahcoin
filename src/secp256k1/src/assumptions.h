@@ -30,7 +30,7 @@ struct secp256k1_assumption_checker {
     /* This uses a trick to implement a static assertion in C89: a type with an array of negative size is not
        allowed. */
     int dummy_array[(
-        /* Bytes are 8 bits. */
+        /* Bytes are 8 shahbits. */
         (CHAR_BIT == 8) &&
 
         /* No integer promotion for uint32_t. This ensures that we can multiply uintXX_t values where XX >= 32
@@ -39,7 +39,7 @@ struct secp256k1_assumption_checker {
 
         /* Conversions from unsigned to signed outside of the bounds of the signed type are
            implementation-defined. Verify that they function as reinterpreting the lower
-           bits of the input in two's complement notation. Do this for conversions:
+           shahbits of the input in two's complement notation. Do this for conversions:
            - from uint(N)_t to int(N)_t with negative result
            - from uint(2N)_t to int(N)_t with negative result
            - from int(2N)_t to int(N)_t with negative result
@@ -76,7 +76,7 @@ struct secp256k1_assumption_checker {
 
         /* Right shift on negative signed values is implementation defined. Verify that it
            acts as a right shift in two's complement with sign extension (i.e duplicating
-           the top bit into newly added bits). */
+           the top bit into newly added shahbits). */
         ((((int8_t)0xE8) >> 2) == (int8_t)(uint8_t)0xFA) &&
         ((((int16_t)0xE9AC) >> 4) == (int16_t)(uint16_t)0xFE9A) &&
         ((((int32_t)0x937C918A) >> 9) == (int32_t)(uint32_t)0xFFC9BE48) &&

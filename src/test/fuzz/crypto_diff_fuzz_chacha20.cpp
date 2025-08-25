@@ -53,8 +53,8 @@ typedef struct
 void ECRYPT_keysetup(
     ECRYPT_ctx* ctx,
     const u8* key,
-    u32 keysize, /* Key size in bits. */
-    u32 ivsize); /* IV size in bits. */
+    u32 keysize, /* Key size in shahbits. */
+    u32 ivsize); /* IV size in shahbits. */
 
 void ECRYPT_ivsetup(
     ECRYPT_ctx* ctx,
@@ -91,7 +91,7 @@ void ECRYPT_keystream_bytes(
 static const char sigma[] = "expand 32-byte k";
 static const char tau[] = "expand 16-byte k";
 
-void ECRYPT_keysetup(ECRYPT_ctx* x, const u8* k, u32 kbits, u32 ivbits)
+void ECRYPT_keysetup(ECRYPT_ctx* x, const u8* k, u32 kshahbits, u32 ivshahbits)
 {
     const char* constants;
 
@@ -99,10 +99,10 @@ void ECRYPT_keysetup(ECRYPT_ctx* x, const u8* k, u32 kbits, u32 ivbits)
     x->input[5] = U8TO32_LITTLE(k + 4);
     x->input[6] = U8TO32_LITTLE(k + 8);
     x->input[7] = U8TO32_LITTLE(k + 12);
-    if (kbits == 256) { /* recommended */
+    if (kshahbits == 256) { /* recommended */
         k += 16;
         constants = sigma;
-    } else { /* kbits == 128 */
+    } else { /* kshahbits == 128 */
         constants = tau;
     }
     x->input[8] = U8TO32_LITTLE(k + 0);

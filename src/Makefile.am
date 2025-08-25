@@ -327,7 +327,7 @@ SHAHCOIN_CORE_H = \
   util/vector.h \
   validation.h \
   validationinterface.h \
-  versionbits.h \
+  versionshahbits.h \
   wallet/bdb.h \
   wallet/coincontrol.h \
   wallet/coinselection.h \
@@ -460,7 +460,7 @@ libshahcoin_node_a_SOURCES = \
   txrequest.cpp \
   validation.cpp \
   validationinterface.cpp \
-  versionbits.cpp \
+  versionshahbits.cpp \
   $(SHAHCOIN_CORE_H)
 
 if ENABLE_WALLET
@@ -1000,7 +1000,7 @@ libshahcoinkernel_la_SOURCES = \
   util/tokenpipe.cpp \
   validation.cpp \
   validationinterface.cpp \
-  versionbits.cpp \
+  versionshahbits.cpp \
   warnings.cpp
 
 # Required for obj/build.h to be generated first.

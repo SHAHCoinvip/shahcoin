@@ -3,7 +3,7 @@
 
 #include <consensus/params.h>
 #include <util/check.h>
-#include <versionbits.h>
+#include <versionshahbits.h>
 
 ThresholdState AbstractThresholdConditionChecker::GetStateFor(const CBlockIndex* pindexPrev, const Consensus::Params& params, ThresholdConditionCache& cache) const
 {
@@ -174,9 +174,9 @@ int AbstractThresholdConditionChecker::GetStateSinceHeightFor(const CBlockIndex*
 namespace
 {
 /**
- * Class to implement versionbits logic.
+ * Class to implement versionshahbits logic.
  */
-class VersionBitsConditionChecker : public AbstractThresholdConditionChecker {
+class VersionshahbitsConditionChecker : public AbstractThresholdConditionChecker {
 private:
     const Consensus::DeploymentPos id;
 
@@ -189,46 +189,46 @@ protected:
 
     bool Condition(const CBlockIndex* pindex, const Consensus::Params& params) const override
     {
-        return (((pindex->nVersion & VERSIONBITS_TOP_MASK) == VERSIONBITS_TOP_BITS) && (pindex->nVersion & Mask(params)) != 0);
+        return (((pindex->nVersion & VERSIONshahbits_TOP_MASK) == VERSIONshahbits_TOP_shahbits) && (pindex->nVersion & Mask(params)) != 0);
     }
 
 public:
-    explicit VersionBitsConditionChecker(Consensus::DeploymentPos id_) : id(id_) {}
+    explicit VersionshahbitsConditionChecker(Consensus::DeploymentPos id_) : id(id_) {}
     uint32_t Mask(const Consensus::Params& params) const { return (uint32_t{1}) << params.vDeployments[id].bit; }
 };
 
 } // namespace
 
-ThresholdState VersionBitsCache::State(const CBlockIndex* pindexPrev, const Consensus::Params& params, Consensus::DeploymentPos pos)
+ThresholdState VersionshahbitsCache::State(const CBlockIndex* pindexPrev, const Consensus::Params& params, Consensus::DeploymentPos pos)
 {
     LOCK(m_mutex);
-    return VersionBitsConditionChecker(pos).GetStateFor(pindexPrev, params, m_caches[pos]);
+    return VersionshahbitsConditionChecker(pos).GetStateFor(pindexPrev, params, m_caches[pos]);
 }
 
-BIP9Stats VersionBitsCache::Statistics(const CBlockIndex* pindex, const Consensus::Params& params, Consensus::DeploymentPos pos, std::vector<bool>* signalling_blocks)
+BIP9Stats VersionshahbitsCache::Statistics(const CBlockIndex* pindex, const Consensus::Params& params, Consensus::DeploymentPos pos, std::vector<bool>* signalling_blocks)
 {
-    return VersionBitsConditionChecker(pos).GetStateStatisticsFor(pindex, params, signalling_blocks);
+    return VersionshahbitsConditionChecker(pos).GetStateStatisticsFor(pindex, params, signalling_blocks);
 }
 
-int VersionBitsCache::StateSinceHeight(const CBlockIndex* pindexPrev, const Consensus::Params& params, Consensus::DeploymentPos pos)
-{
-    LOCK(m_mutex);
-    return VersionBitsConditionChecker(pos).GetStateSinceHeightFor(pindexPrev, params, m_caches[pos]);
-}
-
-uint32_t VersionBitsCache::Mask(const Consensus::Params& params, Consensus::DeploymentPos pos)
-{
-    return VersionBitsConditionChecker(pos).Mask(params);
-}
-
-int32_t VersionBitsCache::ComputeBlockVersion(const CBlockIndex* pindexPrev, const Consensus::Params& params)
+int VersionshahbitsCache::StateSinceHeight(const CBlockIndex* pindexPrev, const Consensus::Params& params, Consensus::DeploymentPos pos)
 {
     LOCK(m_mutex);
-    int32_t nVersion = VERSIONBITS_TOP_BITS;
+    return VersionshahbitsConditionChecker(pos).GetStateSinceHeightFor(pindexPrev, params, m_caches[pos]);
+}
 
-    for (int i = 0; i < (int)Consensus::MAX_VERSION_BITS_DEPLOYMENTS; i++) {
+uint32_t VersionshahbitsCache::Mask(const Consensus::Params& params, Consensus::DeploymentPos pos)
+{
+    return VersionshahbitsConditionChecker(pos).Mask(params);
+}
+
+int32_t VersionshahbitsCache::ComputeBlockVersion(const CBlockIndex* pindexPrev, const Consensus::Params& params)
+{
+    LOCK(m_mutex);
+    int32_t nVersion = VERSIONshahbits_TOP_shahbits;
+
+    for (int i = 0; i < (int)Consensus::MAX_VERSION_shahbits_DEPLOYMENTS; i++) {
         Consensus::DeploymentPos pos = static_cast<Consensus::DeploymentPos>(i);
-        ThresholdState state = VersionBitsConditionChecker(pos).GetStateFor(pindexPrev, params, m_caches[pos]);
+        ThresholdState state = VersionshahbitsConditionChecker(pos).GetStateFor(pindexPrev, params, m_caches[pos]);
         if (state == ThresholdState::LOCKED_IN || state == ThresholdState::STARTED) {
             nVersion |= Mask(params, pos);
         }
@@ -237,10 +237,10 @@ int32_t VersionBitsCache::ComputeBlockVersion(const CBlockIndex* pindexPrev, con
     return nVersion;
 }
 
-void VersionBitsCache::Clear()
+void VersionshahbitsCache::Clear()
 {
     LOCK(m_mutex);
-    for (unsigned int d = 0; d < Consensus::MAX_VERSION_BITS_DEPLOYMENTS; d++) {
+    for (unsigned int d = 0; d < Consensus::MAX_VERSION_shahbits_DEPLOYMENTS; d++) {
         m_caches[d].clear();
     }
 }

@@ -103,7 +103,7 @@ enum BlockStatus : uint32_t {
     //! Scripts & signatures ok. Implies all parents are either at least VALID_SCRIPTS, or are ASSUMED_VALID.
     BLOCK_VALID_SCRIPTS      =    5,
 
-    //! All validity bits.
+    //! All validity shahbits.
     BLOCK_VALID_MASK         =   BLOCK_VALID_RESERVED | BLOCK_VALID_TREE | BLOCK_VALID_TRANSACTIONS |
                                  BLOCK_VALID_CHAIN | BLOCK_VALID_SCRIPTS,
 
@@ -195,7 +195,7 @@ public:
     int32_t nVersion{0};
     uint256 hashMerkleRoot{};
     uint32_t nTime{0};
-    uint32_t nBits{0};
+    uint32_t nshahbits{0};
     uint32_t nNonce{0};
 
     //! (memory only) Sequential id assigned to distinguish order in which blocks are received.
@@ -208,7 +208,7 @@ public:
         : nVersion{block.nVersion},
           hashMerkleRoot{block.hashMerkleRoot},
           nTime{block.nTime},
-          nBits{block.nBits},
+          nshahbits{block.nshahbits},
           nNonce{block.nNonce}
     {
     }
@@ -243,7 +243,7 @@ public:
             block.hashPrevBlock = pprev->GetBlockHash();
         block.hashMerkleRoot = hashMerkleRoot;
         block.nTime = nTime;
-        block.nBits = nBits;
+        block.nshahbits = nshahbits;
         block.nNonce = nNonce;
         return block;
     }
@@ -415,7 +415,7 @@ public:
         READWRITE(obj.hashPrev);
         READWRITE(obj.hashMerkleRoot);
         READWRITE(obj.nTime);
-        READWRITE(obj.nBits);
+        READWRITE(obj.nshahbits);
         READWRITE(obj.nNonce);
     }
 
@@ -426,7 +426,7 @@ public:
         block.hashPrevBlock = hashPrev;
         block.hashMerkleRoot = hashMerkleRoot;
         block.nTime = nTime;
-        block.nBits = nBits;
+        block.nshahbits = nshahbits;
         block.nNonce = nNonce;
         return block.GetHash();
     }

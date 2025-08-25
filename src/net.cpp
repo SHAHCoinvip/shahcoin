@@ -244,7 +244,7 @@ std::optional<CService> GetLocalAddrForPeer(CNode& node)
     // address than we do.
     FastRandomContext rng;
     if (IsPeerAddrLocalGood(&node) && (!addrLocal.IsRoutable() ||
-         rng.randbits((GetnScore(addrLocal) > LOCAL_MANUAL) ? 3 : 1) == 0))
+         rng.randshahbits((GetnScore(addrLocal) > LOCAL_MANUAL) ? 3 : 1) == 0))
     {
         if (node.IsInboundConn()) {
             // For inbound connections, assume both the address and the port
@@ -2274,8 +2274,8 @@ void CConnman::ThreadDNSAddressSeed()
             AddAddrFetch(seed);
         } else {
             std::vector<CAddress> vAdd;
-            ServiceFlags requiredServiceBits = GetDesirableServiceFlags(NODE_NONE);
-            std::string host = strprintf("x%x.%s", requiredServiceBits, seed);
+            ServiceFlags requiredServiceshahbits = GetDesirableServiceFlags(NODE_NONE);
+            std::string host = strprintf("x%x.%s", requiredServiceshahbits, seed);
             CNetAddr resolveSource;
             if (!resolveSource.SetInternal(host)) {
                 continue;
@@ -2284,14 +2284,14 @@ void CConnman::ThreadDNSAddressSeed()
             const auto addresses{LookupHost(host, nMaxIPs, true)};
             if (!addresses.empty()) {
                 for (const CNetAddr& ip : addresses) {
-                    CAddress addr = CAddress(CService(ip, m_params.DefaultPort()), requiredServiceBits);
+                    CAddress addr = CAddress(CService(ip, m_params.DefaultPort()), requiredServiceshahbits);
                     addr.nTime = rng.rand_uniform_delay(Now<NodeSeconds>() - 3 * 24h, -4 * 24h); // use a random age between 3 and 7 days old
                     vAdd.push_back(addr);
                     found++;
                 }
                 addrman.Add(vAdd, resolveSource);
             } else {
-                // If the seed does not support a subdomain with our desired service bits,
+                // If the seed does not support a subdomain with our desired service shahbits,
                 // we make an ADDR_FETCH connection to the DNS resolved peer address for the
                 // base dns seed domain in chainparams
                 AddAddrFetch(seed);

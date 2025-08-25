@@ -45,7 +45,7 @@ public:
     {
         std::vector<unsigned char> data = {0};
         data.reserve(33);
-        ConvertBits<8, 5, true>([&](unsigned char c) { data.push_back(c); }, id.begin(), id.end());
+        Convertshahbits<8, 5, true>([&](unsigned char c) { data.push_back(c); }, id.begin(), id.end());
         return bech32::Encode(bech32::Encoding::BECH32, m_params.Bech32HRP(), data);
     }
 
@@ -53,7 +53,7 @@ public:
     {
         std::vector<unsigned char> data = {0};
         data.reserve(53);
-        ConvertBits<8, 5, true>([&](unsigned char c) { data.push_back(c); }, id.begin(), id.end());
+        Convertshahbits<8, 5, true>([&](unsigned char c) { data.push_back(c); }, id.begin(), id.end());
         return bech32::Encode(bech32::Encoding::BECH32, m_params.Bech32HRP(), data);
     }
 
@@ -61,7 +61,7 @@ public:
     {
         std::vector<unsigned char> data = {1};
         data.reserve(53);
-        ConvertBits<8, 5, true>([&](unsigned char c) { data.push_back(c); }, tap.begin(), tap.end());
+        Convertshahbits<8, 5, true>([&](unsigned char c) { data.push_back(c); }, tap.begin(), tap.end());
         return bech32::Encode(bech32::Encoding::BECH32M, m_params.Bech32HRP(), data);
     }
 
@@ -73,7 +73,7 @@ public:
         }
         std::vector<unsigned char> data = {(unsigned char)id.GetWitnessVersion()};
         data.reserve(1 + (program.size() * 8 + 4) / 5);
-        ConvertBits<8, 5, true>([&](unsigned char c) { data.push_back(c); }, program.begin(), program.end());
+        Convertshahbits<8, 5, true>([&](unsigned char c) { data.push_back(c); }, program.begin(), program.end());
         return bech32::Encode(bech32::Encoding::BECH32M, m_params.Bech32HRP(), data);
     }
 
@@ -150,7 +150,7 @@ CTxDestination DecodeDestination(const std::string& str, const CChainParams& par
         }
         // The rest of the symbols are converted witness program bytes.
         data.reserve(((dec.data.size() - 1) * 5) / 8);
-        if (ConvertBits<5, 8, false>([&](unsigned char c) { data.push_back(c); }, dec.data.begin() + 1, dec.data.end())) {
+        if (Convertshahbits<5, 8, false>([&](unsigned char c) { data.push_back(c); }, dec.data.begin() + 1, dec.data.end())) {
 
             std::string_view byte_str{data.size() == 1 ? "byte" : "bytes"};
 

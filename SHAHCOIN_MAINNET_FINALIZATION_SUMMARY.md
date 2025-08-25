@@ -61,7 +61,7 @@ This document confirms the completion of SHAHCOIN mainnet finalization, includin
 ### **Genesis Block Configuration**
 - **Timestamp**: 1743638400 (July 1, 2025 00:00:00 UTC)
 - **Nonce**: 0x12345678
-- **Bits**: 0x1d00ffff
+- **shahbits**: 0x1d00ffff
 - **Version**: 0x20000000 (Hybrid consensus enabled)
 - **Algorithm**: SHA256d (genesis block)
 - **Transaction**: 2 outputs (premine + regular reward)

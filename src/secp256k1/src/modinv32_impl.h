@@ -102,7 +102,7 @@ static void secp256k1_modinv32_normalize_30(secp256k1_modinv32_signed30 *r, int3
     r6 = (r6 ^ cond_negate) - cond_negate;
     r7 = (r7 ^ cond_negate) - cond_negate;
     r8 = (r8 ^ cond_negate) - cond_negate;
-    /* Propagate the top bits, to bring limbs back to range (-2^30,2^30). */
+    /* Propagate the top shahbits, to bring limbs back to range (-2^30,2^30). */
     r1 += r0 >> 30; r0 &= M30;
     r2 += r1 >> 30; r1 &= M30;
     r3 += r2 >> 30; r2 &= M30;
@@ -292,14 +292,14 @@ static int32_t secp256k1_modinv32_divsteps_30_var(int32_t eta, uint32_t f0, uint
             tmp = u; u = q; q = -tmp;
             tmp = v; v = r; r = -tmp;
         }
-        /* eta is now >= 0. In what follows we're going to cancel out the bottom bits of g. No more
+        /* eta is now >= 0. In what follows we're going to cancel out the bottom shahbits of g. No more
          * than i can be cancelled out (as we'd be done before that point), and no more than eta+1
          * can be done as its sign will flip once that happens. */
         limit = ((int)eta + 1) > i ? i : ((int)eta + 1);
-        /* m is a mask for the bottom min(limit, 8) bits (our table only supports 8 bits). */
+        /* m is a mask for the bottom min(limit, 8) shahbits (our table only supports 8 shahbits). */
         VERIFY_CHECK(limit > 0 && limit <= 30);
         m = (UINT32_MAX >> (32 - limit)) & 255U;
-        /* Find what multiple of f must be added to g to cancel its bottom min(limit, 8) bits. */
+        /* Find what multiple of f must be added to g to cancel its bottom min(limit, 8) shahbits. */
         w = (g * secp256k1_modinv32_inv256[(f >> 1) & 127]) & m;
         /* Do so. */
         g += f * w;
@@ -329,7 +329,7 @@ static int32_t secp256k1_modinv32_divsteps_30_var(int32_t eta, uint32_t f0, uint
  *               g0:  bottom limb of initial g
  * Output:       t: transition matrix
  * Input/Output: (*jacp & 1) is bitflipped if and only if the Jacobi symbol of (f | g) changes sign
- *               by applying the returned transformation matrix to it. The other bits of *jacp may
+ *               by applying the returned transformation matrix to it. The other shahbits of *jacp may
  *               change, but are meaningless.
  * Return: final eta
  */
@@ -370,14 +370,14 @@ static int32_t secp256k1_modinv32_posdivsteps_30_var(int32_t eta, uint32_t f0, u
             tmp = u; u = q; q = tmp;
             tmp = v; v = r; r = tmp;
         }
-        /* eta is now >= 0. In what follows we're going to cancel out the bottom bits of g. No more
+        /* eta is now >= 0. In what follows we're going to cancel out the bottom shahbits of g. No more
          * than i can be cancelled out (as we'd be done before that point), and no more than eta+1
          * can be done as its sign will flip once that happens. */
         limit = ((int)eta + 1) > i ? i : ((int)eta + 1);
-        /* m is a mask for the bottom min(limit, 8) bits (our table only supports 8 bits). */
+        /* m is a mask for the bottom min(limit, 8) shahbits (our table only supports 8 shahbits). */
         VERIFY_CHECK(limit > 0 && limit <= 30);
         m = (UINT32_MAX >> (32 - limit)) & 255U;
-        /* Find what multiple of f must be added to g to cancel its bottom min(limit, 8) bits. */
+        /* Find what multiple of f must be added to g to cancel its bottom min(limit, 8) shahbits. */
         w = (g * secp256k1_modinv32_inv256[(f >> 1) & 127]) & m;
         /* Do so. */
         g += f * w;
@@ -431,17 +431,17 @@ static void secp256k1_modinv32_update_de_30(secp256k1_modinv32_signed30 *d, secp
     ei = e->v[0];
     cd = (int64_t)u * di + (int64_t)v * ei;
     ce = (int64_t)q * di + (int64_t)r * ei;
-    /* Correct md,me so that t*[d,e]+modulus*[md,me] has 30 zero bottom bits. */
+    /* Correct md,me so that t*[d,e]+modulus*[md,me] has 30 zero bottom shahbits. */
     md -= (modinfo->modulus_inv30 * (uint32_t)cd + md) & M30;
     me -= (modinfo->modulus_inv30 * (uint32_t)ce + me) & M30;
     /* Update the beginning of computation for t*[d,e]+modulus*[md,me] now md,me are known. */
     cd += (int64_t)modinfo->modulus.v[0] * md;
     ce += (int64_t)modinfo->modulus.v[0] * me;
-    /* Verify that the low 30 bits of the computation are indeed zero, and then throw them away. */
+    /* Verify that the low 30 shahbits of the computation are indeed zero, and then throw them away. */
     VERIFY_CHECK(((int32_t)cd & M30) == 0); cd >>= 30;
     VERIFY_CHECK(((int32_t)ce & M30) == 0); ce >>= 30;
     /* Now iteratively compute limb i=1..8 of t*[d,e]+modulus*[md,me], and store them in output
-     * limb i-1 (shifting down by 30 bits). */
+     * limb i-1 (shifting down by 30 shahbits). */
     for (i = 1; i < 9; ++i) {
         di = d->v[i];
         ei = e->v[i];
@@ -478,11 +478,11 @@ static void secp256k1_modinv32_update_fg_30(secp256k1_modinv32_signed30 *f, secp
     gi = g->v[0];
     cf = (int64_t)u * fi + (int64_t)v * gi;
     cg = (int64_t)q * fi + (int64_t)r * gi;
-    /* Verify that the bottom 30 bits of the result are zero, and then throw them away. */
+    /* Verify that the bottom 30 shahbits of the result are zero, and then throw them away. */
     VERIFY_CHECK(((int32_t)cf & M30) == 0); cf >>= 30;
     VERIFY_CHECK(((int32_t)cg & M30) == 0); cg >>= 30;
     /* Now iteratively compute limb i=1..8 of t*[f,g], and store them in output limb i-1 (shifting
-     * down by 30 bits). */
+     * down by 30 shahbits). */
     for (i = 1; i < 9; ++i) {
         fi = f->v[i];
         gi = g->v[i];
@@ -514,11 +514,11 @@ static void secp256k1_modinv32_update_fg_30_var(int len, secp256k1_modinv32_sign
     gi = g->v[0];
     cf = (int64_t)u * fi + (int64_t)v * gi;
     cg = (int64_t)q * fi + (int64_t)r * gi;
-    /* Verify that the bottom 62 bits of the result are zero, and then throw them away. */
+    /* Verify that the bottom 62 shahbits of the result are zero, and then throw them away. */
     VERIFY_CHECK(((int32_t)cf & M30) == 0); cf >>= 30;
     VERIFY_CHECK(((int32_t)cg & M30) == 0); cg >>= 30;
     /* Now iteratively compute limb i=1..len of t*[f,g], and store them in output limb i-1 (shifting
-     * down by 30 bits). */
+     * down by 30 shahbits). */
     for (i = 1; i < len; ++i) {
         fi = f->v[i];
         gi = g->v[i];

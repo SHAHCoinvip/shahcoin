@@ -43,7 +43,7 @@
 #include <util/translation.h>
 #include <validation.h>
 #include <validationinterface.h>
-#include <versionbits.h>
+#include <versionshahbits.h>
 #include <warnings.h>
 
 #include <stdint.h>
@@ -75,9 +75,9 @@ double GetDifficulty(const CBlockIndex* blockindex)
 {
     CHECK_NONFATAL(blockindex);
 
-    int nShift = (blockindex->nBits >> 24) & 0xff;
+    int nShift = (blockindex->nshahbits >> 24) & 0xff;
     double dDiff =
-        (double)0x0000ffff / (double)(blockindex->nBits & 0x00ffffff);
+        (double)0x0000ffff / (double)(blockindex->nshahbits & 0x00ffffff);
 
     while (nShift < 29)
     {
@@ -148,7 +148,7 @@ UniValue blockheaderToJSON(const CBlockIndex* tip, const CBlockIndex* blockindex
     result.pushKV("time", (int64_t)blockindex->nTime);
     result.pushKV("mediantime", (int64_t)blockindex->GetMedianTimePast());
     result.pushKV("nonce", (uint64_t)blockindex->nNonce);
-    result.pushKV("bits", strprintf("%08x", blockindex->nBits));
+    result.pushKV("shahbits", strprintf("%08x", blockindex->nshahbits));
     result.pushKV("difficulty", GetDifficulty(blockindex));
     result.pushKV("chainwork", blockindex->nChainWork.GetHex());
     result.pushKV("nTx", (uint64_t)blockindex->nTx);
@@ -526,7 +526,7 @@ static RPCHelpMan getblockheader()
                             {RPCResult::Type::NUM_TIME, "time", "The block time expressed in " + UNIX_EPOCH_TIME},
                             {RPCResult::Type::NUM_TIME, "mediantime", "The median block time expressed in " + UNIX_EPOCH_TIME},
                             {RPCResult::Type::NUM, "nonce", "The nonce"},
-                            {RPCResult::Type::STR_HEX, "bits", "The bits"},
+                            {RPCResult::Type::STR_HEX, "shahbits", "The shahbits"},
                             {RPCResult::Type::NUM, "difficulty", "The difficulty"},
                             {RPCResult::Type::STR_HEX, "chainwork", "Expected number of hashes required to produce the current chain"},
                             {RPCResult::Type::NUM, "nTx", "The number of transactions in the block"},
@@ -671,7 +671,7 @@ static RPCHelpMan getblock()
                     {RPCResult::Type::NUM_TIME, "time",       "The block time expressed in " + UNIX_EPOCH_TIME},
                     {RPCResult::Type::NUM_TIME, "mediantime", "The median block time expressed in " + UNIX_EPOCH_TIME},
                     {RPCResult::Type::NUM, "nonce", "The nonce"},
-                    {RPCResult::Type::STR_HEX, "bits", "The bits"},
+                    {RPCResult::Type::STR_HEX, "shahbits", "The shahbits"},
                     {RPCResult::Type::NUM, "difficulty", "The difficulty"},
                     {RPCResult::Type::STR_HEX, "chainwork", "Expected number of hashes required to produce the chain up to this block (in hex)"},
                     {RPCResult::Type::NUM, "nTx", "The number of transactions in the block"},
@@ -1161,8 +1161,8 @@ static void SoftForkDescPushBack(const CBlockIndex* blockindex, UniValue& softfo
 
     UniValue bip9(UniValue::VOBJ);
 
-    const ThresholdState next_state = chainman.m_versionbitscache.State(blockindex, chainman.GetConsensus(), id);
-    const ThresholdState current_state = chainman.m_versionbitscache.State(blockindex->pprev, chainman.GetConsensus(), id);
+    const ThresholdState next_state = chainman.m_versionshahbitscache.State(blockindex, chainman.GetConsensus(), id);
+    const ThresholdState current_state = chainman.m_versionshahbitscache.State(blockindex->pprev, chainman.GetConsensus(), id);
 
     const bool has_signal = (ThresholdState::STARTED == current_state || ThresholdState::LOCKED_IN == current_state);
 
@@ -1176,14 +1176,14 @@ static void SoftForkDescPushBack(const CBlockIndex* blockindex, UniValue& softfo
 
     // BIP9 status
     bip9.pushKV("status", get_state_name(current_state));
-    bip9.pushKV("since", chainman.m_versionbitscache.StateSinceHeight(blockindex->pprev, chainman.GetConsensus(), id));
+    bip9.pushKV("since", chainman.m_versionshahbitscache.StateSinceHeight(blockindex->pprev, chainman.GetConsensus(), id));
     bip9.pushKV("status_next", get_state_name(next_state));
 
     // BIP9 signalling status, if applicable
     if (has_signal) {
         UniValue statsUV(UniValue::VOBJ);
         std::vector<bool> signals;
-        BIP9Stats statsStruct = chainman.m_versionbitscache.Statistics(blockindex, chainman.GetConsensus(), id, &signals);
+        BIP9Stats statsStruct = chainman.m_versionshahbitscache.Statistics(blockindex, chainman.GetConsensus(), id, &signals);
         statsUV.pushKV("period", statsStruct.period);
         statsUV.pushKV("elapsed", statsStruct.elapsed);
         statsUV.pushKV("count", statsStruct.count);
@@ -1204,7 +1204,7 @@ static void SoftForkDescPushBack(const CBlockIndex* blockindex, UniValue& softfo
     UniValue rv(UniValue::VOBJ);
     rv.pushKV("type", "bip9");
     if (ThresholdState::ACTIVE == next_state) {
-        rv.pushKV("height", chainman.m_versionbitscache.StateSinceHeight(blockindex, chainman.GetConsensus(), id));
+        rv.pushKV("height", chainman.m_versionshahbitscache.StateSinceHeight(blockindex, chainman.GetConsensus(), id));
     }
     rv.pushKV("active", ThresholdState::ACTIVE == next_state);
     rv.pushKV("bip9", bip9);

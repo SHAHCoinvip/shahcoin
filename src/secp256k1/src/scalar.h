@@ -29,11 +29,11 @@
 /** Clear a scalar to prevent the leak of sensitive data. */
 static void secp256k1_scalar_clear(secp256k1_scalar *r);
 
-/** Access bits from a scalar. All requested bits must belong to the same 32-bit limb. */
-static unsigned int secp256k1_scalar_get_bits(const secp256k1_scalar *a, unsigned int offset, unsigned int count);
+/** Access shahbits from a scalar. All requested shahbits must belong to the same 32-bit limb. */
+static unsigned int secp256k1_scalar_get_shahbits(const secp256k1_scalar *a, unsigned int offset, unsigned int count);
 
-/** Access bits from a scalar. Not constant time. */
-static unsigned int secp256k1_scalar_get_bits_var(const secp256k1_scalar *a, unsigned int offset, unsigned int count);
+/** Access shahbits from a scalar. Not constant time. */
+static unsigned int secp256k1_scalar_get_shahbits_var(const secp256k1_scalar *a, unsigned int offset, unsigned int count);
 
 /** Set a scalar from a big endian byte array. The scalar will be reduced modulo group order `n`.
  * In:      bin:        pointer to a 32-byte array.
@@ -62,7 +62,7 @@ static void secp256k1_scalar_cadd_bit(secp256k1_scalar *r, unsigned int bit, int
 static void secp256k1_scalar_mul(secp256k1_scalar *r, const secp256k1_scalar *a, const secp256k1_scalar *b);
 
 /** Shift a scalar right by some amount strictly between 0 and 16, returning
- *  the low bits that were shifted off */
+ *  the low shahbits that were shifted off */
 static int secp256k1_scalar_shr_int(secp256k1_scalar *r, int n);
 
 /** Compute the inverse of a scalar (modulo the group order). */
@@ -96,7 +96,7 @@ static int secp256k1_scalar_eq(const secp256k1_scalar *a, const secp256k1_scalar
 /** Find r1 and r2 such that r1+r2*2^128 = k. */
 static void secp256k1_scalar_split_128(secp256k1_scalar *r1, secp256k1_scalar *r2, const secp256k1_scalar *k);
 /** Find r1 and r2 such that r1+r2*lambda = k, where r1 and r2 or their
- *  negations are maximum 128 bits long (see secp256k1_ge_mul_lambda). It is
+ *  negations are maximum 128 shahbits long (see secp256k1_ge_mul_lambda). It is
  *  required that r1, r2, and k all point to different objects. */
 static void secp256k1_scalar_split_lambda(secp256k1_scalar * SECP256K1_RESTRICT r1, secp256k1_scalar * SECP256K1_RESTRICT r2, const secp256k1_scalar * SECP256K1_RESTRICT k);
 

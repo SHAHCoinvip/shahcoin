@@ -99,9 +99,9 @@ typedef Field<uint32_t, 32, 141, StatTable32, DynTable32, &SQR_TABLE_32, &QRT_TA
 #endif
 }
 
-Sketch* ConstructGeneric4Bytes(int bits, int implementation)
+Sketch* ConstructGeneric4Bytes(int shahbits, int implementation)
 {
-    switch (bits) {
+    switch (shahbits) {
 #ifdef ENABLE_FIELD_INT_25
     case 25: return new SketchImpl<Field25>(implementation, 25);
 #endif

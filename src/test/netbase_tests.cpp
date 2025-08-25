@@ -319,7 +319,7 @@ BOOST_AUTO_TEST_CASE(subnet_test)
     BOOST_CHECK_EQUAL(subnet.ToString(), "1::/16");
     subnet = ResolveSubNet("1:2:3:4:5:6:7:8/0000:0000:0000:0000:0000:0000:0000:0000");
     BOOST_CHECK_EQUAL(subnet.ToString(), "::/0");
-    // Invalid netmasks (with 1-bits after 0-bits)
+    // Invalid netmasks (with 1-shahbits after 0-shahbits)
     subnet = ResolveSubNet("1.2.3.4/255.255.232.0");
     BOOST_CHECK(!subnet.IsValid());
     subnet = ResolveSubNet("1.2.3.4/255.0.255.255");

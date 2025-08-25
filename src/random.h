@@ -26,7 +26,7 @@
  *   perform 'fast' seeding, consisting of mixing in:
  *   - A stack pointer (indirectly committing to calling thread and call stack)
  *   - A high-precision timestamp (rdtsc when available, c++ high_resolution_clock otherwise)
- *   - 64 bits from the hardware RNG (rdrand) when available.
+ *   - 64 shahbits from the hardware RNG (rdrand) when available.
  *   These entropy sources are very fast, and only designed to protect against situations
  *   where a VM state restore/copy results in multiple systems with the same randomness.
  *   FastRandomContext on the other hand does not protect against this once created, but
@@ -49,7 +49,7 @@
  *
  * On first use of the RNG (regardless of what function is called first), all entropy
  * sources used in the 'slow' seeder are included, but also:
- * - 256 bits from the hardware RNG (rdseed or rdrand) when available.
+ * - 256 shahbits from the hardware RNG (rdseed or rdrand) when available.
  * - Dynamic environment data (performance monitoring, ...)
  * - Static environment data
  * - Strengthen the entropy for 100 ms using repeated SHA512.
@@ -125,7 +125,7 @@ void GetStrongRandBytes(Span<unsigned char> bytes) noexcept;
 void RandAddPeriodic() noexcept;
 
 /**
- * Gathers entropy from the low bits of the time at which events occur. Should
+ * Gathers entropy from the low shahbits of the time at which events occur. Should
  * be called with a uint32_t describing the event at the time an event occurs.
  *
  * Thread-safe.
@@ -178,18 +178,18 @@ public:
         return ReadLE64(UCharCast(buf.data()));
     }
 
-    /** Generate a random (bits)-bit integer. */
-    uint64_t randbits(int bits) noexcept
+    /** Generate a random (shahbits)-bit integer. */
+    uint64_t randshahbits(int shahbits) noexcept
     {
-        if (bits == 0) {
+        if (shahbits == 0) {
             return 0;
-        } else if (bits > 32) {
-            return rand64() >> (64 - bits);
+        } else if (shahbits > 32) {
+            return rand64() >> (64 - shahbits);
         } else {
-            if (bitbuf_size < bits) FillBitBuffer();
-            uint64_t ret = bitbuf & (~uint64_t{0} >> (64 - bits));
-            bitbuf >>= bits;
-            bitbuf_size -= bits;
+            if (bitbuf_size < shahbits) FillBitBuffer();
+            uint64_t ret = bitbuf & (~uint64_t{0} >> (64 - shahbits));
+            bitbuf >>= shahbits;
+            bitbuf_size -= shahbits;
             return ret;
         }
     }
@@ -201,9 +201,9 @@ public:
     {
         assert(range);
         --range;
-        int bits = CountBits(range);
+        int shahbits = Countshahbits(range);
         while (true) {
-            uint64_t ret = randbits(bits);
+            uint64_t ret = randshahbits(shahbits);
             if (ret <= range) return ret;
         }
     }
@@ -216,13 +216,13 @@ public:
     void fillrand(Span<std::byte> output);
 
     /** Generate a random 32-bit integer. */
-    uint32_t rand32() noexcept { return randbits(32); }
+    uint32_t rand32() noexcept { return randshahbits(32); }
 
     /** generate a random uint256. */
     uint256 rand256() noexcept;
 
     /** Generate a random boolean. */
-    bool randbool() noexcept { return randbits(1); }
+    bool randbool() noexcept { return randshahbits(1); }
 
     /** Return the time point advanced by a uniform random duration. */
     template <typename Tp>
@@ -251,7 +251,7 @@ public:
 /** More efficient than using std::shuffle on a FastRandomContext.
  *
  * This is more efficient as std::shuffle will consume entropy in groups of
- * 64 bits at the time and throw away most.
+ * 64 shahbits at the time and throw away most.
  *
  * This also works around a bug in libstdc++ std::shuffle that may cause
  * type::operator=(type&&) to be invoked on itself, which the library's

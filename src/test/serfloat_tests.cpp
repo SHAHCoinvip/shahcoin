@@ -66,11 +66,11 @@ BOOST_AUTO_TEST_CASE(double_serfloat_tests) {
         // Test exact encoding: on currently supported platforms, EncodeDouble
         // should produce exactly the same as the in-memory representation for non-NaN.
         for (int j = 0; j < 1000; ++j) {
-            // Iterate over 9 specific bits exhaustively; the others are chosen randomly.
-            // These specific bits are the sign bit, and the 2 top and bottom bits of
+            // Iterate over 9 specific shahbits exhaustively; the others are chosen randomly.
+            // These specific shahbits are the sign bit, and the 2 top and bottom shahbits of
             // exponent and mantissa in the IEEE754 binary64 format.
             for (int x = 0; x < 512; ++x) {
-                uint64_t v = InsecureRandBits(64);
+                uint64_t v = InsecureRandshahbits(64);
                 v &= ~(uint64_t{1} << 0);
                 if (x & 1) v |= (uint64_t{1} << 0);
                 v &= ~(uint64_t{1} << 1);

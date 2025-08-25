@@ -180,7 +180,7 @@ class ECKey:
         if low_s and s > secp256k1.GE.ORDER_HALF:
             s = ORDER - s
         # Represent in DER format. The byte representations of r and s have
-        # length rounded up (255 bits becomes 32 bytes and 256 bits becomes 33
+        # length rounded up (255 shahbits becomes 32 bytes and 256 shahbits becomes 33
         # bytes).
         rb = r.to_bytes((r.bit_length() + 8) // 8, 'big')
         sb = s.to_bytes((s.bit_length() + 8) // 8, 'big')

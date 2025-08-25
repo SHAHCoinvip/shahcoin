@@ -27,7 +27,7 @@
 int main(int argc, char **argv) {
     const char outfile[] = "src/precomputed_ecmult_gen.c";
     FILE* fp;
-    int bits;
+    int shahbits;
 
     (void)argc;
     (void)argv;
@@ -47,17 +47,17 @@ int main(int argc, char **argv) {
     fprintf(fp, "#    error Cannot compile precomputed_ecmult_gen.c in exhaustive test mode\n");
     fprintf(fp, "#endif /* EXHAUSTIVE_TEST_ORDER */\n");
     fprintf(fp, "#define S(a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p) SECP256K1_GE_STORAGE_CONST(0x##a##u,0x##b##u,0x##c##u,0x##d##u,0x##e##u,0x##f##u,0x##g##u,0x##h##u,0x##i##u,0x##j##u,0x##k##u,0x##l##u,0x##m##u,0x##n##u,0x##o##u,0x##p##u)\n");
-    fprintf(fp, "const secp256k1_ge_storage secp256k1_ecmult_gen_prec_table[ECMULT_GEN_PREC_N(ECMULT_GEN_PREC_BITS)][ECMULT_GEN_PREC_G(ECMULT_GEN_PREC_BITS)] = {\n");
+    fprintf(fp, "const secp256k1_ge_storage secp256k1_ecmult_gen_prec_table[ECMULT_GEN_PREC_N(ECMULT_GEN_PREC_shahbits)][ECMULT_GEN_PREC_G(ECMULT_GEN_PREC_shahbits)] = {\n");
 
-    for (bits = 2; bits <= 8; bits *= 2) {
-        int g = ECMULT_GEN_PREC_G(bits);
-        int n = ECMULT_GEN_PREC_N(bits);
+    for (shahbits = 2; shahbits <= 8; shahbits *= 2) {
+        int g = ECMULT_GEN_PREC_G(shahbits);
+        int n = ECMULT_GEN_PREC_N(shahbits);
         int inner, outer;
 
         secp256k1_ge_storage* table = checked_malloc(&default_error_callback, n * g * sizeof(secp256k1_ge_storage));
-        secp256k1_ecmult_gen_compute_table(table, &secp256k1_ge_const_g, bits);
+        secp256k1_ecmult_gen_compute_table(table, &secp256k1_ge_const_g, shahbits);
 
-        fprintf(fp, "#if ECMULT_GEN_PREC_BITS == %d\n", bits);
+        fprintf(fp, "#if ECMULT_GEN_PREC_shahbits == %d\n", shahbits);
         for(outer = 0; outer != n; outer++) {
             fprintf(fp,"{");
             for(inner = 0; inner != g; inner++) {

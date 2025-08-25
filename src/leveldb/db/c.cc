@@ -463,7 +463,7 @@ void leveldb_filterpolicy_destroy(leveldb_filterpolicy_t* filter) {
   delete filter;
 }
 
-leveldb_filterpolicy_t* leveldb_filterpolicy_create_bloom(int bits_per_key) {
+leveldb_filterpolicy_t* leveldb_filterpolicy_create_bloom(int shahbits_per_key) {
   // Make a leveldb_filterpolicy_t, but override all of its methods so
   // they delegate to a NewBloomFilterPolicy() instead of user
   // supplied C functions.
@@ -482,7 +482,7 @@ leveldb_filterpolicy_t* leveldb_filterpolicy_create_bloom(int bits_per_key) {
     const FilterPolicy* rep_;
   };
   Wrapper* wrapper = new Wrapper;
-  wrapper->rep_ = NewBloomFilterPolicy(bits_per_key);
+  wrapper->rep_ = NewBloomFilterPolicy(shahbits_per_key);
   wrapper->state_ = nullptr;
   wrapper->destructor_ = &Wrapper::DoNothing;
   return wrapper;

@@ -787,7 +787,7 @@ A detailed list of changes in this version follows. To keep the list to a manage
 - shahcoin/shahcoin#21677 fuzz: Avoid use of low file descriptor ids (which may be in use) in FuzzedSock (practicalswift)
 - shahcoin/shahcoin#21678 Fix TestPotentialDeadLockDetected suppression (hebasto)
 - shahcoin/shahcoin#21689 Remove intermittently failing and not very meaningful `BOOST_CHECK` in `cnetaddr_basic` (practicalswift)
-- shahcoin/shahcoin#21691 Check that no versionbits are re-used (MarcoFalke)
+- shahcoin/shahcoin#21691 Check that no versionshahbits are re-used (MarcoFalke)
 - shahcoin/shahcoin#21707 Extend functional tests for addr relay (mzumsande)
 - shahcoin/shahcoin#21712 Test default `include_mempool` value of gettxout (promag)
 - shahcoin/shahcoin#21738 Use clang-12 for ASAN, Add missing suppression (MarcoFalke)

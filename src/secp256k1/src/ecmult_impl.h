@@ -48,9 +48,9 @@
  */
 #endif
 
-#define WNAF_BITS 128
-#define WNAF_SIZE_BITS(bits, w) (((bits) + (w) - 1) / (w))
-#define WNAF_SIZE(w) WNAF_SIZE_BITS(WNAF_BITS, w)
+#define WNAF_shahbits 128
+#define WNAF_SIZE_shahbits(shahbits, w) (((shahbits) + (w) - 1) / (w))
+#define WNAF_SIZE(w) WNAF_SIZE_shahbits(WNAF_shahbits, w)
 
 /* The number of objects allocated on the scratch space for ecmult_multi algorithms */
 #define PIPPENGER_SCRATCH_OBJECTS 6
@@ -159,12 +159,12 @@ SECP256K1_INLINE static void secp256k1_ecmult_table_get_ge_storage(secp256k1_ge 
     }
 }
 
-/** Convert a number to WNAF notation. The number becomes represented by sum(2^i * wnaf[i], i=0..bits),
+/** Convert a number to WNAF notation. The number becomes represented by sum(2^i * wnaf[i], i=0..shahbits),
  *  with the following guarantees:
  *  - each wnaf[i] is either 0, or an odd integer between -(1<<(w-1) - 1) and (1<<(w-1) - 1)
  *  - two non-zero entries in wnaf are separated by at least w-1 zeroes.
  *  - the number of set values in wnaf is returned. This number is at most 256, and at most one more
- *    than the number of bits in the (absolute value) of the input.
+ *    than the number of shahbits in the (absolute value) of the input.
  */
 static int secp256k1_ecmult_wnaf(int *wnaf, int len, const secp256k1_scalar *a, int w) {
     secp256k1_scalar s;
@@ -181,7 +181,7 @@ static int secp256k1_ecmult_wnaf(int *wnaf, int len, const secp256k1_scalar *a, 
     memset(wnaf, 0, len * sizeof(wnaf[0]));
 
     s = *a;
-    if (secp256k1_scalar_get_bits(&s, 255, 1)) {
+    if (secp256k1_scalar_get_shahbits(&s, 255, 1)) {
         secp256k1_scalar_negate(&s, &s);
         sign = -1;
     }
@@ -189,7 +189,7 @@ static int secp256k1_ecmult_wnaf(int *wnaf, int len, const secp256k1_scalar *a, 
     while (bit < len) {
         int now;
         int word;
-        if (secp256k1_scalar_get_bits(&s, bit, 1) == (unsigned int)carry) {
+        if (secp256k1_scalar_get_shahbits(&s, bit, 1) == (unsigned int)carry) {
             bit++;
             continue;
         }
@@ -199,7 +199,7 @@ static int secp256k1_ecmult_wnaf(int *wnaf, int len, const secp256k1_scalar *a, 
             now = len - bit;
         }
 
-        word = secp256k1_scalar_get_bits_var(&s, bit, now) + carry;
+        word = secp256k1_scalar_get_shahbits_var(&s, bit, now) + carry;
 
         carry = (word >> (w-1)) & 1;
         word -= carry << w;
@@ -216,7 +216,7 @@ static int secp256k1_ecmult_wnaf(int *wnaf, int len, const secp256k1_scalar *a, 
         VERIFY_CHECK(carry == 0);
 
         while (verify_bit < 256) {
-            VERIFY_CHECK(secp256k1_scalar_get_bits(&s, verify_bit, 1) == 0);
+            VERIFY_CHECK(secp256k1_scalar_get_shahbits(&s, verify_bit, 1) == 0);
             verify_bit++;
         }
     }
@@ -227,8 +227,8 @@ static int secp256k1_ecmult_wnaf(int *wnaf, int len, const secp256k1_scalar *a, 
 struct secp256k1_strauss_point_state {
     int wnaf_na_1[129];
     int wnaf_na_lam[129];
-    int bits_na_1;
-    int bits_na_lam;
+    int shahbits_na_1;
+    int shahbits_na_lam;
 };
 
 struct secp256k1_strauss_state {
@@ -244,11 +244,11 @@ static void secp256k1_ecmult_strauss_wnaf(const struct secp256k1_strauss_state *
     /* Split G factors. */
     secp256k1_scalar ng_1, ng_128;
     int wnaf_ng_1[129];
-    int bits_ng_1 = 0;
+    int shahbits_ng_1 = 0;
     int wnaf_ng_128[129];
-    int bits_ng_128 = 0;
+    int shahbits_ng_128 = 0;
     int i;
-    int bits = 0;
+    int shahbits = 0;
     size_t np;
     size_t no = 0;
 
@@ -263,15 +263,15 @@ static void secp256k1_ecmult_strauss_wnaf(const struct secp256k1_strauss_state *
         secp256k1_scalar_split_lambda(&na_1, &na_lam, &na[np]);
 
         /* build wnaf representation for na_1 and na_lam. */
-        state->ps[no].bits_na_1   = secp256k1_ecmult_wnaf(state->ps[no].wnaf_na_1,   129, &na_1,   WINDOW_A);
-        state->ps[no].bits_na_lam = secp256k1_ecmult_wnaf(state->ps[no].wnaf_na_lam, 129, &na_lam, WINDOW_A);
-        VERIFY_CHECK(state->ps[no].bits_na_1 <= 129);
-        VERIFY_CHECK(state->ps[no].bits_na_lam <= 129);
-        if (state->ps[no].bits_na_1 > bits) {
-            bits = state->ps[no].bits_na_1;
+        state->ps[no].shahbits_na_1   = secp256k1_ecmult_wnaf(state->ps[no].wnaf_na_1,   129, &na_1,   WINDOW_A);
+        state->ps[no].shahbits_na_lam = secp256k1_ecmult_wnaf(state->ps[no].wnaf_na_lam, 129, &na_lam, WINDOW_A);
+        VERIFY_CHECK(state->ps[no].shahbits_na_1 <= 129);
+        VERIFY_CHECK(state->ps[no].shahbits_na_lam <= 129);
+        if (state->ps[no].shahbits_na_1 > shahbits) {
+            shahbits = state->ps[no].shahbits_na_1;
         }
-        if (state->ps[no].bits_na_lam > bits) {
-            bits = state->ps[no].bits_na_lam;
+        if (state->ps[no].shahbits_na_lam > shahbits) {
+            shahbits = state->ps[no].shahbits_na_lam;
         }
 
         /* Calculate odd multiples of a.
@@ -310,36 +310,36 @@ static void secp256k1_ecmult_strauss_wnaf(const struct secp256k1_strauss_state *
         secp256k1_scalar_split_128(&ng_1, &ng_128, ng);
 
         /* Build wnaf representation for ng_1 and ng_128 */
-        bits_ng_1   = secp256k1_ecmult_wnaf(wnaf_ng_1,   129, &ng_1,   WINDOW_G);
-        bits_ng_128 = secp256k1_ecmult_wnaf(wnaf_ng_128, 129, &ng_128, WINDOW_G);
-        if (bits_ng_1 > bits) {
-            bits = bits_ng_1;
+        shahbits_ng_1   = secp256k1_ecmult_wnaf(wnaf_ng_1,   129, &ng_1,   WINDOW_G);
+        shahbits_ng_128 = secp256k1_ecmult_wnaf(wnaf_ng_128, 129, &ng_128, WINDOW_G);
+        if (shahbits_ng_1 > shahbits) {
+            shahbits = shahbits_ng_1;
         }
-        if (bits_ng_128 > bits) {
-            bits = bits_ng_128;
+        if (shahbits_ng_128 > shahbits) {
+            shahbits = shahbits_ng_128;
         }
     }
 
     secp256k1_gej_set_infinity(r);
 
-    for (i = bits - 1; i >= 0; i--) {
+    for (i = shahbits - 1; i >= 0; i--) {
         int n;
         secp256k1_gej_double_var(r, r, NULL);
         for (np = 0; np < no; ++np) {
-            if (i < state->ps[np].bits_na_1 && (n = state->ps[np].wnaf_na_1[i])) {
+            if (i < state->ps[np].shahbits_na_1 && (n = state->ps[np].wnaf_na_1[i])) {
                 secp256k1_ecmult_table_get_ge(&tmpa, state->pre_a + np * ECMULT_TABLE_SIZE(WINDOW_A), n, WINDOW_A);
                 secp256k1_gej_add_ge_var(r, r, &tmpa, NULL);
             }
-            if (i < state->ps[np].bits_na_lam && (n = state->ps[np].wnaf_na_lam[i])) {
+            if (i < state->ps[np].shahbits_na_lam && (n = state->ps[np].wnaf_na_lam[i])) {
                 secp256k1_ecmult_table_get_ge_lambda(&tmpa, state->pre_a + np * ECMULT_TABLE_SIZE(WINDOW_A), state->aux + np * ECMULT_TABLE_SIZE(WINDOW_A), n, WINDOW_A);
                 secp256k1_gej_add_ge_var(r, r, &tmpa, NULL);
             }
         }
-        if (i < bits_ng_1 && (n = wnaf_ng_1[i])) {
+        if (i < shahbits_ng_1 && (n = wnaf_ng_1[i])) {
             secp256k1_ecmult_table_get_ge_storage(&tmpa, secp256k1_pre_g, n, WINDOW_G);
             secp256k1_gej_add_zinv_var(r, r, &tmpa, &Z);
         }
-        if (i < bits_ng_128 && (n = wnaf_ng_128[i])) {
+        if (i < shahbits_ng_128 && (n = wnaf_ng_128[i])) {
             secp256k1_ecmult_table_get_ge_storage(&tmpa, secp256k1_pre_g_128, n, WINDOW_G);
             secp256k1_gej_add_zinv_var(r, r, &tmpa, &Z);
         }
@@ -440,15 +440,15 @@ static int secp256k1_wnaf_fixed(int *wnaf, const secp256k1_scalar *s, int w) {
         skew = 1;
     }
 
-    wnaf[0] = secp256k1_scalar_get_bits_var(work, 0, w) + skew;
+    wnaf[0] = secp256k1_scalar_get_shahbits_var(work, 0, w) + skew;
     /* Compute last window size. Relevant when window size doesn't divide the
-     * number of bits in the scalar */
-    last_w = WNAF_BITS - (WNAF_SIZE(w) - 1) * w;
+     * number of shahbits in the scalar */
+    last_w = WNAF_shahbits - (WNAF_SIZE(w) - 1) * w;
 
     /* Store the position of the first nonzero word in max_pos to allow
      * skipping leading zeros when calculating the wnaf. */
     for (pos = WNAF_SIZE(w) - 1; pos > 0; pos--) {
-        int val = secp256k1_scalar_get_bits_var(work, pos * w, pos == WNAF_SIZE(w)-1 ? last_w : w);
+        int val = secp256k1_scalar_get_shahbits_var(work, pos * w, pos == WNAF_SIZE(w)-1 ? last_w : w);
         if(val != 0) {
             break;
         }
@@ -458,7 +458,7 @@ static int secp256k1_wnaf_fixed(int *wnaf, const secp256k1_scalar *s, int w) {
     pos = 1;
 
     while (pos <= max_pos) {
-        int val = secp256k1_scalar_get_bits_var(work, pos * w, pos == WNAF_SIZE(w)-1 ? last_w : w);
+        int val = secp256k1_scalar_get_shahbits_var(work, pos * w, pos == WNAF_SIZE(w)-1 ? last_w : w);
         if ((val & 1) == 0) {
             wnaf[pos - 1] -= (1 << w);
             wnaf[pos] = (val + 1);
@@ -579,7 +579,7 @@ static int secp256k1_ecmult_pippenger_wnaf(secp256k1_gej *buckets, int bucket_wi
 }
 
 /**
- * Returns optimal bucket_window (number of bits of a scalar represented by a
+ * Returns optimal bucket_window (number of shahbits of a scalar represented by a
  * set of buckets) for a given number of points.
  */
 static int secp256k1_pippenger_bucket_window(size_t n) {

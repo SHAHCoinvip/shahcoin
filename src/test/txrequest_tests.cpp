@@ -50,8 +50,8 @@ struct Runner
     std::multiset<std::pair<NodeId, GenTxid>> expired;
 };
 
-std::chrono::microseconds RandomTime8s() { return std::chrono::microseconds{1 + InsecureRandBits(23)}; }
-std::chrono::microseconds RandomTime1y() { return std::chrono::microseconds{1 + InsecureRandBits(45)}; }
+std::chrono::microseconds RandomTime8s() { return std::chrono::microseconds{1 + InsecureRandshahbits(23)}; }
+std::chrono::microseconds RandomTime1y() { return std::chrono::microseconds{1 + InsecureRandshahbits(45)}; }
 
 /** A proxy for a Runner that helps build a sequence of consecutive test actions on a TxRequestTracker.
  *
@@ -231,7 +231,7 @@ public:
         bool ok;
         NodeId ret;
         do {
-            ret = InsecureRandBits(63);
+            ret = InsecureRandshahbits(63);
             ok = m_runner.peerset.insert(ret).second;
         } while(!ok);
         return ret;

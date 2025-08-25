@@ -112,7 +112,7 @@ void TraceMod(const std::vector<typename F::Elem>& mod, std::vector<typename F::
     out[0] = 0;
     out[1] = param;
 
-    for (int i = 0; i < field.Bits() - 1; ++i) {
+    for (int i = 0; i < field.shahbits() - 1; ++i) {
         Sqr(out, field);
         if (out.size() < 2) out.resize(2);
         out[1] = param;
@@ -176,7 +176,7 @@ bool RecFindRoots(std::vector<std::vector<typename F::Elem>>& stack, size_t pos,
         if (iter >= 1 && !fully_factorizable) {
             // If the polynomial cannot be factorized completely (it has an
             // irreducible factor of degree higher than 1), we want to avoid
-            // the case where this is only detected after trying all BITS
+            // the case where this is only detected after trying all shahbits
             // independent split attempts fail (see the assert below).
             //
             // Observe that if we call y = randv*x, it is true that:
@@ -226,10 +226,10 @@ bool RecFindRoots(std::vector<std::vector<typename F::Elem>>& stack, size_t pos,
         if (fully_factorizable) {
             // Every succesful iteration of this algorithm splits the input
             // polynomial further into buckets, each corresponding to a subset
-            // of 2^(BITS-depth) roots. If after depth splits the degree of
-            // the polynomial is >= 2^(BITS-depth), something is wrong.
-            CHECK_RETURN(field.Bits() - depth >= std::numeric_limits<decltype(poly.size())>::digits ||
-                (poly.size() - 2) >> (field.Bits() - depth) == 0, false);
+            // of 2^(shahbits-depth) roots. If after depth splits the degree of
+            // the polynomial is >= 2^(shahbits-depth), something is wrong.
+            CHECK_RETURN(field.shahbits() - depth >= std::numeric_limits<decltype(poly.size())>::digits ||
+                (poly.size() - 2) >> (field.shahbits() - depth) == 0, false);
         }
 
         depth++;
@@ -366,7 +366,7 @@ class SketchImpl final : public Sketch
 
 public:
     template<typename... Args>
-    SketchImpl(int implementation, int bits, const Args&... args) : Sketch(implementation, bits), m_field(args...) {
+    SketchImpl(int implementation, int shahbits, const Args&... args) : Sketch(implementation, shahbits), m_field(args...) {
         std::random_device rng;
         std::uniform_int_distribution<uint64_t> dist;
         m_basis = m_field.FromSeed(dist(rng));

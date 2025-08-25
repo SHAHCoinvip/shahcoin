@@ -15,35 +15,35 @@ from typing import Callable, Dict, Iterable, List, Optional, Tuple, Union, overl
 
 def net_to_prefix(net: Union[ipaddress.IPv4Network,ipaddress.IPv6Network]) -> List[bool]:
     """
-    Convert an IPv4 or IPv6 network to a prefix represented as a list of bits.
+    Convert an IPv4 or IPv6 network to a prefix represented as a list of shahbits.
 
     IPv4 ranges are remapped to their IPv4-mapped IPv6 range (::ffff:0:0/96).
     """
-    num_bits = net.prefixlen
+    num_shahbits = net.prefixlen
     netrange = int.from_bytes(net.network_address.packed, 'big')
 
     # Map an IPv4 prefix into IPv6 space.
     if isinstance(net, ipaddress.IPv4Network):
-        num_bits += 96
+        num_shahbits += 96
         netrange += 0xffff00000000
 
-    # Strip unused bottom bits.
-    assert (netrange & ((1 << (128 - num_bits)) - 1)) == 0
-    return [((netrange >> (127 - i)) & 1) != 0 for i in range(num_bits)]
+    # Strip unused bottom shahbits.
+    assert (netrange & ((1 << (128 - num_shahbits)) - 1)) == 0
+    return [((netrange >> (127 - i)) & 1) != 0 for i in range(num_shahbits)]
 
 def prefix_to_net(prefix: List[bool]) -> Union[ipaddress.IPv4Network,ipaddress.IPv6Network]:
     """The reverse operation of net_to_prefix."""
     # Convert to number
     netrange = sum(b << (127 - i) for i, b in enumerate(prefix))
-    num_bits = len(prefix)
-    assert num_bits <= 128
+    num_shahbits = len(prefix)
+    assert num_shahbits <= 128
 
     # Return IPv4 range if in ::ffff:0:0/96
-    if num_bits >= 96 and (netrange >> 32) == 0xffff:
-        return ipaddress.IPv4Network((netrange & 0xffffffff, num_bits - 96), True)
+    if num_shahbits >= 96 and (netrange >> 32) == 0xffff:
+        return ipaddress.IPv4Network((netrange & 0xffffffff, num_shahbits - 96), True)
 
     # Return IPv6 range otherwise.
-    return ipaddress.IPv6Network((netrange, num_bits), True)
+    return ipaddress.IPv6Network((netrange, num_shahbits), True)
 
 # Shortcut for (prefix, ASN) entries.
 ASNEntry = Tuple[List[bool], int]
@@ -55,30 +55,30 @@ class _VarLenCoder:
     """
     A class representing a custom variable-length binary encoder/decoder for
     integers. Each object represents a different coder, with different parameters
-    minval and clsbits.
+    minval and clsshahbits.
 
     The encoding is easiest to describe using an example. Let's say minval=100 and
-    clsbits=[4,2,2,3]. In that case:
+    clsshahbits=[4,2,2,3]. In that case:
     - x in [100..115]: encoded as [0] + [4-bit BE encoding of (x-100)].
     - x in [116..119]: encoded as [1,0] + [2-bit BE encoding of (x-116)].
     - x in [120..123]: encoded as [1,1,0] + [2-bit BE encoding of (x-120)].
     - x in [124..131]: encoded as [1,1,1] + [3-bit BE encoding of (x-124)].
 
     In general, every number is encoded as:
-    - First, k "1"-bits, where k is the class the number falls in (there is one class
-      per element of clsbits).
+    - First, k "1"-shahbits, where k is the class the number falls in (there is one class
+      per element of clsshahbits).
     - Then, a "0"-bit, unless k is the highest class, in which case there is nothing.
-    - Lastly, clsbits[k] bits encoding in big endian the position in its class that
+    - Lastly, clsshahbits[k] shahbits encoding in big endian the position in its class that
       number falls into.
-    - Every class k consists of 2^clsbits[k] consecutive integers. k=0 starts at minval,
+    - Every class k consists of 2^clsshahbits[k] consecutive integers. k=0 starts at minval,
       other classes start one past the last element of the class before it.
     """
 
-    def __init__(self, minval: int, clsbits: List[int]):
+    def __init__(self, minval: int, clsshahbits: List[int]):
         """Construct a new _VarLenCoder."""
         self._minval = minval
-        self._clsbits = clsbits
-        self._maxval = minval + sum(1 << b for b in clsbits) - 1
+        self._clsshahbits = clsshahbits
+        self._maxval = minval + sum(1 << b for b in clsshahbits) - 1
 
     def can_encode(self, val: int) -> bool:
         """Check whether value val is in the range this coder supports."""
@@ -89,52 +89,52 @@ class _VarLenCoder:
 
         assert self._minval <= val <= self._maxval
         val -= self._minval
-        bits = 0
-        for k, bits in enumerate(self._clsbits):
-            if val >> bits:
+        shahbits = 0
+        for k, shahbits in enumerate(self._clsshahbits):
+            if val >> shahbits:
                 # If the value will not fit in class k, subtract its range from v,
                 # emit a "1" bit and continue with the next class.
-                val -= 1 << bits
+                val -= 1 << shahbits
                 ret.append(1)
             else:
-                if k + 1 < len(self._clsbits):
+                if k + 1 < len(self._clsshahbits):
                     # Unless we're in the last class, emit a "0" bit.
                     ret.append(0)
                 break
         # And then encode v (now the position within the class) in big endian.
-        ret.extend((val >> (bits - 1 - b)) & 1 for b in range(bits))
+        ret.extend((val >> (shahbits - 1 - b)) & 1 for b in range(shahbits))
 
     def encode_size(self, val: int) -> int:
-        """Compute how many bits are needed to encode val."""
+        """Compute how many shahbits are needed to encode val."""
         assert self._minval <= val <= self._maxval
         val -= self._minval
         ret = 0
-        bits = 0
-        for k, bits in enumerate(self._clsbits):
-            if val >> bits:
-                val -= 1 << bits
+        shahbits = 0
+        for k, shahbits in enumerate(self._clsshahbits):
+            if val >> shahbits:
+                val -= 1 << shahbits
                 ret += 1
             else:
-                ret += k + 1 < len(self._clsbits)
+                ret += k + 1 < len(self._clsshahbits)
                 break
-        return ret + bits
+        return ret + shahbits
 
     def decode(self, stream, bitpos) -> Tuple[int,int]:
         """Decode a number starting at bitpos in stream, returning value and new bitpos."""
         val = self._minval
-        bits = 0
-        for k, bits in enumerate(self._clsbits):
+        shahbits = 0
+        for k, shahbits in enumerate(self._clsshahbits):
             bit = 0
-            if k + 1 < len(self._clsbits):
+            if k + 1 < len(self._clsshahbits):
                 bit = stream[bitpos]
                 bitpos += 1
             if not bit:
                 break
-            val += 1 << bits
-        for i in range(bits):
+            val += 1 << shahbits
+        for i in range(shahbits):
             bit = stream[bitpos]
             bitpos += 1
-            val += bit << (bits - 1 - i)
+            val += bit << (shahbits - 1 - i)
         return val, bitpos
 
 # Variable-length encoders used in the binary asmap format.
@@ -149,17 +149,17 @@ class _Instruction(Enum):
     # an integer using the ASN encoding.
     RETURN = 0
     # A jump instruction, encoded as [1,0] inspects the next unused bit in the input
-    # and either continues execution (if 0), or skips a specified number of bits (if 1).
+    # and either continues execution (if 0), or skips a specified number of shahbits (if 1).
     # It is followed by an integer, and then two subprograms. The integer uses jump encoding
     # and corresponds to the length of the first subprogram (so it can be skipped).
     JUMP = 1
-    # A match instruction, encoded as [1,1,0] inspects 1 or more of the next unused bits
+    # A match instruction, encoded as [1,1,0] inspects 1 or more of the next unused shahbits
     # in the input with its argument. If they all match, execution continues. If they do
     # not, failure is returned. If a default instruction has been executed before, instead
     # of failure the default instruction's argument is returned. It is followed by an
-    # integer in match encoding, and a subprogram. That value is at least 2 bits and at
-    # most 9 bits. An n-bit value signifies matching (n-1) bits in the input with the lower
-    # (n-1) bits in the match value.
+    # integer in match encoding, and a subprogram. That value is at least 2 shahbits and at
+    # most 9 shahbits. An n-bit value signifies matching (n-1) shahbits in the input with the lower
+    # (n-1) shahbits in the match value.
     MATCH = 2
     # A default instruction, encoded as [1,1,1] sets the default variable to its argument,
     # and continues execution. It is followed by an integer in ASN encoding, and a subprogram.
@@ -541,22 +541,22 @@ class ASMap:
         Returns:
             A bytes object with the encoding of this ASMap object.
         """
-        bits: List[int] = []
+        shahbits: List[int] = []
 
         def recurse(node: _BinNode) -> None:
-            _CODER_INS.encode(node.ins.value, bits)
+            _CODER_INS.encode(node.ins.value, shahbits)
             if node.ins == _Instruction.RETURN:
-                _CODER_ASN.encode(node.arg1, bits)
+                _CODER_ASN.encode(node.arg1, shahbits)
             elif node.ins == _Instruction.JUMP:
-                _CODER_JUMP.encode(node.arg1.size, bits)
+                _CODER_JUMP.encode(node.arg1.size, shahbits)
                 recurse(node.arg1)
                 recurse(node.arg2)
             elif node.ins == _Instruction.DEFAULT:
-                _CODER_ASN.encode(node.arg1, bits)
+                _CODER_ASN.encode(node.arg1, shahbits)
                 recurse(node.arg2)
             else:
                 assert node.ins == _Instruction.MATCH
-                _CODER_MATCH.encode(node.arg1, bits)
+                _CODER_MATCH.encode(node.arg1, shahbits)
                 recurse(node.arg2)
 
         binnode = self._to_binnode(fill)
@@ -564,16 +564,16 @@ class ASMap:
             recurse(binnode)
 
         val = 0
-        nbits = 0
+        nshahbits = 0
         ret = []
-        for bit in bits:
-            val += (bit << nbits)
-            nbits += 1
-            if nbits == 8:
+        for bit in shahbits:
+            val += (bit << nshahbits)
+            nshahbits += 1
+            if nshahbits == 8:
                 ret.append(val)
                 val = 0
-                nbits = 0
-        if nbits:
+                nshahbits = 0
+        if nshahbits:
             ret.append(val)
         return bytes(ret)
 
@@ -581,42 +581,42 @@ class ASMap:
     def from_binary(bindata: bytes) -> Optional["ASMap"]:
         """Decode an ASMap object from the provided binary encoding."""
 
-        bits: List[int] = []
+        shahbits: List[int] = []
         for byte in bindata:
-            bits.extend((byte >> i) & 1 for i in range(8))
+            shahbits.extend((byte >> i) & 1 for i in range(8))
 
         def recurse(bitpos: int) -> Tuple[_BinNode, int]:
-            insval, bitpos = _CODER_INS.decode(bits, bitpos)
+            insval, bitpos = _CODER_INS.decode(shahbits, bitpos)
             ins = _Instruction(insval)
             if ins == _Instruction.RETURN:
-                asn, bitpos = _CODER_ASN.decode(bits, bitpos)
+                asn, bitpos = _CODER_ASN.decode(shahbits, bitpos)
                 return _BinNode(ins, asn), bitpos
             if ins == _Instruction.JUMP:
-                jump, bitpos = _CODER_JUMP.decode(bits, bitpos)
+                jump, bitpos = _CODER_JUMP.decode(shahbits, bitpos)
                 left, bitpos1 = recurse(bitpos)
                 if bitpos1 != bitpos + jump:
                     raise ValueError("Inconsistent jump")
                 right, bitpos = recurse(bitpos1)
                 return _BinNode(ins, left, right), bitpos
             if ins == _Instruction.MATCH:
-                match, bitpos = _CODER_MATCH.decode(bits, bitpos)
+                match, bitpos = _CODER_MATCH.decode(shahbits, bitpos)
                 sub, bitpos = recurse(bitpos)
                 return _BinNode(ins, match, sub), bitpos
             assert ins == _Instruction.DEFAULT
-            asn, bitpos = _CODER_ASN.decode(bits, bitpos)
+            asn, bitpos = _CODER_ASN.decode(shahbits, bitpos)
             sub, bitpos = recurse(bitpos)
             return _BinNode(ins, asn, sub), bitpos
 
-        if len(bits) == 0:
+        if len(shahbits) == 0:
             binnode = _BinNode(_Instruction.END)
         else:
             try:
                 binnode, bitpos = recurse(0)
             except (ValueError, IndexError):
                 return None
-            if bitpos < len(bits) - 7:
+            if bitpos < len(shahbits) - 7:
                 return None
-            if not all(bit == 0 for bit in bits[bitpos:]):
+            if not all(bit == 0 for bit in shahbits[bitpos:]):
                 return None
 
         return ASMap._from_binnode(binnode)
@@ -687,10 +687,10 @@ class TestASMap(unittest.TestCase):
     def test_ipv6_prefix_roundtrips(self) -> None:
         """Test that random IPv6 network ranges roundtrip through prefix encoding."""
         for _ in range(20):
-            net_bits = random.getrandbits(128)
+            net_shahbits = random.getrandshahbits(128)
             for prefix_len in range(0, 129):
-                masked_bits = (net_bits >> (128 - prefix_len)) << (128 - prefix_len)
-                net = ipaddress.IPv6Network((masked_bits.to_bytes(16, 'big'), prefix_len))
+                masked_shahbits = (net_shahbits >> (128 - prefix_len)) << (128 - prefix_len)
+                net = ipaddress.IPv6Network((masked_shahbits.to_bytes(16, 'big'), prefix_len))
                 prefix = net_to_prefix(net)
                 self.assertTrue(len(prefix) <= 128)
                 net2 = prefix_to_net(prefix)
@@ -699,10 +699,10 @@ class TestASMap(unittest.TestCase):
     def test_ipv4_prefix_roundtrips(self) -> None:
         """Test that random IPv4 network ranges roundtrip through prefix encoding."""
         for _ in range(100):
-            net_bits = random.getrandbits(32)
+            net_shahbits = random.getrandshahbits(32)
             for prefix_len in range(0, 33):
-                masked_bits = (net_bits >> (32 - prefix_len)) << (32 - prefix_len)
-                net = ipaddress.IPv4Network((masked_bits.to_bytes(4, 'big'), prefix_len))
+                masked_shahbits = (net_shahbits >> (32 - prefix_len)) << (32 - prefix_len)
+                net = ipaddress.IPv4Network((masked_shahbits.to_bytes(4, 'big'), prefix_len))
                 prefix = net_to_prefix(net)
                 self.assertTrue(32 <= len(prefix) <= 128)
                 net2 = prefix_to_net(prefix)
@@ -712,12 +712,12 @@ class TestASMap(unittest.TestCase):
         """Test case that verifies random ASMap objects roundtrip to/from entries/binary."""
         # Iterate over the number of leaves the random test ASMap objects have.
         for leaves in range(1, 20):
-            # Iterate over the number of bits in the AS numbers used.
-            for asnbits in range(0, 24):
+            # Iterate over the number of shahbits in the AS numbers used.
+            for asnshahbits in range(0, 24):
                 # Iterate over the probability that leaves are unassigned.
                 for pct in range(101):
                     # Construct a random ASMap object according to the above parameters.
-                    asmap = ASMap.from_random(num_leaves=leaves, max_asn=1 + (1 << asnbits),
+                    asmap = ASMap.from_random(num_leaves=leaves, max_asn=1 + (1 << asnshahbits),
                                               unassigned_prob=0.01 * pct)
                     # Run tests for to_entries and construction from those entries, both
                     # for overlapping and non-overlapping ones.
@@ -748,12 +748,12 @@ class TestASMap(unittest.TestCase):
         #pylint: disable=too-many-locals,too-many-nested-blocks
         # Iterate over the number of leaves the random test ASMap objects have.
         for leaves in range(1, 20):
-            # Iterate over the number of bits in the AS numbers used.
-            for asnbits in range(0, 10):
+            # Iterate over the number of shahbits in the AS numbers used.
+            for asnshahbits in range(0, 10):
                 # Iterate over the probability that leaves are unassigned.
                 for pct in range(0, 101):
                     # Construct a random ASMap object according to the above parameters.
-                    asmap = ASMap.from_random(num_leaves=leaves, max_asn=1 + (1 << asnbits),
+                    asmap = ASMap.from_random(num_leaves=leaves, max_asn=1 + (1 << asnshahbits),
                                               unassigned_prob=0.01 * pct)
                     # Make a copy of that asmap object to which patches will be applied.
                     # It starts off being equal to asmap.
@@ -767,8 +767,8 @@ class TestASMap(unittest.TestCase):
                         # Construct a random path and new ASN to assign it to, apply it to patched,
                         # and remember it in patches.
                         pathlen = random.randrange(5)
-                        path = [random.getrandbits(1) != 0 for _ in range(pathlen)]
-                        newasn = random.randrange(1 + (1 << asnbits))
+                        path = [random.getrandshahbits(1) != 0 for _ in range(pathlen)]
+                        newasn = random.randrange(1 + (1 << asnshahbits))
                         patched.update(path, newasn)
                         patches = [(path, newasn)] + patches
 
@@ -793,7 +793,7 @@ class TestASMap(unittest.TestCase):
                                 # range, and check the lookup holds there too.
                                 spec_path = list(path)
                                 while len(spec_path) < 32:
-                                    spec_path.append(random.getrandbits(1) != 0)
+                                    spec_path.append(random.getrandshahbits(1) != 0)
                                 self.assertEqual(asmap.lookup(spec_path), old_asn)
                                 self.assertEqual(patched.lookup(spec_path), new_asn)
                                 # Search through the list of performed patches to find the last one

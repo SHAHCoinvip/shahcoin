@@ -191,7 +191,7 @@ public:
      */
     void Connected(const CService& addr, NodeSeconds time = Now<NodeSeconds>());
 
-    //! Update an entry's service bits.
+    //! Update an entry's service shahbits.
     void SetServices(const CService& addr, ServiceFlags nServices);
 
     /** Test-only function

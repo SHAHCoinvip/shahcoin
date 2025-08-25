@@ -14,7 +14,7 @@
 #include <util/check.h>
 #include <validation.h>
 #include <validationinterface.h>
-#include <versionbits.h>
+#include <versionshahbits.h>
 
 using node::BlockAssembler;
 using node::NodeContext;
@@ -44,14 +44,14 @@ std::vector<std::shared_ptr<CBlock>> CreateBlockChain(size_t total_height, const
         coinbase_tx.vin[0].scriptSig = CScript() << (height + 1) << OP_0;
         block.vtx = {MakeTransactionRef(std::move(coinbase_tx))};
 
-        block.nVersion = VERSIONBITS_LAST_OLD_BLOCK_VERSION;
+        block.nVersion = VERSIONshahbits_LAST_OLD_BLOCK_VERSION;
         block.hashPrevBlock = (height >= 1 ? *ret.at(height - 1) : params.GenesisBlock()).GetHash();
         block.hashMerkleRoot = BlockMerkleRoot(block);
         block.nTime = ++time;
-        block.nBits = params.GenesisBlock().nBits;
+        block.nshahbits = params.GenesisBlock().nshahbits;
         block.nNonce = 0;
 
-        while (!CheckProofOfWork(block.GetHash(), block.nBits, params.GetConsensus())) {
+        while (!CheckProofOfWork(block.GetHash(), block.nshahbits, params.GetConsensus())) {
             ++block.nNonce;
             assert(block.nNonce);
         }
@@ -85,7 +85,7 @@ protected:
 
 COutPoint MineBlock(const NodeContext& node, std::shared_ptr<CBlock>& block)
 {
-    while (!CheckProofOfWork(block->GetHash(), block->nBits, Params().GetConsensus())) {
+    while (!CheckProofOfWork(block->GetHash(), block->nshahbits, Params().GetConsensus())) {
         ++block->nNonce;
         assert(block->nNonce);
     }

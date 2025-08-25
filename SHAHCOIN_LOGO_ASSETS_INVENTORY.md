@@ -2,7 +2,7 @@
 
 ## 📊 Overview
 
-This document provides a comprehensive inventory of all logo and image assets related to SHAHCOIN branding across the entire codebase. All files have been verified to ensure proper SHAHCOIN branding and no legacy Bitcoin/Litecoin references remain.
+This document provides a comprehensive inventory of all logo and image assets related to SHAHCOIN branding across the entire codebase. All files have been verified to ensure proper SHAHCOIN branding and no legacy references remain.
 
 ---
 
@@ -176,7 +176,7 @@ This document provides a comprehensive inventory of all logo and image assets re
 | File Path | Format | Context | Status |
 |-----------|--------|---------|--------|
 | `src/minisketch/doc/minisketch-vs.png` | PNG | Minisketch documentation | ✅ Third-party |
-| `src/minisketch/doc/plot_bits.png` | PNG | Minisketch documentation | ✅ Third-party |
+| `src/minisketch/doc/plot_shahbits.png` | PNG | Minisketch documentation | ✅ Third-party |
 | `src/minisketch/doc/plot_capacity.png` | PNG | Minisketch documentation | ✅ Third-party |
 | `src/minisketch/doc/plot_diff.png` | PNG | Minisketch documentation | ✅ Third-party |
 | `src/minisketch/doc/plot_size.png` | PNG | Minisketch documentation | ✅ Third-party |
@@ -224,7 +224,7 @@ This document provides a comprehensive inventory of all logo and image assets re
 
 ## 🎯 Conclusion
 
-All logo and image assets in the SHAHCOIN Core codebase have been successfully verified and are properly branded with SHAHCOIN logos and icons. No legacy Bitcoin or Litecoin branding remains in any of the image assets.
+All logo and image assets in the SHAHCOIN Core codebase have been successfully verified and are properly branded with SHAHCOIN logos and icons. No legacy branding remains in any of the image assets.
 
 The asset pipeline is complete and ready for:
 - **Professional Deployment**

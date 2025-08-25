@@ -5,6 +5,13 @@
  ***********************************************************************/
 #include <stdio.h>
 
+/**********************************************************************
+ * Additional modifications and extensions by:
+ * Copyright (C) 2025 The SHAHCOIN Core Developers — Hamid Rad
+ * https://shah.vip | info@shah.vip
+ * Distributed under the MIT License
+ **********************************************************************/
+
 #include "secp256k1.c"
 #include "../include/secp256k1.h"
 

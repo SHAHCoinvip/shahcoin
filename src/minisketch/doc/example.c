@@ -4,6 +4,13 @@
  * file LICENSE or http://www.opensource.org/licenses/mit-license.php.*
  **********************************************************************/
 
+/**********************************************************************
+ * Additional modifications and extensions by:
+ * Copyright (C) 2025 The SHAHCOIN Core Developers — Hamid Rad
+ * https://shah.vip | info@shah.vip
+ * Distributed under the MIT License
+ **********************************************************************/
+
 #include <stdio.h>
 #include <assert.h>
 #include "../include/minisketch.h"

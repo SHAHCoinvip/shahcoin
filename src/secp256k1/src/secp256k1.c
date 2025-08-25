@@ -4,6 +4,13 @@
  * file COPYING or https://www.opensource.org/licenses/mit-license.php.*
  ***********************************************************************/
 
+/**********************************************************************
+ * Additional modifications and extensions by:
+ * Copyright (C) 2025 The SHAHCOIN Core Developers — Hamid Rad
+ * https://shah.vip | info@shah.vip
+ * Distributed under the MIT License
+ **********************************************************************/
+
 /* This is a C project. It should not be compiled with a C++ compiler,
  * and we error out if we detect one.
  *

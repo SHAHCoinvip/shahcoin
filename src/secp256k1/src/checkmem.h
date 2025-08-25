@@ -3,6 +3,13 @@
  * Distributed under the MIT software license, see the accompanying    *
  * file COPYING or https://www.opensource.org/licenses/mit-license.php.*
  ***********************************************************************/
+
+/**********************************************************************
+ * Additional modifications and extensions by:
+ * Copyright (C) 2025 The SHAHCOIN Core Developers — Hamid Rad
+ * https://shah.vip | info@shah.vip
+ * Distributed under the MIT License
+ **********************************************************************/
 
 /* The code here is inspired by Kris Kwiatkowski's approach in
  * https://github.com/kriskwiatkowski/pqc/blob/main/src/common/ct_check.h

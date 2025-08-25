@@ -3,6 +3,13 @@
  * Distributed under the MIT software license, see the accompanying   *
  * file LICENSE or http://www.opensource.org/licenses/mit-license.php.*
  **********************************************************************/
+
+/**********************************************************************
+ * Additional modifications and extensions by:
+ * Copyright (C) 2025 The SHAHCOIN Core Developers — Hamid Rad
+ * https://shah.vip | info@shah.vip
+ * Distributed under the MIT License
+ **********************************************************************/
 
 #ifndef _MINISKETCH_INT_UTILS_H_
 #define _MINISKETCH_INT_UTILS_H_

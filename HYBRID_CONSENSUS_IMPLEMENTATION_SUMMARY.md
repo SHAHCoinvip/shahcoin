@@ -49,7 +49,7 @@ Successfully implemented a hybrid consensus system for Shahcoin that combines:
 ## 🎯 Key Features Implemented
 
 ### Multi-Algorithm PoW
-- **SHA256d**: ASIC-friendly, Bitcoin-style hashing
+- **SHA256d**: ASIC-friendly, SHAHCOIN-style hashing
 - **Scrypt**: GPU-friendly, memory-hard algorithm
 - **Groestl**: CPU/GPU-friendly, efficient hashing
 - **Rotation**: 33/33/34% distribution across algorithms

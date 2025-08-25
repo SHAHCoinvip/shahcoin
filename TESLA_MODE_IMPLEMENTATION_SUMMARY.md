@@ -126,7 +126,7 @@ The Tesla Mode implementation transforms the Shahcoin Qt Wallet into a modern, i
 - **Error Handling**: Comprehensive error handling and debugging
 
 ### Wallet Importer
-- **Multi-chain Support**: Import wallets from Bitcoin, Litecoin, Ethereum
+- **Multi-chain Support**: Import wallets from SHAHCOIN, Ethereum, and other compatible chains
 - **Read-only Mode**: Secure read-only access to external wallets
 - **Balance Tracking**: Track balances across multiple chains
 - **Address Management**: Manage addresses from different chains

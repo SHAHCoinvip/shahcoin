@@ -1,73 +1,74 @@
 # 🪙 SHAHCOIN CORE (v1.0)
 
-SHAHCOIN CORE is a next-generation decentralized digital currency platform built as a sovereign fork of Bitcoin Core. Designed for security, scalability, and real-world adoption, SHAHCOIN combines Proof-of-Work and Proof-of-Stake mechanisms with advanced DeFi infrastructure.
+**SHAHCOIN CORE** is a sovereign, next-generation Layer 1 blockchain designed for global adoption, high security, and integrated DeFi utility. It combines as a native, sovereign blockchain, hybrid Proof-of-Stake, and a full decentralized ecosystem — built from the ground up with a focus on real-world usage.
 
-> ⚠️ This is not a cosmetic rebrand — SHAHCOIN CORE is a full-stack protocol transformation, ready for real-world deployment.
-
----
-
-## 🚀 Key Features
-
-### 🔧 Protocol Layer
-- ✅ Multi-Algorithm PoW (Scrypt, Groestl, etc.)
-- ✅ Hybrid PoS Rewards System
-- ✅ 2.5 min block time (customized)
-- ✅ Custom halving & checkpoint logic
-- ✅ Replay protection + Sybil defense
-
-### 💼 Wallets
-- ✅ Qt Wallet UI with SHAH branding
-- ✅ Send / Receive / Stake SHAH
-- ✅ Cold & Hot staking with NFT boosts
-- ✅ Secure private key storage
-- ✅ Available for Windows, macOS, Linux
-
-### 💱 DeFi Infrastructure
-- ✅ SHAHSwap (Native DEX: SHAH ↔ SHI-20)
-- ✅ SHAHFactory (Token launcher)
-- ✅ Tiered staking APY + NFT reward boosts
-- ✅ SHAH GOLD NFT integration
-- ✅ Portfolio analytics and AI suggestions
-
-### 🧰 Developer SDKs & Plugins
-- ✅ JS / CLI / C++ SDK
-- ✅ Unity & Unreal plugins
-- ✅ WooCommerce integration
-- ✅ Telegram Mini App Wallet (SHAH native)
+> 💡 SHAHCOIN CORE is not a clone or cosmetic rebrand. It is an original blockchain protocol with its own consensus engine, wallet infrastructure, token standards, and decentralized apps.
 
 ---
 
-## 🔍 Project Evolution
+## 🚀 Core Protocol Features
 
-SHAHCOIN CORE is a full protocol transformation of the original Bitcoin Core source code.
+### 🔧 Consensus & Protocol Layer
+- 🔄 Multi-Algorithm PoW (Scrypt, Groestl, etc.)
+- 🔐 Hybrid PoS system with tiered rewards
+- ⏱ Custom block time (2.5 minutes)
+- 🪙 Halving schedule and staking checkpoints
+- 🛡 Replay protection, anti-sybil logic, UPNP disabled
+- 🧱 Native block explorer and P2P network
 
-Key upgrades include:
-- Multi-algorithm Proof-of-Work (Scrypt, Groestl, and more)
-- Hybrid Proof-of-Stake with advanced reward mechanics
-- Native Qt Wallet redesign with SHAH branding
-- Integrated SHAHSwap, SHAHFactory, NFT boosts, and Telegram Wallet
-- Developer SDKs (JS, CLI, C++, Unity, Unreal, WooCommerce)
-- AI-powered analytics, portfolio tools, and advanced staking logic
+---
 
-📘 For a complete breakdown of these protocol-level upgrades and architectural changes, please see:
+## 💼 Wallets & Staking
 
-👉 [`TRANSFORMATION_LOG.md`](./TRANSFORMATION_LOG.md)
+- 💻 Qt Wallet for Windows, macOS, and Linux
+- 🔐 Secure key storage and transaction signing
+- 💰 Native staking system with hot/cold modes
+- 🎖 Tiered APY rewards + NFT staking boosts
+- 📊 Real-time balance and analytics tracking
+
+---
+
+## 🌐 Integrated DeFi Features
+
+- 🔁 Native decentralized exchange (SHAH ↔️ SHI-20)
+- 🏗 SHAHFactory – Token creation tool with SHI-20 standard
+- 🪙 NFT integration (SHAH GOLD) for staking and access
+- 🤖 AI-powered portfolio analytics
+- 📱 Telegram Mini App – SHAH wallet, staking, swap, and tracking
+
+---
+
+## 🧰 Developer Tooling
+
+- ✅ SDKs in JavaScript, CLI, C++
+- ✅ Unity, Unreal, and WooCommerce plugins
+- ✅ REST + WebSocket APIs
+- ✅ GitHub Actions support (optional)
+- ✅ Telegram integration toolkit
 
 ---
 
 ## 📥 Downloads
 
 - [SHAHCOIN Qt Wallet (Windows/macOS/Linux)](https://shah.vip/download)
-- [SHAHCOIN Mining Daemon](https://shah.vip/download)
-- [SHAH GOLD NFT Collection](https://shah.vip/nft)
-- [SHAH Telegram Web3 Wallet](https://t.me/shahcoinvipbot)
+- [Mining Daemon](https://shah.vip/download)
+- [Telegram Wallet MiniApp](https://t.me/shahcoinvipbot)
+- [SHAH GOLD NFTs](https://shah.vip/nft)
+
+---
+
+## 🧠 Evolution Log
+
+SHAHCOIN CORE represents a complete protocol transformation — not a fork or reskin. For full technical notes, see:
+
+📘 [`TRANSFORMATION_LOG.md`](./TRANSFORMATION_LOG.md)
 
 ---
 
 ## 📡 Explorer & Chain Stats
 
 - [SHAHCOIN Explorer](https://explorer.shah.vip)
-- [SHAH Token on Etherscan](https://etherscan.io/token/0x6E0cFA42F797E316ff147A21f7F1189cd610ede8)
+- [SHAHToken (ERC-20)](https://etherscan.io/token/0x6E0cFA42F797E316ff147A21f7F1189cd610ede8)
 
 ---
 
@@ -75,7 +76,7 @@ Key upgrades include:
 
 - [SHAH SDK – JS, CLI, C++](https://github.com/SHAHCoinvip/shahcoin)
 - [SHAHFactory Templates](https://shah.vip/factory)
-- [Developer Plugins (Unity, Unreal, WooCommerce)](https://shah.vip/dev)
+- [Unity / Unreal / WooCommerce Plugins](https://shah.vip/dev)
 - [Telegram Web3 Wallet](https://t.me/shahcoinvipbot)
 
 ---
@@ -93,7 +94,7 @@ Key upgrades include:
 
 ## 🙌 Contribute
 
-SHAHCOIN is open-source and community-powered. Contributions are welcome across protocol, wallet UI, smart contract infrastructure, and SDKs.
+SHAHCOIN is fully open-source and welcomes contributions across protocol, wallet UI, SDKs, and DeFi layers.
 
 To get started:
 
@@ -103,7 +104,7 @@ cd shahcoin
 make
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed contribution guidelines.
 
 ---
 
@@ -111,6 +112,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 SHAHCOIN® is a registered trademark owned by Hamid Rad. Unauthorized use of the SHAHCOIN name, logo, or brand identity is strictly prohibited and will result in legal action.
 
-This software is provided under the MIT License. You may fork and use the code with attribution, but you may not use the SHAHCOIN name, logo, or branding in your projects without written permission.
+This software is provided under the MIT License. You may fork and use the code with attribution, but you may not use the SHAHCOIN name, logo, or branding without written permission.
 
-For trademark licensing inquiries: [info@shah.vip](mailto:info@shah.vip)
+For licensing inquiries: [info@shah.vip](mailto:info@shah.vip)

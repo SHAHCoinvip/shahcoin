@@ -16,7 +16,7 @@ Shahcoin implements three mining algorithms with equal weight distribution:
    - 33% weight in difficulty adjustment
 
 2. **Scrypt** (ALGO_SCRYPT = 1)
-   - Memory-hard algorithm used by Litecoin
+   - Memory-hard algorithm used by SHAHCOIN
    - GPU-friendly, ASIC-resistant
    - 33% weight in difficulty adjustment
 

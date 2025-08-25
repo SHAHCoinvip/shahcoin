@@ -2,53 +2,45 @@
 
 ## Overview
 
-SHAHCOIN CORE (v1.0) is a full evolution of the original Bitcoin Core protocol, extensively modified and extended at every level of the stack. This project is not a cosmetic fork — it represents a new direction in decentralized finance and blockchain utility.
+SHAHCOIN CORE (v1.0) is a full evolution of decentralized blockchain design— it is a sovereign protocol with its own consensus, infrastructure, and ecosystem.
 
 ---
 
 ## 🔧 Protocol Upgrades
 
-- 🔄 Multi-Algorithm Proof-of-Work (PoW): Added support for Scrypt, Groestl, and future-ready mining layers
-- 🔐 Hybrid Proof-of-Stake (PoS): Implemented future-compatible PoS checkpoints and reward logic
-- ⚙️ Custom block time, halving, reward, and peer logic
-- 🛡️ Security-focused enhancements: Replay protection, Sybil filters, daemon protections, UPNP disabled, etc.
+- 🔄 Multi-Algorithm PoW (Scrypt, Groestl)
+- 🔐 Hybrid PoS reward system
+- ⚙️ Custom halving, peer, block rules
+- 🛡 Replay protection, UPNP disabled, anti-sybil
 
 ---
 
-## 🧱 Core Wallet Enhancements
+## 💻 Wallet Enhancements
 
-- 🪙 Full Qt Wallet UI redesign (SHAH logo, native icons, new status messages)
-- 🧩 Custom checkpoints and seed nodes
-- 🧠 Integrated SHAHTools (AI, analytics, staking tiers, and NFT boosts)
-
----
-
-## 🌐 Ecosystem Features
-
-- 🔁 Native SHAHSwap DEX
-- 🏗️ SHAHFactory with SHI-20 token templates
-- 🧠 AI analytics dashboard
-- 🪙 NFT Boost integration with SHAH GOLD NFTs
-- 📱 Telegram Mini App (native SHAH wallet, staking, swap)
-- 📤 GitHub SDKs: JS, CLI, C++, Unity, Unreal, WooCommerce
+- Qt Wallet UI redesigned (SHAH logo, status bars, system tray)
+- Full staking, NFT boost integration
+- Cold & hot stake management
 
 ---
 
-## ⚠️ Original Base Code
+## 🧠 Ecosystem Layers
 
-This project was initially based on Bitcoin Core under the MIT License. All original Bitcoin-specific content has been removed or replaced with SHAHCOIN-specific branding, logic, and architecture.
+- SHAHSwap: Native DEX for SHAH ↔️ SHI-20
+- SHAHFactory: SHI-20 creator with on-chain metadata
+- NFT Boosts: 100 collectible NFTs linked to staking
+- Telegram Mini App Wallet
+- Developer SDKs: JS, CLI, C++, Unity, Unreal, WooCommerce
 
 ---
 
-## 📜 License & Attribution
+## 📜 License & Contact
 
 - License: MIT  
-- Copyright (C) 2025  
-- Project Maintainer: Hamid Rad
-- Contact: [info@shah.vip](mailto:info@shah.vip)  
-- Website: [https://shah.vip](https://shah.vip)  
-- GitHub: [https://github.com/SHAHCoinvip/shahcoin](https://github.com/SHAHCoinvip/shahcoin)
+- Creator: Hamid Rad  
+- Email: info@shah.vip  
+- Website: https://shah.vip  
+- GitHub: https://github.com/SHAHCoinvip/shahcoin
 
 ---
 
-SHAHCOIN CORE represents the next generation of open-source sovereign currency and infrastructure.
+SHAHCOIN CORE is not a clone — it's an independently maintained, production-grade decentralized financial layer.

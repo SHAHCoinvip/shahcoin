@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (c) 2017-2022 The SHAHCOIN Core developers
-# Distributed under the MIT software license, see the accompanying
+# Copyright (C) 2025 The SHAHCOIN Core Developers# Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #
 # This script runs all test/lint/lint-* files, and fails if any exit

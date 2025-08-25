@@ -1,5 +1,4 @@
-// Copyright (c) 2016-present The SHAHCOIN Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (C) 2025 The SHAHCOIN Core Developers// Distributed under the MIT software license, see the accompanying
 // file COPYING or https://opensource.org/license/mit/.
 
 #ifndef SHAHCOIN_KERNEL_MEMPOOL_REMOVAL_REASON_H

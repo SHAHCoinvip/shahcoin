@@ -1,5 +1,4 @@
-// Copyright (c) 2012 The LevelDB Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
+// Copyright (C) 2025 The SHAHCOIN Core Developers// Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file. See the AUTHORS file for names of contributors.
 //
 // A filter block is stored near the end of a Table file.  It contains

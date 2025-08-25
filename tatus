@@ -1,0 +1,112 @@
+[1mdiff --git a/README.md b/README.md[m
+[1mindex 6f708de..4a0a6ea 100644[m
+[1m--- a/README.md[m
+[1m+++ b/README.md[m
+[36m@@ -108,3 +108,106 @@[m [mSee [LICENSE](LICENSE.md) and [NOTICE](NOTICE.md) for full details.[m
+ SHAHCOIN® is a registered trademark owned by Hamid Rad. Unauthorized use of the SHAHCOIN name, logo, or brand identity is strictly prohibited and will result in legal action.[m
+ [m
+ For trademark licensing inquiries: info@shah.vip[m
+[32m+[m[32m# 🪙 SHAHCOIN CORE (v1.0)[m
+[32m+[m
+[32m+[m[32mSHAHCOIN CORE is a next-generation decentralized digital currency platform built as a sovereign fork of Bitcoin Core. Designed for security, scalability, and real-world adoption, SHAHCOIN combines Proof-of-Work and Proof-of-Stake mechanisms with advanced DeFi infrastructure.[m
+[32m+[m
+[32m+[m[32m> ⚠️ This is not a cosmetic rebrand — SHAHCOIN CORE is a full-stack protocol transformation, ready for real-world deployment.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## 🚀 Key Features[m
+[32m+[m
+[32m+[m[32m### 🔧 Protocol Layer[m
+[32m+[m[32m- ✅ Multi-Algorithm PoW (Scrypt, Groestl, etc.)[m
+[32m+[m[32m- ✅ Hybrid PoS Rewards System[m
+[32m+[m[32m- ✅ 2.5 min block time (customized)[m
+[32m+[m[32m- ✅ Custom halving & checkpoint logic[m
+[32m+[m[32m- ✅ Replay protection + Sybil defense[m
+[32m+[m
+[32m+[m[32m### 💼 Wallets[m
+[32m+[m[32m- ✅ Qt Wallet UI with SHAH branding[m
+[32m+[m[32m- ✅ Send / Receive / Stake SHAH[m
+[32m+[m[32m- ✅ Cold & Hot staking with NFT boosts[m
+[32m+[m[32m- ✅ Secure private key storage[m
+[32m+[m[32m- ✅ Available for Windows, macOS, Linux[m
+[32m+[m
+[32m+[m[32m### 💱 DeFi Infrastructure[m
+[32m+[m[32m- ✅ SHAHSwap (Native DEX: SHAH ↔ SHI-20)[m
+[32m+[m[32m- ✅ SHAHFactory (Token launcher)[m
+[32m+[m[32m- ✅ Tiered staking APY + NFT reward boosts[m
+[32m+[m[32m- ✅ SHAH GOLD NFT integration[m
+[32m+[m[32m- ✅ Portfolio analytics and AI suggestions[m
+[32m+[m
+[32m+[m[32m### 🧰 Developer SDKs & Plugins[m
+[32m+[m[32m- ✅ JS / CLI / C++ SDK[m
+[32m+[m[32m- ✅ Unity & Unreal plugins[m
+[32m+[m[32m- ✅ WooCommerce integration[m
+[32m+[m[32m- ✅ Telegram Mini App Wallet (SHAH native)[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## 🔍 Project Evolution[m
+[32m+[m
+[32m+[m[32mSHAHCOIN CORE is a full protocol transformation of the original Bitcoin Core source code.[m
+[32m+[m
+[32m+[m[32mKey upgrades include:[m
+[32m+[m[32m- Multi-algorithm Proof-of-Work (Scrypt, Groestl, and more)[m
+[32m+[m[32m- Hybrid Proof-of-Stake with advanced reward mechanics[m
+[32m+[m[32m- Native Qt Wallet redesign with SHAH branding[m
+[32m+[m[32m- Integrated SHAHSwap, SHAHFactory, NFT boosts, and Telegram Wallet[m
+[32m+[m[32m- Developer SDKs (JS, CLI, C++, Unity, Unreal, WooCommerce)[m
+[32m+[m[32m- AI-powered analytics, portfolio tools, and advanced staking logic[m
+[32m+[m
+[32m+[m[32m📘 For a complete breakdown of these protocol-level upgrades and architectural changes, please see:[m
+[32m+[m
+[32m+[m[32m👉 [`TRANSFORMATION_LOG.md`](./TRANSFORMATION_LOG.md)[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## 📥 Downloads[m
+[32m+[m
+[32m+[m[32m- [SHAHCOIN Qt Wallet (Windows/macOS/Linux)](https://shah.vip/download)[m
+[32m+[m[32m- [SHAHCOIN Mining Daemon](https://shah.vip/download)[m
+[32m+[m[32m- [SHAH GOLD NFT Collection](https://shah.vip/nft)[m
+[32m+[m[32m- [SHAH Telegram Web3 Wallet](https://t.me/shahcoinvipbot)[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## 📡 Explorer & Chain Stats[m
+[32m+[m
+[32m+[m[32m- [SHAHCOIN Explorer](https://explorer.shah.vip)[m
+[32m+[m[32m- [SHAH Token on Etherscan](https://etherscan.io/token/0x6E0cFA42F797E316ff147A21f7F1189cd610ede8)[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## 📚 Developer Resources[m
+[32m+[m
+[32m+[m[32m- [SHAH SDK – JS, CLI, C++](https://github.com/SHAHCoinvip/shahcoin)[m
+[32m+[m[32m- [SHAHFactory Templates](https://shah.vip/factory)[m
+[32m+[m[32m- [Developer Plugins (Unity, Unreal, WooCommerce)](https://shah.vip/dev)[m
+[32m+[m[32m- [Telegram Web3 Wallet](https://t.me/shahcoinvipbot)[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## 🛡 License & Attribution[m
+[32m+[m
+[32m+[m[32m- License: MIT[m[41m  [m
+[32m+[m[32m- Copyright © 2025[m[41m  [m
+[32m+[m[32m- Maintainer: Hamid Rad[m[41m  [m
+[32m+[m[32m- Contact: [info@shah.vip](mailto:info@shah.vip)[m[41m  [m
+[32m+[m[32m- Website: [https://shah.vip](https://shah.vip)[m[41m  [m
+[32m+[m[32m- GitHub: [https://github.com/SHAHCoinvip/shahcoin](https://github.com/SHAHCoinvip/shahcoin)[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## 🙌 Contribute[m
+[32m+[m
+[32m+[m[32mSHAHCOIN is open-source and community-powered. Contributions are welcome across protocol, wallet UI, smart contract infrastructure, and SDKs.[m
+[32m+[m
+[32m+[m[32mTo get started:[m
+[32m+[m
+[32m+[m[32m```bash[m
+[32m+[m[32mgit clone https://github.com/SHAHCoinvip/shahcoin.git[m
+[32m+[m[32mcd shahcoin[m
+[32m+[m[32mmake[m
+\ No newline at end of file[m

@@ -1,6 +1,5 @@
 // tinyformat.h
-// Copyright (C) 2011, Chris Foster [chris42f (at) gmail (d0t) com]
-//
+// Copyright (C) 2025 The SHAHCOIN Core Developers//
 // Boost Software License - Version 1.0
 //
 // Permission is hereby granted, free of charge, to any person or organization

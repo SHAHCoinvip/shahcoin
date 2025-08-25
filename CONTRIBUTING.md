@@ -84,7 +84,7 @@ To contribute a patch, the workflow is as follows:
   1. Create topic branch
   1. Commit patches
 
-For GUI-related issues or pull requests, the https://github.com/SHAHCoinvip/gui repository should be used.
+For GUI-related issues or pull requests, the https://github.com/SHAHCoinvip/shahcoin repository should be used.
 For all other issues and pull requests, the https://github.com/SHAHCoinvip/shahcoin repository should be used.
 
 The master branch for all monotree repositories is identical.

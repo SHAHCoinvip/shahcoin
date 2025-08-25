@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2016-2022 The SHAHCOIN Core developers
-# Distributed under the MIT software license, see the accompanying
+# Copyright (C) 2025 The SHAHCOIN Core Developers# Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 import re
@@ -402,26 +401,7 @@ UPDATE_USAGE = """
 Updates all the copyright headers of "The SHAHCOIN Core developers" which were
 changed in a year more recent than is listed. For example:
 
-// Copyright (c) <firstYear>-<lastYear> The SHAHCOIN Core developers
-
-will be updated to:
-
-// Copyright (c) <firstYear>-<lastModifiedYear> The SHAHCOIN Core developers
-
-where <lastModifiedYear> is obtained from the 'git log' history.
-
-This subcommand also handles copyright headers that have only a single year. In those cases:
-
-// Copyright (c) <year> The SHAHCOIN Core developers
-
-will be updated to:
-
-// Copyright (c) <year>-<lastModifiedYear> The SHAHCOIN Core developers
-
-where the update is appropriate.
-
-Usage:
-    $ ./copyright_header.py update <base_directory>
+// Copyright (C) 2025 The SHAHCOIN Core Developers// Copyright (C) 2025 The SHAHCOIN Core Developers// Copyright (C) 2025 The SHAHCOIN Core Developers// Copyright (C) 2025 The SHAHCOIN Core Developers/copyright_header.py update <base_directory>
 
 Arguments:
     <base_directory> - The base directory of a shahcoin source code repository.
@@ -449,8 +429,7 @@ def get_header_lines(header, start_year, end_year):
     return [line + '\n' for line in lines]
 
 CPP_HEADER = '''
-// Copyright (c) %s The SHAHCOIN Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (C) 2025 The SHAHCOIN Core Developers// Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 '''
 
@@ -458,8 +437,7 @@ def get_cpp_header_lines_to_insert(start_year, end_year):
     return reversed(get_header_lines(CPP_HEADER, start_year, end_year))
 
 SCRIPT_HEADER = '''
-# Copyright (c) %s The SHAHCOIN Core developers
-# Distributed under the MIT software license, see the accompanying
+# Copyright (C) 2025 The SHAHCOIN Core Developers# Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 '''
 

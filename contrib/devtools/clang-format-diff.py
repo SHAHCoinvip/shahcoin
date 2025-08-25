@@ -12,8 +12,7 @@
 # University of Illinois/NCSA
 # Open Source License
 #
-# Copyright (c) 2007-2015 University of Illinois at Urbana-Champaign.
-# All rights reserved.
+# Copyright (C) 2025 The SHAHCOIN Core Developers# All rights reserved.
 #
 # Developed by:
 #

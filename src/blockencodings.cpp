@@ -1,5 +1,4 @@
-// Copyright (C) 2025 The SHAHCOIN Core Developers
-// Distributed under the MIT software license.
+// Copyright (C) 2025 The SHAHCOIN Core Developers// Distributed under the MIT software license.
 
 #include <blockencodings.h>
 #include <primitives/block.h>

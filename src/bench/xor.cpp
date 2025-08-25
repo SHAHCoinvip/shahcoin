@@ -1,5 +1,4 @@
-// Copyright (c) The SHAHCOIN Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (C) 2025 The SHAHCOIN Core Developers// Distributed under the MIT software license, see the accompanying
 // file COPYING or https://opensource.org/license/mit/.
 
 #include <bench/bench.h>

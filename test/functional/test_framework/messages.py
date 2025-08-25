@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2010 ArtForz -- public domain half-a-node
-# Copyright (c) 2012 Jeff Garzik
-# Copyright (c) 2010-2022 The SHAHCOIN Core developers
-# Distributed under the MIT software license, see the accompanying
+# Copyright (C) 2025 The SHAHCOIN Core Developers# Copyright (C) 2025 The SHAHCOIN Core Developers# Copyright (C) 2025 The SHAHCOIN Core Developers# Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Shahcoin test framework primitive and message structures
 

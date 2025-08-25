@@ -1,110 +1,116 @@
-# SHAHCOIN® - Advanced Blockchain Platform
+# 🪙 SHAHCOIN CORE (v1.0)
 
-## ⚠️ LEGAL DISCLAIMER & BRANDING RESTRICTIONS
+SHAHCOIN CORE is a next-generation decentralized digital currency platform built as a sovereign fork of Bitcoin Core. Designed for security, scalability, and real-world adoption, SHAHCOIN combines Proof-of-Work and Proof-of-Stake mechanisms with advanced DeFi infrastructure.
 
-**SHAHCOIN® is a registered trademark owned by Hamid Rad.**  
-**Unauthorized use of the Shahcoin name, logo, or associated assets is strictly prohibited.**
-
-This repository is licensed under the Apache 2.0 License. You may fork and use the code with attribution, but you may not use the Shahcoin name, logo, or branding in your projects or imply affiliation without permission.
-
-### 🚫 FORKING AND BRANDING RESTRICTIONS
-
-- You may fork this code under Apache 2.0 license
-- You may NOT use SHAHCOIN®, SHAH, or any derivative branding
-- You may NOT create tokens/NFTs with SHAH-branded names
-- You may NOT use SHAHCOIN logos, graphics, or visual assets
-- Violations will result in legal action and takedown requests
-
-**Respect the trademark. Build your own brand.**
-
-### 📜 License and Legal Notice
-
-This project is licensed under the Apache 2.0 License for core blockchain code.
-
-⚠️ **"SHAHCOIN", "SHAH", "SHAHI", and associated logos are registered trademarks of the Shahcoin project. Unauthorized use of these names, marks, or graphical assets is strictly prohibited.**
-
-You may not use the Shahcoin branding, name, or logos in forked projects or derivative works without written permission.
-
-→ See LICENSE file and trademark guidelines for details.
+> ⚠️ This is not a cosmetic rebrand — SHAHCOIN CORE is a full-stack protocol transformation, ready for real-world deployment.
 
 ---
 
-## About SHAHCOIN®
+## 🚀 Key Features
 
-SHAHCOIN® is a comprehensive blockchain platform featuring advanced wallet functionality, marketplace integration, premium subscription services, and cross-platform compatibility.
+### 🔧 Protocol Layer
+- ✅ Multi-Algorithm PoW (Scrypt, Groestl, etc.)
+- ✅ Hybrid PoS Rewards System
+- ✅ 2.5 min block time (customized)
+- ✅ Custom halving & checkpoint logic
+- ✅ Replay protection + Sybil defense
 
-### Features
+### 💼 Wallets
+- ✅ Qt Wallet UI with SHAH branding
+- ✅ Send / Receive / Stake SHAH
+- ✅ Cold & Hot staking with NFT boosts
+- ✅ Secure private key storage
+- ✅ Available for Windows, macOS, Linux
 
-- **Multi-Platform Wallet**: Qt desktop, Web3, and Telegram Mini App
-- **Advanced Marketplace**: Token/NFT trading with moderation
-- **Premium Tier System**: Subscription-based monetization
-- **Tesla Mode**: AI-powered portfolio analysis and smart UX
-- **Cross-Platform Sync**: Seamless data synchronization
-- **Modern UI**: Glassmorphism design with animations
+### 💱 DeFi Infrastructure
+- ✅ SHAHSwap (Native DEX: SHAH ↔ SHI-20)
+- ✅ SHAHFactory (Token launcher)
+- ✅ Tiered staking APY + NFT reward boosts
+- ✅ SHAH GOLD NFT integration
+- ✅ Portfolio analytics and AI suggestions
 
-### Project Structure
+### 🧰 Developer SDKs & Plugins
+- ✅ JS / CLI / C++ SDK
+- ✅ Unity & Unreal plugins
+- ✅ WooCommerce integration
+- ✅ Telegram Mini App Wallet (SHAH native)
 
-```
-/mnt/c/Users/hamid/shahcoin-core/
-└── shahcoin/                    # Main project directory
-    ├── src/                     # Core source code
-    ├── doc/                     # Documentation
-    ├── contrib/                 # Contrib scripts and tools
-    ├── test/                    # Test files
-    ├── build_msvc/              # Windows build files
-    ├── sdk/                     # SDK packages
-    ├── sdk-core/                # Core SDK modules
-    ├── web/                     # Web components
-    ├── api/                     # API services
-    └── game-plugins/            # Game engine integrations
-```
+---
 
-### Quick Start
+## 🔍 Project Evolution
+
+SHAHCOIN CORE is a full protocol transformation of the original Bitcoin Core source code.
+
+Key upgrades include:
+- Multi-algorithm Proof-of-Work (Scrypt, Groestl, and more)
+- Hybrid Proof-of-Stake with advanced reward mechanics
+- Native Qt Wallet redesign with SHAH branding
+- Integrated SHAHSwap, SHAHFactory, NFT boosts, and Telegram Wallet
+- Developer SDKs (JS, CLI, C++, Unity, Unreal, WooCommerce)
+- AI-powered analytics, portfolio tools, and advanced staking logic
+
+📘 For a complete breakdown of these protocol-level upgrades and architectural changes, please see:
+
+👉 [`TRANSFORMATION_LOG.md`](./TRANSFORMATION_LOG.md)
+
+---
+
+## 📥 Downloads
+
+- [SHAHCOIN Qt Wallet (Windows/macOS/Linux)](https://shah.vip/download)
+- [SHAHCOIN Mining Daemon](https://shah.vip/download)
+- [SHAH GOLD NFT Collection](https://shah.vip/nft)
+- [SHAH Telegram Web3 Wallet](https://t.me/shahcoinvipbot)
+
+---
+
+## 📡 Explorer & Chain Stats
+
+- [SHAHCOIN Explorer](https://explorer.shah.vip)
+- [SHAH Token on Etherscan](https://etherscan.io/token/0x6E0cFA42F797E316ff147A21f7F1189cd610ede8)
+
+---
+
+## 📚 Developer Resources
+
+- [SHAH SDK – JS, CLI, C++](https://github.com/SHAHCoinvip/shahcoin)
+- [SHAHFactory Templates](https://shah.vip/factory)
+- [Developer Plugins (Unity, Unreal, WooCommerce)](https://shah.vip/dev)
+- [Telegram Web3 Wallet](https://t.me/shahcoinvipbot)
+
+---
+
+## 🛡 License & Attribution
+
+- License: MIT  
+- Copyright © 2025  
+- Maintainer: Hamid Rad  
+- Contact: [info@shah.vip](mailto:info@shah.vip)  
+- Website: [https://shah.vip](https://shah.vip)  
+- GitHub: [https://github.com/SHAHCoinvip/shahcoin](https://github.com/SHAHCoinvip/shahcoin)
+
+---
+
+## 🙌 Contribute
+
+SHAHCOIN is open-source and community-powered. Contributions are welcome across protocol, wallet UI, smart contract infrastructure, and SDKs.
+
+To get started:
 
 ```bash
-# Clone the repository
-git clone https://github.com/SHAHCoinvip/shahcoin
+git clone https://github.com/SHAHCoinvip/shahcoin.git
 cd shahcoin
-
-# Build Qt Wallet
-make -f Makefile.unix
-
-# Run the wallet
-./src/qt/shahcoin-qt
+make
 ```
 
-### Development
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
-```bash
-# Install dependencies
-npm install
+---
 
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-```
-
-### Documentation
-
-- [API Documentation](docs/api.md)
-- [Development Guide](docs/development.md)
-- [Deployment Guide](docs/deployment.md)
-
-### Contributing
-
-We welcome contributions! Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting pull requests.
-
-### License
-
-This project is licensed under Apache 2.0.
-
-© 2025 Hamid Rad – All Rights Reserved. SHAHCOIN® is a registered trademark.  
-See [LICENSE](LICENSE.md) and [NOTICE](NOTICE.md) for full details.
-
-### Legal
+## ⚠️ Legal Disclaimer
 
 SHAHCOIN® is a registered trademark owned by Hamid Rad. Unauthorized use of the SHAHCOIN name, logo, or brand identity is strictly prohibited and will result in legal action.
 
-For trademark licensing inquiries: info@shah.vip
+This software is provided under the MIT License. You may fork and use the code with attribution, but you may not use the SHAHCOIN name, logo, or branding in your projects without written permission.
+
+For trademark licensing inquiries: [info@shah.vip](mailto:info@shah.vip)

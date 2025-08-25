@@ -1,5 +1,5 @@
+# Build artifacts
 *.tar.gz
-
 *.exe
 *.pdb
 src/shahcoin
@@ -15,7 +15,7 @@ src/test/fuzz/fuzz
 src/test/test_shahcoin
 src/qt/test/test_shahcoin-qt
 
-# autoreconf
+# Autotools
 Makefile.in
 aclocal.m4
 autom4te.cache/
@@ -44,18 +44,18 @@ src/obj
 share/setup.nsi
 share/qt/Info.plist
 
+# Qt specific
 src/qt/*.moc
 src/qt/moc_*.cpp
 src/qt/forms/ui_*.h
-
 src/qt/test/moc*.cpp
-
 src/qt/shahcoin-qt.config
 src/qt/shahcoin-qt.creator
 src/qt/shahcoin-qt.creator.user
 src/qt/shahcoin-qt.files
 src/qt/shahcoin-qt.includes
 
+# Compilation artifacts
 .deps
 .dirstamp
 .libs
@@ -72,23 +72,25 @@ src/qt/shahcoin-qt.includes
 *.pb.h
 *.dat
 
+# Logs and archives
 *.log
 *.trs
 *.zip
 
+# Generated headers
 *.json.h
 *.raw.h
 
-# Only ignore unexpected patches
+# Patches (only ignore unexpected ones)
 *.patch
 !contrib/guix/patches/*.patch
 !depends/patches/**/*.patch
 
-#libtool object files
+# Libtool
 *.lo
 *.la
 
-# Compilation and Qt preprocessor part
+# Qt compilation
 *.qm
 Makefile
 !depends/Makefile
@@ -98,21 +100,21 @@ Shahcoin-Qt.app
 # Qt Creator
 Makefile.am.user
 
-# Unit-tests
+# Unit tests
 Makefile.test
 shahcoin-qt_test
 
-# Resources cpp
+# Qt resources
 qrc_*.cpp
 
-# Mac specific
+# macOS
 .DS_Store
 build
 
 # Previous releases
 releases
 
-#lcov
+# Coverage
 *.gcno
 *.gcda
 /*.info
@@ -123,7 +125,7 @@ coverage_percent.txt
 /cov_tool_wrapper.sh
 qa-assets/
 
-#build tests
+# Build tests
 linux-coverage-build
 linux-build
 win32-build
@@ -133,22 +135,27 @@ test/.mypy_cache/
 
 !src/leveldb*/Makefile
 
+# Documentation
 /doc/doxygen/
 
+# Package config
 libshahcoinconsensus.pc
 contrib/devtools/split-debug.sh
 
-# Output from running db4 installation
+# Database
 db4/
 
-# clang-check
+# Clang
 *.plist
 
+# OS specific
 osx_volname
 dist/
 
+# Guix builds
 /guix-build-*
 
+# CI
 /ci/scratch/
 
 # Security exclusions
@@ -159,3 +166,62 @@ dist/
 *.dat
 qt_wallet.db
 *.sqlite
+
+# Node.js (for SDK components)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Backup files
+*.backup
+*.bak
+*.old
+
+# Wallet data (additional security)
+wallet.dat
+wallet.dat.bak
+wallet.dat.old
+*.wallet
+*.dat.bak
+
+# Private keys and sensitive data
+*.priv
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Build directories
+build/
+dist/
+out/
+target/
+
+# Package managers
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

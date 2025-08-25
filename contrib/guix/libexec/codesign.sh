@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# Copyright (c) 2021-2022 The SHAHCOIN Core developers
-# Distributed under the MIT software license, see the accompanying
+# Copyright (C) 2025 The SHAHCOIN Core Developers# Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 export LC_ALL=C
 set -e -o pipefail

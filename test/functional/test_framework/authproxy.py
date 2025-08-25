@@ -1,9 +1,7 @@
-# Copyright (c) 2011 Jeff Garzik
-#
+# Copyright (C) 2025 The SHAHCOIN Core Developers#
 # Previous copyright, from python-jsonrpc/jsonrpc/proxy.py:
 #
-# Copyright (c) 2007 Jan-Klaas Kollhof
-#
+# Copyright (C) 2025 The SHAHCOIN Core Developers#
 # This file is part of jsonrpc.
 #
 # jsonrpc is free software; you can redistribute it and/or modify

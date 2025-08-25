@@ -1,5 +1,4 @@
-// Copyright (c) 2023 SHAHCOIN Core
-// Distributed under the MIT software license
+// Copyright (C) 2025 The SHAHCOIN Core Developers// Distributed under the MIT software license
 
 #ifndef SHAHCOIN_CHAINPARAMSBASE_H
 #define SHAHCOIN_CHAINPARAMSBASE_H

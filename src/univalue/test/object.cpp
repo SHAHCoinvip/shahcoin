@@ -1,6 +1,4 @@
-// Copyright (c) 2014 BitPay Inc.
-// Copyright (c) 2014-2022 The SHAHCOIN Core developers
-// Distributed under the MIT software license, see the accompanying
+// Copyright (C) 2025 The SHAHCOIN Core Developers// Copyright (C) 2025 The SHAHCOIN Core Developers// Distributed under the MIT software license, see the accompanying
 // file COPYING or https://opensource.org/licenses/mit-license.php.
 
 #include <univalue.h>

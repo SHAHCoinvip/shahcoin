@@ -1,3 +1,9 @@
+######################################################################
+# Additional integration and maintenance by:
+# Copyright (C) 2025 The SHAHCOIN Core Developers — Hamid Rad
+# https://shah.vip | info@shah.vip
+# Distributed under the MIT License
+######################################################################
 #!/bin/bash
 
 # SHAHCOIN Core Setup Script

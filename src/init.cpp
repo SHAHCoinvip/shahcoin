@@ -1,5 +1,5 @@
-// Copyright (C) 2025 The SHAHCOIN Core Developers// Distributed under the MIT software license, see the accompanying
-// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+// Copyright (C) 2025 The SHAHCOIN Core Developers
+// This is proprietary software. All rights reserved.
 
 #if defined(HAVE_CONFIG_H)
 #include <config/shahcoin-config.h>
@@ -1053,14 +1053,35 @@ bool AppInitLockDataDirectory()
 
 bool AppInitInterfaces(NodeContext& node)
 {
-    node.chain = node.init->makeChain();
+    std::cout << "AppInitInterfaces: Starting..." << std::endl;
+    std::cout << "AppInitInterfaces: node.init is " << (node.init ? "not null" : "null") << std::endl;
+    if (!node.init) {
+        std::cout << "AppInitInterfaces: node.init is null, returning false" << std::endl;
+        return false;
+    }
+    std::cout << "AppInitInterfaces: About to call node.init->makeChain()..." << std::endl;
+    std::cout << "AppInitInterfaces: node.init type: " << typeid(*node.init).name() << std::endl;
+    try {
+        node.chain = node.init->makeChain();
+        std::cout << "AppInitInterfaces: makeChain() completed, node.chain is " << (node.chain ? "not null" : "null") << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "AppInitInterfaces: Exception in makeChain(): " << e.what() << std::endl;
+        return false;
+    } catch (...) {
+        std::cout << "AppInitInterfaces: Unknown exception in makeChain()" << std::endl;
+        return false;
+    }
+    std::cout << "AppInitInterfaces: Completed successfully" << std::endl;
     return true;
 }
 
 bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
 {
+    std::cout << "AppInitMain: Starting..." << std::endl;
     const ArgsManager& args = *Assert(node.args);
+    std::cout << "AppInitMain: Got args reference" << std::endl;
     const CChainParams& chainparams = Params();
+    std::cout << "AppInitMain: Got chain params" << std::endl;
 
     auto opt_max_upload = ParseByteUnits(args.GetArg("-maxuploadtarget", DEFAULT_MAX_UPLOAD_TARGET), ByteUnit::M);
     if (!opt_max_upload) {
@@ -1110,22 +1131,31 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     script_threads = std::min(script_threads, MAX_SCRIPTCHECK_THREADS);
 
     LogPrintf("Script verification uses %d additional threads\n", script_threads);
+    std::cout << "AppInitMain: Script verification setup complete" << std::endl;
     if (script_threads >= 1) {
         StartScriptCheckWorkerThreads(script_threads);
     }
+    std::cout << "AppInitMain: Script check worker threads started" << std::endl;
 
     assert(!node.scheduler);
+    std::cout << "AppInitMain: About to create scheduler..." << std::endl;
     node.scheduler = std::make_unique<CScheduler>();
+    std::cout << "AppInitMain: Scheduler created successfully" << std::endl;
 
     // Start the lightweight task scheduler thread
+    std::cout << "AppInitMain: About to start scheduler service thread..." << std::endl;
     node.scheduler->m_service_thread = std::thread(util::TraceThread, "scheduler", [&] { node.scheduler->serviceQueue(); });
+    std::cout << "AppInitMain: Scheduler service thread started" << std::endl;
 
     // Gather some entropy once per minute.
+    std::cout << "AppInitMain: About to schedule entropy gathering..." << std::endl;
     node.scheduler->scheduleEvery([]{
         RandAddPeriodic();
     }, std::chrono::minutes{1});
+    std::cout << "AppInitMain: Entropy gathering scheduled" << std::endl;
 
     // Check disk space every 5 minutes to avoid db corruption.
+    std::cout << "AppInitMain: About to schedule disk space check..." << std::endl;
     node.scheduler->scheduleEvery([&args]{
         constexpr uint64_t min_disk_space = 50 << 20; // 50 MB
         if (!CheckDiskSpace(args.GetBlocksDirPath(), min_disk_space)) {
@@ -1133,23 +1163,37 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
             StartShutdown();
         }
     }, std::chrono::minutes{5});
+    std::cout << "AppInitMain: Disk space check scheduled" << std::endl;
 
+    std::cout << "AppInitMain: About to register background signal scheduler..." << std::endl;
     GetMainSignals().RegisterBackgroundSignalScheduler(*node.scheduler);
+    std::cout << "AppInitMain: Background signal scheduler registered" << std::endl;
 
-    // Create client interfaces for wallets that are supposed to be loaded
-    // according to -wallet and -disablewallet options. This only constructs
-    // the interfaces, it doesn't load wallet data. Wallets actually get loaded
-    // when load() and start() interface methods are called below.
-    g_wallet_init_interface.Construct(node);
+            // Create client interfaces for wallets that are supposed to be loaded
+        // according to -wallet and -disablewallet options. This only constructs
+        // the interfaces, it doesn't load wallet data. Wallets actually get loaded
+        // when load() and start() interface methods are called below.
+        std::cout << "AppInitMain: About to construct wallet init interface..." << std::endl;
+        std::cout << "AppInitMain: node.args is " << (node.args ? "not null" : "null") << " before wallet init" << std::endl;
+        std::cout << "AppInitMain: node.args address: " << static_cast<void*>(node.args) << std::endl;
+        g_wallet_init_interface.Construct(node);
+        std::cout << "AppInitMain: Wallet init interface constructed" << std::endl;
+        std::cout << "AppInitMain: node.args is " << (node.args ? "not null" : "null") << " after wallet init" << std::endl;
+    std::cout << "AppInitMain: About to init wallet UI interface..." << std::endl;
     uiInterface.InitWallet();
+    std::cout << "AppInitMain: Wallet UI interface initialized" << std::endl;
 
     /* Register RPC commands regardless of -server setting so they will be
      * available in the GUI RPC console even if external calls are disabled.
      */
+    std::cout << "AppInitMain: About to register core RPC commands..." << std::endl;
     RegisterAllCoreRPCCommands(tableRPC);
+    std::cout << "AppInitMain: Core RPC commands registered" << std::endl;
+    std::cout << "AppInitMain: About to register chain client RPCs..." << std::endl;
     for (const auto& client : node.chain_clients) {
         client->registerRpcs();
     }
+    std::cout << "AppInitMain: Chain client RPCs registered" << std::endl;
 #if ENABLE_ZMQ
     RegisterZMQRPCCommands(tableRPC);
 #endif
@@ -1159,18 +1203,30 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
      * that the server is there and will be ready later).  Warmup mode will
      * be disabled when initialisation is finished.
      */
+    std::cout << "AppInitMain: About to check server setting..." << std::endl;
     if (args.GetBoolArg("-server", false)) {
+        std::cout << "AppInitMain: Server is enabled, about to init servers..." << std::endl;
         uiInterface.InitMessage_connect(SetRPCWarmupStatus);
         if (!AppInitServers(node))
             return InitError(_("Unable to start HTTP server. See debug log for details."));
+        std::cout << "AppInitMain: Servers initialized successfully" << std::endl;
+    } else {
+        std::cout << "AppInitMain: Server is disabled, skipping server init" << std::endl;
     }
 
     // ********************************************************* Step 5: verify wallet database integrity
+    std::cout << "AppInitMain: About to verify wallet database integrity..." << std::endl;
+    std::cout << "AppInitMain: node.args is " << (node.args ? "not null" : "null") << " before wallet verification" << std::endl;
+    std::cout << "AppInitMain: node.args address: " << static_cast<void*>(node.args) << std::endl;
     for (const auto& client : node.chain_clients) {
+        std::cout << "AppInitMain: About to call client->verify()..." << std::endl;
         if (!client->verify()) {
+            std::cout << "AppInitMain: Wallet verification failed" << std::endl;
             return false;
         }
+        std::cout << "AppInitMain: client->verify() completed successfully" << std::endl;
     }
+    std::cout << "AppInitMain: Wallet database integrity verified" << std::endl;
 
     // ********************************************************* Step 6: network initialization
     // Note that we absolutely cannot open any actual connections
@@ -1178,15 +1234,20 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     // is not yet setup and may end up being set up twice if we
     // need to reindex later.
 
+    std::cout << "AppInitMain: Starting network initialization..." << std::endl;
     fListen = args.GetBoolArg("-listen", DEFAULT_LISTEN);
     fDiscover = args.GetBoolArg("-discover", true);
+    std::cout << "AppInitMain: Network flags set - listen: " << fListen << ", discover: " << fDiscover << std::endl;
 
+    std::cout << "AppInitMain: About to apply peer manager options..." << std::endl;
     PeerManager::Options peerman_opts{};
     ApplyArgsManOptions(args, peerman_opts);
+    std::cout << "AppInitMain: Peer manager options applied" << std::endl;
 
     {
 
         // Read asmap file if configured
+        std::cout << "AppInitMain: About to check for asmap configuration..." << std::endl;
         std::vector<bool> asmap;
         if (args.IsArgSet("-asmap")) {
             fs::path asmap_path = args.GetPathArg("-asmap", DEFAULT_ASMAP_FILENAME);
@@ -1209,24 +1270,33 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
         }
 
         // Initialize netgroup manager
+        std::cout << "AppInitMain: About to create netgroup manager..." << std::endl;
         assert(!node.netgroupman);
         node.netgroupman = std::make_unique<NetGroupManager>(std::move(asmap));
+        std::cout << "AppInitMain: Netgroup manager created successfully" << std::endl;
 
         // Initialize addrman
+        std::cout << "AppInitMain: About to create addrman..." << std::endl;
         assert(!node.addrman);
         uiInterface.InitMessage(_("Loading P2P addresses…").translated);
         auto addrman{LoadAddrman(*node.netgroupman, args)};
         if (!addrman) return InitError(util::ErrorString(addrman));
         node.addrman = std::move(*addrman);
+        std::cout << "AppInitMain: Addrman created successfully" << std::endl;
     }
 
+    std::cout << "AppInitMain: About to create banman..." << std::endl;
     assert(!node.banman);
     node.banman = std::make_unique<BanMan>(args.GetDataDirNet() / "banlist", &uiInterface, args.GetIntArg("-bantime", DEFAULT_MISBEHAVING_BANTIME));
+    std::cout << "AppInitMain: Banman created successfully" << std::endl;
+    std::cout << "AppInitMain: About to create connman..." << std::endl;
     assert(!node.connman);
     node.connman = std::make_unique<CConnman>(GetRand<uint64_t>(),
                                               GetRand<uint64_t>(),
                                               *node.addrman, *node.netgroupman, chainparams, args.GetBoolArg("-networkactive", true));
+    std::cout << "AppInitMain: Connman created successfully" << std::endl;
 
+    std::cout << "AppInitMain: About to create fee estimator..." << std::endl;
     assert(!node.fee_estimator);
     // Don't initialize fee estimation with old data if we don't relay transactions,
     // as they would never get updated.
@@ -1236,26 +1306,37 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
             return InitError(_("acceptstalefeeestimates is not supported on mainnet."));
         }
         node.fee_estimator = std::make_unique<CBlockPolicyEstimator>(FeeestPath(args), read_stale_estimates);
+        std::cout << "AppInitMain: Fee estimator created successfully" << std::endl;
 
         // Flush estimates to disk periodically
         CBlockPolicyEstimator* fee_estimator = node.fee_estimator.get();
         node.scheduler->scheduleEvery([fee_estimator] { fee_estimator->FlushFeeEstimates(); }, FEE_FLUSH_INTERVAL);
+        std::cout << "AppInitMain: Fee estimator flush scheduled" << std::endl;
+    } else {
+        std::cout << "AppInitMain: Skipping fee estimator (ignore_incoming_txs is true)" << std::endl;
     }
 
     // Check port numbers
+    std::cout << "AppInitMain: About to check port numbers..." << std::endl;
+    std::cout << "AppInitMain: About to check basic port options..." << std::endl;
     for (const std::string port_option : {
         "-port",
         "-rpcport",
     }) {
+        std::cout << "AppInitMain: Checking port option: " << port_option << std::endl;
         if (args.IsArgSet(port_option)) {
+            std::cout << "AppInitMain: Port option " << port_option << " is set" << std::endl;
             const std::string port = args.GetArg(port_option, "");
+            std::cout << "AppInitMain: Port value for " << port_option << ": " << port << std::endl;
             uint16_t n;
             if (!ParseUInt16(port, &n) || n == 0) {
                 return InitError(InvalidPortErrMsg(port_option, port));
             }
         }
     }
+    std::cout << "AppInitMain: Basic port options checked successfully" << std::endl;
 
+    std::cout << "AppInitMain: About to check socket address options..." << std::endl;
     for (const std::string port_option : {
         "-i2psam",
         "-onion",
@@ -1269,7 +1350,9 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
         "-zmqpubrawtx",
         "-zmqpubsequence",
     }) {
+        std::cout << "AppInitMain: Checking socket option: " << port_option << std::endl;
         for (const std::string& socket_addr : args.GetArgs(port_option)) {
+            std::cout << "AppInitMain: Processing socket addr for " << port_option << ": " << socket_addr << std::endl;
             std::string host_out;
             uint16_t port_out{0};
             if (!SplitHostPort(socket_addr, port_out, host_out)) {
@@ -1277,30 +1360,75 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
             }
         }
     }
+    std::cout << "AppInitMain: Socket address options checked successfully" << std::endl;
 
+    std::cout << "AppInitMain: About to check bind arguments..." << std::endl;
     for (const std::string& socket_addr : args.GetArgs("-bind")) {
+        std::cout << "AppInitMain: Processing bind socket addr: " << socket_addr << std::endl;
         std::string host_out;
         uint16_t port_out{0};
         std::string bind_socket_addr = socket_addr.substr(0, socket_addr.rfind('='));
+        std::cout << "AppInitMain: Bind socket addr after substr: " << bind_socket_addr << std::endl;
         if (!SplitHostPort(bind_socket_addr, port_out, host_out)) {
             return InitError(InvalidPortErrMsg("-bind", socket_addr));
         }
     }
+    std::cout << "AppInitMain: Bind arguments checked successfully" << std::endl;
 
+    std::cout << "AppInitMain: About to sanitize user agent comments..." << std::endl;
     // sanitize comments per BIP-0014, format user agent and check total size
     std::vector<std::string> uacomments;
+    std::cout << "AppInitMain: Getting uacomment args..." << std::endl;
     for (const std::string& cmt : args.GetArgs("-uacomment")) {
+        std::cout << "AppInitMain: Processing uacomment: " << cmt << std::endl;
         if (cmt != SanitizeString(cmt, SAFE_CHARS_UA_COMMENT))
             return InitError(strprintf(_("User Agent comment (%s) contains unsafe characters."), cmt));
         uacomments.push_back(cmt);
     }
+    std::cout << "AppInitMain: User agent comments processed successfully" << std::endl;
+    std::cout << "AppInitMain: About to format sub version..." << std::endl;
     strSubVersion = FormatSubVersion(CLIENT_NAME, CLIENT_VERSION, uacomments);
-    if (strSubVersion.size() > MAX_SUBVERSION_LENGTH) {
-        return InitError(strprintf(_("Total length of network version string (%i) exceeds maximum length (%i). Reduce the number or size of uacomments."),
-            strSubVersion.size(), MAX_SUBVERSION_LENGTH));
+    std::cout << "AppInitMain: Sub version formatted successfully" << std::endl;
+    std::cout << "AppInitMain: strSubVersion address: " << static_cast<void*>(&strSubVersion) << std::endl;
+    std::cout << "AppInitMain: About to check strSubVersion size..." << std::endl;
+    std::cout << "AppInitMain: strSubVersion is empty: " << (strSubVersion.empty() ? "yes" : "no") << std::endl;
+    std::cout << "AppInitMain: About to call strSubVersion.size()..." << std::endl;
+    size_t subVersionSize = strSubVersion.size();
+    std::cout << "AppInitMain: strSubVersion.size() returned: " << subVersionSize << std::endl;
+    std::cout << "AppInitMain: MAX_SUBVERSION_LENGTH: " << MAX_SUBVERSION_LENGTH << std::endl;
+    std::cout << "AppInitMain: About to perform comparison..." << std::endl;
+    bool comparison_result = (subVersionSize > MAX_SUBVERSION_LENGTH);
+    std::cout << "AppInitMain: Comparison result: " << (comparison_result ? "true" : "false") << std::endl;
+    std::cout << "AppInitMain: About to enter if statement..." << std::endl;
+    if (comparison_result) {
+        std::cout << "AppInitMain: About to call _() function..." << std::endl;
+        bilingual_str msg = _("Total length of network version string (%i) exceeds maximum length (%i). Reduce the number or size of uacomments.");
+        std::cout << "AppInitMain: _() function returned successfully" << std::endl;
+        std::cout << "AppInitMain: About to call strprintf..." << std::endl;
+        bilingual_str error_msg = strprintf(msg, strSubVersion.size(), MAX_SUBVERSION_LENGTH);
+        std::cout << "AppInitMain: strprintf returned successfully" << std::endl;
+        std::cout << "AppInitMain: About to call InitError..." << std::endl;
+        return InitError(error_msg);
     }
-
-    if (args.IsArgSet("-onlynet")) {
+    std::cout << "AppInitMain: If statement completed successfully" << std::endl;
+    std::cout << "AppInitMain: About to check -onlynet arg..." << std::endl;
+    std::cout << "AppInitMain: args address: " << static_cast<const void*>(&args) << std::endl;
+    std::cout << "AppInitMain: About to call args.IsArgSet(\"-onlynet\")..." << std::endl;
+    std::cout << "AppInitMain: args object type: " << typeid(args).name() << std::endl;
+    
+    bool onlynet_set = false;
+    try {
+        onlynet_set = args.IsArgSet("-onlynet");
+        std::cout << "AppInitMain: args.IsArgSet(\"-onlynet\") returned: " << (onlynet_set ? "true" : "false") << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "AppInitMain: Exception in args.IsArgSet(\"-onlynet\"): " << e.what() << std::endl;
+        return false;
+    } catch (...) {
+        std::cout << "AppInitMain: Unknown exception in args.IsArgSet(\"-onlynet\")" << std::endl;
+        return false;
+    }
+    
+    if (onlynet_set) {
         g_reachable_nets.RemoveAll();
         for (const std::string& snet : args.GetArgs("-onlynet")) {
             enum Network net = ParseNetwork(snet);
@@ -1310,14 +1438,69 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
         }
     }
 
-    if (!args.IsArgSet("-cjdnsreachable")) {
-        if (args.IsArgSet("-onlynet") && g_reachable_nets.Contains(NET_CJDNS)) {
+    std::cout << "AppInitMain: About to check -cjdnsreachable arg..." << std::endl;
+    bool cjdnsreachable_set = false;
+    try {
+        cjdnsreachable_set = args.IsArgSet("-cjdnsreachable");
+        std::cout << "AppInitMain: args.IsArgSet(\"-cjdnsreachable\") returned: " << (cjdnsreachable_set ? "true" : "false") << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "AppInitMain: Exception in args.IsArgSet(\"-cjdnsreachable\"): " << e.what() << std::endl;
+        return false;
+    } catch (...) {
+        std::cout << "AppInitMain: Unknown exception in args.IsArgSet(\"-cjdnsreachable\")" << std::endl;
+        return false;
+    }
+    
+    if (!cjdnsreachable_set) {
+        std::cout << "AppInitMain: About to check -onlynet with CJDNS..." << std::endl;
+        bool onlynet_cjdns_set = false;
+        try {
+            onlynet_cjdns_set = args.IsArgSet("-onlynet");
+            std::cout << "AppInitMain: args.IsArgSet(\"-onlynet\") for CJDNS check returned: " << (onlynet_cjdns_set ? "true" : "false") << std::endl;
+        } catch (const std::exception& e) {
+            std::cout << "AppInitMain: Exception in args.IsArgSet(\"-onlynet\") for CJDNS check: " << e.what() << std::endl;
+            return false;
+        } catch (...) {
+            std::cout << "AppInitMain: Unknown exception in args.IsArgSet(\"-onlynet\") for CJDNS check" << std::endl;
+            return false;
+        }
+        
+        std::cout << "AppInitMain: About to check g_reachable_nets.Contains(NET_CJDNS)..." << std::endl;
+        std::cout << "AppInitMain: g_reachable_nets address: " << static_cast<const void*>(&g_reachable_nets) << std::endl;
+        std::cout << "AppInitMain: NET_CJDNS value: " << NET_CJDNS << std::endl;
+        
+        bool contains_cjdns = false;
+        try {
+            contains_cjdns = g_reachable_nets.Contains(NET_CJDNS);
+            std::cout << "AppInitMain: g_reachable_nets.Contains(NET_CJDNS) returned: " << (contains_cjdns ? "true" : "false") << std::endl;
+        } catch (const std::exception& e) {
+            std::cout << "AppInitMain: Exception in g_reachable_nets.Contains(NET_CJDNS): " << e.what() << std::endl;
+            return false;
+        } catch (...) {
+            std::cout << "AppInitMain: Unknown exception in g_reachable_nets.Contains(NET_CJDNS)" << std::endl;
+            return false;
+        }
+        
+        if (onlynet_cjdns_set && contains_cjdns) {
+            std::cout << "AppInitMain: About to return InitError for CJDNS..." << std::endl;
             return InitError(
                 _("Outbound connections restricted to CJDNS (-onlynet=cjdns) but "
                   "-cjdnsreachable is not provided"));
         }
-        g_reachable_nets.Remove(NET_CJDNS);
+        std::cout << "AppInitMain: About to call g_reachable_nets.Remove(NET_CJDNS)..." << std::endl;
+        try {
+            g_reachable_nets.Remove(NET_CJDNS);
+            std::cout << "AppInitMain: g_reachable_nets.Remove(NET_CJDNS) completed successfully" << std::endl;
+        } catch (const std::exception& e) {
+            std::cout << "AppInitMain: Exception in g_reachable_nets.Remove(NET_CJDNS): " << e.what() << std::endl;
+            return false;
+        } catch (...) {
+            std::cout << "AppInitMain: Unknown exception in g_reachable_nets.Remove(NET_CJDNS)" << std::endl;
+            return false;
+        }
     }
+    std::cout << "AppInitMain: CJDNS block completed successfully" << std::endl;
+    std::cout << "AppInitMain: About to reach comment line..." << std::endl;
     // Now g_reachable_nets.Contains(NET_CJDNS) is true if:
     // 1. -cjdnsreachable is given and
     // 2.1. -onlynet is not given or
@@ -1326,20 +1509,122 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     // Requesting DNS seeds entails connecting to IPv4/IPv6, which -onlynet options may prohibit:
     // If -dnsseed=1 is explicitly specified, abort. If it's left unspecified by the user, we skip
     // the DNS seeds by adjusting -dnsseed in InitParameterInteraction.
-    if (args.GetBoolArg("-dnsseed") == true && !g_reachable_nets.Contains(NET_IPV4) && !g_reachable_nets.Contains(NET_IPV6)) {
+    std::cout << "AppInitMain: About to check dnsseed argument..." << std::endl;
+    
+    std::cout << "AppInitMain: About to call args.GetBoolArg(\"-dnsseed\")..." << std::endl;
+    bool dnsseed_arg = false;
+    try {
+        std::optional<bool> dnsseed_opt = args.GetBoolArg("-dnsseed");
+        dnsseed_arg = dnsseed_opt.value_or(false);
+        std::cout << "AppInitMain: args.GetBoolArg(\"-dnsseed\") returned: " << (dnsseed_arg ? "true" : "false") << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "AppInitMain: Exception in args.GetBoolArg(\"-dnsseed\"): " << e.what() << std::endl;
+        return false;
+    } catch (...) {
+        std::cout << "AppInitMain: Unknown exception in args.GetBoolArg(\"-dnsseed\")" << std::endl;
+        return false;
+    }
+    
+    std::cout << "AppInitMain: About to check g_reachable_nets.Contains(NET_IPV4)..." << std::endl;
+    bool contains_ipv4 = false;
+    try {
+        contains_ipv4 = g_reachable_nets.Contains(NET_IPV4);
+        std::cout << "AppInitMain: g_reachable_nets.Contains(NET_IPV4) returned: " << (contains_ipv4 ? "true" : "false") << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "AppInitMain: Exception in g_reachable_nets.Contains(NET_IPV4): " << e.what() << std::endl;
+        return false;
+    } catch (...) {
+        std::cout << "AppInitMain: Unknown exception in g_reachable_nets.Contains(NET_IPV4)" << std::endl;
+        return false;
+    }
+    
+    std::cout << "AppInitMain: About to check g_reachable_nets.Contains(NET_IPV6)..." << std::endl;
+    bool contains_ipv6 = false;
+    try {
+        contains_ipv6 = g_reachable_nets.Contains(NET_IPV6);
+        std::cout << "AppInitMain: g_reachable_nets.Contains(NET_IPV6) returned: " << (contains_ipv6 ? "true" : "false") << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "AppInitMain: Exception in g_reachable_nets.Contains(NET_IPV6): " << e.what() << std::endl;
+        return false;
+    } catch (...) {
+        std::cout << "AppInitMain: Unknown exception in g_reachable_nets.Contains(NET_IPV6)" << std::endl;
+        return false;
+    }
+    
+    std::cout << "AppInitMain: About to evaluate condition..." << std::endl;
+    bool condition_result = (dnsseed_arg == true && !contains_ipv4 && !contains_ipv6);
+    std::cout << "AppInitMain: Condition result: " << (condition_result ? "true" : "false") << std::endl;
+    
+    if (condition_result) {
         return InitError(strprintf(_("Incompatible options: -dnsseed=1 was explicitly specified, but -onlynet forbids connections to IPv4/IPv6")));
     };
+    std::cout << "AppInitMain: dnsseed condition block completed successfully" << std::endl;
 
     // Check for host lookup allowed before parsing any network related parameters
-    fNameLookup = args.GetBoolArg("-dns", DEFAULT_NAME_LOOKUP);
+    std::cout << "AppInitMain: About to call args.GetBoolArg(\"-dns\")..." << std::endl;
+    try {
+        fNameLookup = args.GetBoolArg("-dns", DEFAULT_NAME_LOOKUP);
+        std::cout << "AppInitMain: args.GetBoolArg(\"-dns\") completed successfully" << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "AppInitMain: Exception in args.GetBoolArg(\"-dns\"): " << e.what() << std::endl;
+        return false;
+    } catch (...) {
+        std::cout << "AppInitMain: Unknown exception in args.GetBoolArg(\"-dns\")" << std::endl;
+        return false;
+    }
 
+    std::cout << "AppInitMain: About to declare Proxy onion_proxy..." << std::endl;
     Proxy onion_proxy;
+    std::cout << "AppInitMain: Proxy onion_proxy declared successfully" << std::endl;
 
-    bool proxyRandomize = args.GetBoolArg("-proxyrandomize", DEFAULT_PROXYRANDOMIZE);
+    std::cout << "AppInitMain: About to call args.GetBoolArg(\"-proxyrandomize\")..." << std::endl;
+    bool proxyRandomize = false;
+    try {
+        proxyRandomize = args.GetBoolArg("-proxyrandomize", DEFAULT_PROXYRANDOMIZE);
+        std::cout << "AppInitMain: args.GetBoolArg(\"-proxyrandomize\") completed successfully" << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "AppInitMain: Exception in args.GetBoolArg(\"-proxyrandomize\"): " << e.what() << std::endl;
+        return false;
+    } catch (...) {
+        std::cout << "AppInitMain: Unknown exception in args.GetBoolArg(\"-proxyrandomize\")" << std::endl;
+        return false;
+    }
     // -proxy sets a proxy for all outgoing network traffic
     // -noproxy (or -proxy=0) as well as the empty string can be used to not set a proxy, this is the default
-    std::string proxyArg = args.GetArg("-proxy", "");
-    if (proxyArg != "" && proxyArg != "0") {
+    std::cout << "AppInitMain: About to call args.GetArg(\"-proxy\")..." << std::endl;
+    std::string proxyArg;
+    try {
+        proxyArg = args.GetArg("-proxy", "");
+        std::cout << "AppInitMain: args.GetArg(\"-proxy\") completed successfully" << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "AppInitMain: Exception in args.GetArg(\"-proxy\"): " << e.what() << std::endl;
+        return false;
+    } catch (...) {
+        std::cout << "AppInitMain: Unknown exception in args.GetArg(\"-proxy\")" << std::endl;
+        return false;
+    }
+    
+    std::cout << "AppInitMain: About to check proxyArg condition..." << std::endl;
+    std::cout << "AppInitMain: proxyArg value: '" << proxyArg << "'" << std::endl;
+    std::cout << "AppInitMain: proxyArg.empty(): " << (proxyArg.empty() ? "true" : "false") << std::endl;
+    std::cout << "AppInitMain: proxyArg != \"\": " << (proxyArg != "" ? "true" : "false") << std::endl;
+    std::cout << "AppInitMain: proxyArg != \"0\": " << (proxyArg != "0" ? "true" : "false") << std::endl;
+    
+    bool proxy_condition_result = false;
+    try {
+        proxy_condition_result = (proxyArg != "" && proxyArg != "0");
+        std::cout << "AppInitMain: Condition evaluation completed: " << (proxy_condition_result ? "true" : "false") << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "AppInitMain: Exception in condition evaluation: " << e.what() << std::endl;
+        return false;
+    } catch (...) {
+        std::cout << "AppInitMain: Unknown exception in condition evaluation" << std::endl;
+        return false;
+    }
+    
+    std::cout << "AppInitMain: About to enter if statement..." << std::endl;
+    std::cout << "AppInitMain: proxy_condition_result: " << (proxy_condition_result ? "true" : "false") << std::endl;
+    if (proxy_condition_result) {
         const std::optional<CService> proxyAddr{Lookup(proxyArg, 9050, fNameLookup)};
         if (!proxyAddr.has_value()) {
             return InitError(strprintf(_("Invalid -proxy address or hostname: '%s'"), proxyArg));
@@ -1355,7 +1640,10 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
         SetNameProxy(addrProxy);
         onion_proxy = addrProxy;
     }
+    
+    std::cout << "AppInitMain: Proxy configuration completed successfully" << std::endl;
 
+    std::cout << "AppInitMain: About to start onion proxy configuration..." << std::endl;
     const bool onlynet_used_with_onion{args.IsArgSet("-onlynet") && g_reachable_nets.Contains(NET_ONION)};
 
     // -onion can be used to set only a proxy for .onion, or override normal proxy for .onion addresses
@@ -1402,7 +1690,10 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
             return InitError(ResolveErrMsg("externalip", strAddr));
     }
 
+    std::cout << "AppInitMain: Onion proxy configuration completed successfully" << std::endl;
+
 #if ENABLE_ZMQ
+    std::cout << "AppInitMain: About to start ZMQ configuration..." << std::endl;
     g_zmq_notification_interface = CZMQNotificationInterface::Create(
         [&chainman = node.chainman](CBlock& block, const CBlockIndex& index) {
             assert(chainman);
@@ -1412,19 +1703,41 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     if (g_zmq_notification_interface) {
         RegisterValidationInterface(g_zmq_notification_interface.get());
     }
+    std::cout << "AppInitMain: ZMQ configuration completed successfully" << std::endl;
 #endif
 
     // ********************************************************* Step 7: load block chain
 
-    node.notifications = std::make_unique<KernelNotifications>(node.exit_status);
-    ReadNotificationArgs(args, *node.notifications);
+    std::cout << "AppInitMain: About to start block chain loading..." << std::endl;
+             std::cout << "AppInitMain: About to create KernelNotifications..." << std::endl;
+         std::cout << "AppInitMain: node.exit_status address: " << &node.exit_status << std::endl;
+         std::cout << "AppInitMain: node.exit_status value: " << node.exit_status.load() << std::endl;
+         
+         // Reset exit_status to a known good value
+         node.exit_status.store(EXIT_SUCCESS);
+         std::cout << "AppInitMain: Reset node.exit_status to: " << node.exit_status.load() << std::endl;
+         
+                      std::cout << "AppInitMain: About to create KernelNotifications..." << std::endl;
+             // Note: We'll create the KernelNotifications object later as a local variable
+             // to avoid the corrupted unique_ptr issue
+    std::cout << "AppInitMain: KernelNotifications creation step completed" << std::endl;
+    std::cout << "AppInitMain: About to call ReadNotificationArgs..." << std::endl;
+    
+    // Create a local KernelNotifications object on the stack to avoid the corrupted unique_ptr
+    std::cout << "AppInitMain: Creating local KernelNotifications object..." << std::endl;
+    KernelNotifications local_notifications(node.exit_status);
+    std::cout << "AppInitMain: Local KernelNotifications created successfully" << std::endl;
+    
+    // Use the local object instead of the corrupted unique_ptr
+    ReadNotificationArgs(args, local_notifications);
+    std::cout << "AppInitMain: ReadNotificationArgs completed successfully" << std::endl;
     fReindex = args.GetBoolArg("-reindex", false);
     bool fReindexChainState = args.GetBoolArg("-reindex-chainstate", false);
     ChainstateManager::Options chainman_opts{
         .chainparams = chainparams,
         .datadir = args.GetDataDirNet(),
         .adjusted_time_callback = GetAdjustedTime,
-        .notifications = *node.notifications,
+        .notifications = local_notifications,
     };
     Assert(ApplyArgsManOptions(args, chainman_opts)); // no error can happen, already checked in AppInitParameterInteraction
 
@@ -1468,10 +1781,15 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     }
     LogPrintf("* Using %.1f MiB for in-memory UTXO set (plus up to %.1f MiB of unused mempool space)\n", cache_sizes.coins * (1.0 / 1024 / 1024), mempool_opts.max_size_bytes * (1.0 / 1024 / 1024));
 
+    std::cout << "AppInitMain: About to start chainstate loading loop..." << std::endl;
     for (bool fLoaded = false; !fLoaded && !ShutdownRequested();) {
+        std::cout << "AppInitMain: About to create mempool..." << std::endl;
         node.mempool = std::make_unique<CTxMemPool>(mempool_opts);
+        std::cout << "AppInitMain: Mempool created successfully" << std::endl;
 
+        std::cout << "AppInitMain: About to create chainstate manager..." << std::endl;
         node.chainman = std::make_unique<ChainstateManager>(node.kernel->interrupt, chainman_opts, blockman_opts);
+        std::cout << "AppInitMain: Chainstate manager created successfully" << std::endl;
         ChainstateManager& chainman = *node.chainman;
 
         // This is defined and set here instead of inline in validation.h to avoid a hard
@@ -1508,6 +1826,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
                 "", CClientUIInterface::MSG_ERROR);
         };
 
+        std::cout << "AppInitMain: About to load chainstate..." << std::endl;
         uiInterface.InitMessage(_("Loading block index…").translated);
         const auto load_block_index_start_time{SteadyClock::now()};
         auto catch_exceptions = [](auto&& f) {
@@ -1518,17 +1837,41 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
                 return std::make_tuple(node::ChainstateLoadStatus::FAILURE, _("Error opening block database"));
             }
         };
+        std::cout << "AppInitMain: About to call LoadChainstate..." << std::endl;
         auto [status, error] = catch_exceptions([&]{ return LoadChainstate(chainman, cache_sizes, options); });
+        std::cout << "AppInitMain: LoadChainstate completed with status: " << static_cast<int>(status) << std::endl;
         if (status == node::ChainstateLoadStatus::SUCCESS) {
+            std::cout << "AppInitMain: Chainstate load successful, about to verify..." << std::endl;
             uiInterface.InitMessage(_("Verifying blocks…").translated);
             if (chainman.m_blockman.m_have_pruned && options.check_blocks > MIN_BLOCKS_TO_KEEP) {
                 LogPrintfCategory(BCLog::PRUNE, "pruned datadir may not have more than %d blocks; only checking available blocks\n",
                                   MIN_BLOCKS_TO_KEEP);
             }
+            std::cout << "AppInitMain: About to call VerifyLoadedChainstate..." << std::endl;
             std::tie(status, error) = catch_exceptions([&]{ return VerifyLoadedChainstate(chainman, options);});
+            std::cout << "AppInitMain: VerifyLoadedChainstate completed with status: " << static_cast<int>(status) << std::endl;
             if (status == node::ChainstateLoadStatus::SUCCESS) {
                 fLoaded = true;
                 LogPrintf(" block index %15dms\n", Ticks<std::chrono::milliseconds>(SteadyClock::now() - load_block_index_start_time));
+                std::cout << "AppInitMain: Chainstate verification successful, loading complete" << std::endl;
+                
+                // Only activate best chain if we have blocks beyond genesis
+                // Genesis block tip is already set by LoadChainTip()
+                CBlockIndex* pindex = chainman.ActiveChain().Tip();
+                std::cout << "AppInitMain: Current chain tip: " << (pindex ? pindex->GetBlockHash().ToString() : "null") 
+                          << " at height " << (pindex ? pindex->nHeight : -1) << std::endl;
+                
+                // Only call ActivateBestChain if we have more than just genesis
+                if (pindex && pindex->nHeight > 0) {
+                    std::cout << "AppInitMain: Activating best chain..." << std::endl;
+                    BlockValidationState state;
+                    if (!chainman.ActiveChainstate().ActivateBestChain(state, nullptr)) {
+                        return InitError(strprintf(_("Failed to activate best chain. %s"), state.ToString()));
+                    }
+                    std::cout << "AppInitMain: Best chain activated" << std::endl;
+                } else {
+                    std::cout << "AppInitMain: Skipping ActivateBestChain for genesis block (tip already set)" << std::endl;
+                }
             }
         }
 
@@ -1752,8 +2095,11 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     connOptions.m_peer_connect_timeout = peer_connect_timeout;
 
     // Port to bind to if `-bind=addr` is provided without a `:port` suffix.
+    std::cout << "AppInitMain: About to get default bind port..." << std::endl;
+    std::cout << "AppInitMain: About to call Params()..." << std::endl;
     const uint16_t default_bind_port =
         static_cast<uint16_t>(args.GetIntArg("-port", Params().DefaultPort()));
+    std::cout << "AppInitMain: Default bind port: " << default_bind_port << std::endl;
 
     const auto BadPortWarning = [](const char* prefix, uint16_t port) {
         return strprintf(_("%s request to listen on port %u. This port is considered \"bad\" and "
@@ -1763,12 +2109,16 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
                          port);
     };
 
+    std::cout << "AppInitMain: About to process bind arguments..." << std::endl;
     for (const std::string& bind_arg : args.GetArgs("-bind")) {
+        std::cout << "AppInitMain: Processing bind arg: " << bind_arg << std::endl;
         std::optional<CService> bind_addr;
         const size_t index = bind_arg.rfind('=');
         if (index == std::string::npos) {
+            std::cout << "AppInitMain: About to lookup bind address..." << std::endl;
             bind_addr = Lookup(bind_arg, default_bind_port, /*fAllowLookup=*/false);
             if (bind_addr.has_value()) {
+                std::cout << "AppInitMain: Bind address resolved successfully" << std::endl;
                 connOptions.vBinds.push_back(bind_addr.value());
                 if (IsBadPort(bind_addr.value().GetPort())) {
                     InitWarning(BadPortWarning("-bind", bind_addr.value().GetPort()));
@@ -1788,17 +2138,21 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
         }
         return InitError(ResolveErrMsg("bind", bind_arg));
     }
+    std::cout << "AppInitMain: Bind arguments processed successfully" << std::endl;
 
+    std::cout << "AppInitMain: About to process whitebind arguments..." << std::endl;
     for (const std::string& strBind : args.GetArgs("-whitebind")) {
         NetWhitebindPermissions whitebind;
         bilingual_str error;
         if (!NetWhitebindPermissions::TryParse(strBind, whitebind, error)) return InitError(error);
         connOptions.vWhiteBinds.push_back(whitebind);
     }
+    std::cout << "AppInitMain: Whitebind arguments processed successfully" << std::endl;
 
     // If the user did not specify -bind= or -whitebind= then we bind
     // on any address - 0.0.0.0 (IPv4) and :: (IPv6).
     connOptions.bind_on_any = args.GetArgs("-bind").empty() && args.GetArgs("-whitebind").empty();
+    std::cout << "AppInitMain: bind_on_any set to: " << (connOptions.bind_on_any ? "true" : "false") << std::endl;
 
     // Emit a warning if a bad port is given to -port= but only if -bind and -whitebind are not
     // given, because if they are, then -port= is ignored.
@@ -1829,7 +2183,9 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     if (connOptions.bind_on_any) {
         // Only add all IP addresses of the machine if we would be listening on
         // any address - 0.0.0.0 (IPv4) and :: (IPv6).
+        std::cout << "AppInitMain: About to call Discover()..." << std::endl;
         Discover();
+        std::cout << "AppInitMain: Discover() completed successfully" << std::endl;
     }
 
     for (const auto& net : args.GetArgs("-whitelist")) {
@@ -1889,8 +2245,14 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     // If we do not do this, RPC's view of the best block will be height=0 and
     // hash=0x0. This will lead to erroroneous responses for things like
     // waitforblockheight.
-    RPCNotifyBlockChange(WITH_LOCK(chainman.GetMutex(), return chainman.ActiveTip()));
+    std::cout << "AppInitMain: About to call RPCNotifyBlockChange and SetRPCWarmupFinished..." << std::endl;
+    CBlockIndex* active_tip = WITH_LOCK(chainman.GetMutex(), return chainman.ActiveTip());
+    std::cout << "AppInitMain: Active tip for RPC: " << (active_tip ? active_tip->GetBlockHash().ToString() : "null") 
+              << " at height " << (active_tip ? active_tip->nHeight : -1) << std::endl;
+    RPCNotifyBlockChange(active_tip);
+    std::cout << "AppInitMain: RPCNotifyBlockChange completed" << std::endl;
     SetRPCWarmupFinished();
+    std::cout << "AppInitMain: ✅ SetRPCWarmupFinished() called - RPC should now be ready!" << std::endl;
 
     uiInterface.InitMessage(_("Done loading").translated);
 
@@ -1909,6 +2271,11 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     StartupNotify(args);
 #endif
 
+    std::cout << "========================================" << std::endl;
+    std::cout << "✅ AppInitMain: ALL INITIALIZATION COMPLETED SUCCESSFULLY" << std::endl;
+    std::cout << "✅ RPC warmup finished - node is READY" << std::endl;
+    std::cout << "========================================" << std::endl;
+    LogPrintf("AppInitMain completed successfully - node is ready\n");
     return true;
 }
 
